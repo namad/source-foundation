@@ -1,0 +1,210 @@
+<form id="importForm">
+
+    <div class="card color-preview card-stiky">
+        <h4 class="font-bold font-size-md">Palette Preview</h4>
+        <div class="flex flex-col gap-sy-xs">
+            <div class="flex flex-row gap-0 radii-base overflow-hidden">
+                <div class="color-box flex-1 l-1"></div>
+                <div class="color-box flex-1 l-2"></div>
+                <div class="color-box flex-1 l-3"></div>
+                <div class="color-box flex-1 l-4"></div>
+                <div class="color-box flex-1 l-5"></div>
+            </div>
+            <div class="flex flex-row gap-0 radii-base overflow-hidden">
+                <div class="color-box flex-1 d-1"></div>
+                <div class="color-box flex-1 d-2"></div>
+                <div class="color-box flex-1 d-3"></div>
+                <div class="color-box flex-1 d-4"></div>
+                <div class="color-box flex-1 d-5"></div>
+            </div>
+            <div class="flex flex-row gap-0 radii-base overflow-hidden">
+                <div class="color-box flex-1 a-primary radii-base mr-1">
+                    <div>Primary</div>
+                    <div class="token-value"></div>
+                </div>
+                <div class="color-box flex-1 radii-base-l a-info">
+                    <div>Info</div>
+                    <div class="token-value"></div>
+                </div>
+                <div class="color-box flex-1 a-success">
+                    <div>Success</div>
+                    <div class="token-value"></div>
+                </div>
+                <div class="color-box flex-1 a-warning">
+                    <div>Warning</div>
+                    <div class="token-value"></div>
+                </div>
+                <div class="color-box flex-1 a-danger">
+                    <div>Danger</div>
+                    <div class="token-value"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="px-base py-md flex flex-col gap-sy-base">
+        <dialog id="typographyScaleModal">
+            <button class="close" value="cancel">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M9.64017 2.89017C9.78661 2.74372 9.78661 2.50628 9.64017 2.35983C9.49372 2.21339 9.25628 2.21339 9.10983 2.35983L6 5.46967L2.89017 2.35983C2.74372 2.21339 2.50628 2.21339 2.35983 2.35983C2.21339 2.50628 2.21339 2.74372 2.35983 2.89017L5.46967 6L2.35983 9.10983C2.21339 9.25628 2.21339 9.49372 2.35983 9.64017C2.50628 9.78661 2.74372 9.78661 2.89017 9.64017L6 6.53033L9.10983 9.64017C9.25628 9.78661 9.49372 9.78661 9.64017 9.64017C9.78661 9.49372 9.78661 9.25628 9.64017 9.10983L6.53033 6L9.64017 2.89017Z"
+                        fill="currentColor" />
+                </svg>
+            </button>
+
+            <div class="flex flex-col gap-sy-base">
+                <h3 class="font-bold text-size-lg">Typography</h3>
+                <p class="text-size-sm opacity-75">Select base font size / line height to generate text styles.
+                    Please note, the plugin will create set of styles based on base selected typography scale.
+                </p>
+                <div data-type="typography"
+                    data-slider='{"label": "Base Size", "name": "fontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="spacingScaleModal">
+            <button class="close" value="cancel">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M9.64017 2.89017C9.78661 2.74372 9.78661 2.50628 9.64017 2.35983C9.49372 2.21339 9.25628 2.21339 9.10983 2.35983L6 5.46967L2.89017 2.35983C2.74372 2.21339 2.50628 2.21339 2.35983 2.35983C2.21339 2.50628 2.21339 2.74372 2.35983 2.89017L5.46967 6L2.35983 9.10983C2.21339 9.25628 2.21339 9.49372 2.35983 9.64017C2.50628 9.78661 2.74372 9.78661 2.89017 9.64017L6 6.53033L9.10983 9.64017C9.25628 9.78661 9.49372 9.78661 9.64017 9.64017C9.78661 9.49372 9.78661 9.25628 9.64017 9.10983L6.53033 6L9.64017 2.89017Z"
+                        fill="currentColor" />
+                </svg>
+            </button>
+            <div class="flex flex-col gap-sy-base">
+                <h3 class="font-bold text-size-lg">Spacing</h3>
+                <div data-type="spacing"
+                    data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="radiiScaleModal">
+            <button class="close" value="cancel">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M9.64017 2.89017C9.78661 2.74372 9.78661 2.50628 9.64017 2.35983C9.49372 2.21339 9.25628 2.21339 9.10983 2.35983L6 5.46967L2.89017 2.35983C2.74372 2.21339 2.50628 2.21339 2.35983 2.35983C2.21339 2.50628 2.21339 2.74372 2.35983 2.89017L5.46967 6L2.35983 9.10983C2.21339 9.25628 2.21339 9.49372 2.35983 9.64017C2.50628 9.78661 2.74372 9.78661 2.89017 9.64017L6 6.53033L9.10983 9.64017C9.25628 9.78661 9.49372 9.78661 9.64017 9.64017C9.78661 9.49372 9.78661 9.25628 9.64017 9.10983L6.53033 6L9.64017 2.89017Z"
+                        fill="currentColor" />
+                </svg>
+            </button>
+            <div class="flex flex-col gap-sy-base">
+                <h3 class="font-bold text-size-lg">Radii Scale</h3>
+                <p class="text-size-sm opacity-75">Select base border radius</p>
+
+                <div data-type="radii"
+                    data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 0}'>
+                </div>
+            </div>
+        </dialog>
+
+        <div class="card">
+            <div class="flex flex-row justify-between items-baseline">
+                <h3 class="font-bold text-size-lg">Neutral Colours </h3>
+                <a href="#" data-command="renderNeutrals" title="Get palette colours as Figma frames">Extract Neutrals
+                    Palette</a>
+            </div>
+            <h4 class="font-bold font-size-md">Color Pattern</h4>
+            <p class="text-size-sm opacity-75">Difference in lightness between two adjacent colours. Wider steps outcome
+                greater
+                contrast overall
+            </p>
+            <div data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2}'>
+            </div>
+
+            <h5 class="font-bold mt-3">Parameters</h5>
+            <p class="text-size-sm opacity-75">Set the tone with hue slider and select intensity using saturation slider
+            </p>
+
+            <div data-neutrals
+                data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 210}'>
+            </div>
+            <div data-neutrals
+                data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 30, "step": 1, "value": 10}'>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h3 class="font-bold text-size-lg">Semantic Colours </h3>
+            <h4 class="font-bold font-size-md">Brand Colour</h4>
+            <p class="text-size-sm opacity-75">Set brand / primary colour</p>
+            <div data-type="semantics"
+                data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
+
+            <h4 class="font-bold mt-3">Semantic Colours</h4>
+            <a href="#" data-expander data-role="trigger" data-expanded="no" class="text-size-sm">Finetune other
+                semantics
+                like success and danger</a>
+            <div data-expander data-role="container" class="flex flex-col gap-sy-sm" style="display: none;">
+                <div data-type="semantics"
+                    data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
+                <div data-type="semantics"
+                    data-slider='{"label": "Success", "name": "success", "min": 0, "max": 10, "step": 1, "value": 3}'>
+                </div>
+                <div data-type="semantics"
+                    data-slider='{"label": "Warning", "name": "warning", "min": 0, "max": 10, "step": 1, "value": 1}'>
+                </div>
+                <div data-type="semantics"
+                    data-slider='{"label": "Danger", "name": "danger", "min": 0, "max": 10, "step": 1, "value": 0}'>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="accentColors">
+            <div class="flex flex-row justify-between items-baseline">
+                <h3 class="font-bold text-size-lg">Accent Colours</h3>
+                <a href="#" data-command="renderAccents" title="Get palette colours as Figma frames">Extract Accent
+                    Palette</a>
+            </div>
+
+            <p class="text-size-sm opacity-75">Finetune each accent colour with custom hue value.
+                Lightness of the base colour to be set to fit into WCAG2 Level AA. Global saturation controls are below
+            </p>
+
+            <div class="flex flex-col gap-sy-sm" id="accentColorsSliders"></div>
+            <hr>
+            <div
+                data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90}'>
+            </div>
+            <p class="text-size-sm opacity-75">Global saturation level for all accent colours. Please note, saturation
+                is 15%
+                lower in dark mode</p>
+
+        </div>
+
+        <div class="card" id="ui-scale">
+            <h3 class="font-bold text-size-lg">UI Scale</h3>
+            <ul class="action-list">
+                <li>
+                    <a href="#" data-modal="spacingScaleModal">
+                        <span>Spacing</span><span data-value="spacing" data-type="spacing"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-modal="radiiScaleModal">
+                        <span>Radii</span><span data-value="radii" data-type="radii"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-modal="typographyScaleModal">
+                        <span>Typography</span><span data-value="fontSize" data-type="typography"></span>
+                    </a>
+                </li>
+            </ul>
+            <hr class="mb-3">
+            <label class="checkbox flex flex-row gap-sx-sm align-top items-start">
+                <input type="checkbox" name="singleCollection" value="true" />
+                <span class="flex flex-col gap-sy-xs">
+                    <span>Import Spacing, Radii and Type Scale tokens as sinlge collection</span>
+                    <span class="text-size-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise different token types to get their own collections.</span>
+                </span>
+            </label>
+        </div>
+
+        <div class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right">
+            <button id="resetDefaultsButton">Reset to Defaults</button>
+            <button id="importVariablesButton" class="primary">Import Variables</button>
+        </div>
+    </div>
+</form>

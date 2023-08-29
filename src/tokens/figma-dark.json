@@ -1,0 +1,690 @@
+{
+    "figma-color-bg": {
+        "$type": "color",
+        "$value": "#2c2c2c"
+    },
+    "figma-color-bg-brand": {
+        "$type": "color",
+        "$value": "#0c8ce9"
+    },
+    "figma-color-bg-brand-hover": {
+        "$type": "color",
+        "$value": "#0a6dc2"
+    },
+    "figma-color-bg-brand-pressed": {
+        "$type": "color",
+        "$value": "#0a6dc2"
+    },
+    "figma-color-bg-brand-secondary": {
+        "$type": "color",
+        "$value": "#105cad"
+    },
+    "figma-color-bg-brand-tertiary": {
+        "$type": "color",
+        "$value": "#394360"
+    },
+    "figma-color-bg-component": {
+        "$type": "color",
+        "$value": "#8a38f5"
+    },
+    "figma-color-bg-component-hover": {
+        "$type": "color",
+        "$value": "#7a2ed6"
+    },
+    "figma-color-bg-component-pressed": {
+        "$type": "color",
+        "$value": "#7a2ed6"
+    },
+    "figma-color-bg-component-secondary": {
+        "$type": "color",
+        "$value": "#652ca8"
+    },
+    "figma-color-bg-component-tertiary": {
+        "$type": "color",
+        "$value": "#473956"
+    },
+    "figma-color-bg-danger": {
+        "$type": "color",
+        "$value": "#e03e1a"
+    },
+    "figma-color-bg-danger-hover": {
+        "$type": "color",
+        "$value": "#c4381c"
+    },
+    "figma-color-bg-danger-pressed": {
+        "$type": "color",
+        "$value": "#c4381c"
+    },
+    "figma-color-bg-danger-secondary": {
+        "$type": "color",
+        "$value": "#963323"
+    },
+    "figma-color-bg-danger-tertiary": {
+        "$type": "color",
+        "$value": "#7c2622"
+    },
+    "figma-color-bg-disabled": {
+        "$type": "color",
+        "$value": "#757575"
+    },
+    "figma-color-bg-disabled-secondary": {
+        "$type": "color",
+        "$value": "#b3b3b3"
+    },
+    "figma-color-bg-hover": {
+        "$type": "color",
+        "$value": "#383838"
+    },
+    "figma-color-bg-inverse": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-bg-onselected": {
+        "$type": "color",
+        "$value": "#667799"
+    },
+    "figma-color-bg-onselected-hover": {
+        "$type": "color",
+        "$value": "#667799"
+    },
+    "figma-color-bg-onselected-pressed": {
+        "$type": "color",
+        "$value": "#667799"
+    },
+    "figma-color-bg-pressed": {
+        "$type": "color",
+        "$value": "#383838"
+    },
+    "figma-color-bg-secondary": {
+        "$type": "color",
+        "$value": "#383838"
+    },
+    "figma-color-bg-selected": {
+        "$type": "color",
+        "$value": "#4a5878"
+    },
+    "figma-color-bg-selected-hover": {
+        "$type": "color",
+        "$value": "#536383"
+    },
+    "figma-color-bg-selected-pressed": {
+        "$type": "color",
+        "$value": "#536383"
+    },
+    "figma-color-bg-selected-secondary": {
+        "$type": "color",
+        "$value": "#394360"
+    },
+    "figma-color-bg-selected-strong": {
+        "$type": "color",
+        "$value": "#0c8ce9"
+    },
+    "figma-color-bg-selected-tertiary": {
+        "$type": "color",
+        "$value": "#394360"
+    },
+    "figma-color-bg-success": {
+        "$type": "color",
+        "$value": "#198f51"
+    },
+    "figma-color-bg-success-hover": {
+        "$type": "color",
+        "$value": "#078348"
+    },
+    "figma-color-bg-success-pressed": {
+        "$type": "color",
+        "$value": "#078348"
+    },
+    "figma-color-bg-success-secondary": {
+        "$type": "color",
+        "$value": "#0a5c35"
+    },
+    "figma-color-bg-success-tertiary": {
+        "$type": "color",
+        "$value": "#0a4c2d"
+    },
+    "figma-color-bg-tertiary": {
+        "$type": "color",
+        "$value": "#444444"
+    },
+    "figma-color-bg-warning": {
+        "$type": "color",
+        "$value": "#f3c11b"
+    },
+    "figma-color-bg-warning-hover": {
+        "$type": "color",
+        "$value": "#f2b50d"
+    },
+    "figma-color-bg-warning-pressed": {
+        "$type": "color",
+        "$value": "#f2b50d"
+    },
+    "figma-color-bg-warning-secondary": {
+        "$type": "color",
+        "$value": "#e4a711"
+    },
+    "figma-color-bg-warning-tertiary": {
+        "$type": "color",
+        "$value": "#c58011"
+    },
+    "figma-color-border": {
+        "$type": "color",
+        "$value": "#444444"
+    },
+    "figma-color-border-brand": {
+        "$type": "color",
+        "$value": "#105cad"
+    },
+    "figma-color-border-brand-strong": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-border-component": {
+        "$type": "color",
+        "$value": "#652ca8"
+    },
+    "figma-color-border-component-hover": {
+        "$type": "color",
+        "$value": "#8a38f5"
+    },
+    "figma-color-border-component-strong": {
+        "$type": "color",
+        "$value": "#d6b6fb"
+    },
+    "figma-color-border-danger": {
+        "$type": "color",
+        "$value": "#963323"
+    },
+    "figma-color-border-danger-strong": {
+        "$type": "color",
+        "$value": "#fca397"
+    },
+    "figma-color-border-disabled": {
+        "$type": "color",
+        "$value": "#444444"
+    },
+    "figma-color-border-disabled-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-border-onbrand": {
+        "$type": "color",
+        "$value": "#0a6dc2"
+    },
+    "figma-color-border-onbrand-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-border-oncomponent": {
+        "$type": "color",
+        "$value": "#7a2ed6"
+    },
+    "figma-color-border-oncomponent-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-border-ondanger": {
+        "$type": "color",
+        "$value": "#c4381c"
+    },
+    "figma-color-border-ondanger-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-border-onselected": {
+        "$type": "color",
+        "$value": "#667799"
+    },
+    "figma-color-border-onselected-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.9)"
+    },
+    "figma-color-border-onsuccess": {
+        "$type": "color",
+        "$value": "#078348"
+    },
+    "figma-color-border-onsuccess-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-border-onwarning": {
+        "$type": "color",
+        "$value": "#e4a711"
+    },
+    "figma-color-border-onwarning-strong": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.9)"
+    },
+    "figma-color-border-selected": {
+        "$type": "color",
+        "$value": "#0c8ce9"
+    },
+    "figma-color-border-selected-strong": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-border-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.9)"
+    },
+    "figma-color-border-success": {
+        "$type": "color",
+        "$value": "#0a5c35"
+    },
+    "figma-color-border-success-strong": {
+        "$type": "color",
+        "$value": "#79d297"
+    },
+    "figma-color-border-warning": {
+        "$type": "color",
+        "$value": "#925711"
+    },
+    "figma-color-border-warning-strong": {
+        "$type": "color",
+        "$value": "#f7d15f"
+    },
+    "figma-color-icon": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-brand": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-icon-brand-pressed": {
+        "$type": "color",
+        "$value": "#0c8ce9"
+    },
+    "figma-color-icon-brand-secondary": {
+        "$type": "color",
+        "$value": "#536383"
+    },
+    "figma-color-icon-brand-tertiary": {
+        "$type": "color",
+        "$value": "#394360"
+    },
+    "figma-color-icon-component": {
+        "$type": "color",
+        "$value": "#d1a8ff"
+    },
+    "figma-color-icon-component-pressed": {
+        "$type": "color",
+        "$value": "#d6b6fb"
+    },
+    "figma-color-icon-component-secondary": {
+        "$type": "color",
+        "$value": "#6b5884"
+    },
+    "figma-color-icon-component-tertiary": {
+        "$type": "color",
+        "$value": "#6b5884"
+    },
+    "figma-color-icon-danger": {
+        "$type": "color",
+        "$value": "#e03e1a"
+    },
+    "figma-color-icon-danger-hover": {
+        "$type": "color",
+        "$value": "#fbbcb6"
+    },
+    "figma-color-icon-danger-pressed": {
+        "$type": "color",
+        "$value": "#fbbcb6"
+    },
+    "figma-color-icon-danger-secondary": {
+        "$type": "color",
+        "$value": "#e03e1a"
+    },
+    "figma-color-icon-danger-secondary-hover": {
+        "$type": "color",
+        "$value": "#e03e1a"
+    },
+    "figma-color-icon-danger-tertiary": {
+        "$type": "color",
+        "$value": "#e03e1a"
+    },
+    "figma-color-icon-disabled": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-onbrand": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-onbrand-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-icon-onbrand-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-oncomponent": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-oncomponent-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-icon-oncomponent-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-ondanger": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-ondanger-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-icon-ondanger-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-ondisabled": {
+        "$type": "color",
+        "$value": "#2c2c2c"
+    },
+    "figma-color-icon-oninverse": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.9)"
+    },
+    "figma-color-icon-onselected": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-onselected-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.7)"
+    },
+    "figma-color-icon-onselected-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-onselected-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-onsuccess": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-onsuccess-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-icon-onsuccess-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-onwarning": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.9)"
+    },
+    "figma-color-icon-onwarning-secondary": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.5)"
+    },
+    "figma-color-icon-onwarning-tertiary": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.3)"
+    },
+    "figma-color-icon-pressed": {
+        "$type": "color",
+        "$value": "#0a6dc2"
+    },
+    "figma-color-icon-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.7)"
+    },
+    "figma-color-icon-secondary-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-selected": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-icon-selected-secondary": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-icon-selected-tertiary": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-icon-success": {
+        "$type": "color",
+        "$value": "#198f51"
+    },
+    "figma-color-icon-success-pressed": {
+        "$type": "color",
+        "$value": "#a1e8b9"
+    },
+    "figma-color-icon-success-secondary": {
+        "$type": "color",
+        "$value": "#198f51"
+    },
+    "figma-color-icon-success-tertiary": {
+        "$type": "color",
+        "$value": "#198f51"
+    },
+    "figma-color-icon-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-icon-tertiary-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-icon-warning": {
+        "$type": "color",
+        "$value": "#f3c11b"
+    },
+    "figma-color-icon-warning-pressed": {
+        "$type": "color",
+        "$value": "#f7d15f"
+    },
+    "figma-color-icon-warning-secondary": {
+        "$type": "color",
+        "$value": "#f3c11b"
+    },
+    "figma-color-icon-warning-tertiary": {
+        "$type": "color",
+        "$value": "#f3c11b"
+    },
+    "figma-color-text": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-brand": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-text-brand-secondary": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-text-brand-tertiary": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-text-component": {
+        "$type": "color",
+        "$value": "#d1a8ff"
+    },
+    "figma-color-text-component-pressed": {
+        "$type": "color",
+        "$value": "#d6b6fb"
+    },
+    "figma-color-text-component-secondary": {
+        "$type": "color",
+        "$value": "#6b5884"
+    },
+    "figma-color-text-component-tertiary": {
+        "$type": "color",
+        "$value": "#6b5884"
+    },
+    "figma-color-text-danger": {
+        "$type": "color",
+        "$value": "#fca397"
+    },
+    "figma-color-text-danger-secondary": {
+        "$type": "color",
+        "$value": "#fca397"
+    },
+    "figma-color-text-danger-tertiary": {
+        "$type": "color",
+        "$value": "#fca397"
+    },
+    "figma-color-text-disabled": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-onbrand": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-onbrand-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-text-onbrand-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-oncomponent": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-oncomponent-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-text-oncomponent-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-ondanger": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-ondanger-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-text-ondanger-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-ondisabled": {
+        "$type": "color",
+        "$value": "#2c2c2c"
+    },
+    "figma-color-text-oninverse": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.9)"
+    },
+    "figma-color-text-onselected": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.9)"
+    },
+    "figma-color-text-onselected-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.7)"
+    },
+    "figma-color-text-onselected-strong": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-onselected-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-onsuccess": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-onsuccess-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.8)"
+    },
+    "figma-color-text-onsuccess-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-onwarning": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.9)"
+    },
+    "figma-color-text-onwarning-secondary": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.5)"
+    },
+    "figma-color-text-onwarning-tertiary": {
+        "$type": "color",
+        "$value": "rgba(0, 0, 0, 0.3)"
+    },
+    "figma-color-text-secondary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.7)"
+    },
+    "figma-color-text-secondary-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-selected": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-text-selected-secondary": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-text-selected-tertiary": {
+        "$type": "color",
+        "$value": "#7cc4f8"
+    },
+    "figma-color-text-success": {
+        "$type": "color",
+        "$value": "#79d297"
+    },
+    "figma-color-text-success-secondary": {
+        "$type": "color",
+        "$value": "#79d297"
+    },
+    "figma-color-text-success-tertiary": {
+        "$type": "color",
+        "$value": "#79d297"
+    },
+    "figma-color-text-tertiary": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 0.4)"
+    },
+    "figma-color-text-tertiary-hover": {
+        "$type": "color",
+        "$value": "rgba(255, 255, 255, 1)"
+    },
+    "figma-color-text-warning": {
+        "$type": "color",
+        "$value": "#f7d15f"
+    },
+    "figma-color-text-warning-secondary": {
+        "$type": "color",
+        "$value": "#f7d15f"
+    },
+    "figma-color-text-warning-tertiary": {
+        "$type": "color",
+        "$value": "#f7d15f"
+    }
+}

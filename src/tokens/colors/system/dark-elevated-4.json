@@ -1,0 +1,110 @@
+{
+  "fill": {
+    "base": {
+      "100": {
+        "$value": "{grey-24}",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "{grey-20}",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "{grey-16}",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "{grey-12}",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "{grey-8}",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "{grey-4}",
+        "$type": "color"
+      }
+    },
+    "contrast": {
+      "100": {
+        "$value": "{grey-32}",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "{grey-28}",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "{grey-24}",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "{grey-20}",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "{grey-16}",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "{grey-12}",
+        "$type": "color"
+      }
+    }
+  },
+  "stroke": {
+    "base": {
+      "100": {
+        "$value": "{grey-32}",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "{grey-36}",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "{grey-40}",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "{grey-44}",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "{grey-48}",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "{grey-52}",
+        "$type": "color"
+      }
+    },
+    "contrast": {
+      "100": {
+        "$value": "{grey-36}",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "{grey-40}",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "{grey-44}",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "{grey-48}",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "{grey-52}",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "{grey-56}",
+        "$type": "color"
+      }
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "text": {
+    "base": {
+      "400": {
+        "$value": "rgba(#FFFFFF, 0.45)",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "rgba(#FFFFFF, 0.65)",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "#FFFFFF",
+        "$type": "color"
+      },
+      "action": {
+        "$value": "{primary.500}",
+        "$type": "color"
+      },
+      "info": {
+        "$value": "{info.500}",
+        "$type": "color"
+      },
+      "success": {
+        "$value": "{success.500}",
+        "$type": "color"
+      },
+      "warning": {
+        "$value": "{warning.500}",
+        "$type": "color"
+      },
+      "danger": {
+        "$value": "{danger.500}",
+        "$type": "color"
+      }
+    },
+    "contrast": {
+      "400": {
+        "$value": "rgba(#FFFFFF, 0.45)",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "rgba(#FFFFFF, 0.65)",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "#FFFFFF",
+        "$type": "color"
+      },
+      "action": {
+        "$value": "{primary.600}",
+        "$type": "color"
+      },
+      "info": {
+        "$value": "{info.600}",
+        "$type": "color"
+      },
+      "success": {
+        "$value": "{success.600}",
+        "$type": "color"
+      },
+      "warning": {
+        "$value": "{warning.600}",
+        "$type": "color"
+      },
+      "danger": {
+        "$value": "{danger.600}",
+        "$type": "color"
+      }
+    }
+  },
+  "alt": {
+    "base": {
+      "100": {
+        "$value": "rgba(#B6CDD9, 0.03)",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "rgba(#B6CDD9, 0.06)",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "rgba(#B6CDD9, 0.09)",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "rgba(#B6CDD9, 0.16)",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "rgba(#B6CDD9, 0.24)",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "rgba(#B6CDD9, 0.32)",
+        "$type": "color"
+      }
+    },
+    "contrast": {
+      "100": {
+        "$value": "rgba(#B6CDD9, 0.03)",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "rgba(#B6CDD9, 0.06)",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "rgba(#B6CDD9, 0.09)",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "rgba(#B6CDD9, 0.16)",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "rgba(#B6CDD9, 0.24)",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "rgba(#B6CDD9, 0.32)",
+        "$type": "color"
+      }
+    }
+  },
+  "utility": {
+    "white": {
+      "$value": "{grey-100}",
+      "$type": "color"
+    },
+    "black": {
+      "$value": "{grey-4}",
+      "$type": "color"
+    },
+    "transparent": {
+      "$value": "rgba(0, 0, 0, 0)",
+      "$type": "color"
+    },  
+    "shade": {
+      "100": {
+        "$value": "rgba(#000000, 0.10)",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "rgba(#000000, 0.2)",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "rgba(#000000, 0.3)",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "rgba(#000000, 0.4)",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "rgba(#000000, 0.5)",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "rgba(#000000, 0.6)",
+        "$type": "color"
+      }
+    },
+    "tint": {
+      "100": {
+        "$value": "rgba(#B6CDD9, 0.03)",
+        "$type": "color"
+      },
+      "200": {
+        "$value": "rgba(#B6CDD9, 0.05)",
+        "$type": "color"
+      },
+      "300": {
+        "$value": "rgba(#B6CDD9, 0.07)",
+        "$type": "color"
+      },
+      "400": {
+        "$value": "rgba(#B6CDD9, 0.09)",
+        "$type": "color"
+      },
+      "500": {
+        "$value": "rgba(#B6CDD9, 0.12)",
+        "$type": "color"
+      },
+      "600": {
+        "$value": "rgba(#B6CDD9, 0.16)",
+        "$type": "color"
+      }
+    }
+  }
+}

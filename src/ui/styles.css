@@ -1,0 +1,532 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --spacing: 0.5rem 1rem;
+    --slider-thumb-size: 1.5rem;
+    --slider-track-size: 0.25rem;
+
+    --primary: #0C75D0;
+    --info: #078380;
+    --success: #078650;
+    --warning: #C15600;
+    --danger: #E81B00;
+
+    --font-size-base: 12px;
+    --line-height-base: 16px;
+
+    --font-size-md: 14px;
+    --line-height-md: 20px;
+    --font-size-lg: 16px;
+    --line-height-lg: 24px;
+
+    --radii-base: 4px;
+    --radii-md: calc(var(--radii-base) + 2px);
+    --radii-md: calc(var(--radii-base) + 4px);
+
+    --sx-xs4: 2px;
+    --sx-xs3: 4px;
+    --sx-xs2: 6px;
+    --sx-xs: 8px;
+    --sx-sm: 12px;
+    --sx-base: 16px;
+    --sx-md: 20px;
+    --sx-lg: 24px;
+    --sx-xl: 28px;
+    --sx-xl2: 32px;
+    --sx-xl3: 40px;
+
+    --sy-xs4: 1px;
+    --sy-xs3: 2px;
+    --sy-xs2: 4px;
+    --sy-xs: 6px;
+    --sy-sm: 8px;
+    --sy-base: 12px;
+    --sy-md: 16px;
+    --sy-lg: 20px;
+    --sy-xl: 24px;
+    --sy-xl2: 28px;
+    --sy-xl3: 32px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: var(--figma-color-bg-secondary);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--figma-color-text);
+    margin: 0;
+    overflow: hidden;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+a {
+    color: var(--primary);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.figma-bg-secondary {
+    background-color: var(--figma-color-bg-secondary);
+}
+
+.card {
+    --light-1: #f8fafc;
+    --light-2: #e1e7ea;
+    --light-3: #e7ecee;
+    --light-4: #edf1f3;
+    --light-5: #f2f6f7;
+
+    --dark-1: #121516;
+    --dark-2: #171a1c;
+    --dark-3: #1c2022;
+    --dark-4: #202527;
+    --dark-5: #252a2d;
+
+    background-color: var(--figma-color-bg);
+    border-radius: var(--radii-md);
+    padding: var(--sy-base) var(--sx-base) ;
+    gap: var(--sy-base);
+
+    @apply flex flex-col;
+}
+
+.card-stiky {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    @apply rounded-none m-0 shadow-md;
+}
+
+.color-box {
+    min-height: 2rem;
+    ;
+    padding: 0.5rem;
+    color: white;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.color-box.l-1 {
+    background-color: var(--light-1);
+}
+
+.color-box.l-2 {
+    background-color: var(--light-2);
+}
+
+.color-box.l-3 {
+    background-color: var(--light-3);
+}
+
+.color-box.l-4 {
+    background-color: var(--light-4);
+}
+
+.color-box.l-5 {
+    background-color: var(--light-5);
+}
+
+.color-box.d-1 {
+    background-color: var(--dark-1);
+}
+
+.color-box.d-2 {
+    background-color: var(--dark-2);
+}
+
+.color-box.d-3 {
+    background-color: var(--dark-3);
+}
+
+.color-box.d-4 {
+    background-color: var(--dark-4);
+}
+
+.color-box.d-5 {
+    background-color: var(--dark-5);
+}
+
+.color-box.a-primary {
+    background-color: var(--primary);
+}
+
+.color-box.a-info {
+    background-color: var(--info);
+}
+
+.color-box.a-success {
+    background-color: var(--success);
+}
+
+.color-box.a-warning {
+    background-color: var(--warning);
+}
+
+.color-box.a-danger {
+    background-color: var(--danger);
+}
+
+.color-box .token-value {
+    display: block;
+    opacity: 0.7;
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xs);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+    margin: 0;
+}
+
+button {
+    appearance: none;
+    border-radius: var(--radii-base);
+    padding: var(--sy-xs) var(--sx-sm);
+}
+
+input,
+textarea {
+    padding: var(--sy-xs) var(--sx-sm);
+}
+
+form>* {
+    display: block;
+    width: 100%;
+}
+
+button.primary {
+    background-color: var(--primary);
+    border: none;
+    color: var(--figma-color-text-onbrand);
+}
+
+input,
+textarea {
+    background-color: var(--figma-color-bg-secondary);
+    color: var(--figma-color-text);
+    border: 2px solid var(--figma-color-border);
+}
+
+input[type=radio] {
+    appearance: none;
+    padding: 0;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    vertical-align: middle;
+    transition: 0.2s all linear;
+}
+
+input[type=radio]:checked {
+    background-color: white;
+    ;
+    border: 5px solid var(--primary);
+}
+
+.radiogroup {
+    background-color: var(--figma-color-bg-secondary);
+    padding: 2px;
+    gap: 1px;
+    @apply flex flex-row rounded;
+}
+
+.radiogroup input[type=radio] {
+    background-color: var(--primary);
+    border: 0 none;
+    appearance: none;
+    padding: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0;
+    vertical-align: middle;
+    transition: 0.2s all linear;
+    opacity: 0.5;
+
+    @apply rounded-none;
+}
+
+.radiogroup input[type=radio]:checked {
+    opacity: 1;
+    @apply shadow
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--figma-color-border-selected);
+    outline: none;
+}
+
+textarea {
+    flex: 1;
+    white-space: pre;
+}
+
+fieldset {
+    border-style: solid;
+    border-color: var(--figma-color-border);
+    border-radius: var(--radii-md);
+    border-width: 1px;
+}
+
+.sliders label {
+    display: flex;
+    align-items: center;
+}
+
+.sliders .text-label {
+    flex: 1;
+}
+
+.sliders input[type=range] {
+    flex: 3;
+}
+
+.sliders input[type=text] {
+    width: 6rem;
+    border: 0 none;
+    background: transparent;
+    text-align: right;
+}
+
+
+[data-semantics] .sliders input[type=text] {
+    font-size: 0.9rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sy-base);
+    height: 100%;
+}
+
+
+#export {
+    background-color: var(--figma-color-bg-component);
+}
+
+/********** Range Input Styles **********/
+/*Range Reset*/
+input[type="range"] {
+    --thumb-color: var(--primary);
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 15rem;
+    border: 0 none;
+    padding: 0;
+}
+
+/* Removes default focus */
+input[type="range"]:focus {
+    outline: none;
+}
+
+/***** Chrome, Safari, Opera and Edge Chromium styles *****/
+/* slider track */
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: var(--figma-color-border);
+    border-radius: 0.5rem;
+    height: var(--slider-track-size);
+}
+
+/* slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    margin-top: calc((var(--slider-thumb-size) - var(--slider-track-size)) / -2);
+
+    /*custom styles*/
+    background-color: var(--thumb-color);
+    height: var(--slider-thumb-size);
+    width: var(--slider-thumb-size);
+    border-radius: var(--slider-thumb-size);
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+    border: 1px solid #053a5f;
+    outline: 3px solid #053a5f;
+
+    outline-color: color-mix(in srgb, var(--thumb-color), transparent 20%);
+    outline-offset: 0.125rem;
+}
+
+hr {
+    border-color: var(--figma-color-border);
+}
+
+a[data-expander]::after {
+    content: '';
+    display: inline-block;
+    width: 7.29px;
+    height: 7.29px;
+    border: solid var(--primary);
+    border-width: 0 1px 1px 0;
+    transform: rotate(-45deg) translate(2px, 0px);
+    margin-left: 4px;
+}
+
+a[data-expanded=yes]::after {
+    transform: rotate(45deg) translate(0px, -5px);
+}
+
+.font-preview-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    background-color: var(--figma-color-bg-secondary);
+}
+
+.font-preview-box .base {
+    font-size: var(--font-size-base);
+}
+
+.font-preview-box .md {
+    font-size: var(--font-size-md);
+}
+
+.font-preview-box .lg {
+    font-size: var(--font-size-lg);
+}
+
+.checkbox {
+    display: flex;
+}
+
+.checkbox:hover input[type=checkbox] {
+    border-color: var(--figma-color-border-selected);
+}
+
+.checkbox input[type="checkbox"] {
+    appearance: none;
+    width: var(--line-height-base);
+    height: var(--line-height-base);
+    padding: 0;
+    border-radius: 4px;
+    flex: 0 0 auto;
+    
+}
+
+.checkbox input[type="checkbox"]:checked {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    position: relative;
+}
+
+.checkbox input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    border: 2px solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(1px, -3px);
+    width: 0.4rem;
+    height: 0.7rem;
+}
+
+
+.action-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.action-list li {
+    display: block;
+    border-bottom: 1px solid var(--figma-color-border);
+}
+
+.action-list li:last-child {
+    border-width: 0;
+}
+
+.action-list li a {
+    color: var(--figma-color-text);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--sy-base) 0;
+}
+
+.action-list li a:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.action-list span[data-value]::after {
+    content: '';
+    display: inline-block;
+    width: 7.29px;
+    height: 7.29px;
+    border: solid var(--primary);
+    border-width: 0 1px 1px 0;
+    transform: rotate(-45deg) translate(2px, 0px);
+    margin-left: var(--sx-sm);
+}
+
+dialog {
+    color: var(--figma-color-text);
+    background-color: var(--figma-color-bg);
+    border-radius: var(--radii-lg);
+    padding: var(--sy-lg) var(--sx-lg) ;
+    outline: 1px solid color-mix(in srgb, var(--figma-color-text), transparent 85%);
+    box-shadow: 0px 12px 20px -6px rgba(14, 16, 17, 0.10), 0px 30px 48px -8px rgba(14, 16, 17, 0.15);
+}
+
+dialog button.close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.close-icon-bar {
+    width: 1px;
+    height: 10px;
+}
+
+button.close {
+    color: currentColor;
+    appearance: none;
+    border: 0 none;
+    background: transparent;
+    border-radius: var(--radii-base);
+    width: 1.5rem;
+    height: 1.5rem;
+    opacity: 0.6;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.close svg {
+    color: var(--figma-color-text);
+}
+
+button.close:hover {
+    opacity: 1;
+}

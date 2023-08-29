@@ -1,0 +1,44 @@
+{
+    "radii": {
+        "sm": {
+            "$value": "3",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
+        "base": {
+            "$value": "4",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
+        "md": {
+            "$value": "6",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
+        "lg": {
+            "$value": "8",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
+        "xl": {
+            "$value": "12",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        }
+    }
+}

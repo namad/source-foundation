@@ -1,0 +1,30 @@
+{
+    "font-families": {
+        "primary": {
+            "$value": "Inter",
+            "$type": "fontFamilies"
+        }
+    },
+    "font-weights": {
+        "regular": {
+            "$value": "Regular",
+            "$type": "fontWeights"
+        },
+        "bold": {
+            "$value": "Bold",
+            "$type": "fontWeights"
+        },
+        "semibold": {
+            "$value": "Semi Bold",
+            "$type": "fontWeights"
+        },
+        "light": {
+            "$value": "Light",
+            "$type": "fontWeights"
+        },
+        "italic": {
+            "$value": "Italic",
+            "$type": "fontWeights"
+        }
+    }
+}

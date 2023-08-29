@@ -1,0 +1,179 @@
+{
+    "button": {
+        "rest": {
+            "bg": {
+                "$value": "{utility.tint.400}",
+                "$type": "color",
+                "description": "utility/tint/400"
+            },
+            "border": {
+                "$value": "{stroke.base.300}",
+                "$type": "color",
+                "description": "stroke/base/300"
+            }
+        },
+        "hover": {
+            "bg": {
+                "$value": "{alt.base.100}",
+                "$type": "color",
+                "description": "alt/base/100"
+            },
+            "border": {
+                "$value": "{stroke.base.400}",
+                "$type": "color",
+                "description": "stroke/base/400"
+            }
+        },
+        "active": {
+            "bg": {
+                "$value": "{utility.tint.200}",
+                "$type": "color",
+                "description": "utility/tint/200"
+            },
+            "border": {
+                "$value": "{stroke.base.300}",
+                "$type": "color",
+                "description": "stroke/base/300"
+            }
+        },
+        "primary": {
+            "$value": "{primary.400}",
+            "$type": "color"
+        },
+        "danger": {
+            "$value": "{danger.400}",
+            "$type": "color"
+        },
+        "success": {
+            "$value": "{success.400}",
+            "$type": "color"
+        }
+    },
+    "ui-element": {
+        "rest": {
+            "bg": {
+                "$value": "{utility.transparent}",
+                "$type": "color",
+                "description": "utility/transparent"
+            },
+            "border": {
+                "$value": "{alt.base.100}",
+                "$type": "color",
+                "description": "alt/base/100"
+            }
+        },
+        "hover": {
+            "bg": {
+                "$value": "{alt.base.100}",
+                "$type": "color",
+                "description": "alt/base/100"
+            },
+            "border": {
+                "$value": "{alt.base.200}",
+                "$type": "color",
+                "description": "alt/base/200"
+            }
+        },
+        "active": {
+            "bg": {
+                "$value": "{alt.base.200}",
+                "$type": "color",
+                "description": "alt/base/200"
+            },
+            "border": {
+                "$value": "{alt.base.300}",
+                "$type": "color",
+                "description": "alt/base/300"
+            }
+        },
+        "selected": {
+            "bg": {
+                "$value": "{primary.400}",
+                "$type": "color",
+                "description": "primary/400"
+            },
+            "border": {
+                "$value": "{primary.500}",
+                "$type": "color",
+                "description": "primary/500"
+            }
+        },
+        "disabled": {
+            "bg": {
+                "$value": "{alt.base.600}",
+                "$type": "color",
+                "description": "alt/base/600"
+            },
+            "border": {
+                "$value": "{alt.base.600}",
+                "$type": "color",
+                "description": "alt/base/600"
+            }
+        }
+    },
+    "form-element": {
+        "rest": {
+            "bg": {
+                "$value": "{fill.base.100}",
+                "$type": "color",
+                "description": "fill/base/100"
+            },
+            "border": {
+                "$value": "{stroke.base.300}",
+                "$type": "color",
+                "description": "stroke/base/300"
+            }
+        },
+        "hover": {
+            "border": {
+                "$value": "{stroke.base.400}",
+                "$type": "color",
+                "description": "stroke/base/400"
+            }
+        },
+        "readonly": {
+            "bg": {
+                "$value": "{fill.base.200}",
+                "$type": "color",
+                "description": "fill/base/200"
+            }
+        }
+    },
+    "card": {
+        "bg": {
+            "primary": {
+                "$value": "{fill.base.100}",
+                "$type": "color",
+                "description": "fill/base/100"
+            },
+            "secondary": {
+                "$value": "{fill.base.200}",
+                "$type": "color",
+                "description": "fill/base/200"
+            }
+        },
+        "border": {
+            "inner": {
+                "$value": "{stroke.base.100}",
+                "$type": "color",
+                "description": "stroke/base/100"
+            },
+            "outer": {
+                "$value": "{stroke.base.200}",
+                "$type": "color",
+                "description": "stroke/base/200"
+            }
+        }
+    },
+    "overlay": {
+        "bg": {
+            "$value": "{card.bg.primary}",
+            "$type": "color"
+        },
+        "border": {
+            "$value": "{alt.base.400}",
+            "$type": "color",
+            "description": "alt/base/400"
+        }
+    }
+}
