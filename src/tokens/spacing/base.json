@@ -46,7 +46,7 @@
             ]
         },
         "base": {
-            "$value": "24",
+            "$value": "20",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -55,7 +55,7 @@
             ]
         },
         "md": {
-            "$value": "32",
+            "$value": "24",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -64,7 +64,7 @@
             ]
         },
         "lg": {
-            "$value": "40",
+            "$value": "28",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -73,7 +73,7 @@
             ]
         },
         "xl": {
-            "$value": "48",
+            "$value": "32",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -82,7 +82,7 @@
             ]
         },
         "xl2": {
-            "$value": "56",
+            "$value": "40",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -91,7 +91,7 @@
             ]
         },
         "xl3": {
-            "$value": "64",
+            "$value": "48",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -100,7 +100,7 @@
             ]
         },
         "xl4": {
-            "$value": "72",
+            "$value": "60",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -109,7 +109,7 @@
             ]
         },
         "xl5": {
-            "$value": "80",
+            "$value": "72",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -183,7 +183,7 @@
             ]
         },
         "lg": {
-            "$value": "36",
+            "$value": "24",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -192,7 +192,7 @@
             ]
         },
         "xl": {
-            "$value": "44",
+            "$value": "28",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -201,7 +201,7 @@
             ]
         },
         "xl2": {
-            "$value": "52",
+            "$value": "36",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -210,7 +210,7 @@
             ]
         },
         "xl3": {
-            "$value": "60",
+            "$value": "44",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -219,7 +219,7 @@
             ]
         },
         "xl4": {
-            "$value": "68",
+            "$value": "56",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -228,7 +228,7 @@
             ]
         },
         "xl5": {
-            "$value": "76",
+            "$value": "68",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

@@ -28,27 +28,27 @@
     },
     "contrast": {
       "100": {
-        "$value": "{grey-18}",
+        "$value": "{grey-24}",
         "$type": "color"
       },
       "200": {
-        "$value": "{grey-16}",
+        "$value": "{grey-22}",
         "$type": "color"
       },
       "300": {
-        "$value": "{grey-14}",
+        "$value": "{grey-20}",
         "$type": "color"
       },
       "400": {
-        "$value": "{grey-12}",
+        "$value": "{grey-18}",
         "$type": "color"
       },
       "500": {
-        "$value": "{grey-10}",
+        "$value": "{grey-16}",
         "$type": "color"
       },
       "600": {
-        "$value": "{grey-28}",
+        "$value": "{grey-12}",
         "$type": "color"
       }
     }
@@ -76,33 +76,33 @@
         "$type": "color"
       },
       "600": {
-        "$value": "{grey-50}",
+        "$value": "{grey-48}",
         "$type": "color"
       }
     },
     "contrast": {
       "100": {
-        "$value": "{grey-22}",
+        "$value": "{grey-26}",
         "$type": "color"
       },
       "200": {
-        "$value": "{grey-24}",
-        "$type": "color"
-      },
-      "300": {
         "$value": "{grey-28}",
         "$type": "color"
       },
+      "300": {
+        "$value": "{grey-30}",
+        "$type": "color"
+      },
       "400": {
-        "$value": "{grey-38}",
+        "$value": "{grey-32}",
         "$type": "color"
       },
       "500": {
-        "$value": "{grey-48}",
+        "$value": "{grey-38}",
         "$type": "color"
       },
       "600": {
-        "$value": "{grey-50}",
+        "$value": "{grey-46}",
         "$type": "color"
       }
     }

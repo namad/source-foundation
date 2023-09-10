@@ -1,5 +1,13 @@
 {
     "radii": {
+        "none": {
+            "$value": "0",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
         "sm": {
             "$value": "5",
             "$type": "number",
@@ -34,6 +42,14 @@
         },
         "xl": {
             "$value": "13",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
+        "round": {
+            "$value": "999",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

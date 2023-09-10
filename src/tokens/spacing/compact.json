@@ -129,7 +129,7 @@
             ]
         },
         "xs3": {
-            "$value": "3",
+            "$value": "2",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

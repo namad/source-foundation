@@ -5,14 +5,18 @@ import { sortColorTokens } from './utils/sort-palette';
 import * as spacing from './spacing-tokens';
 import * as radii from './radii-tokens';
 import * as typescale from './typescale-tokens';
+import * as sizing from './sizing-tokens';
 import { sortSizeTokens } from './utils/sort-sizes';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-tokens/render-accents";
-import { generateSystemAccentPalette } from './color-tokens/accent-palette-generator2';
+import { generateGlobalAccentPalette, generateSystemAccentPalette } from './color-tokens/accent-palette-generator2';
 import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palette-generator';
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, parseVariableReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
+import { ImportFormData } from './ui/import';
+import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
+import { processComponents } from './fix-layers';
 
 console.clear();
 
@@ -24,157 +28,114 @@ let GlobalTokens;
             await figma.loadFontAsync(item as FontName)
         )
     );
+
+    if (figma.command === "import") {
+        figma.showUI(__uiFiles__["import"], {
+            width: 480,
+            height: 600,
+            themeColors: true,
+        });
+    }
+
+    if (figma.command === "export") {
+        figma.showUI(__uiFiles__["export"], {
+            width: 500,
+            height: 500,
+            themeColors: true,
+        });
+    }
+
+    if (figma.command == "bindToStyles") {
+        bindVariablesAndStyles();
+        figma.closePlugin();
+    }
+
+    if (figma.command == "fixLayers") {
+
+        await processComponents();
+        figma.closePlugin();
+    }
 })()
 
-figma.ui.onmessage = (eventData) => {
+
+interface MessagePayload {
+    type: string;
+    params: ImportFormData;
+}
+
+figma.ui.onmessage = (eventData: MessagePayload) => {
     console.log("code received message", eventData);
+    const params = eventData.params;
+
     if (eventData.type === "IMPORT") {
 
-        
-
-        let themeColors = getThemeColors('lightBase', eventData);
-
-        GlobalTokens = {
-            ...getGlobalNeutrals(),
-            ...themeColors
-        }
-
-        importVariables({
-            collectionName: "Color / System",
-            modeName: "Light Base", 
-            data: themeColors,
-            sortFn: sortColorTokens
-        });
-
-
-
-        themeColors = getThemeColors('darkBase', eventData);
-        GlobalTokens = Object.assign(GlobalTokens, themeColors);
-
-        importVariables({
-            collectionName: "Color / System",
-            modeName: "Dark Base", 
-            data: themeColors
-        });
-
-        themeColors = getThemeColors('darkElevated', eventData);
-        GlobalTokens = Object.assign(GlobalTokens, themeColors);
-
-        importVariables({
-            collectionName: "Color / System",
-            modeName: "Dark Elevated", 
-            data: themeColors
-        });
+        importSystemColorTokens(params);
 
         importAliases({
-            collectionName: "Color / Component",
-            modeName: "Default", 
+            collectionName: "Component Tokens",
+            modeName: "Default",
             data: getComponentColors(),
             sortFn: sortColorTokens
         });
-        
-        const singleCollection = eventData.singleCollection;
 
-        // SPACING
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Spacing",
-            modeName: toTitleCase(eventData.spacing), 
-            data: spacing[eventData.spacing],
-            sortFn: sortSizeTokens,
+        importSizeTokens({
+            type: 'spacing',
+            collectionName: 'Spacing',
+            params: params,
+            defaultMode: params.spacing,
+            defaultOrder: spacingSizeName,
+            tokens: spacing
+        });
+
+        importSizeTokens({
+            type: 'radii',
+            collectionName: 'Radii',
+            params: params,
+            defaultMode: params.radii,
+            defaultOrder: radiiSizeName,
+            tokens: radii
+        });
+
+        importSizeTokens({
+            type: 'typeScale',
+            collectionName: 'Type Scale',
+            params: params,
+            defaultMode: params.typeScale,
+            defaultOrder: typographySizeName,
+            tokens: typescale,
             isSingleMode: true
         });
 
-        /*
+        // ICONS SCALE
         importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Spacing",
-            modeName: "Base", 
-            data: spacing.base
-        });
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Spacing",
-            modeName: "Large", 
-            data: spacing.large
-        });
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Spacing",
-            modeName: "Touch", 
-            data: spacing.touch
-        });
-        */
-
-        // RADII
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Radii",
-            modeName: toTitleCase(eventData.radii), 
-            data: radii[eventData.radii],            
+            collectionName: params.singleCollection ? "UI Scale" : "Icon Scale",
+            modeName: "Desktop",
+            data: params.typeScale == 'large' ? sizing.touch : sizing.base,
             sortFn: sortSizeTokens,
             isSingleMode: true
         });
-        /*
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Radii",
-            modeName: "Base", 
-            data: radii.base
-        });
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Radii",
-            modeName: "Large", 
-            data: radii.large
-        });
-        singleCollection && importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Radii",
-            modeName: "Touch", 
-            data: radii.large
-        });
-        */
-
-        // TYPE SCALE
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Type Scale",
-            modeName: toTitleCase(eventData.fontSize), 
-            data: typescale[eventData.fontSize],
-            sortFn: sortSizeTokens,
-            isSingleMode: true
-        });
-        /*
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Type Scale",
-            modeName: "Base", 
-            data: typescale.base
-        });
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Type Scale",
-            modeName: "Large", 
-            data: typescale.large
-        });
-        singleCollection && importVariables({
-            collectionName: singleCollection ? "UI Scale" : "Type Scale",
-            modeName: "Touch", 
-            data: typescale.large
-        });
-        */
 
         GlobalTokens = {
             ...GlobalTokens,
-            ...typescale.getTypograohyTokens(eventData.fontSize)
+            ...typescale.getTypograohyTokens(params.typeScale)
         }
-        importTextStyles(typescale.getTypograohyTokens(eventData.fontSize));
+        importTextStyles(typescale.getTypograohyTokens(params.typeScale));
 
         figma.notify("✅ Figma variables has been imported");
 
     } else if (eventData.type === "EXPORT") {
-        exportToJSON(eventData.format);
+        // exportToJSON(eventData.format);
     }
     else if (eventData.type === "RENDER_ACCENTS") {
-        const lightAccentTokens = generateSystemAccentPalette('light', eventData.params);
-        const darkAccentTokens = generateSystemAccentPalette('dark', eventData.params);
+        const lightAccentTokens = generateGlobalAccentPalette('light', params);
+        const darkAccentTokens = generateGlobalAccentPalette('dark', params);
         const frameLightPalette = renderAccents(lightAccentTokens, 'Light Mode Accents');
-        const frameDarkPalette =  renderAccents(darkAccentTokens, 'Dark Mode Accents');
+        const frameDarkPalette = renderAccents(darkAccentTokens, 'Dark Mode Accents');
         frameDarkPalette.y = frameLightPalette.height + 64;
     }
     else if (eventData.type === "RENDER_NEUTRALS") {
-        const neutralTokens = generateNeutrals(eventData.params);
-        const step = eventData.params.distance * 100;
+        const neutralTokens = generateNeutrals(params);
+        const step = params.distance * 100;
         let filteredTokens = {};
 
         Object.entries(neutralTokens).forEach(([name, value], index) => {
@@ -182,31 +143,95 @@ figma.ui.onmessage = (eventData) => {
                 filteredTokens[name] = value;
             }
         });
-
         renderNeutrals(filteredTokens, `Global Neutrals ${eventData.params.distance * 100}% Distance`);
-        console.warn('Not impletented');
     }
 };
 
-if (figma.command === "import") {
-    figma.showUI(__uiFiles__["import"], {
-        width: 480,
-        height: 600,
-        themeColors: true,
+
+
+function importSystemColorTokens(params: ImportFormData) {
+    let themeColors = getThemeColors('lightBase', params);
+
+    GlobalTokens = {
+        ...getGlobalNeutrals(),
+        ...themeColors
+    };
+
+    importVariables({
+        collectionName: "Color Theme",
+        modeName: "Light Base",
+        data: themeColors,
+        sortFn: sortColorTokens
+    });
+
+    themeColors = getThemeColors('darkBase', params);
+    GlobalTokens = Object.assign(GlobalTokens, themeColors);
+
+    importVariables({
+        collectionName: "Color Theme",
+        modeName: "Dark Base",
+        data: themeColors
+    });
+
+    themeColors = getThemeColors('darkElevated', params);
+    GlobalTokens = Object.assign(GlobalTokens, themeColors);
+
+    importVariables({
+        collectionName: "Color Theme",
+        modeName: "Dark Elevated",
+        data: themeColors
     });
 }
 
-if (figma.command === "export") {
-    figma.showUI(__uiFiles__["export"], {
-        width: 500,
-        height: 500,
-        themeColors: true,
-    });
+function importSizeTokens(data: {
+    type: "spacing" | "radii" | "typeScale";
+    defaultMode: string;
+    params: ImportFormData, 
+    collectionName: string,
+    defaultOrder: string[],
+    tokens: any;
+    isSingleMode?: boolean;
+}) {
+    const tokens = data.tokens;
+    const isSingleMode = data.isSingleMode || false;
+    const singleCollection = data.params.singleCollection;
+    const defaultMode = data.defaultMode;
+
+    const defaultOrder = data.defaultOrder.filter(item => item != defaultMode)
+    defaultOrder.splice(0, 0, defaultMode);
+
+    defaultOrder.length = isSingleMode ? 1 : defaultOrder.length;
+
+    defaultOrder.forEach((modeName, index) => {
+        importVariables({
+            collectionName: singleCollection ? "UI Scale" : data.collectionName,
+            modeName: toTitleCase(modeName),
+            modeIndex: index,
+            data: tokens[modeName],
+            sortFn: sortSizeTokens,
+            isSingleMode: isSingleMode
+        });
+    })
 }
 
-if (figma.command == "bindToStyles") {
-    bindVariablesAndStyles();
-    figma.closePlugin();
+function importRadiiTokens(params: ImportFormData, collectionName = "Radii") {
+    const singleCollection = params.singleCollection;
+    const defaultMode = params.radii;
+    const defaultModeIndex = radiiSizeName.indexOf(defaultMode);
+
+    const defaultOrder = radiiSizeName.filter(item => item != defaultMode)
+    defaultOrder.splice(0, 0, defaultMode);
+
+    defaultOrder.forEach((item, index) => {
+        importVariables({
+            collectionName: singleCollection ? "UI Scale" : collectionName,
+            modeName: toTitleCase(item),
+            modeIndex: index,
+            data: radii[item],
+            sortFn: sortSizeTokens,
+            isSingleMode: false
+        });
+    })
 }
 
 function createVariableAlias(collection, modeId, variableName, sourceVariable: Variable, type?) {
@@ -216,7 +241,7 @@ function createVariableAlias(collection, modeId, variableName, sourceVariable: V
     });
 }
 
-function prepareTokens({ collectionName, modeName, data, sortFn = null, isSingleMode = false }) {
+function prepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
     let modeId;
     const { collection, isNew } = getFigmaCollection(collectionName);
 
@@ -224,12 +249,13 @@ function prepareTokens({ collectionName, modeName, data, sortFn = null, isSingle
         modeId = collection.modes[0].modeId;
         collection.renameMode(modeId, modeName);
     } else {
-        const mode = collection.modes.find(mode => mode.name === modeName);
+        const mode = modeIndex < 0 ? collection.modes.find(mode => mode.name === modeName) : collection.modes[modeIndex];
 
         if (!mode) {
             modeId = collection.addMode(modeName)
         } else {
             modeId = mode.modeId;
+            collection.renameMode(modeId, modeName);
         }
     }
 
@@ -245,7 +271,7 @@ function prepareTokens({ collectionName, modeName, data, sortFn = null, isSingle
 
     let sortedTokens = transformedTokens;
 
-    if(sortFn != null) {
+    if (sortFn != null) {
         sortedTokens = transformedTokens.sort(sortFn);
     }
 
@@ -257,13 +283,13 @@ function prepareTokens({ collectionName, modeName, data, sortFn = null, isSingle
     }
 }
 
-function importVariables({ collectionName, modeName, data, sortFn = null, isSingleMode = false }) {
+function importVariables({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
     const {
         tokens,
         collection,
         modeId,
         type
-    } = prepareTokens({ collectionName, modeName, data, sortFn, isSingleMode })
+    } = prepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
     return tokens.map(token => {
         return processToken({
@@ -272,7 +298,7 @@ function importVariables({ collectionName, modeName, data, sortFn = null, isSing
             type: token.$type,
             variableName: token.name,
             token: token
-        });       
+        });
     })
 }
 
@@ -283,8 +309,6 @@ function importAliases({ collectionName, modeName, data, sortFn = null }) {
         modeId,
         type
     } = prepareTokens({ collectionName, modeName, data, sortFn })
-
-    debugger;
 
     loopAliases(tokens, collection, modeId, data);
 }
@@ -303,7 +327,7 @@ function loopAliases(tokens: any[], collection: VariableCollection, modeId: any,
         return (result.success !== true);
     });
 
-    if(missedTokens.length) {
+    if (missedTokens.length) {
         return loopAliases(missedTokens, collection, modeId, data)
     }
 }
@@ -331,7 +355,7 @@ function processAlias({
             success: true,
             result: createVariableAlias(collection, modeId, variableName, sourceVariable, type)
         }
-    } 
+    }
     else {
         return {
             success: false,
@@ -396,10 +420,10 @@ function processToken({
                 token.description || null
             );
         }
-        catch(e) {
+        catch (e) {
             console.error("unsupported type", type, token);
         }
-        
+
     } else {
         console.warn('recursion in ', token);
     }

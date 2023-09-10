@@ -13,10 +13,10 @@ export function generateNeutrals(params) {
   let tokens = {};
   
   let value = min as number;
-  let step = 0;
   
   while (value <= max ) {
-    const color = chroma.hsl(hue, saturation, value/100);
+    const sMod = 1 / Math.pow(1.3, (max - value) / 100);
+    const color = chroma.hsl(hue, saturation * sMod, value/100);
 
     tokens[`grey-${value}`] = {
       '$value': color.hex(),
@@ -34,7 +34,6 @@ export function generateNeutrals(params) {
 }
 
 export function renderNeutrals(colors, name?): FrameNode {
-    debugger;
     let frame = figma.createFrame();
     frame.layoutMode = 'HORIZONTAL';
     frame.counterAxisSizingMode = "AUTO";

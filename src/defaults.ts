@@ -29,6 +29,17 @@ export const typographySizeValues = [
     "16/24",
 ]
 
+export const iconSizeName = [
+    "base",
+    "touch"
+]
+
+export const iconSizeValues = [
+    "16",
+    "24",
+]
+
+
 export const systemAccentList = [
     "red",
     "amber",

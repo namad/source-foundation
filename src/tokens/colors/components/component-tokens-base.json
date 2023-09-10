@@ -51,18 +51,15 @@
         "bg": {
             "rest": {
                 "$value": "{utility.transparent}",
-                "type": "color",
-                "description": "utility/transparent"
+                "type": "color"
             },
             "hover": {
-                "$value": "{alt.base.100}",
-                "type": "color",
-                "description": "alt/base/100"
+                "$value": "{alt.base.200}",
+                "type": "color"
             },
             "active": {
-                "$value": "{alt.base.200}",
-                "type": "color",
-                "description": "alt/base/200"
+                "$value": "{alt.base.300}",
+                "type": "color"
             },
             "selected": {
                 "$value": "{primary.400}",

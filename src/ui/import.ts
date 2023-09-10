@@ -11,6 +11,7 @@ import * as typescale from "../typescale-tokens";
 import * as spacing from "../spacing-tokens";
 
 export interface ImportFormData {
+    type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
     hue: number;
     saturation: number;
     distance: number;
@@ -30,7 +31,7 @@ export interface ImportFormData {
     violet: number;
     purple: number;
     pink: number;
-    fontSize: string;
+    typeScale: string;
     createStyles: boolean;
     accentSaturation: number;
     radii: string;
@@ -160,7 +161,7 @@ importButton.addEventListener('click', (e) => {
 
     let message = {
         type: "IMPORT",
-        ...getFormData()
+        params: getFormData()
     };
 
     parent.postMessage({ pluginMessage: message }, "*");
@@ -192,6 +193,7 @@ function getFormData(): ImportFormData {
     })
 
     return {
+        type: 'IMPORT',
         singleCollection: rawValues.singleCollection && rawValues.singleCollection === 'true',
         hue: parseInt(rawValues.hue),
         saturation: parseInt(rawValues.saturation) / 100,
@@ -212,7 +214,7 @@ function getFormData(): ImportFormData {
         violet: parseInt(rawValues.violet),
         purple: parseInt(rawValues.purple),
         pink: parseInt(rawValues.pink),
-        fontSize: typographySizeName[rawValues.fontSize],
+        typeScale: typographySizeName[rawValues.fontSize],
         createStyles: false,
         accentSaturation: parseInt(rawValues.accentSaturation) / 100,
         radii: radiiSizeName[rawValues.radii],
@@ -259,7 +261,7 @@ function generatePreview() {
     });
 
     generateCSSVars(radii[data.radii]);
-    generateCSSVars(typescale[data.fontSize]);
+    generateCSSVars(typescale[data.typeScale]);
     generateCSSVars(spacing[data.spacing]);
 
     updateValuesDisplay(data);

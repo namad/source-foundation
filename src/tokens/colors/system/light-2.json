@@ -72,11 +72,11 @@
         "$type": "color"
       },
       "500": {
-        "$value": "{grey-80}",
+        "$value": "{grey-70}",
         "$type": "color"
       },
       "600": {
-        "$value": "{grey-74}",
+        "$value": "{grey-58}",
         "$type": "color"
       }
     },

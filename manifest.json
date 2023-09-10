@@ -1,5 +1,5 @@
 {
-  "name": "Foundation Tokens",
+  "name": "Source Bootstrapper",
   "id": "1131528333142948222",
   "api": "1.0.0",
   "main": "dist/plugin.js",
@@ -8,8 +8,7 @@
   ],
   "menu": [
     { "command": "import", "name": "Import Variables" },
-    { "command": "export", "name": "Export Variables" },
-    { "command": "bindToStyles", "name": "Bind variables to styles" }
+    { "command": "fixLayers", "name": "Fix Layers" }
   ],
   "ui": { "import": "dist/import.html", "export": "dist/export.html" }   
 }
