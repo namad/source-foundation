@@ -56,54 +56,90 @@
   "stroke": {
     "base": {
       "100": {
-        "$value": "{grey-20}",
-        "$type": "color"
+        "$value": "{grey-22}",
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "200": {
         "$value": "{grey-24}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "300": {
         "$value": "{grey-28}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "400": {
         "$value": "{grey-34}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "500": {
         "$value": "{grey-44}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "600": {
         "$value": "{grey-48}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       }
     },
     "contrast": {
       "100": {
         "$value": "{grey-26}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "200": {
         "$value": "{grey-28}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "300": {
         "$value": "{grey-30}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "400": {
         "$value": "{grey-32}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "500": {
         "$value": "{grey-38}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "600": {
         "$value": "{grey-46}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       }
     }
   }

@@ -68,7 +68,7 @@ export function getThemeColors(theme, params: ImportFormData) {
         ...paletteDarkCommon,
         ...darkSemanticTokens
     }
-
+    
     let commonColors = {};
     let themeColors = {};
 

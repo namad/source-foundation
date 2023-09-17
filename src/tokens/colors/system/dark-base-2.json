@@ -56,7 +56,7 @@
   "stroke": {
     "base": {
       "100": {
-        "$value": "{grey-18}",
+        "$value": "{grey-20}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
