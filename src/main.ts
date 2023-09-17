@@ -214,26 +214,6 @@ function importSizeTokens(data: {
     })
 }
 
-function importRadiiTokens(params: ImportFormData, collectionName = "Radii") {
-    const singleCollection = params.singleCollection;
-    const defaultMode = params.radii;
-    const defaultModeIndex = radiiSizeName.indexOf(defaultMode);
-
-    const defaultOrder = radiiSizeName.filter(item => item != defaultMode)
-    defaultOrder.splice(0, 0, defaultMode);
-
-    defaultOrder.forEach((item, index) => {
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : collectionName,
-            modeName: toTitleCase(item),
-            modeIndex: index,
-            data: radii[item],
-            sortFn: sortSizeTokens,
-            isSingleMode: false
-        });
-    })
-}
-
 function createVariableAlias(collection, modeId, variableName, sourceVariable: Variable, type?) {
     return setFigmaVariable(collection, modeId, type || sourceVariable.resolvedType, variableName, {
         type: "VARIABLE_ALIAS",
@@ -258,9 +238,6 @@ function prepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn 
             collection.renameMode(modeId, modeName);
         }
     }
-
-    const aliases = {};
-    const tokens = {};
 
     let transformedTokens = [];
 
@@ -291,7 +268,7 @@ function importVariables({ collectionName, modeName, modeIndex = -1, data, sortF
         type
     } = prepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
-    return tokens.map(token => {
+    return tokens.map((token: DesignToken) => {
         return processToken({
             collection,
             modeId,
@@ -374,6 +351,15 @@ function isAlias(value) {
     return value.toString().trim().charAt(0) === "{";
 }
 
+export interface DesignToken {
+    $value: string;
+    $type: string;
+    name: string;
+    scopes?: string[];
+    description?: string;
+    adjustments?: any;
+}
+
 function processToken({
     collection,
     modeId,
@@ -394,7 +380,7 @@ function processToken({
                 modeId,
                 "COLOR",
                 variableName,
-                parseColor(token.$value, GlobalTokens)
+                parseColor(token, GlobalTokens)
             );
         }
         if (type === "number") {

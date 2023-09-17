@@ -57,53 +57,89 @@
     "base": {
       "100": {
         "$value": "{grey-18}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "200": {
         "$value": "{grey-22}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "300": {
         "$value": "{grey-24}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "400": {
         "$value": "{grey-32}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "500": {
         "$value": "{grey-40}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "600": {
         "$value": "{grey-46}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       }
     },
     "contrast": {
       "100": {
         "$value": "{grey-20}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "200": {
         "$value": "{grey-20}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "300": {
         "$value": "{grey-22}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "400": {
         "$value": "{grey-32}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "500": {
         "$value": "{grey-44}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       },
       "600": {
         "$value": "{grey-50}",
-        "$type": "color"
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
       }
     }
   }

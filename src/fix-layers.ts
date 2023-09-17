@@ -6,14 +6,14 @@ function delayAsync(time) {
 
 export async function processComponents() {
     figma.skipInvisibleInstanceChildren = true;
-    let framesCollection = figma.currentPage.findAllWithCriteria({types: ['COMPONENT']});
-    const size = framesCollection.length;
+    let pageComponents = figma.currentPage.findAllWithCriteria({types: ['COMPONENT']});
+    const size = pageComponents.length;
     let count = 0;
 
-    while (framesCollection.length) {
-        const item = framesCollection.shift();
+    while (pageComponents.length) {
+        const componentFrame = pageComponents.shift();
         figma.skipInvisibleInstanceChildren = false;
-        const children = item.findAll((n: FrameNode) => {
+        const children = componentFrame.findAll((n: FrameNode) => {
             return n.layoutPositioning == 'ABSOLUTE' 
                     && n.width > 0 
                     && n.height > 0 
@@ -21,8 +21,8 @@ export async function processComponents() {
                     && n.constraints.vertical === 'STRETCH';
         });
 
-        await fixLayers(children as FrameNode[], item);
-        console.log(`%c${count++} / ${size} updated`, `color: #0773DF; font-weight: bold;`)
+        await fixLayers(children as FrameNode[], componentFrame);
+        console.log(`%cComponent ${count++} / ${size}`, `color: #0773DF; font-weight: bold;`)
     }
 }
 
@@ -34,12 +34,23 @@ async function fixLayers(nodes: FrameNode[], component: ComponentNode) {
         height,
         width;
 
+    let updated = 0,
+        skipped = 0,
+        failed = 0;
+
+    console.log(`Working on ${component.name}`);
     try {
         while(nodes.length) {
 
-            console.log(nodes.length, component.name);
+            console.log(`Remaining nodes: ${nodes.length}`);
 
             node = nodes.shift();
+
+            if(checkInstance(node, component)) {
+                skipped++;
+                continue;
+            }
+
             parent = node.parent as FrameNode;
             offsetX = node.x;
             offsetY = node.y;
@@ -48,12 +59,29 @@ async function fixLayers(nodes: FrameNode[], component: ComponentNode) {
 
             if (node.width != width || node.height != height) {
                 node.resize(width, height);
+                updated++;
             }
 
             await delayAsync(100);
         }
+
+        console.log(`Resized: ${updated}, Skipped: ${skipped}`);
     }
     catch (e) {
+        failed++;
         debugger;
     }
+}
+
+function checkInstance(targetFrame, componentFrame) {
+    let node = targetFrame.parent;
+
+    while(node != componentFrame) {
+        if(node.type == 'INSTANCE') {
+            return true;
+        }
+        node = node.parent;
+    }
+
+    return false;
 }

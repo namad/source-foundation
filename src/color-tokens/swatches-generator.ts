@@ -30,7 +30,7 @@ export function renderColor(parentNode, name, color, colors) {
 
     const {
         r, g, b, a
-    } = parseColor(color.$value, colors);
+    } = parseColor(color, colors);
     const chromaColor = chroma.gl(r, g, b, a);
 
 

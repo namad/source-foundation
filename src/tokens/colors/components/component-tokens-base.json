@@ -54,22 +54,20 @@
                 "type": "color"
             },
             "hover": {
-                "$value": "{alt.base.200}",
+                "$value": "{alt.base.100}",
                 "type": "color"
             },
             "active": {
-                "$value": "{alt.base.300}",
+                "$value": "{alt.base.200}",
                 "type": "color"
             },
             "selected": {
-                "$value": "{primary.400}",
-                "type": "color",
-                "description": "primary/400"
+                "$value": "{primary.200}",
+                "type": "color"
             },
             "disabled": {
                 "$value": "{alt.base.600}",
-                "type": "color",
-                "description": "alt/base/600"
+                "type": "color"
             }
         },
         "border": {

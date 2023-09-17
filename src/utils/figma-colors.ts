@@ -1,6 +1,7 @@
 import chroma from 'chroma-js';
 
 import { parseReferenceGlobal } from './token-references';
+import { DesignToken } from '../main';
 
 export interface FigmaRGB {
     r: number;
@@ -39,7 +40,14 @@ export function convertFigmaColorToRgb(input: FigmaRGB, format?) {
     }
 }
 
-function convertToFigmaColor(input): FigmaRGB {
+interface HSLAdjustments {
+    h?: number;
+    s?: number;
+    l?: number;
+    a?: number;
+}
+
+function convertToFigmaColor(input, adjustments?: HSLAdjustments): FigmaRGB {
     let color;
   
     try {
@@ -65,6 +73,20 @@ function convertToFigmaColor(input): FigmaRGB {
         return null;
     }
   
+    if(adjustments) {
+        if(adjustments.h) {
+            color = color.set('hsl.h', `${adjustments.h}`);
+        }
+        if(adjustments.s) {
+            color = color.set('hsl.s', `${adjustments.s}`);
+        }
+        if(adjustments.l) {
+            color = color.set('hsl.l', `${adjustments.l}`);
+        }
+        if(adjustments.a) {
+            color = color.set('hsl.a', `${adjustments.a}`);
+        }
+    }
     const [ 
         r, g, b, a 
     ] = color.gl();
@@ -74,9 +96,10 @@ function convertToFigmaColor(input): FigmaRGB {
     };
 }
 
-export function parseColor(color, dictionary) {
+export function parseColor(token: DesignToken, dictionary) {
+    let color = token.$value;
     color = parseReferenceGlobal(color.trim(), dictionary);
-    const figmaColor = convertToFigmaColor(color);
+    const figmaColor = convertToFigmaColor(color, token.adjustments);
 
     if(figmaColor) {
         return figmaColor;

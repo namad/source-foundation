@@ -72,54 +72,90 @@
   "alt": {
     "base": {
       "100": {
-        "$value": "rgba(#B6CDD9, 0.03)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.03)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "200": {
-        "$value": "rgba(#B6CDD9, 0.06)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.06)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "300": {
-        "$value": "rgba(#B6CDD9, 0.09)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.09)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "400": {
-        "$value": "rgba(#B6CDD9, 0.16)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.16)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "500": {
-        "$value": "rgba(#B6CDD9, 0.24)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.24)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "600": {
-        "$value": "rgba(#B6CDD9, 0.32)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.32)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       }
     },
     "contrast": {
       "100": {
-        "$value": "rgba(#B6CDD9, 0.03)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.03)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "200": {
-        "$value": "rgba(#B6CDD9, 0.06)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.06)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "300": {
-        "$value": "rgba(#B6CDD9, 0.09)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.09)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "400": {
-        "$value": "rgba(#B6CDD9, 0.16)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.16)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "500": {
-        "$value": "rgba(#B6CDD9, 0.24)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.24)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "600": {
-        "$value": "rgba(#B6CDD9, 0.32)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.32)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       }
     }
   },
@@ -164,28 +200,46 @@
     },
     "tint": {
       "100": {
-        "$value": "rgba(#B6CDD9, 0.03)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.03)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "200": {
-        "$value": "rgba(#B6CDD9, 0.05)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.05)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "300": {
-        "$value": "rgba(#B6CDD9, 0.07)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.07)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "400": {
-        "$value": "rgba(#B6CDD9, 0.09)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.09)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "500": {
-        "$value": "rgba(#B6CDD9, 0.12)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.12)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       },
       "600": {
-        "$value": "rgba(#B6CDD9, 0.16)",
-        "$type": "color"
+        "$value": "rgba({grey-78}, 0.16)",
+        "$type": "color",
+        "adjustments": {
+          "s": "*2"
+        }
       }
     }
   }
