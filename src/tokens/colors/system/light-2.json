@@ -63,21 +63,21 @@
         }
       },
       "200": {
-        "$value": "{grey-90}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "300": {
         "$value": "{grey-88}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
         }
       },
-      "400": {
+      "300": {
         "$value": "{grey-86}",
+        "$type": "color",
+        "adjustments": {
+          "s": "*0.6"
+        }
+      },
+      "400": {
+        "$value": "{grey-82}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
