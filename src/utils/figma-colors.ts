@@ -47,7 +47,7 @@ interface HSLAdjustments {
     a?: number;
 }
 
-function convertToFigmaColor(input, adjustments?: HSLAdjustments): FigmaRGB {
+export function convertToFigmaColor(input, adjustments?: HSLAdjustments): RGBA {
     let color;
   
     try {
@@ -97,7 +97,7 @@ function convertToFigmaColor(input, adjustments?: HSLAdjustments): FigmaRGB {
 }
 
 export function parseColor(token: DesignToken, dictionary) {
-    let color = token.$value;
+    let color = token.$value as string;
     color = parseReferenceGlobal(color.trim(), dictionary);
     const figmaColor = convertToFigmaColor(color, token.adjustments);
 

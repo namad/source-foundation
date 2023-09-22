@@ -6,6 +6,9 @@ import * as spacing from './spacing-tokens';
 import * as radii from './radii-tokens';
 import * as typescale from './typescale-tokens';
 import * as sizing from './sizing-tokens';
+
+import * as effects from './effect-tokens';
+
 import { sortSizeTokens } from './utils/sort-sizes';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-tokens/render-accents";
@@ -15,8 +18,9 @@ import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, parseVariableReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './ui/import';
-import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
+import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { processComponents } from './fix-layers';
+import { importEffectStyles } from './utils/figma-effect-styles';
 
 console.clear();
 
@@ -107,19 +111,31 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
         });
 
         // ICONS SCALE
-        importVariables({
-            collectionName: params.singleCollection ? "UI Scale" : "Icon Scale",
-            modeName: "Desktop",
-            data: params.typeScale == 'large' ? sizing.touch : sizing.base,
-            sortFn: sortSizeTokens,
-            isSingleMode: true
+        importSizeTokens({
+            type: 'iconScale',
+            collectionName: 'Icon Scale',
+            params: params,
+            defaultMode: params.typeScale == 'large' ? 'touch' : 'base',
+            defaultOrder: iconSizeName,
+            tokens: sizing
         });
+
+        // importVariables({
+        //     collectionName: params.singleCollection ? "UI Scale" : "Icon Scale",
+        //     modeName: "Desktop",
+        //     data: params.typeScale == 'large' ? sizing.touch : sizing.base,
+        //     sortFn: sortSizeTokens,
+        //     isSingleMode: true
+        // });
 
         GlobalTokens = {
             ...GlobalTokens,
             ...typescale.getTypograohyTokens(params.typeScale)
         }
         importTextStyles(typescale.getTypograohyTokens(params.typeScale));
+
+        // import effects for default theme which is light one
+        importEffectStyles(effects.elevation);
 
         figma.notify("✅ Figma variables has been imported");
 
@@ -164,6 +180,7 @@ function importSystemColorTokens(params: ImportFormData) {
         sortFn: sortColorTokens
     });
 
+
     themeColors = getThemeColors('darkBase', params);
     GlobalTokens = Object.assign(GlobalTokens, themeColors);
 
@@ -184,7 +201,7 @@ function importSystemColorTokens(params: ImportFormData) {
 }
 
 function importSizeTokens(data: {
-    type: "spacing" | "radii" | "typeScale";
+    type: "spacing" | "radii" | "typeScale" | "iconScale";
     defaultMode: string;
     params: ImportFormData, 
     collectionName: string,
@@ -352,7 +369,7 @@ function isAlias(value) {
 }
 
 export interface DesignToken {
-    $value: string;
+    $value: string | object[];
     $type: string;
     name: string;
     scopes?: string[];

@@ -56,35 +56,35 @@
   "stroke": {
     "base": {
       "100": {
-        "$value": "{grey-91}",
+        "$value": "{grey-92}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
         }
       },
       "200": {
-        "$value": "{grey-85}",
+        "$value": "{grey-89}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
         }
       },
       "300": {
-        "$value": "{grey-79}",
+        "$value": "{grey-86}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
         }
       },
       "400": {
-        "$value": "{grey-70}",
+        "$value": "{grey-83}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"
         }
       },
       "500": {
-        "$value": "{grey-61}",
+        "$value": "{grey-73}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"

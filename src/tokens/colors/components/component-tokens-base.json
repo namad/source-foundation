@@ -143,14 +143,12 @@
         },
         "border": {
             "inner": {
-                "$value": "{stroke.base.100}",
-                "type": "color",
-                "description": "stroke/base/100"
+                "$value": "{stroke.base.200}",
+                "type": "color"
             },
             "outer": {
-                "$value": "{stroke.base.200}",
-                "type": "color",
-                "description": "stroke/base/200"
+                "$value": "{stroke.base.300}",
+                "type": "color"
             }
         }
     },

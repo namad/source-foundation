@@ -1,14 +1,14 @@
 {
     "font-size": {
-        "xs": {
-            "$value": "10",
+        "xs2": {
+            "$value": "9",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT"
             ]
         },
-        "sm": {
+        "xs": {
             "$value": "11",
             "$type": "number",
             "scopes": [
@@ -16,7 +16,7 @@
                 "WIDTH_HEIGHT"
             ]
         },
-        "base": {
+        "sm": {
             "$value": "12",
             "$type": "number",
             "scopes": [
@@ -24,8 +24,16 @@
                 "WIDTH_HEIGHT"
             ]
         },
+        "base": {
+            "$value": "13",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
         "md": {
-            "$value": "14",
+            "$value": "15",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -33,7 +41,7 @@
             ]
         },
         "lg": {
-            "$value": "16",
+            "$value": "17",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -41,7 +49,7 @@
             ]
         },
         "xl": {
-            "$value": "18",
+            "$value": "19",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -49,7 +57,7 @@
             ]
         },
         "xl2": {
-            "$value": "22",
+            "$value": "23",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -57,7 +65,7 @@
             ]
         },
         "xl3": {
-            "$value": "28",
+            "$value": "29",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -65,7 +73,7 @@
             ]
         },
         "xl4": {
-            "$value": "32",
+            "$value": "33",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -73,7 +81,7 @@
             ]
         },
         "xl5": {
-            "$value": "48",
+            "$value": "49",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -81,7 +89,7 @@
             ]
         },
         "xl6": {
-            "$value": "64",
+            "$value": "65",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -89,7 +97,7 @@
             ]
         },
         "xl7": {
-            "$value": "80",
+            "$value": "81",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

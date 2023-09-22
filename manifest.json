@@ -1,5 +1,5 @@
 {
-  "name": "Source Bootstrapper",
+  "name": "SDS Bootstrapper",
   "id": "1131528333142948222",
   "api": "1.0.0",
   "main": "dist/plugin.js",

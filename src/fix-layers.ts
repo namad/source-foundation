@@ -12,8 +12,16 @@ export async function processComponents() {
 
     while (pageComponents.length) {
         const componentFrame = pageComponents.shift();
+
+        if(componentFrame.name == 'state=:focus, style=default, selected=false') {
+            debugger
+        }
+
         figma.skipInvisibleInstanceChildren = false;
         const children = componentFrame.findAll((n: FrameNode) => {
+            if(n.layoutPositioning == 'ABSOLUTE' && !n.constraints) debugger;
+
+            
             return n.layoutPositioning == 'ABSOLUTE' 
                     && n.width > 0 
                     && n.height > 0 
@@ -57,12 +65,13 @@ async function fixLayers(nodes: FrameNode[], component: ComponentNode) {
             height = parent.height - 2 * offsetY;
             width = parent.width - 2 * offsetX;
 
-            if (node.width != width || node.height != height) {
-                node.resize(width, height);
-                updated++;
-            }
+            node.resize(width * 0.8, height * 0.8);
+            await delayAsync(10);
 
-            await delayAsync(100);
+            node.resize(width, height);
+            updated++;
+
+            await delayAsync(50);
         }
 
         console.log(`Resized: ${updated}, Skipped: ${skipped}`);
