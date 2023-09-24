@@ -4,7 +4,7 @@ import "./styles.css";
 import chroma from 'chroma-js';
 import { initSlider } from "./slider";
 import { toTitleCase } from "../utils/text-to-title-case";
-import { generateSystemAccentPalette } from "../color-tokens/accent-palette-generator2";
+import { generateSystemAccentPalette } from "../color-tokens/accent-palette-generator";
 import { defaultAccentHUEs, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
 import * as radii from "../radii-tokens";
 import * as typescale from "../typescale-tokens";
@@ -31,6 +31,7 @@ export interface ImportFormData {
     violet: number;
     purple: number;
     pink: number;
+    baseFontSize: string;
     typeScale: string;
     createStyles: boolean;
     accentSaturation: number;
@@ -214,7 +215,8 @@ function getFormData(): ImportFormData {
         violet: parseInt(rawValues.violet),
         purple: parseInt(rawValues.purple),
         pink: parseInt(rawValues.pink),
-        typeScale: typographySizeName[rawValues.fontSize],
+        baseFontSize: typographySizeName[rawValues.baseFontSize],
+        typeScale: rawValues.typeScale,
         createStyles: false,
         accentSaturation: parseInt(rawValues.accentSaturation) / 100,
         radii: radiiSizeName[rawValues.radii],
@@ -224,6 +226,8 @@ function getFormData(): ImportFormData {
 
 function generatePreview() {
     let data = getFormData();
+
+    console.log(data);
 
     for (var a = 1, b = 7; a < b; a++) {
         const colorLight = chroma.hsl(data.hue, data.saturation, 1 - data.distance * a);
@@ -261,7 +265,7 @@ function generatePreview() {
     });
 
     generateCSSVars(radii[data.radii]);
-    generateCSSVars(typescale[data.typeScale]);
+    generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacing[data.spacing]);
 
     updateValuesDisplay(data);
@@ -279,12 +283,11 @@ function updateValuesDisplay(data: ImportFormData) {
 function generateCSSVars(tokens = {}) {
     Object.entries(tokens).forEach(([name, value]) => {
         const varName = `--${name.replace(/\//g, "-")}`;
-        const varValue = parseInt(value["$value"]);
-        if (varValue != null) {
+        const type = value['$type'];
+
+        if (type == 'number') {
+            const varValue = parseInt(value["$value"]);
             document.documentElement.style.setProperty(varName, `${varValue}px`);
-        }
-        else {
-            console.error(`Variable ${varName} value is not an integer`);
         }
     })
 }

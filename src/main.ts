@@ -12,7 +12,7 @@ import * as effects from './effect-tokens';
 import { sortSizeTokens } from './utils/sort-sizes';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-tokens/render-accents";
-import { generateGlobalAccentPalette, generateSystemAccentPalette } from './color-tokens/accent-palette-generator2';
+import { generateGlobalAccentPalette, generateSystemAccentPalette } from './color-tokens/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palette-generator';
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, parseVariableReferences } from './utils/token-references';
@@ -104,7 +104,7 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
             type: 'typeScale',
             collectionName: 'Type Scale',
             params: params,
-            defaultMode: params.typeScale,
+            defaultMode: params.baseFontSize,
             defaultOrder: typographySizeName,
             tokens: typescale,
             isSingleMode: true
@@ -115,7 +115,7 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
             type: 'iconScale',
             collectionName: 'Icon Scale',
             params: params,
-            defaultMode: params.typeScale == 'large' ? 'touch' : 'base',
+            defaultMode: 'base',
             defaultOrder: iconSizeName,
             tokens: sizing
         });
@@ -130,9 +130,9 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
 
         GlobalTokens = {
             ...GlobalTokens,
-            ...typescale.getTypograohyTokens(params.typeScale)
+            ...typescale.getTypograohyTokens(params.baseFontSize, params.typeScale)
         }
-        importTextStyles(typescale.getTypograohyTokens(params.typeScale));
+        importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
 
         // import effects for default theme which is light one
         importEffectStyles(effects.elevation);

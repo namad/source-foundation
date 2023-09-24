@@ -1,32 +1,39 @@
 import textStyleTokens from "./tokens/typography/styles.json";
 import typeFaceTokens from "./tokens/typography/typeface.json";
-import baseTypeScaleTokens from "./tokens/typography/typescale-base.json";
-import compactTypeScaleTokens from "./tokens/typography/typescale-compact.json";
-import largeTypeScaleTokens from "./tokens/typography/typescale-large.json";
+
+import baseMinorThird from "./tokens/typography/minor-third/typescale-base.json";
+import compactMinorThird from "./tokens/typography/minor-third/typescale-compact.json";
+import largeMinorThird from "./tokens/typography/minor-third/typescale-large.json";
+
+import baseMajorSecond from "./tokens/typography/major-second/typescale-base.json";
+import compactMajorSecond from "./tokens/typography/major-second/typescale-compact.json";
+import largeMajorSecond from "./tokens/typography/major-second/typescale-large.json";
+
 import { flattenObject } from "./utils/flatten-object";
 
-export const base = flattenObject(baseTypeScaleTokens);
-export const compact = flattenObject(compactTypeScaleTokens);
-export const large = flattenObject(largeTypeScaleTokens);
-export const styles = flattenObject(textStyleTokens);
+export const base = flattenObject(baseMinorThird);
+export const compact = flattenObject(compactMinorThird);
+export const large = flattenObject(largeMinorThird);
 
-export function getTypograohyTokens(size: string) {
+const styles = flattenObject(textStyleTokens);
 
-    let scaleTokens;
+const tokens = {
+    minorThird: {
+        base: flattenObject(baseMinorThird),
+        compact: flattenObject(compactMinorThird),
+        large: flattenObject(largeMinorThird),
+    },
+    majorSecond: {
+        base: flattenObject(baseMajorSecond),
+        compact: flattenObject(compactMajorSecond),
+        large: flattenObject(largeMajorSecond),
+    },
+}
 
-    switch (size) {
-        case "compact": {
-            scaleTokens = flattenObject(compactTypeScaleTokens);
-            break;
-        }
-        case "large": {
-            scaleTokens = flattenObject(largeTypeScaleTokens);
-            break;
-        }
-        case "base": {
-            scaleTokens = flattenObject(baseTypeScaleTokens);
-        }
-    }
+export function getTypograohyTokens(size: string, scale = "minorThird") {
+
+    let scaleTokens = tokens[scale][size];
+
     return {
         ...flattenObject(typeFaceTokens),
         ...scaleTokens,

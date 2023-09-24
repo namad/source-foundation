@@ -1,5 +1,5 @@
 {
-  "name": "SDS Bootstrapper",
+  "name": "SDS Foundation",
   "id": "1131528333142948222",
   "api": "1.0.0",
   "main": "dist/plugin.js",
@@ -7,7 +7,7 @@
     "figma"
   ],
   "menu": [
-    { "command": "import", "name": "Import Variables" },
+    { "command": "import", "name": "Make Tokens" },
     { "command": "fixLayers", "name": "Fix Layers" }
   ],
   "ui": { "import": "dist/import.html", "export": "dist/export.html" }   

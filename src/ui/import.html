@@ -59,7 +59,15 @@
                     Please note, the plugin will create set of styles based on base selected typography scale.
                 </p>
                 <div data-type="typography"
-                    data-slider='{"label": "Base Size", "name": "fontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
+                    data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
+                </div>
+                <div class="flex flex-row mt-2">
+                    <div class="flex-1">Scale</div>
+                    <div class="flex flex-col gap-3 flex-3">
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird" checked /> <span>Third (1.200)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorSecond" /> <span>Major Second (1.125)</span></label>
+                    </div>
+                    <div class="w-24"></div>
                 </div>
             </div>
         </dialog>
@@ -190,7 +198,7 @@
                 </li>
                 <li>
                     <a href="#" data-modal="typographyScaleModal">
-                        <span>Typography</span><span data-value="typeScale" data-type="typography"></span>
+                        <span>Typography</span><span data-value="baseFontSize" data-type="typography"></span>
                     </a>
                 </li>
             </ul>

@@ -16,7 +16,7 @@ import paletteDarkBase3 from './tokens/colors/system/dark-base-3.json';
 import paletteDarkBase4 from './tokens/colors/system/dark-base-4.json';
 
 import { flattenObject } from './utils/flatten-object';
-import { generateSystemAccentPalette } from './color-tokens/accent-palette-generator2';
+import { generateSystemAccentPalette } from './color-tokens/accent-palette-generator';
 import { generateNeutrals } from './color-tokens/neutrals-palette-generator';
 import { ImportFormData } from './ui/import';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';

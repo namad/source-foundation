@@ -232,17 +232,17 @@ input[type=radio] {
     appearance: none;
     padding: 0;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: var(--line-height-base);
+    height: var(--line-height-base);
     margin: 0;
     vertical-align: middle;
     transition: 0.2s all linear;
 }
 
 input[type=radio]:checked {
+    --width: calc(var(--line-height-base)/4);
     background-color: white;
-    ;
-    border: 5px solid var(--primary);
+    border: var(--width) solid var(--primary);
 }
 
 .radiogroup {

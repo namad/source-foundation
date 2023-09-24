@@ -3,17 +3,17 @@
   "text": {
     "base": {
       "400": {
-        "$value": "rgba({grey-4}, 0.45)",
+        "$value": "rgba({grey-6}, 0.45)",
         "$type": "color",
         "description": "utility/black, 0.45"
       },
       "500": {
-        "$value": "rgba({grey-4}, 0.65)",
+        "$value": "rgba({grey-6}, 0.65)",
         "$type": "color",
         "description": "utility/black, 0.65"
       },
       "600": {
-        "$value": "{grey-4}",
+        "$value": "{grey-6}",
         "$type": "color",
         "description": "utility/black"
       },

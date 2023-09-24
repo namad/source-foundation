@@ -94,28 +94,6 @@ function getShadesTemplate(theme): ColorShadesScale {
     throw new Error(`Theme: ${theme} is invalid`);
 }
 
-function parseReference(value, dictionary) {
-    let references = findTokenReferences(value);
-    let result = value;
-
-    references?.forEach(refrence => {
-        let name = refrence.replace(/{/g, "");
-        name = name.replace(/}/g, "");
-
-        const globalToken = dictionary[name];
-
-        if (globalToken) {
-            result = result.replace(references, globalToken.$value);
-        }
-        else {
-            debugger;
-            console.warn(`parseReferences() call failed -> cannot find reference for ${value}`);
-        }
-    })
-
-    return result;
-}
-
 function getColorParams(theme, params: ImportFormData) {
     switch (theme) {
         case 'light': {
@@ -166,7 +144,7 @@ export function generateGlobalAccentPalette(theme: string, params: ImportFormDat
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
         const hue = params[name];
-        accents[name] = getGlobalAccent(hue, saturation, minLuminance, 0.9, 15);
+        accents[name] = getGlobalAccent(hue, saturation, minLuminance, maxLuminance/*, 0.9, 15 */);
     })
     return accents;
 }
