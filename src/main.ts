@@ -17,7 +17,7 @@ import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palett
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, parseVariableReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
-import { ImportFormData } from './ui/import';
+import { ImportFormData } from './utils/import-utils';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
@@ -72,6 +72,8 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     const params = eventData.params;
 
     if (eventData.type === "IMPORT") {
+
+        figma.root.setPluginData('SDS', JSON.stringify(params));
 
         importSystemColorTokens(params);
 
@@ -137,6 +139,8 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
         // import effects for default theme which is light one
         importEffectStyles(effects.elevation);
 
+
+
         figma.notify("✅ Figma variables has been imported");
 
     } else if (eventData.type === "EXPORT") {
@@ -160,6 +164,17 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
             }
         });
         renderNeutrals(filteredTokens, `Global Neutrals ${eventData.params.distance * 100}% Distance`);
+    }
+    else if (eventData.type === "LOADED") {
+        try {
+            const pluginData = figma.root.getPluginData('SDS');
+            const data = JSON.parse(pluginData);
+            figma.ui.postMessage(data)
+        }
+        catch (e) {
+            console.warn('failed to read plugin data', e);
+        }
+
     }
 };
 

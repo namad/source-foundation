@@ -1,7 +1,7 @@
 import chroma from "chroma-js";
 import { roundTwoDigits } from "../utils/round-two-digits";
 import { findTokenReferences, parseReferenceGlobal } from "../utils/token-references";
-import { ImportFormData } from "../ui/import";
+import { ImportFormData } from "../utils/import-utils";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
 
 interface DesignTokenValue {

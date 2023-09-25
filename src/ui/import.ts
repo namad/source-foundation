@@ -1,47 +1,21 @@
 import "./utils.css";
 import "./styles.css";
+import "../../node_modules/nouislider/dist/nouislider.css";
 
-import chroma from 'chroma-js';
+
 import { initSlider } from "./slider";
 import { toTitleCase } from "../utils/text-to-title-case";
-import { generateSystemAccentPalette } from "../color-tokens/accent-palette-generator";
 import { defaultAccentHUEs, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
-import * as radii from "../radii-tokens";
-import * as typescale from "../typescale-tokens";
-import * as spacing from "../spacing-tokens";
 
-export interface ImportFormData {
-    type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
-    hue: number;
-    saturation: number;
-    distance: number;
-    primary: string;
-    info: string;
-    success: string;
-    warning: string;
-    danger: string;
-    red: number;
-    amber: number;
-    brown: number;
-    green: number;
-    teal: number;
-    cyan: number;
-    blue: number;
-    indigo: number;
-    violet: number;
-    purple: number;
-    pink: number;
-    baseFontSize: string;
-    typeScale: string;
-    createStyles: boolean;
-    accentSaturation: number;
-    radii: string;
-    spacing: string;
-    singleCollection: boolean;
-}
+import { debounce } from "../utils/debounce";
+import { generatePreview, getFormData } from "../utils/import-utils";
 
-const form = document.querySelector('form');
-const card = document.querySelector('.color-preview') as HTMLDivElement;
+/*
+    UI INITIALIZATION
+*/
+
+const form = document.querySelector('form') as HTMLFormElement;
+const colorPreviewCard = document.querySelector('.color-preview') as HTMLDivElement;
 const accentSlidersContainer = document.getElementById('accentColorsSliders') as HTMLDivElement;
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
@@ -51,7 +25,7 @@ let defaultData;
 
 document.querySelectorAll('[data-command="renderAccents"]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
-        const params = getFormData();
+        const params = getFormData(form);
 
         parent.postMessage({
             pluginMessage: {
@@ -65,7 +39,7 @@ document.querySelectorAll('[data-command="renderAccents"]').forEach((el: HTMLAnc
 
 document.querySelectorAll('[data-command="renderNeutrals"]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
-        const params = getFormData();
+        const params = getFormData(form);
 
         parent.postMessage({
             pluginMessage: {
@@ -76,6 +50,7 @@ document.querySelectorAll('[data-command="renderNeutrals"]').forEach((el: HTMLAn
 
     });
 });
+
 document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
     const modalID = el.dataset.modal;
     const modal = document.getElementById(modalID) as HTMLDialogElement;
@@ -87,15 +62,9 @@ document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
 
     modal.querySelector('button.close').addEventListener('click', (e) => {
         e.preventDefault();
-        modal.close();    
+        modal.close();
     })
 });
-
-function closeModal(modalID) {
-    const modal = document.getElementById(modalID) as HTMLDialogElement;
-    modal.close();
-    return false;
-}
 
 document.querySelectorAll('[data-expander][data-role="trigger"]').forEach((el: HTMLAnchorElement) => {
     const next = el.nextElementSibling as HTMLDivElement;
@@ -111,7 +80,8 @@ document.querySelectorAll('[data-expander][data-role="trigger"]').forEach((el: H
     }
 });
 
-function transformValue(type: string, value: any): string {
+
+document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
     const valueMaps = {
         'semantics': systemAccentList,
         'typography': typographySizeValues,
@@ -119,23 +89,10 @@ function transformValue(type: string, value: any): string {
         'spacing': spacingSizeName
     };
 
-    const values = valueMaps[type];
-    const resolvedValue = values[value];
+    const type = el.dataset.type;
 
-    return toTitleCase(resolvedValue || value);
-}
-
-document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
-    const sliderCompoent = initSlider(el, { syncValue: el.dataset.type == null });
-    sliders[sliderCompoent.params.name] = sliderCompoent;
-
-    if (el.dataset.type != null) {
-        sliderCompoent.sliderElement.setAttribute('readonly', 'true');
-        sliderCompoent.sliderElement.addEventListener('input', (e) => {
-            sliderCompoent.valueInput.value = transformValue(el.dataset.type, sliderCompoent.sliderElement.value);
-        });
-        sliderCompoent.valueInput.value = transformValue(el.dataset.type, sliderCompoent.sliderElement.value);
-    }
+    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null});
+    sliders[sliderComponent.params.name] = sliderComponent;
 });
 
 
@@ -147,14 +104,15 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
     sliders[name] = sliderCompoent;
 });
 
-form.addEventListener("input", (e) => {
-    generatePreview();
-});
+form.addEventListener("input", debounce(() => {
+    generatePreview(form, colorPreviewCard, sliders);
+}, 100));
+
 
 resetDefaultsButton.addEventListener('click', (e) => {
     e.preventDefault();
     form.reset();
-    generatePreview();
+    generatePreview(form, colorPreviewCard, sliders);
 });
 
 importButton.addEventListener('click', (e) => {
@@ -162,132 +120,57 @@ importButton.addEventListener('click', (e) => {
 
     let message = {
         type: "IMPORT",
-        params: getFormData()
+        params: getFormData(form)
     };
 
     parent.postMessage({ pluginMessage: message }, "*");
 })
 
-generatePreview();
+document.addEventListener("DOMContentLoaded", (event) => {
+    // restoreSavedData();
 
-function getCheckboxValue(propName, formData) {
-    let radii = [];
-
-    formData.forEach((value) => {
-        if (value[propName]) {
-            radii.push(value.radii)
+    parent.postMessage({
+        pluginMessage: {
+            type: 'LOADED'
         }
-    })
+    }, "*");
 
-    return radii;
-}
+    generatePreview(form, colorPreviewCard, sliders);
+});
 
-function getFormData(): ImportFormData {
-    const formEntries = new FormData(form).entries();
-    const entries = Array.from(formEntries, ([x, y]) => ({ [x]: y }));
-    const accentList = systemAccentList;
 
-    let rawValues;
+onmessage = (event) => {
+    console.log("got this from the plugin code", event.data.pluginMessage)
+    const data = event.data.pluginMessage;
 
-    entries.forEach(val => {
-        rawValues = Object.assign(rawValues || {}, val);
-    })
+    // convert string values into numbers for sliders
 
-    return {
-        type: 'IMPORT',
-        singleCollection: rawValues.singleCollection && rawValues.singleCollection === 'true',
-        hue: parseInt(rawValues.hue),
-        saturation: parseInt(rawValues.saturation) / 100,
-        distance: parseInt(rawValues.distance) / 100,
-        primary: accentList[rawValues.primary],
-        info: accentList[rawValues.info],
-        success: accentList[rawValues.success],
-        warning: accentList[rawValues.warning],
-        danger: accentList[rawValues.danger],
-        red: parseInt(rawValues.red),
-        amber: parseInt(rawValues.amber),
-        brown: parseInt(rawValues.brown),
-        green: parseInt(rawValues.green),
-        teal: parseInt(rawValues.teal),
-        cyan: parseInt(rawValues.cyan),
-        blue: parseInt(rawValues.blue),
-        indigo: parseInt(rawValues.indigo),
-        violet: parseInt(rawValues.violet),
-        purple: parseInt(rawValues.purple),
-        pink: parseInt(rawValues.pink),
-        baseFontSize: typographySizeName[rawValues.baseFontSize],
-        typeScale: rawValues.typeScale,
-        createStyles: false,
-        accentSaturation: parseInt(rawValues.accentSaturation) / 100,
-        radii: radiiSizeName[rawValues.radii],
-        spacing: spacingSizeName[rawValues.spacing]
-    };
-}
+    data.saturation = data.saturation * 100;
+    data.distance = data.distance * 100;
+    data.accentSaturation = data.accentSaturation * 100;
 
-function generatePreview() {
-    let data = getFormData();
+    data.baseFontSize = typographySizeName.indexOf(data.baseFontSize);
+    data.spacing = spacingSizeName.indexOf(data.spacing);
+    data.radii = radiiSizeName.indexOf(data.radii);
 
-    console.log(data);
+    data.primary = systemAccentList.indexOf(data.primary);
+    data.info = systemAccentList.indexOf(data.info);
+    data.success = systemAccentList.indexOf(data.success);
+    data.danger = systemAccentList.indexOf(data.danger);
+    data.warning = systemAccentList.indexOf(data.warning);
 
-    for (var a = 1, b = 7; a < b; a++) {
-        const colorLight = chroma.hsl(data.hue, data.saturation, 1 - data.distance * a);
-        const colorDark = chroma.hsl(data.hue, data.saturation, 0.2 + data.distance * a);
-
-        card.style.setProperty(`--light-${a}`, colorLight.hex());
-        card.style.setProperty(`--dark-${a}`, colorDark.hex());
-    }
-
-    sliders['hue'].sliderElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
-    sliders['saturation'].sliderElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
-
-    const semanticSlidersUpdateMap = [
-        ["primary", data.primary],
-        ["info", data.info],
-        ["success", data.success],
-        ["warning", data.warning],
-        ["danger", data.danger],
-    ]
-
-    Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
-        const sliderValue = data[name];
-        const accentColor = chroma.hsl([sliderValue, data.accentSaturation, 0.5]).luminance(0.18);
-        sliders[name].sliderElement.style.setProperty('--thumb-color', accentColor.hex());
-    });
-
-    semanticSlidersUpdateMap.forEach(([sliderName, sliderValue]) => {
-        const sliderAccentColor = sliders[sliderValue].sliderElement.style.getPropertyValue('--thumb-color');
-        sliders[sliderName].sliderElement.style.setProperty('--thumb-color', sliderAccentColor);
-        document.documentElement.style.setProperty(`--${sliderName}`, sliderAccentColor);
-        const valueEl = document.querySelector(`.color-box.a-${sliderName} > .token-value`) as HTMLDivElement;
-        if (valueEl) {
-            valueEl.innerHTML = sliderValue;
-        }
-    });
-
-    generateCSSVars(radii[data.radii]);
-    generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
-    generateCSSVars(spacing[data.spacing]);
-
-    updateValuesDisplay(data);
-
-}
-
-function updateValuesDisplay(data: ImportFormData) {
     Object.entries(data).forEach(([key, value]) => {
-        document.querySelectorAll(`[data-value=${key}]`).forEach((el: HTMLElement) => {
-            el.innerHTML = transformValue(el.dataset.type, value);
-        });
-    })
-}
+        const formElements = form.querySelectorAll(`[name=${key}]`);
 
-function generateCSSVars(tokens = {}) {
-    Object.entries(tokens).forEach(([name, value]) => {
-        const varName = `--${name.replace(/\//g, "-")}`;
-        const type = value['$type'];
-
-        if (type == 'number') {
-            const varValue = parseInt(value["$value"]);
-            document.documentElement.style.setProperty(varName, `${varValue}px`);
-        }
+        formElements.forEach((formEl: HTMLFormElement) => {
+            if (formEl.type == 'radio' && formEl.value === value) {
+                formEl.checked = true;
+                formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
+            }
+            else {
+                formEl.value = value;
+                formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
+            }
+        })
     })
 }

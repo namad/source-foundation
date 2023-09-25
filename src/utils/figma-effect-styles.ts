@@ -16,8 +16,6 @@ interface EffectToken {
     This method reads shadow color values directly from Figma Variables
 */
 export function importEffectStyles(tokens) {
-    debugger;
-
     Object.entries(tokens).forEach(([name, tokenData]) => {
         let token = tokenData as DesignToken;
 

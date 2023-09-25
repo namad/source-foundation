@@ -27,6 +27,7 @@
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "node-fetch": "^3.2.2",
+    "nouislider": "^15.7.1",
     "postcss": "^8.4.25",
     "postcss-loader": "^7.3.3",
     "postcss-preset-env": "^9.0.0",

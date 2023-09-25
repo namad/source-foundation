@@ -107,7 +107,7 @@ a:hover {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1;
+    z-index: 10;
     @apply rounded-none m-0 shadow-md;
 }
 
@@ -290,17 +290,26 @@ fieldset {
     border-width: 1px;
 }
 
+[data-slider] {
+    --thumb-color:  var(--primary);
+}
+
 .sliders label {
     display: flex;
     align-items: center;
 }
 
 .sliders .text-label {
-    flex: 1;
+    width: 20%;
 }
 
-.sliders input[type=range] {
+.sliders .slider {
+    height: var(--slider-track-size);
+    background-color: var(--figma-color-border);
+    border: 0 none;
+    box-shadow: none;
     flex: 3;
+    margin: 0 calc(var(--slider-thumb-size) / 2);
 }
 
 .sliders input[type=text] {
@@ -310,6 +319,35 @@ fieldset {
     text-align: right;
 }
 
+.sliders .slider .noUi-connect {
+    background-color: var(--thumb-color);
+}
+
+.sliders .slider  .noUi-handle {
+    border: calc(var(--slider-thumb-size) / 5) solid white;
+    cursor: default;
+    box-shadow: none;
+
+    
+    height: var(--slider-thumb-size);
+    width: var(--slider-thumb-size);
+
+    top: calc((var(--slider-thumb-size) - var(--slider-track-size)) / -2);
+    right: calc((var(--slider-thumb-size) - var(--slider-track-size)) / -2);
+
+    box-shadow: 0px 1px 2px -1px rgba(0, 35, 41, 0.04), 0px 1px 3px 0px rgba(0, 35, 41, 0.04), 0px 0px 0px 1px rgba(0, 35, 41, 0.1);
+;
+
+    /*custom styles*/
+    background: var(--thumb-color);
+    border-radius: 50%;
+
+}
+
+.sliders .slider  .noUi-handle::before,
+.sliders .slider  .noUi-handle::after {
+    display: none;
+}
 
 [data-semantics] .sliders input[type=text] {
     font-size: 0.9rem;
@@ -489,6 +527,7 @@ a[data-expanded=yes]::after {
 }
 
 dialog {
+    width: 90%;
     color: var(--figma-color-text);
     background-color: var(--figma-color-bg);
     border-radius: var(--radii-lg);
@@ -530,3 +569,5 @@ button.close svg {
 button.close:hover {
     opacity: 1;
 }
+
+

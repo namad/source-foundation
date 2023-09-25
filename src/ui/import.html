@@ -62,10 +62,10 @@
                     data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
                 </div>
                 <div class="flex flex-row mt-2">
-                    <div class="flex-1">Scale</div>
+                    <div class="w-20">Scale</div>
                     <div class="flex flex-col gap-3 flex-3">
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird" checked /> <span>Third (1.200)</span></label>
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorSecond" /> <span>Major Second (1.125)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird" checked /><span>Minor Third (1.200)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorSecond" /><span>Major Second (1.125)</span></label>
                     </div>
                     <div class="w-24"></div>
                 </div>
@@ -117,7 +117,7 @@
                 greater
                 contrast overall
             </p>
-            <div data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2}'>
+            <div data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
 
             <h5 class="font-bold mt-3">Parameters</h5>
@@ -125,10 +125,10 @@
             </p>
 
             <div data-neutrals
-                data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190}'>
+                data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "syncValue": true}'>
             </div>
             <div data-neutrals
-                data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 30, "step": 1, "value": 20}'>
+                data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 30, "step": 1, "value": 20, "syncValue": true}'>
             </div>
         </div>
 
@@ -172,7 +172,7 @@
             <div class="flex flex-col gap-sy-sm" id="accentColorsSliders"></div>
             <hr>
             <div
-                data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90}'>
+                data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "syncValue": true}'>
             </div>
             <p class="text-size-sm opacity-75">Global saturation level for all accent colours. Please note, saturation
                 is 15%
@@ -212,7 +212,7 @@
             </label>
         </div>
 
-        <div class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right">
+        <div class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right z-10">
             <button id="resetDefaultsButton">Reset to Defaults</button>
             <button id="importVariablesButton" class="primary">Import Variables</button>
         </div>
