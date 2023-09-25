@@ -5,10 +5,10 @@ import "../../node_modules/nouislider/dist/nouislider.css";
 
 import { initSlider } from "./slider";
 import { toTitleCase } from "../utils/text-to-title-case";
-import { defaultAccentHUEs, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
+import { defaultAccentHUEs, defaultSettings, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
 
 import { debounce } from "../utils/debounce";
-import { generatePreview, getFormData } from "../utils/import-utils";
+import { ImportFormData, generatePreview, getFormData, loadSettings, transformValue } from "../utils/import-utils";
 
 /*
     UI INITIALIZATION
@@ -21,7 +21,6 @@ let importButton = document.getElementById('importVariablesButton') as HTMLButto
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
 
 let sliders = {};
-let defaultData;
 
 document.querySelectorAll('[data-command="renderAccents"]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
@@ -106,13 +105,13 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
 
 form.addEventListener("input", debounce(() => {
     generatePreview(form, colorPreviewCard, sliders);
-}, 100));
+}, 10));
 
 
 resetDefaultsButton.addEventListener('click', (e) => {
     e.preventDefault();
-    form.reset();
-    generatePreview(form, colorPreviewCard, sliders);
+
+    loadSettings(form, defaultSettings);
 });
 
 importButton.addEventListener('click', (e) => {
@@ -127,12 +126,8 @@ importButton.addEventListener('click', (e) => {
 })
 
 document.addEventListener("DOMContentLoaded", (event) => {
-    // restoreSavedData();
-
     parent.postMessage({
-        pluginMessage: {
-            type: 'LOADED'
-        }
+        pluginMessage: {type: 'LOADED'}
     }, "*");
 
     generatePreview(form, colorPreviewCard, sliders);
@@ -141,36 +136,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 onmessage = (event) => {
     console.log("got this from the plugin code", event.data.pluginMessage)
-    const data = event.data.pluginMessage;
+    const data = event.data.pluginMessage as ImportFormData;
 
     // convert string values into numbers for sliders
 
-    data.saturation = data.saturation * 100;
-    data.distance = data.distance * 100;
-    data.accentSaturation = data.accentSaturation * 100;
-
-    data.baseFontSize = typographySizeName.indexOf(data.baseFontSize);
-    data.spacing = spacingSizeName.indexOf(data.spacing);
-    data.radii = radiiSizeName.indexOf(data.radii);
-
-    data.primary = systemAccentList.indexOf(data.primary);
-    data.info = systemAccentList.indexOf(data.info);
-    data.success = systemAccentList.indexOf(data.success);
-    data.danger = systemAccentList.indexOf(data.danger);
-    data.warning = systemAccentList.indexOf(data.warning);
-
-    Object.entries(data).forEach(([key, value]) => {
-        const formElements = form.querySelectorAll(`[name=${key}]`);
-
-        formElements.forEach((formEl: HTMLFormElement) => {
-            if (formEl.type == 'radio' && formEl.value === value) {
-                formEl.checked = true;
-                formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
-            }
-            else {
-                formEl.value = value;
-                formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
-            }
-        })
-    })
+    loadSettings(form, data);
 }

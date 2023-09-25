@@ -515,7 +515,7 @@ a[data-expanded=yes]::after {
     text-decoration: none;
 }
 
-.action-list span[data-value]::after {
+.action-list li a > span:last-child::after {
     content: '';
     display: inline-block;
     width: 7.29px;
@@ -570,4 +570,7 @@ button.close:hover {
     opacity: 1;
 }
 
-
+:focus-visible {
+    outline: var(--primary) auto 2px;
+    outline-offset: 2px;
+}

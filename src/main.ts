@@ -1,6 +1,6 @@
 import { convertFigmaColorToRgb, parseColor } from './utils/figma-colors';
 import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
-import { getFigmaCollection, setFigmaVariable, findFigmaVariableByName } from "./utils/figma-variables";
+import { getFigmaCollection, setFigmaVariable } from "./utils/figma-variables";
 import { sortColorTokens } from './utils/sort-palette';
 import * as spacing from './spacing-tokens';
 import * as radii from './radii-tokens';
@@ -73,75 +73,7 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
 
     if (eventData.type === "IMPORT") {
 
-        figma.root.setPluginData('SDS', JSON.stringify(params));
-
-        importSystemColorTokens(params);
-
-        importAliases({
-            collectionName: "Component Tokens",
-            modeName: "Default",
-            data: getComponentColors(),
-            sortFn: sortColorTokens
-        });
-
-        importSizeTokens({
-            type: 'spacing',
-            collectionName: 'Spacing',
-            params: params,
-            defaultMode: params.spacing,
-            defaultOrder: spacingSizeName,
-            tokens: spacing
-        });
-
-        importSizeTokens({
-            type: 'radii',
-            collectionName: 'Radii',
-            params: params,
-            defaultMode: params.radii,
-            defaultOrder: radiiSizeName,
-            tokens: radii
-        });
-
-        importSizeTokens({
-            type: 'typeScale',
-            collectionName: 'Type Scale',
-            params: params,
-            defaultMode: params.baseFontSize,
-            defaultOrder: typographySizeName,
-            tokens: typescale,
-            isSingleMode: true
-        });
-
-        // ICONS SCALE
-        importSizeTokens({
-            type: 'iconScale',
-            collectionName: 'Icon Scale',
-            params: params,
-            defaultMode: 'base',
-            defaultOrder: iconSizeName,
-            tokens: sizing
-        });
-
-        // importVariables({
-        //     collectionName: params.singleCollection ? "UI Scale" : "Icon Scale",
-        //     modeName: "Desktop",
-        //     data: params.typeScale == 'large' ? sizing.touch : sizing.base,
-        //     sortFn: sortSizeTokens,
-        //     isSingleMode: true
-        // });
-
-        GlobalTokens = {
-            ...GlobalTokens,
-            ...typescale.getTypograohyTokens(params.baseFontSize, params.typeScale)
-        }
-        importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
-
-        // import effects for default theme which is light one
-        importEffectStyles(effects.elevation);
-
-
-
-        figma.notify("✅ Figma variables has been imported");
+        importAllTokens(params);
 
     } else if (eventData.type === "EXPORT") {
         // exportToJSON(eventData.format);
@@ -179,6 +111,67 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
 };
 
 
+function importAllTokens(params: ImportFormData) {
+    figma.root.setPluginData('SDS', JSON.stringify(params));
+
+    importSystemColorTokens(params);
+
+    importAliases({
+        collectionName: "Component Tokens",
+        modeName: "Default",
+        data: getComponentColors(),
+        sortFn: sortColorTokens
+    });
+
+    importSizeTokens({
+        type: 'spacing',
+        collectionName: 'Spacing',
+        params: params,
+        defaultMode: params.spacing,
+        defaultOrder: spacingSizeName,
+        tokens: spacing
+    });
+
+    importSizeTokens({
+        type: 'radii',
+        collectionName: 'Radii',
+        params: params,
+        defaultMode: params.radii,
+        defaultOrder: radiiSizeName,
+        tokens: radii
+    });
+
+    importSizeTokens({
+        type: 'typeScale',
+        collectionName: 'Type Scale',
+        params: params,
+        defaultMode: params.baseFontSize,
+        defaultOrder: typographySizeName,
+        tokens: typescale,
+        isSingleMode: true
+    });
+
+    // ICONS SCALE
+    importSizeTokens({
+        type: 'iconScale',
+        collectionName: 'Icon Scale',
+        params: params,
+        defaultMode: 'base',
+        defaultOrder: iconSizeName,
+        tokens: sizing
+    });
+
+    GlobalTokens = {
+        ...GlobalTokens,
+        ...typescale.getTypograohyTokens(params.baseFontSize, params.typeScale)
+    };
+    importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
+
+    // import effects for default theme which is light one
+    importEffectStyles(effects.elevation);
+
+    figma.notify("✅ Figma variables has been imported");
+}
 
 function importSystemColorTokens(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
@@ -341,12 +334,6 @@ function loopAliases(tokens: any[], collection: VariableCollection, modeId: any,
     }
 }
 
-interface AliasToken {
-    name: string;
-    referenceName: string;
-    type: string;
-}
-
 function processAlias({
     collection,
     modeId,
@@ -354,8 +341,6 @@ function processAlias({
     variableName,
     token
 }) {
-    let missedTokens = [];
-
     const value = token.$value;
     const sourceVariable = parseVariableReferences(value);
 

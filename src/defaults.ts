@@ -1,3 +1,5 @@
+import { ImportFormData } from "./utils/import-utils"
+
 export const radiiSizeName = [
     "compact",
     "base",
@@ -66,6 +68,36 @@ export const defaultAccentHUEs = {
     "violet": 260,
     "purple": 280,
     "pink": 340
+}
+
+export const defaultSettings: ImportFormData = {
+    type: 'IMPORT',
+    hue: 190,
+    saturation: 0.2,
+    distance: 0.02,
+    primary: 'blue',
+    info: 'teal',
+    success: 'green',
+    warning: 'amber',
+    danger: 'red',
+    red: 4,
+    amber: 25,
+    brown: 33,
+    green: 150,
+    teal: 180,
+    cyan: 200,
+    blue: 210,
+    indigo: 240,
+    violet: 260,
+    purple: 280,
+    pink: 340,
+    baseFontSize: 'base',
+    typeScale: 'minorThird',
+    createStyles: true,
+    accentSaturation: 0.9,
+    radii: 'base',
+    spacing: 'base',
+    singleCollection: false
 }
 
 export interface SemanticAccentColors {
