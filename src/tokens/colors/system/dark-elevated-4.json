@@ -28,27 +28,27 @@
     },
     "contrast": {
       "100": {
-        "$value": "{grey-32}",
+        "$value": "{grey-27}",
         "$type": "color"
       },
       "200": {
-        "$value": "{grey-28}",
+        "$value": "{grey-23}",
         "$type": "color"
       },
       "300": {
-        "$value": "{grey-24}",
+        "$value": "{grey-19}",
         "$type": "color"
       },
       "400": {
-        "$value": "{grey-20}",
+        "$value": "{grey-15}",
         "$type": "color"
       },
       "500": {
-        "$value": "{grey-16}",
+        "$value": "{grey-11}",
         "$type": "color"
       },
       "600": {
-        "$value": "{grey-12}",
+        "$value": "{grey-7}",
         "$type": "color"
       }
     }

@@ -109,10 +109,9 @@ function collectValues(form): ImportFormData {
 }
 
 export function getFormData(form): ImportFormData {
-    const rawValues = collectValues(form);
     return {
         type: 'IMPORT',
-        ...rawValues
+        ...collectValues(form)
     };
 }
 
@@ -120,6 +119,7 @@ export function getFormData(form): ImportFormData {
 export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDivElement, sliders) {
     let data = getFormData(form);
 
+    // render neutral colours preview
     for (var a = 1, b = 7; a < b; a++) {
         const colorLight = chroma.hsl(data.hue, data.saturation, 1 - data.distance * a);
         const colorDark = chroma.hsl(data.hue, data.saturation, 0.2 + data.distance * a);
@@ -128,6 +128,7 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
         colorPreviewCard.style.setProperty(`--dark-${a}`, colorDark.hex());
     }
 
+    // set colours on neutrals hue & sdaturation sliders
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
@@ -151,6 +152,7 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
 
         sliders[colorName].rootElement.style.setProperty('--thumb-color', sliderAccentColor);
         document.documentElement.style.setProperty(`--${colorName}`, sliderAccentColor);
+        document.documentElement.style.setProperty(`--${colorName}-text`, sliderAccentColor.luminance(0.3));
 
         // update text node to display selected value
         const valueEl = document.querySelector(`.color-box.a-${colorName} > .token-value`) as HTMLDivElement;
