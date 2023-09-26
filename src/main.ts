@@ -2,20 +2,20 @@ import { convertFigmaColorToRgb, parseColor } from './utils/figma-colors';
 import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
 import { getFigmaCollection, setFigmaVariable } from "./utils/figma-variables";
 import { sortColorTokens } from './utils/sort-palette';
+
 import * as spacing from './spacing-tokens';
 import * as radii from './radii-tokens';
 import * as typescale from './typescale-tokens';
 import * as sizing from './sizing-tokens';
-
 import * as effects from './effect-tokens';
 
 import { sortSizeTokens } from './utils/sort-sizes';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-tokens/render-accents";
-import { generateGlobalAccentPalette, generateSystemAccentPalette } from './color-tokens/accent-palette-generator';
+import { generateGlobalAccentPalette } from './color-tokens/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palette-generator';
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
-import { parseReferenceGlobal, parseVariableReferences } from './utils/token-references';
+import { parseReferenceGlobal, findVariableReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './utils/import-utils';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
@@ -246,7 +246,7 @@ function createVariableAlias(collection, modeId, variableName, sourceVariable: V
     });
 }
 
-function prepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
+function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
     let modeId;
     const { collection, isNew } = getFigmaCollection(collectionName);
 
@@ -291,7 +291,7 @@ function importVariables({ collectionName, modeName, modeIndex = -1, data, sortF
         collection,
         modeId,
         type
-    } = prepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
+    } = getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
     return tokens.map((token: DesignToken) => {
         return processToken({
@@ -310,7 +310,7 @@ function importAliases({ collectionName, modeName, data, sortFn = null }) {
         collection,
         modeId,
         type
-    } = prepareTokens({ collectionName, modeName, data, sortFn })
+    } = getCollectionAndPrepareTokens({ collectionName, modeName, data, sortFn })
 
     loopAliases(tokens, collection, modeId, data);
 }
@@ -342,7 +342,7 @@ function processAlias({
     token
 }) {
     const value = token.$value;
-    const sourceVariable = parseVariableReferences(value);
+    const sourceVariable = findVariableReferences(value);
 
     if (sourceVariable) {
         return {

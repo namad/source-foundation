@@ -1,6 +1,6 @@
 import { DesignToken } from "../main";
 import { convertToFigmaColor } from "./figma-colors";
-import { parseReferenceGlobal, parseVariableReferences } from "./token-references";
+import { parseReferenceGlobal, findVariableReferences } from "./token-references";
 
 
 interface EffectToken {
@@ -24,7 +24,7 @@ export function importEffectStyles(tokens) {
             const values = token.$value as EffectToken[];
 
             const resolved = values.map(value => {
-                const figmaVariable = parseVariableReferences(value.color);
+                const figmaVariable = findVariableReferences(value.color);
                 const collectionID = figmaVariable.variableCollectionId;
                 const collection = figma.variables.getVariableCollectionById(collectionID);
                 const defaultMode = collection.modes[0].modeId;

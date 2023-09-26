@@ -6,7 +6,7 @@ export function findTokenReferences(tokenValue: string) {
     return tokenValue?.toString().match(aliasRegex)
 };
 
-export function parseVariableReferences(value: string): Variable {
+export function findVariableReferences(value: string): Variable {
     let references = findTokenReferences(value);
     let results = [];
     
