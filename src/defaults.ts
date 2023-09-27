@@ -76,7 +76,7 @@ export const defaultSettings: ImportFormData = {
     saturation: 0.2,
     distance: 0.02,
     primary: 'blue',
-    info: 'teal',
+    info: 'cyan',
     success: 'green',
     warning: 'amber',
     danger: 'red',

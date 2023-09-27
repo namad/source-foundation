@@ -4,8 +4,9 @@
 
 :root {
     --spacing: 0.5rem 1rem;
-    --slider-thumb-size: 1.5rem;
-    --slider-track-size: 0.25rem;
+    --slider-thumb-size: var(--line-height-md);
+    --slider-track-size: calc(var(--line-height-md) / 4);
+    --slider-margin: calc(var(--slider-thumb-size) / 2);
 
     --primary: #0C75D0;
     --primary-text: #65a5dd;
@@ -310,7 +311,7 @@ fieldset {
     border: 0 none;
     box-shadow: none;
     flex: 3;
-    margin: 0 calc(var(--slider-thumb-size) / 2);
+    margin: 0 var(--slider-margin);
 }
 
 .sliders input[type=text] {
@@ -343,6 +344,10 @@ fieldset {
     background: var(--thumb-color);
     border-radius: 50%;
 
+}
+
+.sliders .slider:hover  .noUi-handle {
+    border: calc(var(--slider-thumb-size) / 4) solid white;
 }
 
 .sliders .slider  .noUi-handle::before,
@@ -528,7 +533,7 @@ a[data-expanded=yes]::after {
 }
 
 dialog {
-    width: 90%;
+    width: 95%;
     color: var(--figma-color-text);
     background-color: var(--figma-color-bg);
     border-radius: var(--radii-lg);

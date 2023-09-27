@@ -125,13 +125,11 @@ importButton.addEventListener('click', (e) => {
     parent.postMessage({ pluginMessage: message }, "*");
 })
 
-document.addEventListener("DOMContentLoaded", (event) => {
-    parent.postMessage({
-        pluginMessage: {type: 'LOADED'}
-    }, "*");
+parent.postMessage({
+    pluginMessage: {type: 'LOADED'}
+}, "*");
 
-    generatePreview(form, colorPreviewCard, sliders);
-});
+generatePreview(form, colorPreviewCard, sliders);
 
 
 onmessage = (event) => {
