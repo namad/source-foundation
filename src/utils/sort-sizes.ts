@@ -1,4 +1,5 @@
 const paletteOrder = [
+    'none',
     'xs5',
     'xs5',
     'xs3',
@@ -14,7 +15,8 @@ const paletteOrder = [
     'xl4',
     'xl5',
     'xl6',
-    'xl7'
+    'xl7',
+    'round'
 ]
 
 export function sortSizeTokens(firstEl, secondEl) {

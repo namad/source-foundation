@@ -36,7 +36,7 @@ let GlobalTokens;
     if (figma.command === "import") {
         figma.showUI(__uiFiles__["import"], {
             width: 480,
-            height: 600,
+            height: 720,
             themeColors: true,
         });
     }

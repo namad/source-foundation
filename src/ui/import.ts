@@ -70,7 +70,7 @@ document.querySelectorAll('[data-expander][data-role="trigger"]').forEach((el: H
     if (next.dataset.role == 'container') {
         el.addEventListener('click', (e) => {
             e.preventDefault();
-            next.style.display = next.style.display == 'none' ? 'block' : 'none';
+            next.style.display = next.style.display == 'none' ? 'inherit' : 'none';
             el.setAttribute('data-expanded', next.style.display == 'none' ? 'no' : 'yes');
         })
     }

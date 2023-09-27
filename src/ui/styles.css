@@ -4,9 +4,9 @@
 
 :root {
     --spacing: 0.5rem 1rem;
-    --slider-thumb-size: var(--line-height-md);
-    --slider-track-size: calc(var(--line-height-md) / 4);
-    --slider-margin: calc(var(--slider-thumb-size) / 2);
+    --slider-thumb-size: calc(var(--line-height-md) + var(--sy-xs));
+    --slider-track-size: calc(var(--slider-thumb-size) / 4);
+    --slider-margin: var(--slider-thumb-size);
 
     --primary: #0C75D0;
     --primary-text: #65a5dd;
@@ -315,10 +315,15 @@ fieldset {
 }
 
 .sliders input[type=text] {
-    width: 6rem;
-    border: 0 none;
+    width: 5rem;
+    border: 1px solid var(--figma-color-border);
     background: transparent;
-    text-align: right;
+    text-align: center;
+    border-radius: var(--radii-base);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .sliders .slider .noUi-connect {

@@ -26,9 +26,9 @@ export const typographySizeName = [
 ]
 
 export const typographySizeValues = [
-    "12/16",
-    "14/20",
-    "16/24",
+    "13/16",
+    "15/20",
+    "17/24",
 ]
 
 export const iconSizeName = [

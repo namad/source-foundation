@@ -35,7 +35,7 @@ export interface ImportFormData {
     singleCollection: boolean;
 }
 
-export function transformValue(name: string, value: any): string | number {
+export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT'): string | number {
     let val = parseInt(value);
     let valueMap;
 
@@ -63,11 +63,11 @@ export function transformValue(name: string, value: any): string | number {
         case 'saturation':
         case 'distance':
         case 'accentSaturation': {
-            if (val > 1) {
-                val = val / 100;
-            }
-            else if (val === 0) {
+            if (direction === 'IN') {
                 val = parseFloat(value) * 100;
+            }
+            if (direction === 'OUT') {
+                val = val / 100;
             }
             break;        
         }
@@ -92,7 +92,7 @@ function collectValues(form): ImportFormData {
 
         if (formEl.type == 'radio') {
             if(formEl.checked) {
-                rawValues[fieldName] = transformValue(formEl.name, formEl.value);
+                rawValues[fieldName] = transformValue(formEl.name, formEl.value, "OUT");
             }
             return;
         }
@@ -102,7 +102,7 @@ function collectValues(form): ImportFormData {
             return;
         }
 
-        rawValues[fieldName] = transformValue(formEl.name, formEl.value);
+        rawValues[fieldName] = transformValue(formEl.name, formEl.value, "OUT");
     })
 
     return rawValues as ImportFormData;
@@ -193,7 +193,7 @@ function generateCSSVars(tokens = {}) {
 export function loadSettings(form: HTMLFormElement, data: ImportFormData) {
     Object.entries(data).forEach(([key, value]) => {
         const formElements = form.querySelectorAll(`[name=${key}]`);
-        const val = transformValue(key, value);
+        const val = transformValue(key, value, "IN");
 
         formElements.forEach((formEl: HTMLFormElement) => {
             if (formEl.type == 'radio') {
