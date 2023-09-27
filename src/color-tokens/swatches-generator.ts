@@ -105,7 +105,7 @@ function getRow(parentNode, isWhite: boolean) {
     };
 }
 
-function outputHSL(chromaColor) {
+export function outputHSL(chromaColor) {
     const [h, s, l] = chromaColor.hsl();
     return [Math.round(h), roundTwoDigits(s), roundTwoDigits(l)];
 }

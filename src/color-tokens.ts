@@ -35,7 +35,7 @@ export function getComponentColors() {
     return flattenObject(componentTokens);
 }
 
-export function getThemeColors(theme, params: ImportFormData) {
+export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated', params: ImportFormData) {
 
     GlobalNeutrals = generateNeutrals({
         hue: params.hue,

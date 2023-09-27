@@ -4,6 +4,11 @@ import * as typescale from "../typescale-tokens";
 import * as spacing from "../spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle, toTitleCase } from "./text-to-title-case";
+import { getGlobalAccent } from "../color-tokens/accent-palette-generator";
+import { roundTwoDigits } from "./round-two-digits";
+import { getThemeColors } from "../color-tokens";
+import { convertToFigmaColor } from "./figma-colors";
+import { outputHSL } from "../color-tokens/swatches-generator";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -30,6 +35,9 @@ export interface ImportFormData {
     typeScale: string;
     createStyles: boolean;
     accentSaturation: number;
+    accentMinLuminance: number;
+    accentMidLuminance: number;
+    accentMaxLuminance: number;
     radii: string;
     spacing: string;
     singleCollection: boolean;
@@ -62,7 +70,10 @@ export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT
         }
         case 'saturation':
         case 'distance':
-        case 'accentSaturation': {
+        case 'accentSaturation': 
+        case 'accentMaxLuminance':
+        case 'accentMidLuminance':
+        case 'accentMinLuminance': {
             if (direction === 'IN') {
                 val = parseFloat(value) * 100;
             }
@@ -161,6 +172,63 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
         }
     });
 
+
+
+    const primaryColorHUE = data.primary
+    const shades = getGlobalAccent(
+                        data[primaryColorHUE],
+                        data.accentSaturation,
+                        data.accentMinLuminance,
+                        data.accentMidLuminance,
+                        data.accentMaxLuminance
+                    )
+
+    const darkThemeMq = false; //window.matchMedia("(prefers-color-scheme: dark)");
+    const themeColors = getThemeColors(darkThemeMq ? 'darkBase' : 'lightBase', data);
+
+    Object.entries(themeColors).forEach(([name, token]) => {
+        if (name.includes(data.primary)) {
+            const index = name.split('/')[2];
+            const { r, g, b, a } = convertToFigmaColor(token['$value']);
+            const chromaColor = chroma.gl(r, g, b, a)
+            document.documentElement.style.setProperty(`--lum-${index}`, chromaColor.css());
+
+            const toolTip = document.querySelector(`.color-box.lum-${index} .toolip-body`) as HTMLDivElement;
+            const valueEl = document.querySelector(`.color-box.lum-${index} .token-value`) as HTMLDivElement;
+            const contrast1 = roundTwoDigits(chroma.contrast("white", chromaColor.css()));
+            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor.css()));
+            const hsl = outputHSL(chromaColor).join(", ");
+            if (valueEl) {
+                valueEl.innerHTML = `${contrast1}`;
+            }
+            if (toolTip) {
+                toolTip.innerHTML = `
+                    <div class="row flex flex-row justify-between">
+                        <span class="text-size-xs opacity-70">vs white</span>
+                        <span class="text-size-xs">${contrast1}</span>
+                    </div>
+                    <div class="row flex flex-row justify-between">
+                        <span class="text-size-xs opacity-70">vs black</span>
+                        <span class="text-size-xs">${contrast2}</span>
+                    </div>
+                    <div class="row flex flex-row justify-between">
+                        <span class="text-size-xs opacity-70">hsl</span>
+                        <span class="text-size-xs">${hsl}</span>
+                    </div>`
+            }
+        }
+    });
+
+    // Object.entries(shades).forEach(([name, token], index) => {
+    //     document.documentElement.style.setProperty(`--lum-${name}`, token.$value);
+    //     const colorBox = document.querySelector(`.color-box.lum-${name}`) as HTMLDivElement;
+    //     const valueEl = document.querySelector(`.color-box.lum-${name} .token-value`) as HTMLDivElement;
+    //     const contrast = roundTwoDigits(chroma.contrast("white", token.$value))
+    //     if (valueEl) {
+    //         valueEl.innerHTML = `${contrast}`;
+    //     }        
+    // })
+
     generateCSSVars(radii[data.radii]);
     generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacing[data.spacing]);
@@ -172,7 +240,7 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
 function updateValuesDisplay(data: ImportFormData) {
     Object.entries(data).forEach(([key, value]) => {
         document.querySelectorAll(`[data-value=${key}]`).forEach((el: HTMLElement) => {
-            el.innerHTML = camelToTitle(value);
+            el.innerHTML = camelToTitle(`${value}`);
         });
     })
 }
@@ -209,4 +277,3 @@ export function loadSettings(form: HTMLFormElement, data: ImportFormData) {
         });
     });
 }
-

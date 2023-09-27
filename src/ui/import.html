@@ -20,23 +20,23 @@
             <div class="flex flex-row gap-0 radii-base overflow-hidden">
                 <div class="color-box flex-1 a-primary radii-base mr-1">
                     <div>Primary</div>
-                    <div class="token-value"></div>
+                    <div class="token-value opacity-70"></div>
                 </div>
                 <div class="color-box flex-1 radii-base-l a-info">
                     <div>Info</div>
-                    <div class="token-value"></div>
+                    <div class="token-value opacity-70"></div>
                 </div>
                 <div class="color-box flex-1 a-success">
                     <div>Success</div>
-                    <div class="token-value"></div>
+                    <div class="token-value opacity-70"></div>
                 </div>
                 <div class="color-box flex-1 a-warning">
                     <div>Warning</div>
-                    <div class="token-value"></div>
+                    <div class="token-value opacity-70"></div>
                 </div>
                 <div class="color-box flex-1 a-danger">
                     <div>Danger</div>
-                    <div class="token-value"></div>
+                    <div class="token-value opacity-70"></div>
                 </div>
             </div>
         </div>
@@ -176,7 +176,74 @@
             <p class="text-size-sm opacity-75">Global saturation level for all accent colours. Please note, saturation
                 is 15%
                 lower in dark mode</p>
+            <hr>
 
+            <a href="#" data-expander data-role="trigger" data-expanded="no" class="text-size-sm">Advanced Settings</a>
+
+            <div data-expander data-role="container" class="flex flex-col gap-sy-base" style="display: none;">
+
+                <p class="text-size-sm opacity-75">
+                    Adjust accent colours luminancy. 
+                    Numbers are contrast ratio against white. 
+                    Mid slider determines primary accent color lightness, marked with bold text.
+                </p>
+                <div class="flex flex-row gap-0">
+                    <!-- <div class="color-box flex-1 lum-700"><div><span class="token-value"></span> : 1</div></div> -->
+                    <div class="color-box flex-1 lum-600 radii-base-l">
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value opacity-70"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                        </div>
+                        <div class="tooltip flex flex-col gap-sy-sm">
+                            <div class="row">Text on dark surface</div>
+                            <div class="toolip-body"></div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 lum-500">
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value opacity-70"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                        </div>
+                        <div class="tooltip flex flex-col gap-sy-sm">
+                            <div class="row">Text on light surface</div>
+                            <div class="toolip-body"></div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 lum-400">
+                        <div class="flex flex-row gap-1 font-bold">
+                            <span class="token-value"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                        </div>
+                        <div class="tooltip flex flex-col gap-sy-sm">
+                            <div class="row">Background color</div>
+                            <div class="toolip-body"></div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 lum-300">
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value opacity-70"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                        </div>
+                        <div class="tooltip flex flex-col gap-sy-sm">
+                            <div class="row">Non-textual element</div>
+                            <div class="toolip-body"></div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 lum-200">
+                        <div class="tooltip flex flex-col gap-sy-sm">
+                            <div class="row">Light background</div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 lum-100 radii-base-r">
+                        <div class="tooltip flex flex-col gap-sy-sm">
+                            <div class="row">Subtle background</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sliders flex flex-row items-center">
+                    <div id="luminanceSlider" class="slider"></div>
+                    <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
+                    <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
+                    <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
+                </div>
+            </div>
         </div>
 
         <div class="card" id="ui-scale">

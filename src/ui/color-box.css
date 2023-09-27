@@ -1,0 +1,149 @@
+.color-box {
+    min-height: 2rem;
+    position: relative;
+    padding: 0.5rem;
+    color: white;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.color-box.l-1 {
+    background-color: var(--light-1);
+}
+
+.color-box.l-2 {
+    background-color: var(--light-2);
+}
+
+.color-box.l-3 {
+    background-color: var(--light-3);
+}
+
+.color-box.l-4 {
+    background-color: var(--light-4);
+}
+
+.color-box.l-5 {
+    background-color: var(--light-5);
+}
+
+.color-box.d-1 {
+    background-color: var(--dark-1);
+}
+
+.color-box.d-2 {
+    background-color: var(--dark-2);
+}
+
+.color-box.d-3 {
+    background-color: var(--dark-3);
+}
+
+.color-box.d-4 {
+    background-color: var(--dark-4);
+}
+
+.color-box.d-5 {
+    background-color: var(--dark-5);
+}
+
+.color-box.a-primary {
+    background-color: var(--primary);
+}
+
+.color-box.a-info {
+    background-color: var(--info);
+}
+
+.color-box.a-success {
+    background-color: var(--success);
+}
+
+.color-box.a-warning {
+    background-color: var(--warning);
+}
+
+.color-box.a-danger {
+    background-color: var(--danger);
+}
+
+.color-box.lum-100 {
+    background-color: var(--lum-100);
+}
+.color-box.lum-200 {
+    background-color: var(--lum-200);
+}
+.color-box.lum-300 {
+    background-color: var(--lum-300);
+}
+.color-box.lum-400 {
+    background-color: var(--lum-400);
+}
+.color-box.lum-500 {
+    background-color: var(--lum-500);
+}
+.color-box.lum-600 {
+    background-color: var(--lum-600);
+}
+.color-box.lum-700 {
+    background-color: var(--lum-700);
+}
+
+.color-box .token-value {
+    display: block;
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xs);
+}
+
+
+.color-box .tooltip {
+    position: absolute;
+    display: none;
+    width: 250%;
+    padding: var(--sy-sm) var(--sx-sm);
+    background: var(--figma-color-bg);
+    border-color: var(--figma-color-border);
+    color: var(--figma-color-text);
+    border-radius: var(--radii-base);
+    outline: 1px solid color-mix(in srgb, var(--figma-color-text), transparent 90%);
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    @apply shadow-lg;
+
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xs);
+}
+
+.color-box:first-child .tooltip {
+    left: 0;
+    transform: none;
+}
+
+.color-box:last-child .tooltip {
+    left: initial;
+    right: 0;
+    transform: none;
+}
+
+
+.color-box:hover .tooltip {
+    display: flex;
+}
+
+.color-box .contrast-1::before {
+    content: var(--contrast-white);
+    display: inline;
+}
+.color-box .contrast-2::before {
+    content: var(--contrast-white);
+    display: inline;
+}
+.color-box .hsl::before {
+    content: var(--hsl);
+    display: inline;
+}

@@ -32,6 +32,10 @@
     border-radius: var(--radii-base) 0 0 var(--radii-base);
 }
 
+.radii-base-r {
+    border-radius: 0 var(--radii-base) var(--radii-base) 0;
+}
+
 .radii-md {
     border-radius: var(--radii-md);
 }

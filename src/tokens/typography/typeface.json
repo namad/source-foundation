@@ -1,11 +1,11 @@
 {
-    "font-families": {
+    "font-family": {
         "primary": {
             "$value": "Inter",
             "$type": "fontFamilies"
         }
     },
-    "font-weights": {
+    "font-weight": {
         "regular": {
             "$value": "Regular",
             "$type": "fontWeights"
@@ -26,5 +26,25 @@
             "$value": "Italic",
             "$type": "fontWeights"
         }
-    }
+    },
+    "text-case": {
+        "none": {
+            "$value": "none",
+            "$type": "textCase"
+        },
+        "uppercase": {
+            "$value": "uppercase",
+            "$type": "textCase"
+        }
+    },
+    "text-decoration": {
+        "none": {
+            "$value": "none",
+            "$type": "textDecoration"
+        },
+        "underline": {
+            "$value": "underline",
+            "$type": "textDecoration"
+        }
+    }    
 }

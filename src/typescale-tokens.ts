@@ -44,9 +44,9 @@ export function getTypograohyTokens(size: string, scale = "minorThird") {
 export function getFontDetails() {
     let names = [];
     const tokens = typeFaceTokens;
-    const family = typeFaceTokens["font-families"].primary.$value;
+    const family = typeFaceTokens["font-family"].primary.$value;
 
-    for (let [name, fontWeight] of Object.entries(typeFaceTokens["font-weights"])) {
+    for (let [name, fontWeight] of Object.entries(typeFaceTokens["font-weight"])) {
         names.push({ family, style: fontWeight.$value });
     }
 

@@ -84,15 +84,6 @@
     },
     "sy": {
         "xs4": {
-            "$value": "1",
-            "$type": "number",
-            "scopes": [
-                "TEXT_CONTENT",
-                "WIDTH_HEIGHT",
-                "GAP"
-            ]
-        },
-        "xs3": {
             "$value": "2",
             "$type": "number",
             "scopes": [
@@ -101,8 +92,17 @@
                 "GAP"
             ]
         },
-        "xs2": {
+        "xs3": {
             "$value": "4",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "xs2": {
+            "$value": "6",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

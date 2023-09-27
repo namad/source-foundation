@@ -95,26 +95,21 @@ function getShadesTemplate(theme): ColorShadesScale {
 }
 
 function getColorParams(theme, params: ImportFormData) {
-    switch (theme) {
-        case 'light': {
-            return {
-                saturation: params.accentSaturation, //0.9 is default value
-                minLuminance: 0.1,
-                maxLuminance: 0.29
-            }
-        }
-        case 'dark': {
-            return {
-                saturation: params.accentSaturation * 0.85,
-                minLuminance: 0.1,
-                maxLuminance: 0.45,
-            }
-        }
+    let colorParams ={
+        saturation: params.accentSaturation, //0.9 is default value
+        minLuminance: params.accentMinLuminance,
+        midLuminance: params.accentMidLuminance,
+        maxLuminance: params.accentMaxLuminance,    
     }
+    if (theme == 'dark') {
+        colorParams.saturation = params.accentSaturation * 0.85;
+        // colorParams.maxLuminance = params.accentMaxLuminance * 0.85;
+    }
+    return colorParams;
 }
 
 export function generateSystemAccentPalette(theme, params: ImportFormData): SystemAccentList {
-    const  {  saturation, minLuminance, maxLuminance } = getColorParams(theme, params);
+    const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
 
     let accents: SystemAccentList = {
         red: getShadesTemplate(theme),
@@ -132,7 +127,7 @@ export function generateSystemAccentPalette(theme, params: ImportFormData): Syst
 
     for (const [name, scale] of Object.entries(accents)) {
         const hue = params[name];
-        const shades = getGlobalAccent(hue, saturation, minLuminance, maxLuminance);
+        const shades = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance);
         accents[name] = getThemeScale(scale, shades)
     }
 
@@ -140,20 +135,21 @@ export function generateSystemAccentPalette(theme, params: ImportFormData): Syst
 }
 
 export function generateGlobalAccentPalette(theme: string, params: ImportFormData): SystemAccentList {
-    const  {  saturation, minLuminance, maxLuminance } = getColorParams(theme, params);
+    const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
         const hue = params[name];
-        accents[name] = getGlobalAccent(hue, saturation, minLuminance, maxLuminance/*, 0.9, 15 */);
+        accents[name] = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance/*, 0.9, 15 */);
     })
     return accents;
 }
 
-function getGlobalAccent(hue: number, saturation: number, minLuminance: number, maxLuminance: number, steps = 7) {
+export function getGlobalAccent(hue: number, saturation: number, minLuminance: number, midLiminance: number, maxLuminance: number, steps = 7) {
     const range = getRangeOfThree({
         hue,
         saturation,
         minLuminance,
+        midLiminance,
         maxLuminance
     });
     const shades = getScale(range, steps);
@@ -183,14 +179,14 @@ function getScale(colors, count = 9): ColorShadesScale {
     return tokens;
 }
 
-function getRangeOfThree({ hue, saturation, minLuminance = 0.1, maxLuminance = 0.29 }) {
+function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }) {
 
     let color1 = chroma.hsl([hue * 0.96, saturation * 0.95, 0.5])
         .luminance(maxLuminance)
 
     // this one always 4.5 : 1 contrast ratio
     let color2 = chroma.hsl([hue, saturation * 1, 0.5])
-        .luminance(0.18)
+        .luminance(midLiminance)
 
     let color3 = chroma.hsl([hue * 1.04, saturation * 0.95, 0.5])
         .luminance(minLuminance)

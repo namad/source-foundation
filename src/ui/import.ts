@@ -1,8 +1,10 @@
 import "./utils.css";
 import "./styles.css";
+import "./color-box.css";
 import "../../node_modules/nouislider/dist/nouislider.css";
 
 
+import noUiSlider from 'nouislider';
 import { initSlider } from "./slider";
 import { toTitleCase } from "../utils/text-to-title-case";
 import { defaultAccentHUEs, defaultSettings, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
@@ -101,6 +103,36 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
     const sliderCompoent = initSlider(el, options);
     accentSlidersContainer.appendChild(el);
     sliders[name] = sliderCompoent;
+});
+
+const luminanceSlider = document.getElementById('luminanceSlider');
+const luminanceSliderVals = [
+    document.getElementById('luminanceValMin') as HTMLInputElement,
+    document.getElementById('luminanceValMid') as HTMLInputElement,
+    document.getElementById('luminanceValMax') as HTMLInputElement
+]
+
+noUiSlider.create(luminanceSlider, {
+    start: [10, 18, 45],
+    connect: [false, true, true, false],
+    step: 1,
+    tooltips: true,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+}).on('update', function (values, handle) {
+    luminanceSliderVals[handle].value = values[handle] as string;
+    form.dispatchEvent(new Event('input', { 'bubbles': true }));
+});
+
+luminanceSliderVals.forEach((element, index) => {
+    let val = [null, null, null];
+   
+    element.addEventListener("input", () => {
+        val[index] = element.value;
+        luminanceSlider['noUiSlider'].set(val);
+    });
 });
 
 form.addEventListener("input", debounce(() => {
