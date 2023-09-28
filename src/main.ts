@@ -15,7 +15,7 @@ import { renderAccents } from "./color-tokens/render-accents";
 import { generateGlobalAccentPalette } from './color-tokens/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palette-generator';
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
-import { parseReferenceGlobal, findVariableReferences } from './utils/token-references';
+import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './utils/import-utils';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
@@ -342,7 +342,7 @@ function processAlias({
     token
 }) {
     const value = token.$value;
-    const sourceVariable = findVariableReferences(value);
+    const sourceVariable = findVariableByReferences(value);
 
     if (sourceVariable) {
         return {

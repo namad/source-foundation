@@ -7,8 +7,9 @@ import { camelToTitle, toTitleCase } from "./text-to-title-case";
 import { getGlobalAccent } from "../color-tokens/accent-palette-generator";
 import { roundTwoDigits } from "./round-two-digits";
 import { getThemeColors } from "../color-tokens";
-import { convertToFigmaColor } from "./figma-colors";
+import { convertToFigmaColor, parseColor } from "./figma-colors";
 import { outputHSL } from "../color-tokens/swatches-generator";
+import { DesignToken } from "../main";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -131,46 +132,46 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
     let data = getFormData(form);
 
     // render neutral colours preview
-    for (var a = 1, b = 7; a < b; a++) {
-        const colorLight = chroma.hsl(data.hue, data.saturation, 1 - data.distance * a);
-        const colorDark = chroma.hsl(data.hue, data.saturation, 0.2 + data.distance * a);
+    // for (var a = 1, b = 7; a < b; a++) {
+    //     const colorLight = chroma.hsl(data.hue, data.saturation, 1 - data.distance * a);
+    //     const colorDark = chroma.hsl(data.hue, data.saturation, 0.2 + data.distance * a);
 
-        colorPreviewCard.style.setProperty(`--light-${a}`, colorLight.hex());
-        colorPreviewCard.style.setProperty(`--dark-${a}`, colorDark.hex());
-    }
+    //     colorPreviewCard.style.setProperty(`--light-${a}`, colorLight.hex());
+    //     colorPreviewCard.style.setProperty(`--dark-${a}`, colorDark.hex());
+    // }
 
     // set colours on neutrals hue & sdaturation sliders
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
-    const semanticSlidersUpdateMap = [
-        ["primary", data.primary],
-        ["info", data.info],
-        ["success", data.success],
-        ["warning", data.warning],
-        ["danger", data.danger],
-    ]
+    // const semanticSlidersUpdateMap = [
+    //     ["primary", data.primary],
+    //     ["info", data.info],
+    //     ["success", data.success],
+    //     ["warning", data.warning],
+    //     ["danger", data.danger],
+    // ]
 
-    Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
-        const sliderValue = data[name];
-        const accentColor = chroma.hsl(sliderValue, data.accentSaturation, 0.5).luminance(0.18);
-        sliders[name].rootElement.style.setProperty('--thumb-color', accentColor.hex());
-    });
+    // Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
+    //     // const sliderValue = data[name];
+    //     // const accentColor = chroma.hsl(sliderValue, data.accentSaturation, 0.5).luminance(0.18);
+    //     // sliders[name].rootElement.style.setProperty('--thumb-color', accentColor.hex());
+    // });
 
-    semanticSlidersUpdateMap.forEach(([colorName, accentReference]) => {
-        const sliderAccentColorHUE = data[accentReference];
-        const sliderAccentColor = chroma.hsl(sliderAccentColorHUE, data.accentSaturation, 0.5).luminance(0.18);
+    // semanticSlidersUpdateMap.forEach(([colorName, accentReference]) => {
+    //     const sliderAccentColorHUE = data[accentReference];
+    //     const sliderAccentColor = chroma.hsl(sliderAccentColorHUE, data.accentSaturation, 0.5).luminance(0.18);
 
-        sliders[colorName].rootElement.style.setProperty('--thumb-color', sliderAccentColor);
-        document.documentElement.style.setProperty(`--${colorName}`, sliderAccentColor);
-        document.documentElement.style.setProperty(`--${colorName}-text`, sliderAccentColor.luminance(0.3));
+    //     sliders[colorName].rootElement.style.setProperty('--thumb-color', sliderAccentColor);
+    //     document.documentElement.style.setProperty(`--${colorName}`, sliderAccentColor);
+    //     document.documentElement.style.setProperty(`--${colorName}-text`, sliderAccentColor.luminance(0.3));
 
-        // update text node to display selected value
-        const valueEl = document.querySelector(`.color-box.a-${colorName} > .token-value`) as HTMLDivElement;
-        if (valueEl) {
-            valueEl.innerHTML = accentReference;
-        }
-    });
+    //     // update text node to display selected value
+    //     const valueEl = document.querySelector(`.color-box.a-${colorName} > .token-value`) as HTMLDivElement;
+    //     if (valueEl) {
+    //         valueEl.innerHTML = accentReference;
+    //     }
+    // });
 
 
 
@@ -186,12 +187,22 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
     const darkThemeMq = false; //window.matchMedia("(prefers-color-scheme: dark)");
     const themeColors = getThemeColors(darkThemeMq ? 'darkBase' : 'lightBase', data);
 
+    debugger;
+
+    generateCSSVars(themeColors);
+
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
+
+            console.log(`input color: ${name}, value: ${token['$value']}`);
+
             const index = name.split('/')[2];
-            const { r, g, b, a } = convertToFigmaColor(token['$value']);
-            const chromaColor = chroma.gl(r, g, b, a)
-            document.documentElement.style.setProperty(`--lum-${index}`, chromaColor.css());
+            const { gl, rgb } = convertToFigmaColor(token['$value']);
+            const chromaColor = chroma.gl(gl.r, gl.g, gl.b, gl.a);
+
+            console.log(`converted ${chromaColor.css()}`);
+
+            document.documentElement.style.setProperty(`--lum-${index}`, rgb);
 
             const toolTip = document.querySelector(`.color-box.lum-${index} .toolip-body`) as HTMLDivElement;
             const valueEl = document.querySelector(`.color-box.lum-${index} .token-value`) as HTMLDivElement;
@@ -246,19 +257,25 @@ function updateValuesDisplay(data: ImportFormData) {
 }
 
 function generateCSSVars(tokens = {}) {
-    Object.entries(tokens).forEach(([name, value]) => {
+    Object.entries(tokens).forEach(([name, token]) => {
         const varName = `--${name.replace(/\//g, "-")}`;
-        const type = value['$type'];
+        const type = token['$type'];
 
         if (type == 'number') {
-            const varValue = parseInt(value["$value"]);
+            const varValue = parseInt(token["$value"]);
             document.documentElement.style.setProperty(varName, `${varValue}px`);
+        }
+
+        if (type == 'color') {
+            const rgb = parseColor(token as DesignToken, tokens, 'rgb');
+            debugger;
+            document.documentElement.style.setProperty(varName, `${rgb}`);
         }
     })
 }
 
 
-export function loadSettings(form: HTMLFormElement, data: ImportFormData) {
+export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
     Object.entries(data).forEach(([key, value]) => {
         const formElements = form.querySelectorAll(`[name=${key}]`);
         const val = transformValue(key, value, "IN");
@@ -267,11 +284,13 @@ export function loadSettings(form: HTMLFormElement, data: ImportFormData) {
             if (formEl.type == 'radio') {
                 if (formEl.value === value) {
                     formEl.checked = true;
-                    formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
                 }
             }
             else {
                 formEl.value = val;
+            }
+
+            if (silent !== true) {
                 formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
             }
         });

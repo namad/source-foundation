@@ -52,45 +52,42 @@
 }
 
 .color-box.a-primary {
-    background-color: var(--primary);
+    background-color: var(--primary-500);
 }
 
 .color-box.a-info {
-    background-color: var(--info);
+    background-color: var(--info-500);
 }
 
 .color-box.a-success {
-    background-color: var(--success);
+    background-color: var(--success-500);
 }
 
 .color-box.a-warning {
-    background-color: var(--warning);
+    background-color: var(--warning-500);
 }
 
 .color-box.a-danger {
-    background-color: var(--danger);
+    background-color: var(--danger-500);
 }
 
 .color-box.lum-100 {
-    background-color: var(--lum-100);
+    background-color: var(--primary-100);
 }
 .color-box.lum-200 {
-    background-color: var(--lum-200);
+    background-color: var(--primary-200);
 }
 .color-box.lum-300 {
-    background-color: var(--lum-300);
+    background-color: var(--primary-300);
 }
 .color-box.lum-400 {
-    background-color: var(--lum-400);
+    background-color: var(--primary-400);
 }
 .color-box.lum-500 {
-    background-color: var(--lum-500);
+    background-color: var(--primary-500);
 }
 .color-box.lum-600 {
-    background-color: var(--lum-600);
-}
-.color-box.lum-700 {
-    background-color: var(--lum-700);
+    background-color: var(--primary-600);
 }
 
 .color-box .token-value {

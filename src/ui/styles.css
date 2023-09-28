@@ -7,49 +7,6 @@
     --slider-thumb-size: calc(var(--line-height-md) + var(--sy-xs));
     --slider-track-size: calc(var(--slider-thumb-size) / 4);
     --slider-margin: var(--slider-thumb-size);
-
-    --primary: #0C75D0;
-    --primary-text: #65a5dd;
-    --info: #078380;
-    --success: #078650;
-    --warning: #C15600;
-    --danger: #E81B00;
-
-    --font-size-base: 12px;
-    --line-height-base: 16px;
-
-    --font-size-md: 14px;
-    --line-height-md: 20px;
-    --font-size-lg: 16px;
-    --line-height-lg: 24px;
-
-    --radii-base: 4px;
-    --radii-md: calc(var(--radii-base) + 2px);
-    --radii-md: calc(var(--radii-base) + 4px);
-
-    --sx-xs4: 2px;
-    --sx-xs3: 4px;
-    --sx-xs2: 6px;
-    --sx-xs: 8px;
-    --sx-sm: 12px;
-    --sx-base: 16px;
-    --sx-md: 20px;
-    --sx-lg: 24px;
-    --sx-xl: 28px;
-    --sx-xl2: 32px;
-    --sx-xl3: 40px;
-
-    --sy-xs4: 1px;
-    --sy-xs3: 2px;
-    --sy-xs2: 4px;
-    --sy-xs: 6px;
-    --sy-sm: 8px;
-    --sy-base: 12px;
-    --sy-md: 16px;
-    --sy-lg: 20px;
-    --sy-xl: 24px;
-    --sy-xl2: 28px;
-    --sy-xl3: 32px;
 }
 
 * {
@@ -58,10 +15,10 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    background-color: var(--figma-color-bg-secondary);
+    background-color: var(--fill-base-300);
     font-size: var(--font-size-base);
     line-height: var(--line-height-base);
-    color: var(--figma-color-text);
+    color: var(--text-base-600);
     margin: 0;
     overflow: hidden;
 }
@@ -72,7 +29,7 @@ body {
 }
 
 a {
-    color: var(--primary);
+    color: var(--primary-500);
 }
 
 a:hover {
@@ -80,23 +37,23 @@ a:hover {
 }
 
 .figma-bg-secondary {
-    background-color: var(--figma-color-bg-secondary);
+    background-color: var(--fill-base-300);
 }
 
 .card {
-    --light-1: #f8fafc;
-    --light-2: #e1e7ea;
-    --light-3: #e7ecee;
-    --light-4: #edf1f3;
-    --light-5: #f2f6f7;
+    --light-1: var(--fill-base-200);
+    --light-2: var(--fill-base-300);
+    --light-3: var(--fill-base-400);
+    --light-4: var(--fill-base-500);
+    --light-5: var(--fill-base-600);
 
-    --dark-1: #121516;
-    --dark-2: #171a1c;
-    --dark-3: #1c2022;
-    --dark-4: #202527;
-    --dark-5: #252a2d;
+    --dark-1: var(--fill-contrast-200);
+    --dark-2: var(--fill-contrast-300);
+    --dark-3: var(--fill-contrast-400);
+    --dark-4: var(--fill-contrast-500);
+    --dark-5: var(--fill-contrast-600);
 
-    background-color: var(--figma-color-bg);
+    background-color: var(--fill-base-100);
     border-radius: var(--radii-md);
     padding: var(--sy-base) var(--sx-base) ;
     gap: var(--sy-base);
@@ -125,6 +82,7 @@ button {
     appearance: none;
     border-radius: var(--radii-base);
     padding: var(--sy-xs) var(--sx-sm);
+    color: var(--text-base-action);
 }
 
 input,
@@ -138,16 +96,16 @@ form>* {
 }
 
 button.primary {
-    background-color: var(--primary);
+    background-color: var(--primary-400);
     border: none;
-    color: var(--figma-color-text-onbrand);
+    color: var(--text-contrast-600);
 }
 
 input,
 textarea {
-    background-color: var(--figma-color-bg-secondary);
-    color: var(--figma-color-text);
-    border: 2px solid var(--figma-color-border);
+    background-color: var(--fill-base-300);
+    color: var(--text-base-600);
+    border: 2px solid var(--stroke-base-300);
 }
 
 input[type=radio] {
@@ -164,18 +122,18 @@ input[type=radio] {
 input[type=radio]:checked {
     --width: calc(var(--line-height-base)/4);
     background-color: white;
-    border: var(--width) solid var(--primary);
+    border: var(--width) solid var(--primary-400);
 }
 
 .radiogroup {
-    background-color: var(--figma-color-bg-secondary);
+    background-color: var(--fill-base-300);
     padding: 2px;
     gap: 1px;
     @apply flex flex-row rounded;
 }
 
 .radiogroup input[type=radio] {
-    background-color: var(--primary);
+    background-color: var(--primary-400);
     border: 0 none;
     appearance: none;
     padding: 0;
@@ -196,7 +154,7 @@ input[type=radio]:checked {
 
 input:focus,
 textarea:focus {
-    border-color: var(--figma-color-border-selected);
+    border-color: var(--primary-500);
     outline: none;
 }
 
@@ -207,14 +165,53 @@ textarea {
 
 fieldset {
     border-style: solid;
-    border-color: var(--figma-color-border);
+    border-color: var(--stroke-base-300);
     border-radius: var(--radii-md);
     border-width: 1px;
 }
 
+[data-name='red'] {
+    --thumb-color:  var(--accent-red-400);
+}
+[data-name='amber'] {
+    --thumb-color:  var(--accent-amber-400);
+}
+[data-name='brown'] {
+    --thumb-color:  var(--accent-brown-400);
+}
+[data-name='green'] {
+    --thumb-color:  var(--accent-green-400);
+}
+[data-name='teal'] {
+    --thumb-color:  var(--accent-teal-400);
+}
+[data-name='cyan'] {
+    --thumb-color:  var(--accent-cyan-400);
+}
+
+[data-name='blue'] {
+    --thumb-color:  var(--accent-blue-400);
+}
+
+[data-name='indigo'] {
+    --thumb-color:  var(--accent-indigo-400);
+}
+
+[data-name='violet'] {
+    --thumb-color:  var(--accent-violet-400);
+}
+
+[data-name='purple'] {
+    --thumb-color:  var(--accent-purple-400);
+}
+
+[data-name='pink'] {
+    --thumb-color:  var(--accent-pink-400);
+}
+
 [data-slider],
 #luminanceSlider {
-    --thumb-color:  var(--primary);
+    --thumb-color:  var(--primary-400);
 }
 
 #luminanceSlider {
@@ -232,7 +229,7 @@ fieldset {
 
 .sliders .slider {
     height: var(--slider-track-size);
-    background-color: var(--figma-color-border);
+    background-color: var(--stroke-base-300);
     border: 0 none;
     box-shadow: none;
     flex: 3;
@@ -241,7 +238,7 @@ fieldset {
 
 .sliders input[type=text] {
     width: 5rem;
-    border: 1px solid var(--figma-color-border);
+    border: 1px solid var(--stroke-base-300);
     background: transparent;
     text-align: center;
     border-radius: var(--radii-base);
@@ -280,9 +277,9 @@ fieldset {
     font-size: var(--font-size-xs2);
     line-height: var(--line-height-xs2);
     visibility: hidden;
-    background: var(--figma-color-bg);
-    border-color: var(--figma-color-border);
-    color: var(--figma-color-text);
+    background: var(--fill-base-100);
+    border-color: var(--stroke-base-300);
+    color: var(--text-base-600);
     border-radius: var(--radii-base);
     @apply shadow-lg;
 }
@@ -313,13 +310,13 @@ main {
 
 
 #export {
-    background-color: var(--figma-color-bg-component);
+    background-color: var(--fill-base-100-component);
 }
 
 /********** Range Input Styles **********/
 /*Range Reset*/
 input[type="range"] {
-    --thumb-color: var(--primary);
+    --thumb-color: var(--primary-400);
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
@@ -337,7 +334,7 @@ input[type="range"]:focus {
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
-    background-color: var(--figma-color-border);
+    background-color: var(--stroke-base-300);
     border-radius: 0.5rem;
     height: var(--slider-track-size);
 }
@@ -365,7 +362,7 @@ input[type="range"]:focus::-webkit-slider-thumb {
 }
 
 hr {
-    border-color: var(--figma-color-border);
+    border-color: var(--stroke-base-300);
 }
 
 a[data-expander]::after {
@@ -373,7 +370,7 @@ a[data-expander]::after {
     display: inline-block;
     width: 7.29px;
     height: 7.29px;
-    border: solid var(--primary);
+    border: solid var(--primary-400);
     border-width: 0 1px 1px 0;
     transform: rotate(-45deg) translate(2px, 0px);
     margin-left: 4px;
@@ -388,7 +385,7 @@ a[data-expanded=yes]::after {
     align-items: center;
     justify-content: center;
     height: 3rem;
-    background-color: var(--figma-color-bg-secondary);
+    background-color: var(--fill-base-300);
 }
 
 .font-preview-box .base {
@@ -408,7 +405,7 @@ a[data-expanded=yes]::after {
 }
 
 .checkbox:hover input[type=checkbox] {
-    border-color: var(--figma-color-border-selected);
+    border-color: var(--primary-500);
 }
 
 .checkbox input[type="checkbox"] {
@@ -422,8 +419,8 @@ a[data-expanded=yes]::after {
 }
 
 .checkbox input[type="checkbox"]:checked {
-    border-color: var(--primary);
-    background-color: var(--primary);
+    border-color: var(--primary-400);
+    background-color: var(--primary-400);
     position: relative;
 }
 
@@ -446,7 +443,7 @@ a[data-expanded=yes]::after {
 
 .action-list li {
     display: block;
-    border-bottom: 1px solid var(--figma-color-border);
+    border-bottom: 1px solid var(--stroke-base-300);
 }
 
 .action-list li:last-child {
@@ -454,7 +451,7 @@ a[data-expanded=yes]::after {
 }
 
 .action-list li a {
-    color: var(--figma-color-text);
+    color: var(--text-base-600);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -462,7 +459,7 @@ a[data-expanded=yes]::after {
 }
 
 .action-list li a:hover {
-    color: var(--primary);
+    color: var(--primary-400);
     text-decoration: none;
 }
 
@@ -471,7 +468,7 @@ a[data-expanded=yes]::after {
     display: inline-block;
     width: 7.29px;
     height: 7.29px;
-    border: solid var(--primary);
+    border: solid var(--primary-400);
     border-width: 0 1px 1px 0;
     transform: rotate(-45deg) translate(2px, 0px);
     margin-left: var(--sx-sm);
@@ -479,11 +476,11 @@ a[data-expanded=yes]::after {
 
 dialog {
     width: 95%;
-    color: var(--figma-color-text);
-    background-color: var(--figma-color-bg);
+    color: var(--text-base-600);
+    background-color: var(--fill-base-100);
     border-radius: var(--radii-lg);
     padding: var(--sy-lg) var(--sx-lg) ;
-    outline: 1px solid color-mix(in srgb, var(--figma-color-text), transparent 85%);
+    outline: 1px solid color-mix(in srgb, var(--text-base-600), transparent 85%);
     box-shadow: 0px 12px 20px -6px rgba(14, 16, 17, 0.10), 0px 30px 48px -8px rgba(14, 16, 17, 0.15);
 }
 
@@ -514,7 +511,7 @@ button.close {
 }
 
 button.close svg {
-    color: var(--figma-color-text);
+    color: var(--text-base-600);
 }
 
 button.close:hover {
@@ -522,6 +519,6 @@ button.close:hover {
 }
 
 :focus-visible {
-    outline: var(--primary) auto 2px;
+    outline: var(--primary-400) auto 2px;
     outline-offset: 2px;
 }

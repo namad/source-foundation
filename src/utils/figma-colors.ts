@@ -47,9 +47,8 @@ interface HSLAdjustments {
     a?: number;
 }
 
-export function convertToFigmaColor(input, adjustments?: HSLAdjustments): RGBA {
+export function convertToFigmaColor(input, adjustments?: HSLAdjustments): { gl: RGBA, rgb: string } {
     let color;
-  
     try {
         if (input.startsWith('rgb')) {
             const rgbValues = input.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
@@ -87,22 +86,21 @@ export function convertToFigmaColor(input, adjustments?: HSLAdjustments): RGBA {
             color = color.set('hsl.a', `${adjustments.a}`);
         }
     }
-    const [ 
-        r, g, b, a 
-    ] = color.gl();
 
+    const [ r, g, b, a ] = color.gl(); 
     return {
-        r, g, b, a
+        gl: { r, g, b, a },
+        rgb: color.css() as string
     };
 }
 
-export function parseColor(token: DesignToken, dictionary) {
+export function parseColor(token: DesignToken, dictionary, output = 'gl') {
     let color = token.$value as string;
     color = parseReferenceGlobal(color.trim(), dictionary);
-    const figmaColor = convertToFigmaColor(color, token.adjustments);
+    const result = convertToFigmaColor(color, token.adjustments);
 
-    if(figmaColor) {
-        return figmaColor;
+    if(result) {
+        return result[output];
     } 
     else {
         debugger;

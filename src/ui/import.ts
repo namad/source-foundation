@@ -1,3 +1,4 @@
+import "./source-vars.css";
 import "./utils.css";
 import "./styles.css";
 import "./color-box.css";
@@ -121,16 +122,14 @@ noUiSlider.create(luminanceSlider, {
         'min': 0,
         'max': 100
     }
-}).on('update', function (values, handle) {
+}).on('update', debounce((values, handle) => {
     luminanceSliderVals[handle].value = values[handle] as string;
     form.dispatchEvent(new Event('input', { 'bubbles': true }));
-});
+}, 10));
 
 luminanceSliderVals.forEach((element, index) => {
-    let val = [null, null, null];
-   
     element.addEventListener("input", () => {
-        val[index] = element.value;
+        const val = luminanceSliderVals.map(el => el.value);
         luminanceSlider['noUiSlider'].set(val);
     });
 });
@@ -161,7 +160,8 @@ parent.postMessage({
     pluginMessage: {type: 'LOADED'}
 }, "*");
 
-generatePreview(form, colorPreviewCard, sliders);
+ 
+loadSettings(form, defaultSettings);
 
 
 onmessage = (event) => {

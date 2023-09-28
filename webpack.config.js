@@ -66,10 +66,5 @@ module.exports = (env, argv) => ({
     new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin)
   ],
 
-  watch: false,
-  
-  watchOptions: {
-    aggregateTimeout: 200,
-    poll: 1000,
-  },
+  watch: false
 })

@@ -131,7 +131,6 @@ function generateSemanticShades(aliasName) {
 
 function generateSemanticPalette(accents: SemanticAccentColors, palette) {
     let result = {};
-
     Object.entries(accents).forEach(([name, alias]) => {
         result[name] = generateSemanticShades(alias);
     });

@@ -5,15 +5,19 @@ const aliasRegex = /\{(.+?)(.+?)\}/g;
 export function findTokenReferences(tokenValue: string) {
     return tokenValue?.toString().match(aliasRegex)
 };
+function getReferenceName(reference: string) {
+    let name = reference.replace(/{/g, "");
+    name = name.replace(/}/g, "");
+    return name;
+}
 
-export function findVariableReferences(value: string): Variable {
+export function findVariableByReferences(value: string): Variable {
     let references = findTokenReferences(value);
     let results = [];
     
-    references?.forEach(refrence => {
-        let name = refrence.replace(/{/g, "");
-        name = name.replace(/}/g, "");
-        name = name.replace(/\./g, "/")
+    references?.forEach(reference => {
+        let name = getReferenceName(reference);
+        name = name.replace(/\./g, "/");
 
         const figmaVariable = findFigmaVariableByName(name);
 
@@ -21,7 +25,7 @@ export function findVariableReferences(value: string): Variable {
             results.push(figmaVariable);
         }
         else {
-            console.warn(`parseReferences() call failed -> cannot find value for ${refrence}`);
+            console.warn(`parseReferences() call failed -> cannot find value for ${reference}`);
         }
     })
 
@@ -40,9 +44,7 @@ export function parseReferenceGlobal(value, dictionary) {
     let result = value;
     
     references?.forEach(reference => {
-        let name = reference.replace(/{/g, "");
-        name = name.replace(/}/g, "");
-
+        let name = getReferenceName(reference);
 
         const globalToken = findGlobalTokenByName(name, dictionary);
 
