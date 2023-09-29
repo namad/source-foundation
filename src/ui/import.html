@@ -20,23 +20,23 @@
             <div class="flex flex-row gap-0 radii-base overflow-hidden">
                 <div class="color-box flex-1 a-primary radii-base mr-1">
                     <div>Primary</div>
-                    <div class="token-value opacity-70"></div>
+                    <div class="token-value opacity-70" data-value="primary"></div>
                 </div>
                 <div class="color-box flex-1 radii-base-l a-info">
                     <div>Info</div>
-                    <div class="token-value opacity-70"></div>
+                    <div class="token-value opacity-70" data-value="info"></div>
                 </div>
                 <div class="color-box flex-1 a-success">
                     <div>Success</div>
-                    <div class="token-value opacity-70"></div>
+                    <div class="token-value opacity-70" data-value="success"></div>
                 </div>
                 <div class="color-box flex-1 a-warning">
                     <div>Warning</div>
-                    <div class="token-value opacity-70"></div>
+                    <div class="token-value opacity-70" data-value="warning"></div>
                 </div>
                 <div class="color-box flex-1 a-danger">
                     <div>Danger</div>
-                    <div class="token-value opacity-70"></div>
+                    <div class="token-value opacity-70" data-value="danger"></div>
                 </div>
             </div>
         </div>
@@ -64,8 +64,10 @@
                 <div class="flex flex-row mt-2">
                     <div class="w-1/5">Scale</div>
                     <div class="flex flex-col gap-3 flex-1" style="margin: 0 var(--slider-margin) 0;">
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird" checked /><span>Minor Third (1.200)</span></label>
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorSecond" /><span>Major Second (1.125)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird"
+                                checked /><span>Minor Third (1.200)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale"
+                                value="majorSecond" /><span>Major Second (1.125)</span></label>
                     </div>
                 </div>
             </div>
@@ -116,7 +118,8 @@
                 greater
                 contrast overall
             </p>
-            <div data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
+            <div
+                data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
 
             <h5 class="font-bold mt-3">Parameters</h5>
@@ -182,67 +185,120 @@
 
             <div data-expander data-role="container" class="flex flex-col gap-sy-base" style="display: none;">
 
+                <h4 class="font-bold text-size-md">Global accent preview</h4>
                 <p class="text-size-sm opacity-75">
-                    Adjust accent colours luminancy. 
-                    Numbers are contrast ratio against white. 
-                    Mid slider determines primary accent color lightness, marked with bold text.
+                    Global accents are generated programatically based on accent luminancy slider values below
                 </p>
-                <div class="flex flex-row gap-0">
-                    <!-- <div class="color-box flex-1 lum-700"><div><span class="token-value"></span> : 1</div></div> -->
-                    <div class="color-box flex-1 lum-600 radii-base-l">
+                <div class="flex flex-row gap-0 mb-3">
+                    <div class="color-box flex-1 global-accent-600 radii-base-l">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value opacity-70"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                            <span class="text-size-xs opacity-70">600</span>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 global-accent-500">
+                        <div class="flex flex-row gap-1">
+                            <span class="text-size-xs opacity-70">500</span>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 global-accent-400">
+                        <div class="flex flex-row gap-1 font-bold">
+                            <span class="text-size-xs">400</span>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 global-accent-300">
+                        <div class="flex flex-row gap-1">
+                            <span class="text-size-xs opacity-70">300</span>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 global-accent-200">
+                        <div class="flex flex-row gap-1">
+                            <span class="text-size-xs opacity-70">200</span>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 global-accent-100 radii-base-r">
+                        <div class="flex flex-row gap-1">
+                            <span class="text-size-xs opacity-70">100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="font-bold text-size-md">System accent preview</h4>
+                <p class="text-size-sm opacity-75">
+                    System accents are are bound to global ones. Hover over to see additional details
+                </p>
+                <div class="flex flex-row gap-0 mb-3">
+                    <!-- <div class="color-box flex-1 primary-700"><div><span class="token-value"></span> : 1</div></div> -->
+                    <div class="color-box flex-1 primary-600 radii-base-l">
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
                         </div>
                         <div class="tooltip flex flex-col gap-sy-sm">
                             <div class="row">Text on dark surface</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 lum-500">
+                    <div class="color-box flex-1 primary-500">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value opacity-70"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                            <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
                         </div>
                         <div class="tooltip flex flex-col gap-sy-sm">
                             <div class="row">Text on light surface</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 lum-400">
+                    <div class="color-box flex-1 primary-400">
                         <div class="flex flex-row gap-1 font-bold">
-                            <span class="token-value"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                            <span class="token-value"></span><span class="text-size-xs opacity-70">:
+                                1</span>
                         </div>
                         <div class="tooltip flex flex-col gap-sy-sm">
                             <div class="row">Background color</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 lum-300">
+                    <div class="color-box flex-1 primary-300">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value opacity-70"></span><span class="text-size-xs line-height-xs opacity-70">: 1</span>
+                            <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
                         </div>
                         <div class="tooltip flex flex-col gap-sy-sm">
                             <div class="row">Non-textual element</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 lum-200">
+                    <div class="color-box flex-1 primary-200" style="color: var(--text-base-action)">
                         <div class="tooltip flex flex-col gap-sy-sm">
                             <div class="row">Light background</div>
+                            <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 lum-100 radii-base-r">
+                    <div class="color-box flex-1 primary-100 radii-base-r" style="color: var(--text-base-action)">
                         <div class="tooltip flex flex-col gap-sy-sm">
                             <div class="row">Subtle background</div>
+                            <div class="toolip-body">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="text-size-xs opacity-70 whitespace-nowrap">alias</span>
+                                    <span class="text-size-xs whitespace-nowrap">{resolvedTo}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
+
+
+                <h4 class="font-bold text-size-md">Accent color luminancy</h4>
+                <p class="text-size-sm opacity-75">
+                    Left slider defines the darkest shade.
+                    Mid slider sets primary accent shade.
+                    Right slider defines the lightest shade.
+                </p>
                 <div class="sliders flex flex-row items-center">
                     <div id="luminanceSlider" class="slider"></div>
                     <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
                     <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
                     <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
                 </div>
+
             </div>
         </div>
 
@@ -250,7 +306,7 @@
             <h3 class="font-bold text-size-lg">UI Scale</h3>
             <p class="text-size-sm opacity-75">
                 Select default mode for spacing, radii and typography
-            </p>            
+            </p>
             <ul class="action-list">
                 <li>
                     <a href="#" data-modal="spacingScaleModal">
@@ -266,7 +322,7 @@
                     <a href="#" data-modal="typographyScaleModal">
                         <span>Typography</span>
                         <span>
-                            <span data-value="typeScale" data-type="typography"></span> / 
+                            <span data-value="typeScale" data-type="typography"></span> /
                             <span data-value="baseFontSize" data-type="typography"></span>
                         </span>
                     </a>
@@ -277,9 +333,31 @@
                 <input type="checkbox" name="singleCollection" value="true" />
                 <span class="flex flex-col gap-sy-xs">
                     <span>Import Spacing, Radii and Type Scale tokens as sinlge collection</span>
-                    <span class="text-size-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise different token types to get their own collections.</span>
+                    <span class="text-size-sm opacity-70">All the tokens to go into a single "UI Scale" collection.
+                        Otherwise different token types to get their own collections.</span>
                 </span>
             </label>
+        </div>
+
+        <div class="card" id="theme">
+            <h3 class="font-bold text-size-lg">Appearance</h3>
+            <p class="text-size-sm opacity-75">
+                    Select preferred visual theme for plugin UI
+                </p>
+            <div class="flex flex-row gap-3 flex-1 mb-2">
+                <label class="flex flex-row gap-2">
+                    <input type="radio" name="theme" value="light" />
+                    <span>Light</span>
+                </label>
+                <label class="flex flex-row gap-2">
+                    <input type="radio" name="theme" value="dark" />
+                    <span>Dark</span>
+                </label>
+                <label class="flex flex-row gap-2">
+                    <input type="radio" name="theme" value="system" checked />
+                    <span>System</span>
+                </label>
+            </div>
         </div>
 
         <div class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right z-10">

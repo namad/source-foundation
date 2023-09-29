@@ -209,6 +209,20 @@ fieldset {
     --thumb-color:  var(--accent-pink-400);
 }
 
+[data-name='info'] {
+    --thumb-color:  var(--info-400);
+}
+[data-name='warning'] {
+    --thumb-color:  var(--warning-400);
+}
+[data-name='success'] {
+    --thumb-color:  var(--success-400);
+}
+[data-name='danger'] {
+    --thumb-color:  var(--danger-400);
+}
+
+
 [data-slider],
 #luminanceSlider {
     --thumb-color:  var(--primary-400);
@@ -459,7 +473,7 @@ a[data-expanded=yes]::after {
 }
 
 .action-list li a:hover {
-    color: var(--primary-400);
+    color: var(--text-base-action);
     text-decoration: none;
 }
 
@@ -468,7 +482,7 @@ a[data-expanded=yes]::after {
     display: inline-block;
     width: 7.29px;
     height: 7.29px;
-    border: solid var(--primary-400);
+    border: solid var(--text-base-action);
     border-width: 0 1px 1px 0;
     transform: rotate(-45deg) translate(2px, 0px);
     margin-left: var(--sx-sm);
@@ -519,6 +533,6 @@ button.close:hover {
 }
 
 :focus-visible {
-    outline: var(--primary-400) auto 2px;
+    outline: var(--primary-500) auto 2px;
     outline-offset: 2px;
 }

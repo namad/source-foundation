@@ -1,4 +1,4 @@
-import { ImportFormData } from "./utils/import-utils"
+import { ImportFormData } from "./import"
 
 export const radiiSizeName = [
     "compact",
@@ -72,6 +72,7 @@ export const defaultAccentHUEs = {
 
 export const defaultSettings: ImportFormData = {
     type: 'IMPORT',
+    theme: 'system',
     hue: 190,
     saturation: 0.2,
     distance: 0.02,

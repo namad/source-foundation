@@ -1,18 +1,21 @@
-import { defaultAccentHUEs, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "../defaults";
-import * as radii from "../radii-tokens";
-import * as typescale from "../typescale-tokens";
-import * as spacing from "../spacing-tokens";
+import { defaultAccentHUEs, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
+import * as radii from "./radii-tokens";
+import * as typescale from "./typescale-tokens";
+import * as spacing from "./spacing-tokens";
 import chroma from 'chroma-js';
-import { camelToTitle, toTitleCase } from "./text-to-title-case";
-import { getGlobalAccent } from "../color-tokens/accent-palette-generator";
-import { roundTwoDigits } from "./round-two-digits";
-import { getThemeColors } from "../color-tokens";
-import { convertToFigmaColor, parseColor } from "./figma-colors";
-import { outputHSL } from "../color-tokens/swatches-generator";
-import { DesignToken } from "../main";
+import { camelToTitle, toTitleCase } from "./utils/text-to-title-case";
+import { getGlobalAccent, getShadesTemplate } from "./color-tokens/accent-palette-generator";
+import { roundTwoDigits } from "./utils/round-two-digits";
+import { getGlobalNeutrals, getThemeColors } from "./color-tokens";
+import { convertToFigmaColor, parseColor } from "./utils/figma-colors";
+import { outputHSL } from "./color-tokens/swatches-generator";
+import { DesignToken } from "./main";
+import { flattenObject } from "./utils/flatten-object";
+import { findTokenReferences } from "./utils/token-references";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
+    theme: 'light' | 'dark' | 'system';
     hue: number;
     saturation: number;
     distance: number;
@@ -182,49 +185,68 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
                         data.accentMinLuminance,
                         data.accentMidLuminance,
                         data.accentMaxLuminance
-                    )
+                    );
+    const globalAccent = flattenObject({
+        'global-accent': shades
+    })
+    const darkThemeMq = data.theme === 'system' ? window.matchMedia("(prefers-color-scheme: dark)").matches : data.theme == 'dark';
+    const themeColors = getThemeColors(darkThemeMq ? 'darkElevated' : 'lightBase', data);
+    const systemAccentShades = getShadesTemplate(darkThemeMq ? 'dark' : 'light');
 
-    const darkThemeMq = false; //window.matchMedia("(prefers-color-scheme: dark)");
-    const themeColors = getThemeColors(darkThemeMq ? 'darkBase' : 'lightBase', data);
+    generateCSSVars({...themeColors, ...globalAccent});
 
     debugger;
-
-    generateCSSVars(themeColors);
 
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
 
-            console.log(`input color: ${name}, value: ${token['$value']}`);
+            const value = token['$value'];
+
+            console.log(`input color: ${name}, value: ${token['$value']}, alias: ${themeColors[name]['$value']}`);
 
             const index = name.split('/')[2];
             const { gl, rgb } = convertToFigmaColor(token['$value']);
-            const chromaColor = chroma.gl(gl.r, gl.g, gl.b, gl.a);
+            let chromaColor = chroma(rgb);
 
             console.log(`converted ${chromaColor.css()}`);
 
-            document.documentElement.style.setProperty(`--lum-${index}`, rgb);
+            const systemToken = systemAccentShades[index]['$value'];
+            const references = findTokenReferences(systemToken);
+            const resolvedTo = systemToken.replace(/{/g, "{global.");
 
-            const toolTip = document.querySelector(`.color-box.lum-${index} .toolip-body`) as HTMLDivElement;
-            const valueEl = document.querySelector(`.color-box.lum-${index} .token-value`) as HTMLDivElement;
-            const contrast1 = roundTwoDigits(chroma.contrast("white", chromaColor.css()));
-            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor.css()));
+            debugger
+
+            const toolTip = document.querySelector(`.color-box.primary-${index} .toolip-body`) as HTMLDivElement;
+            const valueEl = document.querySelector(`.color-box.primary-${index} .token-value`) as HTMLDivElement;
+            const alpha = chromaColor.alpha();
+
+            if (alpha < 1) {
+                chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl')
+            }
+
+            const contrast1 = roundTwoDigits(chroma.contrast("white", chromaColor));
+            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
             const hsl = outputHSL(chromaColor).join(", ");
             if (valueEl) {
                 valueEl.innerHTML = `${contrast1}`;
             }
             if (toolTip) {
                 toolTip.innerHTML = `
-                    <div class="row flex flex-row justify-between">
+                    <div class="row flex flex-row justify-between gap-3">
+                        <span class="text-size-xs opacity-70">alias</span>
+                        <span class="text-size-xs whitespace-nowrap">${resolvedTo}</span>
+                    </div>
+                    <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs white</span>
-                        <span class="text-size-xs">${contrast1}</span>
+                        <span class="text-size-xs whitespace-nowrap">${contrast1} : 1</span>
                     </div>
-                    <div class="row flex flex-row justify-between">
+                    <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs black</span>
-                        <span class="text-size-xs">${contrast2}</span>
+                        <span class="text-size-xs whitespace-nowrap">${contrast2} : 1</span>
                     </div>
-                    <div class="row flex flex-row justify-between">
+                    <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">hsl</span>
-                        <span class="text-size-xs">${hsl}</span>
+                        <span class="text-size-xs whitespace-nowrap">${hsl}</span>
                     </div>`
             }
         }
@@ -267,8 +289,7 @@ function generateCSSVars(tokens = {}) {
         }
 
         if (type == 'color') {
-            const rgb = parseColor(token as DesignToken, tokens, 'rgb');
-            debugger;
+            const rgb = parseColor(token as DesignToken, {...tokens, ...getGlobalNeutrals() }, 'rgb');
             document.documentElement.style.setProperty(varName, `${rgb}`);
         }
     })

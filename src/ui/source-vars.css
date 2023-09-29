@@ -1,4 +1,13 @@
 :root {
+    --global-accent-100: rgb(99,173,243);
+    --global-accent-200: rgb(73,149,243);
+    --global-accent-300: rgb(46,126,242);
+    --global-accent-400: rgb(20,102,242);
+    --global-accent-500: rgb(24,94,241);
+    --global-accent-600: rgb(28,86,239);
+    --global-accent-700: rgb(32,78,238);
+}
+:root {
     --primary-600: #5FABF3;
     --primary-500: #1C5FF0;
     --primary-400: #216EF3;

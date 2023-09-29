@@ -11,7 +11,7 @@ import { toTitleCase } from "../utils/text-to-title-case";
 import { defaultAccentHUEs, defaultSettings, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
 
 import { debounce } from "../utils/debounce";
-import { ImportFormData, generatePreview, getFormData, loadSettings, transformValue } from "../utils/import-utils";
+import { ImportFormData, generatePreview, getFormData, loadSettings, transformValue } from "../import";
 
 /*
     UI INITIALIZATION
@@ -119,8 +119,8 @@ noUiSlider.create(luminanceSlider, {
     step: 1,
     tooltips: true,
     range: {
-        'min': 0,
-        'max': 100
+        'min': 5,
+        'max': 90
     }
 }).on('update', debounce((values, handle) => {
     luminanceSliderVals[handle].value = values[handle] as string;

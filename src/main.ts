@@ -17,7 +17,7 @@ import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palett
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
-import { ImportFormData } from './utils/import-utils';
+import { ImportFormData } from './import';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';

@@ -1,7 +1,7 @@
 import chroma from "chroma-js";
 import { roundTwoDigits } from "../utils/round-two-digits";
 import { findTokenReferences, parseReferenceGlobal } from "../utils/token-references";
-import { ImportFormData } from "../utils/import-utils";
+import { ImportFormData } from "../import";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
 
 interface DesignTokenValue {
@@ -31,7 +31,7 @@ interface GlobalAccentList {
     [key: string]: ColorShadesScale;
 }
 
-function getShadesTemplate(theme): ColorShadesScale {
+export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
     if (theme == 'light') {
         return {
             "100": {
@@ -43,7 +43,7 @@ function getShadesTemplate(theme): ColorShadesScale {
                 "$type": "color"
             },
             "300": {
-                "$value": "{200}",
+                "$value": "{300}",
                 "$type": "color"
             },
             "400": {

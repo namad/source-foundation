@@ -1,4 +1,9 @@
 
+.text-size-xs2 {
+    font-size: var(--font-size-xs2);
+    line-height: var(--line-height-xs2);
+}
+
 .text-size-xs {
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xs);

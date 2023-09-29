@@ -11,83 +11,102 @@
     justify-content: center;
 }
 
-.color-box.l-1 {
+.l-1 {
     background-color: var(--light-1);
 }
 
-.color-box.l-2 {
+.l-2 {
     background-color: var(--light-2);
 }
 
-.color-box.l-3 {
+.l-3 {
     background-color: var(--light-3);
 }
 
-.color-box.l-4 {
+.l-4 {
     background-color: var(--light-4);
 }
 
-.color-box.l-5 {
+.l-5 {
     background-color: var(--light-5);
 }
 
-.color-box.d-1 {
+.d-1 {
     background-color: var(--dark-1);
 }
 
-.color-box.d-2 {
+.d-2 {
     background-color: var(--dark-2);
 }
 
-.color-box.d-3 {
+.d-3 {
     background-color: var(--dark-3);
 }
 
-.color-box.d-4 {
+.d-4 {
     background-color: var(--dark-4);
 }
 
-.color-box.d-5 {
+.d-5 {
     background-color: var(--dark-5);
 }
 
-.color-box.a-primary {
-    background-color: var(--primary-500);
-}
-
-.color-box.a-info {
-    background-color: var(--info-500);
-}
-
-.color-box.a-success {
-    background-color: var(--success-500);
-}
-
-.color-box.a-warning {
-    background-color: var(--warning-500);
-}
-
-.color-box.a-danger {
-    background-color: var(--danger-500);
-}
-
-.color-box.lum-100 {
-    background-color: var(--primary-100);
-}
-.color-box.lum-200 {
-    background-color: var(--primary-200);
-}
-.color-box.lum-300 {
-    background-color: var(--primary-300);
-}
-.color-box.lum-400 {
+.a-primary {
     background-color: var(--primary-400);
 }
-.color-box.lum-500 {
+
+.a-info {
+    background-color: var(--info-400);
+}
+
+.a-success {
+    background-color: var(--success-400);
+}
+
+.a-warning {
+    background-color: var(--warning-400);
+}
+
+.a-danger {
+    background-color: var(--danger-400);
+}
+
+.primary-100 {
+    background-color: var(--primary-100);
+}
+.primary-200 {
+    background-color: var(--primary-200);
+}
+.primary-300 {
+    background-color: var(--primary-300);
+}
+.primary-400 {
+    background-color: var(--primary-400);
+}
+.primary-500 {
     background-color: var(--primary-500);
 }
-.color-box.lum-600 {
+.primary-600 {
     background-color: var(--primary-600);
+}
+
+.global-accent-100 {
+    background-color: var(--global-accent-100);
+}
+.global-accent-200 {
+    background-color: var(--global-accent-200);
+}
+.global-accent-300 {
+    background-color: var(--global-accent-300);
+}
+.global-accent-400 {
+    background-color: var(--global-accent-400);
+}
+.global-accent-500 {
+    background-color: var(--global-accent-500);
+}
+.global-accent-600 {
+    background-color: var(--global-accent-600);
 }
 
 .color-box .token-value {
@@ -100,13 +119,12 @@
 .color-box .tooltip {
     position: absolute;
     display: none;
-    width: 250%;
+    min-width: 200%;
     padding: var(--sy-sm) var(--sx-sm);
-    background: var(--figma-color-bg);
-    border-color: var(--figma-color-border);
-    color: var(--figma-color-text);
+    background: var(--fill-contrast-100);
+    border-color: var(--fill-base-500);
+    color: var(--text-contrast-600);
     border-radius: var(--radii-base);
-    outline: 1px solid color-mix(in srgb, var(--figma-color-text), transparent 90%);
     bottom: 120%;
     left: 50%;
     transform: translateX(-50%);
