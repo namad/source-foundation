@@ -103,7 +103,7 @@ button.primary {
 
 input,
 textarea {
-    background-color: var(--fill-base-300);
+    background-color: var(--fill-base-100);
     color: var(--text-base-600);
     border: 2px solid var(--stroke-base-300);
 }
@@ -376,7 +376,7 @@ input[type="range"]:focus::-webkit-slider-thumb {
 }
 
 hr {
-    border-color: var(--stroke-base-300);
+    border-color: var(--stroke-base-100);
 }
 
 a[data-expander]::after {
@@ -457,7 +457,7 @@ a[data-expanded=yes]::after {
 
 .action-list li {
     display: block;
-    border-bottom: 1px solid var(--stroke-base-300);
+    border-bottom: 1px solid var(--stroke-base-100);
 }
 
 .action-list li:last-child {

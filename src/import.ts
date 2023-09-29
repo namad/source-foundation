@@ -134,49 +134,9 @@ export function getFormData(form): ImportFormData {
 export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDivElement, sliders) {
     let data = getFormData(form);
 
-    // render neutral colours preview
-    // for (var a = 1, b = 7; a < b; a++) {
-    //     const colorLight = chroma.hsl(data.hue, data.saturation, 1 - data.distance * a);
-    //     const colorDark = chroma.hsl(data.hue, data.saturation, 0.2 + data.distance * a);
-
-    //     colorPreviewCard.style.setProperty(`--light-${a}`, colorLight.hex());
-    //     colorPreviewCard.style.setProperty(`--dark-${a}`, colorDark.hex());
-    // }
-
     // set colours on neutrals hue & sdaturation sliders
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
-
-    // const semanticSlidersUpdateMap = [
-    //     ["primary", data.primary],
-    //     ["info", data.info],
-    //     ["success", data.success],
-    //     ["warning", data.warning],
-    //     ["danger", data.danger],
-    // ]
-
-    // Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
-    //     // const sliderValue = data[name];
-    //     // const accentColor = chroma.hsl(sliderValue, data.accentSaturation, 0.5).luminance(0.18);
-    //     // sliders[name].rootElement.style.setProperty('--thumb-color', accentColor.hex());
-    // });
-
-    // semanticSlidersUpdateMap.forEach(([colorName, accentReference]) => {
-    //     const sliderAccentColorHUE = data[accentReference];
-    //     const sliderAccentColor = chroma.hsl(sliderAccentColorHUE, data.accentSaturation, 0.5).luminance(0.18);
-
-    //     sliders[colorName].rootElement.style.setProperty('--thumb-color', sliderAccentColor);
-    //     document.documentElement.style.setProperty(`--${colorName}`, sliderAccentColor);
-    //     document.documentElement.style.setProperty(`--${colorName}-text`, sliderAccentColor.luminance(0.3));
-
-    //     // update text node to display selected value
-    //     const valueEl = document.querySelector(`.color-box.a-${colorName} > .token-value`) as HTMLDivElement;
-    //     if (valueEl) {
-    //         valueEl.innerHTML = accentReference;
-    //     }
-    // });
-
-
 
     const primaryColorHUE = data.primary
     const shades = getGlobalAccent(
@@ -195,8 +155,17 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
 
     generateCSSVars({...themeColors, ...globalAccent});
 
-    debugger;
+    generateAccentsPreview(themeColors, data, systemAccentShades);
 
+    generateCSSVars(radii[data.radii]);
+    generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
+    generateCSSVars(spacing[data.spacing]);
+
+    updateValuesDisplay(data);
+
+}
+
+function generateAccentsPreview(themeColors: {}, data: ImportFormData, systemAccentShades) {
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
 
@@ -214,14 +183,12 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
             const references = findTokenReferences(systemToken);
             const resolvedTo = systemToken.replace(/{/g, "{global.");
 
-            debugger
-
             const toolTip = document.querySelector(`.color-box.primary-${index} .toolip-body`) as HTMLDivElement;
             const valueEl = document.querySelector(`.color-box.primary-${index} .token-value`) as HTMLDivElement;
             const alpha = chromaColor.alpha();
 
             if (alpha < 1) {
-                chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl')
+                chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl');
             }
 
             const contrast1 = roundTwoDigits(chroma.contrast("white", chromaColor));
@@ -247,27 +214,10 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">hsl</span>
                         <span class="text-size-xs whitespace-nowrap">${hsl}</span>
-                    </div>`
+                    </div>`;
             }
         }
     });
-
-    // Object.entries(shades).forEach(([name, token], index) => {
-    //     document.documentElement.style.setProperty(`--lum-${name}`, token.$value);
-    //     const colorBox = document.querySelector(`.color-box.lum-${name}`) as HTMLDivElement;
-    //     const valueEl = document.querySelector(`.color-box.lum-${name} .token-value`) as HTMLDivElement;
-    //     const contrast = roundTwoDigits(chroma.contrast("white", token.$value))
-    //     if (valueEl) {
-    //         valueEl.innerHTML = `${contrast}`;
-    //     }        
-    // })
-
-    generateCSSVars(radii[data.radii]);
-    generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
-    generateCSSVars(spacing[data.spacing]);
-
-    updateValuesDisplay(data);
-
 }
 
 function updateValuesDisplay(data: ImportFormData) {
