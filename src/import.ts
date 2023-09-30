@@ -138,6 +138,9 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
+    const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
+    exportCodeTextarea.value = JSON.stringify(data);
+
     const primaryColorHUE = data.primary
     const shades = getGlobalAccent(
                         data[primaryColorHUE],
@@ -194,6 +197,16 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, systemAcc
             const contrast1 = roundTwoDigits(chroma.contrast("white", chromaColor));
             const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
             const hsl = outputHSL(chromaColor).join(", ");
+            let contrastWarn = 'none';
+
+            if (index == '400' || index == '500') {
+                contrastWarn = contrast1 < 4.5 ? 'color-negative-contrast' : 'color-positive-contrast';
+            }
+
+            if (index == '300') {
+                contrastWarn = contrast1 < 3 ? 'color-negative-contrast' : 'color-positive-contrast';
+            }
+
             if (valueEl) {
                 valueEl.innerHTML = `${contrast1}`;
             }
@@ -205,7 +218,7 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, systemAcc
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs white</span>
-                        <span class="text-size-xs whitespace-nowrap">${contrast1} : 1</span>
+                        <span class="text-size-xs whitespace-nowrap ${contrastWarn}">${contrast1} : 1</span>
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs black</span>

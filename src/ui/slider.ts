@@ -30,12 +30,12 @@ export function initSlider(el: HTMLElement, options?): SliderComponent {
 
 function getMarkup({ label, name, min, max, step, value }) {
     return `
-        <label class="sliders flex flex-row items-center" data-name=${name}>
+        <div class="sliders flex flex-row items-center" data-name=${name}>
             <span class="text-label">${label}</span>
             <div class="slider"></div>
             <input data-display type="text" readonly>
             <input data-value type="hidden" name="${name}" value="${value}">
-        </label>    
+        </div>    
     `
 }
 

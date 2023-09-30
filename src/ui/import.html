@@ -1,56 +1,54 @@
 <form id="importForm">
 
-    <div class="card color-preview card-stiky">
-        <h4 class="font-bold font-size-md">Palette Preview</h4>
-        <div class="flex flex-col gap-sy-xs">
-            <div class="flex flex-row gap-0 radii-base overflow-hidden">
-                <div class="color-box flex-1 l-1"></div>
-                <div class="color-box flex-1 l-2"></div>
-                <div class="color-box flex-1 l-3"></div>
-                <div class="color-box flex-1 l-4"></div>
-                <div class="color-box flex-1 l-5"></div>
+    <div class="card-stiky">
+        <div class="card color-preview">
+            <h4 class="font-bold font-size-md">Palette Preview</h4>
+            <div class="flex flex-col gap-sy-xs">
+                <div class="flex flex-row gap-0 radii-base overflow-hidden">
+                    <div class="color-box flex-1 l-1"></div>
+                    <div class="color-box flex-1 l-2"></div>
+                    <div class="color-box flex-1 l-3"></div>
+                    <div class="color-box flex-1 l-4"></div>
+                    <div class="color-box flex-1 l-5"></div>
+                </div>
+                <div class="flex flex-row gap-0 radii-base overflow-hidden">
+                    <div class="color-box flex-1 d-1"></div>
+                    <div class="color-box flex-1 d-2"></div>
+                    <div class="color-box flex-1 d-3"></div>
+                    <div class="color-box flex-1 d-4"></div>
+                    <div class="color-box flex-1 d-5"></div>
+                </div>
+                <div class="flex flex-row gap-0 radii-base overflow-hidden">
+                    <div class="color-box flex-1 a-primary radii-base mr-1">
+                        <div>Primary</div>
+                        <div class="token-value opacity-70" data-value="primary"></div>
+                    </div>
+                    <div class="color-box flex-1 radii-base-l a-info">
+                        <div>Info</div>
+                        <div class="token-value opacity-70" data-value="info"></div>
+                    </div>
+                    <div class="color-box flex-1 a-success">
+                        <div>Success</div>
+                        <div class="token-value opacity-70" data-value="success"></div>
+                    </div>
+                    <div class="color-box flex-1 a-warning">
+                        <div>Warning</div>
+                        <div class="token-value opacity-70" data-value="warning"></div>
+                    </div>
+                    <div class="color-box flex-1 a-danger">
+                        <div>Danger</div>
+                        <div class="token-value opacity-70" data-value="danger"></div>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-row gap-0 radii-base overflow-hidden">
-                <div class="color-box flex-1 d-1"></div>
-                <div class="color-box flex-1 d-2"></div>
-                <div class="color-box flex-1 d-3"></div>
-                <div class="color-box flex-1 d-4"></div>
-                <div class="color-box flex-1 d-5"></div>
-            </div>
-            <div class="flex flex-row gap-0 radii-base overflow-hidden">
-                <div class="color-box flex-1 a-primary radii-base mr-1">
-                    <div>Primary</div>
-                    <div class="token-value opacity-70" data-value="primary"></div>
-                </div>
-                <div class="color-box flex-1 radii-base-l a-info">
-                    <div>Info</div>
-                    <div class="token-value opacity-70" data-value="info"></div>
-                </div>
-                <div class="color-box flex-1 a-success">
-                    <div>Success</div>
-                    <div class="token-value opacity-70" data-value="success"></div>
-                </div>
-                <div class="color-box flex-1 a-warning">
-                    <div>Warning</div>
-                    <div class="token-value opacity-70" data-value="warning"></div>
-                </div>
-                <div class="color-box flex-1 a-danger">
-                    <div>Danger</div>
-                    <div class="token-value opacity-70" data-value="danger"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+        
+    </div></div>
 
 
-    <div class="px-base py-md flex flex-col gap-sy-base">
+    <div class="px-md py-md flex flex-col gap-sy-base container">
         <dialog id="typographyScaleModal">
             <button class="close" value="cancel">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M9.64017 2.89017C9.78661 2.74372 9.78661 2.50628 9.64017 2.35983C9.49372 2.21339 9.25628 2.21339 9.10983 2.35983L6 5.46967L2.89017 2.35983C2.74372 2.21339 2.50628 2.21339 2.35983 2.35983C2.21339 2.50628 2.21339 2.74372 2.35983 2.89017L5.46967 6L2.35983 9.10983C2.21339 9.25628 2.21339 9.49372 2.35983 9.64017C2.50628 9.78661 2.74372 9.78661 2.89017 9.64017L6 6.53033L9.10983 9.64017C9.25628 9.78661 9.49372 9.78661 9.64017 9.64017C9.78661 9.49372 9.78661 9.25628 9.64017 9.10983L6.53033 6L9.64017 2.89017Z"
-                        fill="currentColor" />
-                </svg>
+                <span class="icon icon__close"></span>
             </button>
 
             <div class="flex flex-col gap-sy-base">
@@ -75,11 +73,7 @@
 
         <dialog id="spacingScaleModal">
             <button class="close" value="cancel">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M9.64017 2.89017C9.78661 2.74372 9.78661 2.50628 9.64017 2.35983C9.49372 2.21339 9.25628 2.21339 9.10983 2.35983L6 5.46967L2.89017 2.35983C2.74372 2.21339 2.50628 2.21339 2.35983 2.35983C2.21339 2.50628 2.21339 2.74372 2.35983 2.89017L5.46967 6L2.35983 9.10983C2.21339 9.25628 2.21339 9.49372 2.35983 9.64017C2.50628 9.78661 2.74372 9.78661 2.89017 9.64017L6 6.53033L9.10983 9.64017C9.25628 9.78661 9.49372 9.78661 9.64017 9.64017C9.78661 9.49372 9.78661 9.25628 9.64017 9.10983L6.53033 6L9.64017 2.89017Z"
-                        fill="currentColor" />
-                </svg>
+                <span class="icon icon__close"></span>
             </button>
             <div class="flex flex-col gap-sy-base">
                 <h3 class="font-bold text-size-lg">Spacing</h3>
@@ -91,11 +85,7 @@
 
         <dialog id="radiiScaleModal">
             <button class="close" value="cancel">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M9.64017 2.89017C9.78661 2.74372 9.78661 2.50628 9.64017 2.35983C9.49372 2.21339 9.25628 2.21339 9.10983 2.35983L6 5.46967L2.89017 2.35983C2.74372 2.21339 2.50628 2.21339 2.35983 2.35983C2.21339 2.50628 2.21339 2.74372 2.35983 2.89017L5.46967 6L2.35983 9.10983C2.21339 9.25628 2.21339 9.49372 2.35983 9.64017C2.50628 9.78661 2.74372 9.78661 2.89017 9.64017L6 6.53033L9.10983 9.64017C9.25628 9.78661 9.49372 9.78661 9.64017 9.64017C9.78661 9.49372 9.78661 9.25628 9.64017 9.10983L6.53033 6L9.64017 2.89017Z"
-                        fill="currentColor" />
-                </svg>
+                <span class="icon icon__close"></span>
             </button>
             <div class="flex flex-col gap-sy-base">
                 <h3 class="font-bold text-size-lg">Radii Scale</h3>
@@ -110,11 +100,11 @@
         <div class="card">
             <div class="flex flex-row justify-between items-baseline">
                 <h3 class="font-bold text-size-lg">Neutral Colours </h3>
-                <a href="#" data-command="renderNeutrals" title="Get palette colours as Figma frames">Extract Neutrals
+                <a href="#" data-command="RENDER_NEUTRALS" title="Get palette colours as Figma frames">Extract Neutrals
                     Palette</a>
             </div>
             <h4 class="font-bold font-size-md">Color Pattern</h4>
-            <p class="text-size-sm opacity-75">Difference in lightness between two adjacent colours. Wider steps outcome
+            <p class="text-size-sm opacity-75">Difference in lightness percent between two adjacent colours. Wider steps outcome
                 greater
                 contrast overall
             </p>
@@ -130,21 +120,20 @@
                 data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "syncValue": true}'>
             </div>
             <div data-neutrals
-                data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 30, "step": 1, "value": 20, "syncValue": true}'>
+                data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "syncValue": true}'>
             </div>
         </div>
 
         <div class="card">
             <h3 class="font-bold text-size-lg">Semantic Colours </h3>
             <h4 class="font-bold font-size-md">Brand Colour</h4>
-            <p class="text-size-sm opacity-75">Set brand / primary colour</p>
             <div data-type="semantics"
                 data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
 
             <h4 class="font-bold mt-3">Semantic Colours</h4>
-            <a href="#" data-expander data-role="trigger" data-expanded="no" class="text-size-sm">Finetune other
-                semantics
-                like success and danger</a>
+            <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">
+                <span>Finetune other semantics like success and danger</span>
+            </a>
             <div data-expander data-role="container" class="flex flex-col gap-sy-sm" style="display: none;">
                 <div data-type="semantics"
                     data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
@@ -163,7 +152,7 @@
         <div class="card" id="accentColors">
             <div class="flex flex-row justify-between items-baseline">
                 <h3 class="font-bold text-size-lg">Accent Colours</h3>
-                <a href="#" data-command="renderAccents" title="Get palette colours as Figma frames">Extract Accent
+                <a href="#" data-command="RENDER_ACCENTS" title="Get palette colours as Figma frames">Extract Accent
                     Palette</a>
             </div>
 
@@ -181,7 +170,7 @@
                 lower in dark mode</p>
             <hr>
 
-            <a href="#" data-expander data-role="trigger" data-expanded="no" class="text-size-sm">Advanced Settings</a>
+            <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Advanced Settings</a>
 
             <div data-expander data-role="container" class="flex flex-col gap-sy-base" style="display: none;">
 
@@ -224,7 +213,7 @@
 
                 <h4 class="font-bold text-size-md">System accent preview</h4>
                 <p class="text-size-sm opacity-75">
-                    System accents are are bound to global ones. Hover over to see additional details
+                    System accents are dervided from global ones. Hover over to see additional details
                 </p>
                 <div class="flex flex-row gap-0 mb-3">
                     <!-- <div class="color-box flex-1 primary-700"><div><span class="token-value"></span> : 1</div></div> -->
@@ -237,7 +226,7 @@
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-500">
+                    <div class="color-box flex-1 primary-500" id="colorPreview0">
                         <div class="flex flex-row gap-1">
                             <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
                         </div>
@@ -246,7 +235,7 @@
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-400">
+                    <div class="color-box flex-1 primary-400" id="colorPreview1">
                         <div class="flex flex-row gap-1 font-bold">
                             <span class="token-value"></span><span class="text-size-xs opacity-70">:
                                 1</span>
@@ -256,7 +245,7 @@
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-300">
+                    <div class="color-box flex-1 primary-300" id="colorPreview2">
                         <div class="flex flex-row gap-1">
                             <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
                         </div>
@@ -284,20 +273,18 @@
                     </div>
                 </div>
 
-
-
                 <h4 class="font-bold text-size-md">Accent color luminancy</h4>
-                <p class="text-size-sm opacity-75">
-                    Left slider defines the darkest shade.
-                    Mid slider sets primary accent shade.
-                    Right slider defines the lightest shade.
-                </p>
                 <div class="sliders flex flex-row items-center">
                     <div id="luminanceSlider" class="slider"></div>
                     <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
                     <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
                     <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
                 </div>
+                <p class="text-size-sm opacity-75">
+                    First value affects the darkest shade.
+                    Second value sets base shade.
+                    Third value defines the lightest shade.
+                </p>
 
             </div>
         </div>
@@ -310,18 +297,18 @@
             <ul class="action-list">
                 <li>
                     <a href="#" data-modal="spacingScaleModal">
-                        <span>Spacing</span><span data-value="spacing" data-type="spacing"></span>
+                        <span>Spacing</span><span data-value="spacing" data-type="spacing" class="icon gap-2 icon_chevron-right"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="radiiScaleModal">
-                        <span>Radii</span><span data-value="radii" data-type="radii"></span>
+                        <span>Radii</span><span data-value="radii" data-type="radii" class="icon gap-2 icon_chevron-right"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="typographyScaleModal">
                         <span>Typography</span>
-                        <span>
+                        <span class="flex flex-row gap-2 icon icon_chevron-right">
                             <span data-value="typeScale" data-type="typography"></span> /
                             <span data-value="baseFontSize" data-type="typography"></span>
                         </span>
@@ -342,8 +329,8 @@
         <div class="card" id="theme">
             <h3 class="font-bold text-size-lg">Appearance</h3>
             <p class="text-size-sm opacity-75">
-                    Select preferred visual theme for plugin UI
-                </p>
+                Select preferred visual theme for plugin UI
+            </p>
             <div class="flex flex-row gap-5 flex-1 mb-2">
                 <label class="flex flex-row gap-2">
                     <input type="radio" name="theme" value="light" />
@@ -360,9 +347,48 @@
             </div>
         </div>
 
-        <div class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right z-10">
-            <button id="resetDefaultsButton">Reset to Defaults</button>
-            <button id="importVariablesButton" class="primary">Import Variables</button>
+        <div
+            class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right z-10 flex flex-row justify-between">
+            <div class="flex gap-2">
+                <button id="exportButton" data-modal="exportModal" title="Export settings"><span class="icon icon__upload"></span></button>
+                <button id="importButton" data-modal="importModal" title="Import settings"><span class="icon icon__download"></span></button>
+            </div>
+            <div class="flex gap-2">
+                <button id="resetDefaultsButton">Reset to Defaults</button>
+                <button id="importVariablesButton" class="primary">Import Variables</button>
+            </div>
         </div>
+
+        <dialog id="importModal">
+            <button class="close" value="cancel">
+                <span class="icon icon__close"></span>
+            </button>
+            <div class="flex flex-col gap-sy-base">
+                <h3 class="font-bold text-size-md">Paste Code</h3>
+                <p class="text-size-sm opacity-75">
+                    Paste preset code to the textarea below
+                </p>                  
+                <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" name="importCodeTextarea" id="importCodeTextarea" class="h-60"></textarea>
+                <div class="flex flex-row justify-end">
+                    <button class="primary" id="importThemeButton">Import Theme</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog id="exportModal">
+            <button class="close" value="cancel">
+                <span class="icon icon__close"></span>
+            </button>
+            <div class="flex flex-col gap-sy-base">
+                <h3 class="font-bold text-size-md">Copy Code</h3>
+                <p class="text-size-sm opacity-75">
+                    Copy the code below to save a preset
+                </p>                
+                <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-60"></textarea>
+                <div class="flex flex-row justify-end">
+                    <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">Copy Code</button>
+                </div>                
+            </div>
+        </dialog>
+
     </div>
 </form>

@@ -96,7 +96,7 @@ export const defaultSettings: ImportFormData = {
     typeScale: 'minorThird',
     createStyles: true,
     accentSaturation: 0.9,
-    accentMaxLuminance: 0.35,
+    accentMaxLuminance: 0.60,
     accentMidLuminance: 0.18,
     accentMinLuminance: 0.10,
     radii: 'base',

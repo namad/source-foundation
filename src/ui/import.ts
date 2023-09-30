@@ -23,15 +23,39 @@ const accentSlidersContainer = document.getElementById('accentColorsSliders') as
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
 
+const importConfigButton = document.getElementById('importButton');
+const exportConfigButton = document.getElementById('exportButton');
+
 let sliders = {};
 
-document.querySelectorAll('[data-command="renderAccents"]').forEach((el: HTMLAnchorElement) => {
+document.getElementById('copyExportedCodeButton').addEventListener('click', (e) => {
+    e.preventDefault();
+    const modal = document.getElementById('exportModal') as HTMLDialogElement;
+    const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
+    textarea.select();
+    document.execCommand("copy");
+    modal.close();
+})
+document.getElementById('importThemeButton').addEventListener('click', (e) => {
+    e.preventDefault();
+    const modal = document.getElementById('importModal') as HTMLDialogElement;
+    const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
+    const code = textarea.value;
+    const data = JSON.parse(code);
+
+    loadSettings(form, data);
+    modal.close();
+
+})
+
+document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
         const params = getFormData(form);
+        const command = el.dataset.command;
 
         parent.postMessage({
             pluginMessage: {
-                type: 'RENDER_ACCENTS',
+                type: command,
                 params: params
             }
         }, "*");
@@ -39,19 +63,6 @@ document.querySelectorAll('[data-command="renderAccents"]').forEach((el: HTMLAnc
     });
 });
 
-document.querySelectorAll('[data-command="renderNeutrals"]').forEach((el: HTMLAnchorElement) => {
-    el.addEventListener('click', (e) => {
-        const params = getFormData(form);
-
-        parent.postMessage({
-            pluginMessage: {
-                type: 'RENDER_NEUTRALS',
-                params: params
-            }
-        }, "*");
-
-    });
-});
 
 document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
     const modalID = el.dataset.modal;
@@ -119,13 +130,23 @@ noUiSlider.create(luminanceSlider, {
     step: 1,
     tooltips: true,
     range: {
-        'min': 5,
-        'max': 90
+        'min': 0,
+        'max': 100
     }
 }).on('update', debounce((values, handle) => {
     luminanceSliderVals[handle].value = values[handle] as string;
     form.dispatchEvent(new Event('input', { 'bubbles': true }));
-}, 10));
+}, 1))
+
+luminanceSlider['noUiSlider'].on('start', (values, handle) => {
+    const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
+    colorPreviewDiv.classList.add("hover");
+})
+
+luminanceSlider['noUiSlider'].on('end', (values, handle) => {
+    const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
+    colorPreviewDiv.classList.remove("hover");
+})
 
 luminanceSliderVals.forEach((element, index) => {
     element.addEventListener("input", () => {
@@ -136,7 +157,7 @@ luminanceSliderVals.forEach((element, index) => {
 
 form.addEventListener("input", debounce(() => {
     generatePreview(form, colorPreviewCard, sliders);
-}, 10));
+}, 1));
 
 
 resetDefaultsButton.addEventListener('click', (e) => {

@@ -122,7 +122,7 @@
     min-width: 200%;
     padding: var(--sy-sm) var(--sx-sm);
     background: var(--fill-contrast-100);
-    border-color: var(--fill-base-500);
+    border: 1px solid var(--alt-base-500);
     color: var(--text-contrast-600);
     border-radius: var(--radii-base);
     bottom: 120%;
@@ -145,7 +145,7 @@
     transform: none;
 }
 
-
+.color-box.hover .tooltip,
 .color-box:hover .tooltip {
     display: flex;
 }
