@@ -19,16 +19,21 @@
 }
 
 .icon {
+    --icon-size: var(--line-height-base);
     display: inline-flex;
     flex-flow: row;
 }
 
+.icon-16 {
+    --icon-size: 16px;
+}
+
 .icon::after {
+    aspect-ratio: 1 / 1;
     content: '';
     display: inline-block;
     background-color: currentColor;
-    width: var(--line-height-base);
-    height: var(--line-height-base);
+    width: var(--icon-size);
     -webkit-mask: var(--icon-svg);
     mask: var(--icon-svg);
     mask-repeat: no-repeat;
@@ -37,52 +42,52 @@
     -webkit-mask-position: center;
 }
 
-.icon__elevation {
+.icon-elevation {
     --icon-svg: var(--ads-elevation);
 }
-.icon__radii {
+.icon-radii {
     --icon-svg: var(--ads-radii);
 }
-.icon__spacing {
+.icon-spacing {
     --icon-svg: var(--ads-spacing);
 }
-.icon__typography {
+.icon-typography {
     --icon-svg: var(--ads-typography);
 }
-.icon__colors {
+.icon-colors {
     --icon-svg: var(--ads-colors);
 }
 
-.icon__upload {
+.icon-upload {
     --icon-svg: var(--upload-icon-svg);
 }
-.icon__info {
+.icon-info {
     --icon-svg: var(--info-icon-svg);
 }
 
-.icon__download {
+.icon-download {
     --icon-svg: var(--download-icon-svg);
 }
 
-.icon_chevron-right {
+.icon-chevron-right {
     --icon-svg: var(--chevron-right-icon-svg);
 }
-.icon_chevron-left {
+.icon-chevron-left {
     --icon-svg: var(--chevron-left-icon-svg);
 }
-.icon_chevron-up {
+.icon-chevron-up {
     --icon-svg: var(--chevron-up-icon-svg);
 }
-.icon_chevron-down {
+.icon-chevron-down {
     --icon-svg: var(--chevron-down-icon-svg);
 }
-.icon__moon {
+.icon-moon {
     --icon-svg: var(--moon-icon-svg);
 }
-.icon__sun {
+.icon-sun {
     --icon-svg: var(--sun-icon-svg);
 }
 
-.icon__close::after {
+.icon-close::after {
     --icon-svg: var(--close-x-icon-svg);
 }

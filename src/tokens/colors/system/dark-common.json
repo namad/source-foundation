@@ -221,21 +221,21 @@
         }
       },
       "400": {
-        "$value": "rgba({grey-78}, 0.09)",
+        "$value": "rgba({grey-78}, 0.10)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
         }
       },
       "500": {
-        "$value": "rgba({grey-78}, 0.12)",
+        "$value": "rgba({grey-78}, 0.14)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
         }
       },
       "600": {
-        "$value": "rgba({grey-78}, 0.16)",
+        "$value": "rgba({grey-78}, 0.20)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
