@@ -1,4 +1,4 @@
-import "./styles.css";
+import "./styles/styles.css";
 
 window.onmessage = ({ data: { pluginMessage } }) => {
     if (pluginMessage.type === "EXPORT_RESULT") {

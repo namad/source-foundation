@@ -68,7 +68,7 @@ export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
                 "$type": "color"
             },
             "200": {
-                "$value": "rgba({200}, 0.33)",
+                "$value": "rgba({200}, 0.40)",
                 "$type": "color"
             },
             "300": {

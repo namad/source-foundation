@@ -1,0 +1,12 @@
+.color-negative {
+    color: var(--text-base-danger)
+}
+.color-positive {
+    color: var(--text-base-success)
+}
+.color-negative-contrast {
+    color: var(--text-contrast-danger)
+}
+.color-positive-contrast {
+    color: var(--text-contrast-success)
+}

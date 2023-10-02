@@ -1,11 +1,13 @@
 {
+    "type": "IMPORT",
     "baseFontSize": "base",
-    "typeScale": "majorSecond",
+    "typeScale": "minorThird",
     "spacing": "base",
     "radii": "base",
+    "theme": "light",
     "distance": 0.03,
     "hue": 194,
-    "saturation": 0.33,
+    "saturation": 0.22,
     "primary": "teal",
     "info": "cyan",
     "success": "green",
@@ -23,8 +25,8 @@
     "purple": 280,
     "pink": 340,
     "accentSaturation": 0.9,
-    "accentMinLuminance": 0.2,
-    "accentMidLuminance": 0.41,
-    "accentMaxLuminance": 0.7,
+    "accentMinLuminance": 0.09,
+    "accentMidLuminance": 0.27,
+    "accentMaxLuminance": 0.51,
     "singleCollection": false
 }

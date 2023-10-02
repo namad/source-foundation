@@ -77,6 +77,8 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
 
     } else if (eventData.type === "EXPORT") {
         // exportToJSON(eventData.format);
+    } else if (eventData.type === "ALERT") {
+        figma.notify(`✅ ${eventData.params}`);
     }
     else if (eventData.type === "RENDER_ACCENTS") {
         const lightAccentTokens = generateGlobalAccentPalette('light', params);

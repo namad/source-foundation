@@ -1,7 +1,9 @@
-import "./source-vars.css";
-import "./utils.css";
-import "./styles.css";
-import "./color-box.css";
+import "./styles/source-vars.css";
+import "./styles/utils.css";
+import "./styles/styles.css";
+import "./styles/icons.css";
+import "./styles/dialog.css";
+import "./styles/color-box.css";
 import "../../node_modules/nouislider/dist/nouislider.css";
 
 
@@ -11,7 +13,8 @@ import { toTitleCase } from "../utils/text-to-title-case";
 import { defaultAccentHUEs, defaultSettings, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
 
 import { debounce } from "../utils/debounce";
-import { ImportFormData, generatePreview, getFormData, loadSettings, transformValue } from "../import";
+import { ImportFormData, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import";
+import { getPresets } from "../presets";
 
 /*
     UI INITIALIZATION
@@ -28,12 +31,36 @@ const exportConfigButton = document.getElementById('exportButton');
 
 let sliders = {};
 
+
+const el = document.querySelector(".card-sticky");
+const sentinal = document.querySelector('.sentinal');
+
+const observer = new IntersectionObserver((entries) => {
+  console.log(entries)
+  // entries is an array of observed dom nodes
+  // we're only interested in the first one at [0]
+  // because that's our .sentinal node.
+  // Here observe whether or not that node is in the viewport
+  if (!entries[0].isIntersecting) {
+    el.classList.add('is-pinned')
+  } else {
+    el.classList.remove('is-pinned')
+  }
+});
+
+observer.observe(sentinal);
+
 document.getElementById('copyExportedCodeButton').addEventListener('click', (e) => {
     e.preventDefault();
     const modal = document.getElementById('exportModal') as HTMLDialogElement;
     const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
     textarea.select();
     document.execCommand("copy");
+
+    parent.postMessage({
+        pluginMessage: {type: 'ALERT', params: "Copied to clipboard"}
+    }, "*");
+
     modal.close();
 })
 document.getElementById('importThemeButton').addEventListener('click', (e) => {
@@ -41,7 +68,21 @@ document.getElementById('importThemeButton').addEventListener('click', (e) => {
     const modal = document.getElementById('importModal') as HTMLDialogElement;
     const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
     const code = textarea.value;
-    const data = JSON.parse(code);
+    const settings = collectValues(modal);
+    let data;
+
+    if(code.length > 0) {
+        try {
+            data = JSON.parse(code);
+        }
+        catch(e) {
+            throw(e);
+        }
+    }
+    else {
+        const themeNumber = settings.theme;
+        data = getPresets()[themeNumber];
+    }
 
     loadSettings(form, data);
     modal.close();
@@ -156,7 +197,7 @@ luminanceSliderVals.forEach((element, index) => {
 });
 
 form.addEventListener("input", debounce(() => {
-    generatePreview(form, colorPreviewCard, sliders);
+    generatePreview(form, sliders);
 }, 1));
 
 

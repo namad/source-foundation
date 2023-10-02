@@ -1,59 +1,14 @@
 <form id="importForm">
-
-    <div class="card-stiky">
-        <div class="card color-preview">
-            <h4 class="font-bold font-size-md">Palette Preview</h4>
-            <div class="flex flex-col gap-sy-xs">
-                <div class="flex flex-row gap-0 radii-base overflow-hidden">
-                    <div class="color-box flex-1 l-1"></div>
-                    <div class="color-box flex-1 l-2"></div>
-                    <div class="color-box flex-1 l-3"></div>
-                    <div class="color-box flex-1 l-4"></div>
-                    <div class="color-box flex-1 l-5"></div>
-                </div>
-                <div class="flex flex-row gap-0 radii-base overflow-hidden">
-                    <div class="color-box flex-1 d-1"></div>
-                    <div class="color-box flex-1 d-2"></div>
-                    <div class="color-box flex-1 d-3"></div>
-                    <div class="color-box flex-1 d-4"></div>
-                    <div class="color-box flex-1 d-5"></div>
-                </div>
-                <div class="flex flex-row gap-0 radii-base overflow-hidden">
-                    <div class="color-box flex-1 a-primary radii-base mr-1">
-                        <div>Primary</div>
-                        <div class="token-value opacity-70" data-value="primary"></div>
-                    </div>
-                    <div class="color-box flex-1 radii-base-l a-info">
-                        <div>Info</div>
-                        <div class="token-value opacity-70" data-value="info"></div>
-                    </div>
-                    <div class="color-box flex-1 a-success">
-                        <div>Success</div>
-                        <div class="token-value opacity-70" data-value="success"></div>
-                    </div>
-                    <div class="color-box flex-1 a-warning">
-                        <div>Warning</div>
-                        <div class="token-value opacity-70" data-value="warning"></div>
-                    </div>
-                    <div class="color-box flex-1 a-danger">
-                        <div>Danger</div>
-                        <div class="token-value opacity-70" data-value="danger"></div>
-                    </div>
-                </div>
+    <dialog class="simple" id="typographyScaleModal">
+        <div class="container">
+            <div class="header">
+                <h3 class="font-bold text-lg">Typography</h3>
+                <button class="close" value="cancel">
+                    <span class="icon icon__close"></span>
+                </button>
             </div>
-        
-    </div></div>
-
-
-    <div class="px-md py-md flex flex-col gap-sy-base container">
-        <dialog id="typographyScaleModal">
-            <button class="close" value="cancel">
-                <span class="icon icon__close"></span>
-            </button>
-
-            <div class="flex flex-col gap-sy-base">
-                <h3 class="font-bold text-size-lg">Typography</h3>
-                <p class="text-size-sm opacity-75">Select base font size / line height to generate text styles.
+            <div class="body">
+                <p class="text-sm opacity-75">Select base font size / line height to generate text styles.
                     Please note, the plugin will create set of styles based on base selected typography scale.
                 </p>
                 <div data-type="typography"
@@ -69,42 +24,86 @@
                     </div>
                 </div>
             </div>
-        </dialog>
+        </div>
+    </dialog>
 
-        <dialog id="spacingScaleModal">
-            <button class="close" value="cancel">
-                <span class="icon icon__close"></span>
-            </button>
-            <div class="flex flex-col gap-sy-base">
-                <h3 class="font-bold text-size-lg">Spacing</h3>
+    <dialog class="simple" id="spacingScaleModal">
+        <div class="container">
+            <div class="header">
+                <h3 class="font-bold text-lg">Spacing</h3>
+                <button class="close" value="cancel">
+                    <span class="icon icon__close"></span>
+                </button>
+            </div>
+            <div class="body">
                 <div data-type="spacing"
                     data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
                 </div>
             </div>
-        </dialog>
+        </div>
+    </dialog>
 
-        <dialog id="radiiScaleModal">
-            <button class="close" value="cancel">
-                <span class="icon icon__close"></span>
-            </button>
-            <div class="flex flex-col gap-sy-base">
-                <h3 class="font-bold text-size-lg">Radii Scale</h3>
-                <p class="text-size-sm opacity-75">Select base border radius</p>
-
+    <dialog class="simple" id="radiiScaleModal">
+        <div class="container">
+            <div class="header">
+                <h3 class="font-bold text-lg">Radii Scale</h3>
+                <button class="close" value="cancel">
+                    <span class="icon icon__close"></span>
+                </button>
+            </div>
+            <div class="body">
+                <p class="text-sm opacity-75">Select base border radius</p>
                 <div data-type="radii"
                     data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
                 </div>
             </div>
-        </dialog>
+        </div>
+    </dialog>
+
+    <div class="flex flex-col container relative">
+        <div class="sentinal"></div>
+        <div class="card-sticky">
+            <div class="card color-preview">
+                <div class="flex flex-row justify-between items-center">
+                    <h4 class="font-bold text-md">Palette Preview</h4>
+                    <div class="radio-segment">
+                        <label>
+                            <input type="radio" name="theme" value="light" />
+                            <span class="container">
+                                <span class="icon icon__sun"></span>
+                            </span>
+                        </label>
+                        <label>
+                            <input type="radio" name="theme" value="dark" />
+                            <span class="container">
+                                <span class="icon icon__moon"></span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="card">
             <div class="flex flex-row justify-between items-baseline">
-                <h3 class="font-bold text-size-lg">Neutral Colours </h3>
+                <h3 class="font-bold text-lg">Neutral Colours </h3>
                 <a href="#" data-command="RENDER_NEUTRALS" title="Get palette colours as Figma frames">Extract Neutrals
                     Palette</a>
             </div>
-            <h4 class="font-bold font-size-md">Color Pattern</h4>
-            <p class="text-size-sm opacity-75">Difference in lightness percent between two adjacent colours. Wider steps outcome
+            <div class="flex flex-col gap-y-xs">
+                <div class="flex flex-row gap-0 rounded overflow-hidden">
+                    <div class="color-box flex-1 bg-fill-base-200"></div>
+                    <div class="color-box flex-1 bg-fill-base-300"></div>
+                    <div class="color-box flex-1 bg-fill-base-400"></div>
+                    <div class="color-box flex-1 bg-fill-base-500"></div>
+                    <div class="color-box flex-1 bg-fill-base-600"></div>
+                </div>
+            </div>
+
+            <h4 class="font-bold text-md">Color Pattern</h4>
+            <p class="text-sm opacity-75">Difference in lightness percent between two adjacent colours. Wider steps
+                outcome
                 greater
                 contrast overall
             </p>
@@ -113,7 +112,7 @@
             </div>
 
             <h5 class="font-bold mt-3">Parameters</h5>
-            <p class="text-size-sm opacity-75">Set the tone with hue slider and select intensity using saturation slider
+            <p class="text-sm opacity-75">Set the tone with hue slider and select intensity using saturation slider
             </p>
 
             <div data-neutrals
@@ -125,8 +124,32 @@
         </div>
 
         <div class="card">
-            <h3 class="font-bold text-size-lg">Semantic Colours </h3>
-            <h4 class="font-bold font-size-md">Brand Colour</h4>
+            <h3 class="font-bold text-lg">Semantic Colours </h3>
+
+            <div class="flex flex-row gap-0 rounded overflow-hidden">
+                <div class="color-box flex-1 bg-primary-400 rounded mr-xs">
+                    <div>Primary</div>
+                    <div class="token-value opacity-70" data-value="primary"></div>
+                </div>
+                <div class="color-box flex-1 rounded-l bg-info-400">
+                    <div>Info</div>
+                    <div class="token-value opacity-70" data-value="info"></div>
+                </div>
+                <div class="color-box flex-1 bg-success-400">
+                    <div>Success</div>
+                    <div class="token-value opacity-70" data-value="success"></div>
+                </div>
+                <div class="color-box flex-1 bg-warning-400">
+                    <div>Warning</div>
+                    <div class="token-value opacity-70" data-value="warning"></div>
+                </div>
+                <div class="color-box flex-1 bg-danger-400">
+                    <div>Danger</div>
+                    <div class="token-value opacity-70" data-value="danger"></div>
+                </div>
+            </div>
+
+            <h4 class="font-bold text-md">Brand Colour</h4>
             <div data-type="semantics"
                 data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
 
@@ -134,7 +157,7 @@
             <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">
                 <span>Finetune other semantics like success and danger</span>
             </a>
-            <div data-expander data-role="container" class="flex flex-col gap-sy-sm" style="display: none;">
+            <div data-expander data-role="container" class="flex flex-col gap-y-sm" style="display: none;">
                 <div data-type="semantics"
                     data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
                 <div data-type="semantics"
@@ -151,35 +174,35 @@
 
         <div class="card" id="accentColors">
             <div class="flex flex-row justify-between items-baseline">
-                <h3 class="font-bold text-size-lg">Accent Colours</h3>
+                <h3 class="font-bold text-lg">Accent Colours</h3>
                 <a href="#" data-command="RENDER_ACCENTS" title="Get palette colours as Figma frames">Extract Accent
                     Palette</a>
             </div>
 
-            <p class="text-size-sm opacity-75">Finetune each accent colour with custom hue value.
+            <p class="text-sm opacity-75">Finetune each accent colour with custom hue value.
                 Lightness of the base colour to be set to fit into WCAG2 Level AA. Global saturation controls are below
             </p>
 
-            <div class="flex flex-col gap-sy-sm" id="accentColorsSliders"></div>
+            <div class="flex flex-col gap-y-sm" id="accentColorsSliders"></div>
             <hr>
             <div
                 data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "syncValue": true}'>
             </div>
-            <p class="text-size-sm opacity-75">Global saturation level for all accent colours. Please note, saturation
+            <p class="text-sm opacity-75">Global saturation level for all accent colours. Please note, saturation
                 is 15%
                 lower in dark mode</p>
             <hr>
 
             <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Advanced Settings</a>
 
-            <div data-expander data-role="container" class="flex flex-col gap-sy-base" style="display: none;">
+            <div data-expander data-role="container" class="flex flex-col gap-y-base" style="display: none;">
 
                 <h4 class="font-bold text-size-md">Global accent preview</h4>
-                <p class="text-size-sm opacity-75">
+                <p class="text-sm opacity-75">
                     Global accents are generated programatically based on accent luminancy slider values below
                 </p>
-                <div class="flex flex-row gap-0 mb-3">
-                    <div class="color-box flex-1 global-accent-600 radii-base-l">
+                <div class="flex flex-row gap-0 mb-y-base">
+                    <div class="color-box flex-1 global-accent-600 rounded-l">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">600</span>
                         </div>
@@ -204,7 +227,7 @@
                             <span class="text-size-xs opacity-70">200</span>
                         </div>
                     </div>
-                    <div class="color-box flex-1 global-accent-100 radii-base-r">
+                    <div class="color-box flex-1 global-accent-100 rounded-r">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">100</span>
                         </div>
@@ -212,56 +235,61 @@
                 </div>
 
                 <h4 class="font-bold text-size-md">System accent preview</h4>
-                <p class="text-size-sm opacity-75">
+                <p class="text-sm opacity-75">
                     System accents are dervided from global ones. Hover over to see additional details
                 </p>
-                <div class="flex flex-row gap-0 mb-3">
+                <div class="flex flex-row gap-0 mb-y-base">
                     <!-- <div class="color-box flex-1 primary-700"><div><span class="token-value"></span> : 1</div></div> -->
-                    <div class="color-box flex-1 primary-600 radii-base-l">
+                    <div class="color-box flex-1 primary-600 rounded-l">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
+                            <span class="token-value text-text-base-600">600</span>
                         </div>
-                        <div class="tooltip flex flex-col gap-sy-sm">
+                        <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Text on dark surface</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
                     <div class="color-box flex-1 primary-500" id="colorPreview0">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
+                            <span class="token-value text-text-contrast-600">500</span>
                         </div>
-                        <div class="tooltip flex flex-col gap-sy-sm">
+                        <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Text on light surface</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
                     <div class="color-box flex-1 primary-400" id="colorPreview1">
-                        <div class="flex flex-row gap-1 font-bold">
-                            <span class="token-value"></span><span class="text-size-xs opacity-70">:
-                                1</span>
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value text-text-contrast-600">400</span>
                         </div>
-                        <div class="tooltip flex flex-col gap-sy-sm">
+                        <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Background color</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
                     <div class="color-box flex-1 primary-300" id="colorPreview2">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value opacity-70"></span><span class="text-size-xs opacity-70">: 1</span>
+                            <span class="token-value text-text-contrast-600">300</span>
                         </div>
-                        <div class="tooltip flex flex-col gap-sy-sm">
+                        <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Non-textual element</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
                     <div class="color-box flex-1 primary-200" style="color: var(--text-base-action)">
-                        <div class="tooltip flex flex-col gap-sy-sm">
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value text-text-base-600">200</span>
+                        </div>
+                        <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Light background</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-100 radii-base-r" style="color: var(--text-base-action)">
-                        <div class="tooltip flex flex-col gap-sy-sm">
+                    <div class="color-box flex-1 primary-100 rounded-r" style="color: var(--text-base-action)">
+                        <div class="flex flex-row gap-1">
+                            <span class="token-value text-text-base-600">100</span>
+                        </div>
+                        <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Subtle background</div>
                             <div class="toolip-body">
                                 <div class="row flex flex-row justify-between gap-3">
@@ -280,7 +308,7 @@
                     <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
                     <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
                 </div>
-                <p class="text-size-sm opacity-75">
+                <p class="text-sm opacity-75">
                     First value affects the darkest shade.
                     Second value sets base shade.
                     Third value defines the lightest shade.
@@ -290,19 +318,21 @@
         </div>
 
         <div class="card" id="ui-scale">
-            <h3 class="font-bold text-size-lg">UI Scale</h3>
-            <p class="text-size-sm opacity-75">
+            <h3 class="font-bold text-lg">UI Scale</h3>
+            <p class="text-sm opacity-75">
                 Select default mode for spacing, radii and typography
             </p>
             <ul class="action-list">
                 <li>
                     <a href="#" data-modal="spacingScaleModal">
-                        <span>Spacing</span><span data-value="spacing" data-type="spacing" class="icon gap-2 icon_chevron-right"></span>
+                        <span>Spacing</span><span data-value="spacing" data-type="spacing"
+                            class="icon gap-2 icon_chevron-right"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="radiiScaleModal">
-                        <span>Radii</span><span data-value="radii" data-type="radii" class="icon gap-2 icon_chevron-right"></span>
+                        <span>Radii</span><span data-value="radii" data-type="radii"
+                            class="icon gap-2 icon_chevron-right"></span>
                     </a>
                 </li>
                 <li>
@@ -315,80 +345,111 @@
                     </a>
                 </li>
             </ul>
-            <hr class="mb-3">
-            <label class="checkbox flex flex-row gap-sx-sm align-top items-start">
+            <hr class="mb-y-base">
+            <label class="checkbox flex flex-row gap-x-sm align-top items-start">
                 <input type="checkbox" name="singleCollection" value="true" />
-                <span class="flex flex-col gap-sy-xs">
+                <span class="flex flex-col gap-y-xs">
                     <span>Import Spacing, Radii and Type Scale tokens as sinlge collection</span>
-                    <span class="text-size-sm opacity-70">All the tokens to go into a single "UI Scale" collection.
+                    <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection.
                         Otherwise different token types to get their own collections.</span>
                 </span>
             </label>
         </div>
 
-        <div class="card" id="theme">
-            <h3 class="font-bold text-size-lg">Appearance</h3>
-            <p class="text-size-sm opacity-75">
-                Select preferred visual theme for plugin UI
-            </p>
-            <div class="flex flex-row gap-5 flex-1 mb-2">
-                <label class="flex flex-row gap-2">
-                    <input type="radio" name="theme" value="light" />
-                    <span>Light</span>
-                </label>
-                <label class="flex flex-row gap-2">
-                    <input type="radio" name="theme" value="dark" />
-                    <span>Dark</span>
-                </label>
-                <label class="flex flex-row gap-2">
-                    <input type="radio" name="theme" value="system" checked />
-                    <span>System</span>
-                </label>
-            </div>
-        </div>
-
-        <div
-            class="figma-bg-secondary sticky bottom-0 left-0 right-0 py-base text-right z-10 flex flex-row justify-between">
-            <div class="flex gap-2">
-                <button id="exportButton" data-modal="exportModal" title="Export settings"><span class="icon icon__upload"></span></button>
-                <button id="importButton" data-modal="importModal" title="Import settings"><span class="icon icon__download"></span></button>
-            </div>
-            <div class="flex gap-2">
-                <button id="resetDefaultsButton">Reset to Defaults</button>
-                <button id="importVariablesButton" class="primary">Import Variables</button>
-            </div>
-        </div>
-
-        <dialog id="importModal">
-            <button class="close" value="cancel">
-                <span class="icon icon__close"></span>
-            </button>
-            <div class="flex flex-col gap-sy-base">
-                <h3 class="font-bold text-size-md">Paste Code</h3>
-                <p class="text-size-sm opacity-75">
-                    Paste preset code to the textarea below
-                </p>                  
-                <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" name="importCodeTextarea" id="importCodeTextarea" class="h-60"></textarea>
-                <div class="flex flex-row justify-end">
-                    <button class="primary" id="importThemeButton">Import Theme</button>
-                </div>
-            </div>
-        </dialog>
-        <dialog id="exportModal">
-            <button class="close" value="cancel">
-                <span class="icon icon__close"></span>
-            </button>
-            <div class="flex flex-col gap-sy-base">
-                <h3 class="font-bold text-size-md">Copy Code</h3>
-                <p class="text-size-sm opacity-75">
-                    Copy the code below to save a preset
-                </p>                
-                <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-60"></textarea>
-                <div class="flex flex-row justify-end">
-                    <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">Copy Code</button>
-                </div>                
-            </div>
-        </dialog>
 
     </div>
+    <div class="px-base py-sm text-right z-10 flex flex-row justify-between">
+        <div class="flex gap-2">
+            <button id="exportButton" data-modal="exportModal" title="Export settings"><span
+                    class="icon icon__upload"></span></button>
+            <button id="importButton" data-modal="importModal" title="Import settings"><span
+                    class="icon icon__download"></span></button>
+        </div>
+        <div class="flex gap-2">
+            <button id="resetDefaultsButton">Reset</button>
+            <button id="importVariablesButton" class="primary">Generate Variables</button>
+        </div>
+    </div>
+
 </form>
+<dialog id="importModal">
+
+    <div class="container">
+        <div class="header">
+            <h3 class="font-bold text-md">Import Theme</h3>
+            <button class="close" value="cancel">
+                <span class="icon icon__close"></span>
+            </button>
+        </div>
+        <div class="body">
+            <p class="text-sm opacity-75">
+                Paste preset code to the textarea below
+            </p>
+            <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" name="importCodeTextarea"
+                id="importCodeTextarea" class="h-80 resize-none"></textarea>
+            <p class="text-sm opacity-75">
+                Or select one of the presets
+            </p>
+        </div>
+        <div class="presets-list mb-sy-base" id="presetsList">
+            <label class="theme-item">
+                <input type="radio" name="theme" value="2" />
+                <span class="text-base hidden">Theme 1</span>
+                <span class="swatches neutral-swatches">
+                    <span class="swatch swatch-1"></span>
+                    <span class="swatch swatch-2"></span>
+                    <span class="swatch swatch-3"></span>
+                    <span class="swatch swatch-4"></span>
+                    <span class="swatch swatch-5"></span>
+                </span>
+                <span class="swatches semantic-swatches">
+                    <span class="swatch swatch-1"></span>
+                    <span class="swatch swatch-2"></span>
+                    <span class="swatch swatch-3"></span>
+                    <span class="swatch swatch-4"></span>
+                    <span class="swatch swatch-5"></span>
+                </span>
+                <span class="info">
+                    <span class="icon icon__info"></span>
+                    <span>
+                        <span class="text-text-base-500">Spacing</span>
+                        <span class="text-text-base-600" data-value="spacing"></span>
+                    </span>
+                    <span>
+                        <span class="text-text-base-500">Radii</span>
+                        <span class="text-text-base-600" data-value="radii"></span>
+                    </span>
+                    <span>
+                        <span class="text-text-base-500">Typography</span>
+                        <span class="text-text-base-600" data-value="typeScale"></span> / 
+                        <span class="text-text-base-600" data-value="baseFontSize"></span>
+                    </span>
+                </span>
+            </label>
+        </div>
+        <div class="footer">
+            <button class="primary" id="importThemeButton">Import Theme</button>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="exportModal" class="modal">
+    <div class="container">
+        <div class="header">
+            <h3 class="font-bold text-md">Export Theme</h3>
+            <button class="close" value="cancel">
+                <span class="icon icon__close"></span>
+            </button>
+        </div>
+        <div class="body max-h-">
+            <p class="text-sm opacity-75">
+                Copy the code below to save a preset
+            </p>
+            <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea"
+                readonly class="h-80 resize-none"></textarea>
+        </div>
+        <div class="footer">
+            <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">Copy Code</button>
+        </div>
+    </div>
+</dialog>

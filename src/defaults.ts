@@ -72,7 +72,7 @@ export const defaultAccentHUEs = {
 
 export const defaultSettings: ImportFormData = {
     type: 'IMPORT',
-    theme: 'system',
+    theme: 'light',
     hue: 190,
     saturation: 0.2,
     distance: 0.02,

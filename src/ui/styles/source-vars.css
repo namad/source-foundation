@@ -243,3 +243,12 @@
 	--font-size-base: 15px;
 	--paragraph-spacing-display: 20px;
 }
+
+:root {
+    --elevatoin-1: 0px 1px 0.5px 0px var(--utility-shade-100);
+    --elevation-2: 0px 2px 3px -1px var(--utility-shade-100), 0px 1px 2px -1px var(--utility-shade-100);
+    --elevation-3: 0px 2px 4px -2px var(--utility-shade-100), 0px 4px 6px -1px var(--utility-shade-100);
+    --elevation-4: 0px 4px 6px -4px var(--utility-shade-100), 0px 10px 15px -3px var(--utility-shade-200);
+    --elevation-5: 0px 8px 10px -6px var(--utility-shade-100), 0px 20px 25px -5px var(--utility-shade-200);
+    --elevation-6: 0px 16px 10px -7px var(--utility-shade-100), 0px 24px 28px -8px var(--utility-shade-200), 0px 24px 48px -10px var(--utility-shade-200);
+}

@@ -12,10 +12,11 @@ import { outputHSL } from "./color-tokens/swatches-generator";
 import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
 import { findTokenReferences } from "./utils/token-references";
+import { getPresetContentTemplate, getPresets } from "./presets";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
-    theme: 'light' | 'dark' | 'system';
+    theme: 'light' | 'dark';
     hue: number;
     saturation: number;
     distance: number;
@@ -51,7 +52,7 @@ export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT
     let val = parseInt(value);
     let valueMap;
 
-    switch(name) {
+    switch (name) {
         case 'baseFontSize': {
             valueMap = typographySizeName;
             break;
@@ -70,11 +71,11 @@ export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT
         case 'danger':
         case 'warning': {
             valueMap = systemAccentList;
-            break;        
+            break;
         }
         case 'saturation':
         case 'distance':
-        case 'accentSaturation': 
+        case 'accentSaturation':
         case 'accentMaxLuminance':
         case 'accentMidLuminance':
         case 'accentMinLuminance': {
@@ -84,11 +85,11 @@ export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT
             if (direction === 'OUT') {
                 val = val / 100;
             }
-            break;        
+            break;
         }
     }
 
-    if(isNaN(val)) {
+    if (isNaN(val)) {
         // this is string value we need to convert to number
         return valueMap ? valueMap.indexOf(value) : value;
     }
@@ -97,7 +98,7 @@ export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT
     }
 }
 
-function collectValues(form): ImportFormData {
+export function collectValues(form): ImportFormData {
     const formElements = form.querySelectorAll('input[name]');
 
     let rawValues = {};
@@ -106,7 +107,7 @@ function collectValues(form): ImportFormData {
         const fieldName = formEl.name;
 
         if (formEl.type == 'radio') {
-            if(formEl.checked) {
+            if (formEl.checked) {
                 rawValues[fieldName] = transformValue(formEl.name, formEl.value, "OUT");
             }
             return;
@@ -130,8 +131,39 @@ export function getFormData(form): ImportFormData {
     };
 }
 
+export function generateMiniPreview(masterData: ImportFormData) {
+    const presetsListElement = document.getElementById('presetsList');
+    const presets = getPresets();
+    
+    const previewColorNames = [
+        'fill/base/200',
+        'fill/base/300',
+        'fill/base/400',
+        'fill/base/500',
+        'fill/base/600',
+        'primary/400',
+        'info/400',
+        'success/400',
+        'warning/400',
+        'danger/400'
+    ]
 
-export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDivElement, sliders) {
+    presetsListElement.innerHTML = '';
+    
+    presets.forEach((data, index) => {
+        const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
+
+        const label = document.createElement('label');
+        label.classList.add('theme-item');
+        label.innerHTML = getPresetContentTemplate(index);
+        presetsListElement.appendChild(label);
+
+        generateCSSVars(themeColors, label);
+        updateValuesDisplay(data, label);
+    })
+}
+
+export function generatePreview(form: HTMLFormElement, sliders) {
     let data = getFormData(form);
 
     // set colours on neutrals hue & sdaturation sliders
@@ -143,32 +175,34 @@ export function generatePreview(form: HTMLFormElement, colorPreviewCard: HTMLDiv
 
     const primaryColorHUE = data.primary
     const shades = getGlobalAccent(
-                        data[primaryColorHUE],
-                        data.accentSaturation,
-                        data.accentMinLuminance,
-                        data.accentMidLuminance,
-                        data.accentMaxLuminance
-                    );
+        data[primaryColorHUE],
+        data.accentSaturation,
+        data.accentMinLuminance,
+        data.accentMidLuminance,
+        data.accentMaxLuminance
+    );
     const globalAccent = flattenObject({
         'global-accent': shades
     })
-    const darkThemeMq = data.theme === 'system' ? window.matchMedia("(prefers-color-scheme: dark)").matches : data.theme == 'dark';
-    const themeColors = getThemeColors(darkThemeMq ? 'darkElevated' : 'lightBase', data);
-    const systemAccentShades = getShadesTemplate(darkThemeMq ? 'dark' : 'light');
 
-    generateCSSVars({...themeColors, ...globalAccent});
+    const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
 
-    generateAccentsPreview(themeColors, data, systemAccentShades);
+    generateCSSVars({ ...themeColors, ...globalAccent });
+
+    generateAccentsPreview(themeColors, data);
 
     generateCSSVars(radii[data.radii]);
     generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacing[data.spacing]);
 
-    updateValuesDisplay(data);
+    updateValuesDisplay(data, form);
 
+    generateMiniPreview(data);
 }
 
-function generateAccentsPreview(themeColors: {}, data: ImportFormData, systemAccentShades) {
+function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
+    const systemAccentShades = getShadesTemplate(data.theme);
+
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
 
@@ -186,8 +220,8 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, systemAcc
             const references = findTokenReferences(systemToken);
             const resolvedTo = systemToken.replace(/{/g, "{global.");
 
-            const toolTip = document.querySelector(`.color-box.primary-${index} .toolip-body`) as HTMLDivElement;
-            const valueEl = document.querySelector(`.color-box.primary-${index} .token-value`) as HTMLDivElement;
+            const toolTip = context.querySelector(`.color-box.primary-${index} .toolip-body`) as HTMLDivElement;
+            const valueEl = context.querySelector(`.color-box.primary-${index} .token-value`) as HTMLDivElement;
             const alpha = chromaColor.alpha();
 
             if (alpha < 1) {
@@ -233,50 +267,48 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, systemAcc
     });
 }
 
-function updateValuesDisplay(data: ImportFormData) {
-    Object.entries(data).forEach(([key, value]) => {
-        document.querySelectorAll(`[data-value=${key}]`).forEach((el: HTMLElement) => {
-            el.innerHTML = camelToTitle(`${value}`);
-        });
+function updateValuesDisplay(data: ImportFormData, context = document.documentElement) {
+    context.querySelectorAll(`[data-value]`).forEach((el: HTMLElement) => {
+        el.innerHTML = camelToTitle(`${data[el.dataset.value]}`);
     })
 }
 
-function generateCSSVars(tokens = {}) {
+function generateCSSVars(tokens = {}, context = document.documentElement) {
     Object.entries(tokens).forEach(([name, token]) => {
         const varName = `--${name.replace(/\//g, "-")}`;
         const type = token['$type'];
 
         if (type == 'number') {
             const varValue = parseInt(token["$value"]);
-            document.documentElement.style.setProperty(varName, `${varValue}px`);
+            context.style.setProperty(varName, `${varValue}px`);
         }
 
         if (type == 'color') {
-            const rgb = parseColor(token as DesignToken, {...tokens, ...getGlobalNeutrals() }, 'rgb');
-            document.documentElement.style.setProperty(varName, `${rgb}`);
+            const rgb = parseColor(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
+            context.style.setProperty(varName, `${rgb}`);
         }
     })
 }
 
 
 export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
-    Object.entries(data).forEach(([key, value]) => {
-        const formElements = form.querySelectorAll(`[name=${key}]`);
-        const val = transformValue(key, value, "IN");
+    const formElements = form.querySelectorAll(`input[name]`);
 
-        formElements.forEach((formEl: HTMLFormElement) => {
-            if (formEl.type == 'radio') {
-                if (formEl.value === value) {
-                    formEl.checked = true;
-                }
+    formElements.forEach((formEl: HTMLFormElement) => {
+        const name = formEl.name;
+        const value = data[name]
+        const val = transformValue(name, value, "IN");
+        if (formEl.type == 'radio') {
+            if (formEl.value === value) {
+                formEl.checked = true;
             }
-            else {
-                formEl.value = val;
-            }
+        }
+        else {
+            formEl.value = val;
+        }
 
-            if (silent !== true) {
-                formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
-            }
-        });
+        if (silent !== true) {
+            formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
+        }
     });
 }

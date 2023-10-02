@@ -1,0 +1,179 @@
+dialog {
+    display: none;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    max-width: none;
+    max-height: none;
+    overflow: hidden;
+    margin: 0;
+    background-color: color-mix(in srgb, var(--fill-base-300), var(--utility-transparent) 20%);
+}
+
+dialog[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+dialog::backdrop {
+    display: none;
+}
+
+dialog .container {
+    display: flex;
+    flex-flow: column;
+    width: 95%;
+    max-height: 75vh;
+    padding: 0;
+    color: var(--text-base-600);
+    background-color: var(--fill-base-100);
+    border-radius: var(--radii-lg);
+    outline: 1px solid var(--alt-base-400);
+    max-height: 95vh;
+    animation: open-modal 250ms ease-in-out;
+    @apply shadow-2xl;
+}
+
+dialog .header {
+    padding: var(--sy-md) var(--sx-md) 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+dialog .body {
+    padding: var(--sy-lg) var(--sx-lg);
+    @apply flex flex-col gap-y-base;
+    flex: 1;
+    overflow: hidden;
+}
+
+dialog .footer {
+    padding: 0 var(--sx-lg) var(--sy-lg);
+    @apply flex flex-row justify-end;
+}
+
+button.close {
+    color: currentColor;
+    appearance: none;
+    border: 0 none;
+    background: transparent;
+    border-radius: var(--radii-base);
+    opacity: 0.6;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--line-height-md);
+    height: var(--line-height-md);
+}
+
+button.close:hover {
+    opacity: 1;
+}
+
+.presets-list {
+    @apply flex flex-col flex-1 gap-sy-xs4 px-lg mb-sy-lg overflow-auto ;
+}
+
+.theme-item {
+    margin: 0 calc(-1 * var(--sx-sm));
+    @apply flex flex-col gap-xs4 p-sm rounded-md;
+}
+
+.theme-item input[type=radio] {
+    opacity: 0;
+    position: absolute;
+}
+
+.theme-item:hover {
+    outline:1px solid var(--primary-300);
+    outline-offset: -1px;
+}
+
+.theme-item:has(input:checked) {
+    background-color: transparent;
+    outline:1px solid var(--primary-500);
+    outline-offset: -1px;
+}
+
+.theme-item:has(input:checked):focus-within {
+    outline-width: 2px;
+    outline-offset: -2px;
+}
+
+dialog .body + .presets-list {
+    padding-top: 0;
+}
+
+.swatches {
+    @apply flex flex-row gap-0 rounded overflow-hidden;
+}
+
+.swatches .swatch {
+    height: 1.5rem;
+    flex: 1;
+}
+
+.swatches .swatch-1 {
+    background-color: var(--swatch-1);
+}
+.swatches .swatch-2 {
+    background-color: var(--swatch-2);
+}
+.swatches .swatch-3 {
+    background-color: var(--swatch-3);
+}
+.swatches .swatch-4 {
+    background-color: var(--swatch-4);
+}
+.swatches .swatch-5 {
+    background-color: var(--swatch-5);
+}
+
+.neutral-swatches {
+    --swatch-1: var(--fill-base-200);
+    --swatch-2: var(--fill-base-300);
+    --swatch-3: var(--fill-base-400);
+    --swatch-4: var(--fill-base-500);
+    --swatch-5: var(--fill-base-600);
+}
+.semantic-swatches {
+    --swatch-1: var(--primary-400);
+    --swatch-2: var(--info-400);
+    --swatch-3: var(--success-400);
+    --swatch-4: var(--warning-400);
+    --swatch-5: var(--danger-400);
+}
+
+.semantic-swatches .swatch-2 {
+    margin-left: 1px;
+}
+.semantic-swatches .swatch-1 {
+    margin-right: 1px;
+}
+
+.theme-item .info {
+    @apply flex flex-row gap-base items-center justify-between px-xs py-sy-xs rounded bg-alt-base-100;
+}
+
+.theme-item .info-item {
+    @apply flex flex-row flex-1 gap-xs items-center;
+}
+
+.theme-item .info-item:last-child {
+    flex: 2 2 0;
+}
+
+@keyframes open-modal {
+    from {
+        opacity: 0;
+        transform: translateY(-25%);    
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    
+    }
+}
