@@ -1,6 +1,6 @@
 <form id="importForm">
     <dialog class="simple" id="typographyScaleModal">
-        <div class="container">
+        <div class="modal-container">
             <div class="header">
                 <h3 class="font-bold text-lg">Typography</h3>
                 <button class="close" value="cancel">
@@ -28,7 +28,7 @@
     </dialog>
 
     <dialog class="simple" id="spacingScaleModal">
-        <div class="container">
+        <div class="modal-container">
             <div class="header">
                 <h3 class="font-bold text-lg">Spacing</h3>
                 <button class="close" value="cancel">
@@ -36,6 +36,7 @@
                 </button>
             </div>
             <div class="body">
+                <p class="text-sm opacity-75">Select base spacing</p>
                 <div data-type="spacing"
                     data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
                 </div>
@@ -44,7 +45,7 @@
     </dialog>
 
     <dialog class="simple" id="radiiScaleModal">
-        <div class="container">
+        <div class="modal-container">
             <div class="header">
                 <h3 class="font-bold text-lg">Radii Scale</h3>
                 <button class="close" value="cancel">
@@ -101,7 +102,7 @@
                 </div>
             </div>
 
-            <h4 class="font-bold text-md">Color Pattern</h4>
+            <h4 class="font-bold text-md mt-3">Color Pattern</h4>
             <p class="text-sm opacity-75">Difference in lightness percent between two adjacent colours. Wider steps
                 outcome
                 greater
@@ -111,7 +112,7 @@
                 data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
 
-            <h5 class="font-bold mt-3">Parameters</h5>
+            <h4 class="font-bold text-md mt-3">Parameters</h4>
             <p class="text-sm opacity-75">Set the tone with hue slider and select intensity using saturation slider
             </p>
 
@@ -149,11 +150,11 @@
                 </div>
             </div>
 
-            <h4 class="font-bold text-md">Brand Colour</h4>
+            <h4 class="font-bold text-md mt-3">Brand Colour</h4>
             <div data-type="semantics"
                 data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
 
-            <h4 class="font-bold mt-3">Semantic Colours</h4>
+            <h4 class="font-bold text-md mt-3">Semantic Colours</h4>
             <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">
                 <span>Finetune other semantics like success and danger</span>
             </a>
@@ -197,7 +198,7 @@
 
             <div data-expander data-role="container" class="flex flex-col gap-y-base" style="display: none;">
 
-                <h4 class="font-bold text-size-md">Global accent preview</h4>
+                <h4 class="font-bold text-md">Global accent preview</h4>
                 <p class="text-sm opacity-75">
                     Global accents are generated programatically based on accent luminancy slider values below
                 </p>
@@ -234,7 +235,7 @@
                     </div>
                 </div>
 
-                <h4 class="font-bold text-size-md">System accent preview</h4>
+                <h4 class="font-bold text-md mt-3">System accent preview</h4>
                 <p class="text-sm opacity-75">
                     System accents are dervided from global ones. Hover over to see additional details
                 </p>
@@ -301,7 +302,7 @@
                     </div>
                 </div>
 
-                <h4 class="font-bold text-size-md">Accent color luminancy</h4>
+                <h4 class="font-bold text-md mt-3">Accent color luminancy</h4>
                 <div class="sliders flex flex-row items-center">
                     <div id="luminanceSlider" class="slider"></div>
                     <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
@@ -358,7 +359,7 @@
 
 
     </div>
-    <div class="px-base py-sm text-right z-10 flex flex-row justify-between">
+    <div class="py-sm px-base text-right flex flex-row justify-between">
         <div class="flex gap-2">
             <button id="exportButton" data-modal="exportModal" title="Export settings"><span
                     class="icon icon-upload"></span></button>
@@ -374,7 +375,7 @@
 </form>
 <dialog id="importModal">
 
-    <div class="container">
+    <div class="modal-container">
         <div class="header">
             <h3 class="font-bold text-md">Import Theme</h3>
             <button class="close" value="cancel">
@@ -477,7 +478,7 @@
 </dialog>
 
 <dialog id="exportModal" class="modal">
-    <div class="container">
+    <div class="modal-container">
         <div class="header">
             <h3 class="font-bold text-md">Export Theme</h3>
             <button class="close" value="cancel">

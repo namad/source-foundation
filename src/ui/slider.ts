@@ -33,8 +33,8 @@ function getMarkup({ label, name, min, max, step, value }) {
         <div class="sliders flex flex-row items-center" data-name=${name}>
             <span class="text-label">${label}</span>
             <div class="slider"></div>
-            <input data-display type="text" readonly>
-            <input data-value type="hidden" name="${name}" value="${value}">
+            <input data-display-element type="text" readonly>
+            <input data-value-element type="hidden" name="${name}" value="${value}">
         </div>    
     `
 }
@@ -42,8 +42,8 @@ function getMarkup({ label, name, min, max, step, value }) {
 function processComponent(el, options: SliderOptions) {
     el.innerHTML = getMarkup(options);
 
-    const displayInput = el.querySelector(`input[data-display]`) as HTMLInputElement;
-    const valueInput = el.querySelector(`input[data-value]`) as HTMLInputElement;
+    const displayInput = el.querySelector(`input[data-display-element]`) as HTMLInputElement;
+    const valueInput = el.querySelector(`input[data-value-element]`) as HTMLInputElement;
     let slider = el.querySelector(`.slider`);
 
     slider = nouislider.create(slider, {

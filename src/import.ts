@@ -48,7 +48,7 @@ export interface ImportFormData {
     singleCollection: boolean;
 }
 
-export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT'): string | number {
+export function transformValue(name: string, value: any, direction?): string | number {
     let val = parseInt(value);
     let valueMap;
 
@@ -91,7 +91,7 @@ export function transformValue(name: string, value: any, direction?: 'IN' | 'OUT
 
     if (isNaN(val)) {
         // this is string value we need to convert to number
-        return valueMap ? valueMap.indexOf(value) : value;
+        return valueMap && direction === 'IN' ? valueMap.indexOf(value) : value;
     }
     else {
         return valueMap ? valueMap[value] : val;
@@ -269,7 +269,10 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
 
 function updateValuesDisplay(data: ImportFormData, context = document.documentElement) {
     context.querySelectorAll(`[data-value]`).forEach((el: HTMLElement) => {
-        el.innerHTML = camelToTitle(`${data[el.dataset.value]}`);
+        const name = el.dataset.value;
+        const value = data[name];
+        const displayValue = transformValue(name, value, el.dataset.transform || 'OUT');
+        el.innerHTML = camelToTitle(`${displayValue}`);
     })
 }
 

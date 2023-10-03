@@ -7,6 +7,7 @@
     --slider-thumb-size: calc(var(--line-height-md) + var(--sy-xs));
     --slider-track-size: calc(var(--slider-thumb-size) / 4);
     --slider-margin: var(--slider-thumb-size);
+    --scrollbar-width: 8px;
 }
 
 * {
@@ -36,6 +37,25 @@ a:hover {
     text-decoration: underline;
 }
 
+::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-thumb {
+    /* Foreground */
+    background: red;
+    background: var(--stroke-base-600);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+    /* Background */
+    background: transparent;
+}
+
 .card {
     background-color: var(--fill-base-100);
     border-radius: var(--radii-md);
@@ -54,18 +74,19 @@ a:hover {
 }
 
 .sentinal {
-  height: var(--sx-xs2);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: transparent;
+    height: var(--sx-xs2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
 }
 
 .is-pinned .card {
-    outline: 1px solid var(--alt-base-300);
+    outline: 1px solid var(--alt-base-400);
     @apply shadow-lg;
 }
+
 form {
     display: flex;
     flex-direction: column;
@@ -110,6 +131,7 @@ button.primary {
 button.primary:hover {
     background-image: linear-gradient(var(--alt-contrast-200), var(--alt-contrast-200));
 }
+
 input,
 textarea {
     background-color: var(--fill-base-100);
@@ -168,14 +190,14 @@ input[type=radio]:checked {
     opacity: 1;
 }
 
-.radio-segment input[type=radio]:checked + .container {
+.radio-segment input[type=radio]:checked+.container {
     background-color: var(--utility-tint-600);
     outline: 1px solid var(--utility-shade-100);
     box-shadow: var(--elevation-2);
     opacity: 1;
 }
 
-.radio-segment input[type=radio]:focus-visible + .container {
+.radio-segment input[type=radio]:focus-visible+.container {
     outline: 2px auto var(--primary-500);
     outline-offset: 2px;
 }
@@ -227,61 +249,69 @@ fieldset {
 }
 
 [data-name='red'] {
-    --thumb-color:  var(--accent-red-400);
+    --thumb-color: var(--accent-red-400);
 }
+
 [data-name='amber'] {
-    --thumb-color:  var(--accent-amber-400);
+    --thumb-color: var(--accent-amber-400);
 }
+
 [data-name='brown'] {
-    --thumb-color:  var(--accent-brown-400);
+    --thumb-color: var(--accent-brown-400);
 }
+
 [data-name='green'] {
-    --thumb-color:  var(--accent-green-400);
+    --thumb-color: var(--accent-green-400);
 }
+
 [data-name='teal'] {
-    --thumb-color:  var(--accent-teal-400);
+    --thumb-color: var(--accent-teal-400);
 }
+
 [data-name='cyan'] {
-    --thumb-color:  var(--accent-cyan-400);
+    --thumb-color: var(--accent-cyan-400);
 }
 
 [data-name='blue'] {
-    --thumb-color:  var(--accent-blue-400);
+    --thumb-color: var(--accent-blue-400);
 }
 
 [data-name='indigo'] {
-    --thumb-color:  var(--accent-indigo-400);
+    --thumb-color: var(--accent-indigo-400);
 }
 
 [data-name='violet'] {
-    --thumb-color:  var(--accent-violet-400);
+    --thumb-color: var(--accent-violet-400);
 }
 
 [data-name='purple'] {
-    --thumb-color:  var(--accent-purple-400);
+    --thumb-color: var(--accent-purple-400);
 }
 
 [data-name='pink'] {
-    --thumb-color:  var(--accent-pink-400);
+    --thumb-color: var(--accent-pink-400);
 }
 
 [data-name='info'] {
-    --thumb-color:  var(--info-400);
+    --thumb-color: var(--info-400);
 }
+
 [data-name='warning'] {
-    --thumb-color:  var(--warning-400);
+    --thumb-color: var(--warning-400);
 }
+
 [data-name='success'] {
-    --thumb-color:  var(--success-400);
+    --thumb-color: var(--success-400);
 }
+
 [data-name='danger'] {
-    --thumb-color:  var(--danger-400);
+    --thumb-color: var(--danger-400);
 }
 
 
 [data-slider],
 #luminanceSlider {
-    --thumb-color:  var(--primary-400);
+    --thumb-color: var(--primary-400);
 }
 
 #luminanceSlider {
@@ -331,7 +361,7 @@ fieldset {
     cursor: default;
     box-shadow: none;
 
-    
+
     height: var(--slider-thumb-size);
     width: var(--slider-thumb-size);
 
@@ -345,6 +375,7 @@ fieldset {
     border-radius: 50%;
 
 }
+
 .sliders .slider .noUi-tooltip {
     bottom: initial;
     top: calc(var(--slider-thumb-size) - var(--slider-thumb-size) / 10);
@@ -366,8 +397,8 @@ fieldset {
     visibility: visible;
 }
 
-.sliders .slider  .noUi-handle::before,
-.sliders .slider  .noUi-handle::after {
+.sliders .slider .noUi-handle::before,
+.sliders .slider .noUi-handle::after {
     display: none;
 }
 
@@ -489,7 +520,7 @@ a[data-expanded=yes]::after {
     padding: 0;
     border-radius: 4px;
     flex: 0 0 auto;
-    
+
 }
 
 .checkbox input[type="checkbox"]:checked {

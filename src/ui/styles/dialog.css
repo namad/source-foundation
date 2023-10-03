@@ -21,11 +21,10 @@ dialog::backdrop {
     display: none;
 }
 
-dialog .container {
+dialog .modal-container {
     display: flex;
     flex-flow: column;
     width: 95%;
-    max-height: 75vh;
     padding: 0;
     color: var(--text-base-600);
     background-color: var(--fill-base-100);
@@ -74,11 +73,12 @@ button.close:hover {
 }
 
 .presets-list {
-    @apply flex flex-col flex-1 gap-sy-xs4 px-lg mb-sy-lg overflow-auto ;
+    @apply flex flex-col flex-1 gap-sy-xs4 px-lg mb-sy-lg overflow-auto overflow-y-visible;
+    padding-right: calc(var(--sx-lg) - var(--scrollbar-width));
 }
 
 .theme-item {
-    @apply rounded-md bg-alt-base-100 flex flex-row;
+    @apply rounded-md bg-alt-base-100 flex flex-row relative;
 }
 
 .theme-item input[type=radio] {
@@ -93,11 +93,14 @@ button.close:hover {
 
 .theme-item:has(input:checked) {
     background-color: transparent;
-    outline:1px solid var(--primary-500);
-    outline-offset: -1px;
+    outline:2px solid var(--primary-300);
+    outline-offset: -2px;
 }
 
-.theme-item:has(input:checked):focus-within {
+.theme-item:focus-within,
+.theme-item:has(input:focus),
+.theme-item:has(input:focus-visible) {
+    outline:1px solid var(--primary-500);
     outline-width: 2px;
     outline-offset: -2px;
 }

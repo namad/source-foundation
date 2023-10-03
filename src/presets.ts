@@ -1,19 +1,23 @@
-import theme1 from './presets/default.json';
-import theme2 from './presets/royal-blue.json';
-import theme3 from './presets/cyan.json';
-import theme4 from './presets/indigo.json';
-import theme5 from './presets/pink.json';
+import blue from './presets/default.json';
+import rolayBlue from './presets/royal-blue.json';
+import cyan from './presets/cyan.json';
+import indigo from './presets/indigo.json';
+import pink from './presets/pink.json';
+import green from './presets/green.json';
+import amber from './presets/amber.json';
 
 import { ImportFormData } from './import';
 
 
 export function getPresets(): ImportFormData[] {
     return [
-        theme1 as ImportFormData, 
-        theme2 as ImportFormData, 
-        theme3 as ImportFormData,
-        theme4 as ImportFormData,
-        theme5 as ImportFormData,
+        amber as ImportFormData,
+        green as ImportFormData,
+        cyan as ImportFormData,
+        blue as ImportFormData, 
+        rolayBlue as ImportFormData, 
+        indigo as ImportFormData,
+        pink as ImportFormData,
     ]
 }
 
@@ -24,7 +28,7 @@ export function getPresetContentTemplate(index) {
             <span class="info-item">
                 <span class="icon icon-16 icon-colors" title="Color pattern"></span>                
                 <span>
-                    <span class="text-text-base-600" data-value="distance">2</span><span class="text-text-base-400">%</span>
+                    <span class="text-text-base-600" data-value="distance" data-transform="IN">2</span><span class="text-text-base-400">%</span>
                 </span>
             </span>
             <span class="info-item">
