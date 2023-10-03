@@ -1,0 +1,246 @@
+{
+    "font-size": {
+        "xs2": {
+            "$value": "9",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xs": {
+            "$value": "10",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "sm": {
+            "$value": "11",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "base": {
+            "$value": "13",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "md": {
+            "$value": "16",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "lg": {
+            "$value": "20",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl": {
+            "$value": "25",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl2": {
+            "$value": "32",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl3": {
+            "$value": "40",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl4": {
+            "$value": "50",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl5": {
+            "$value": "62",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl6": {
+            "$value": "77",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl7": {
+            "$value": "97",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        }
+    },
+    "line-height": {
+        "xs2": {
+            "$value": "10",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xs": {
+            "$value": "12",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "sm": {
+            "$value": "14",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "base": {
+            "$value": "16",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "md": {
+            "$value": "20",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "lg": {
+            "$value": "24",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl": {
+            "$value": "32",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl2": {
+            "$value": "36",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl3": {
+            "$value": "48",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl4": {
+            "$value": "56",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl5": {
+            "$value": "64",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl6": {
+            "$value": "84",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        },
+        "xl7": {
+            "$value": "106",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT"
+            ]
+        }
+    },
+    "letter-spacing": {
+      "0": {
+        "$value": "0%",
+        "$type": "letterSpacing",
+        "scopes": [
+            "TEXT_CONTENT"
+        ]
+      }
+    },
+    "paragraph-spacing": {
+        "label": {
+            "$value": "8",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT"
+            ]
+        },
+        "paragraph": {
+            "$value": "12",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT"
+            ]
+        },
+        "display": {
+            "$value": "16",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT"
+            ]
+        }
+    }
+}

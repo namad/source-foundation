@@ -1,6 +1,10 @@
 import textStyleTokens from "./tokens/typography/styles.json";
 import typeFaceTokens from "./tokens/typography/typeface.json";
 
+import baseMajorThird from "./tokens/typography/major-third/typescale-base.json";
+import compactMajorThird from "./tokens/typography/major-third/typescale-compact.json";
+import largeMajorThird from "./tokens/typography/major-third/typescale-large.json";
+
 import baseMinorThird from "./tokens/typography/minor-third/typescale-base.json";
 import compactMinorThird from "./tokens/typography/minor-third/typescale-compact.json";
 import largeMinorThird from "./tokens/typography/minor-third/typescale-large.json";
@@ -18,6 +22,11 @@ export const large = flattenObject(largeMinorThird);
 const styles = flattenObject(textStyleTokens);
 
 const tokens = {
+    majorThird: {
+        base: flattenObject(baseMajorThird),
+        compact: flattenObject(compactMajorThird),
+        large: flattenObject(largeMajorThird),
+    },
     minorThird: {
         base: flattenObject(baseMinorThird),
         compact: flattenObject(compactMinorThird),
