@@ -21,72 +21,70 @@ import { getPresets } from "../presets";
 */
 
 const form = document.querySelector('form') as HTMLFormElement;
-const colorPreviewCard = document.querySelector('.color-preview') as HTMLDivElement;
 const accentSlidersContainer = document.getElementById('accentColorsSliders') as HTMLDivElement;
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
 
-const importConfigButton = document.getElementById('importButton');
-const exportConfigButton = document.getElementById('exportButton');
-
 let sliders = {};
-
 
 const el = document.querySelector(".card-sticky");
 const sentinal = document.querySelector('.sentinal');
 
 const observer = new IntersectionObserver((entries) => {
-  console.log(entries)
-  // entries is an array of observed dom nodes
-  // we're only interested in the first one at [0]
-  // because that's our .sentinal node.
-  // Here observe whether or not that node is in the viewport
-  if (!entries[0].isIntersecting) {
-    el.classList.add('is-pinned')
-  } else {
-    el.classList.remove('is-pinned')
-  }
+    // entries is an array of observed dom nodes
+    // we're only interested in the first one at [0]
+    // because that's our .sentinal node.
+    // Here observe whether or not that node is in the viewport
+    if (!entries[0].isIntersecting) {
+        el.classList.add('is-pinned')
+    } else {
+        el.classList.remove('is-pinned')
+    }
 });
 
 observer.observe(sentinal);
 
-document.getElementById('copyExportedCodeButton').addEventListener('click', (e) => {
-    e.preventDefault();
-    const modal = document.getElementById('exportModal') as HTMLDialogElement;
-    const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
-    textarea.select();
-    document.execCommand("copy");
+document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('exportModal') as HTMLDialogElement;
+        const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
+        textarea.select();
+        document.execCommand("copy");
 
-    parent.postMessage({
-        pluginMessage: {type: 'ALERT', params: "Copied to clipboard"}
-    }, "*");
+        parent.postMessage({
+            pluginMessage: { type: 'ALERT', params: "Copied to clipboard" }
+        }, "*");
 
-    modal.close();
+        modal.close();
+    })
 })
-document.getElementById('importThemeButton').addEventListener('click', (e) => {
-    e.preventDefault();
-    const modal = document.getElementById('importModal') as HTMLDialogElement;
-    const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
-    const code = textarea.value;
-    const settings = collectValues(modal);
-    let data;
+document.querySelectorAll('#importThemeButton').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('importModal') as HTMLDialogElement;
+        const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
+        const code = textarea.value;
+        const settings = collectValues(modal);
+        let data;
 
-    if(code.length > 0) {
-        try {
-            data = JSON.parse(code);
+        if (code.length > 0) {
+            try {
+                data = JSON.parse(code);
+            }
+            catch (e) {
+                throw (e);
+            }
         }
-        catch(e) {
-            throw(e);
+        else {
+            const themeNumber = settings.theme;
+            data = getPresets()[themeNumber];
         }
-    }
-    else {
-        const themeNumber = settings.theme;
-        data = getPresets()[themeNumber];
-    }
 
-    loadSettings(form, data);
-    modal.close();
+        loadSettings(form, data);
+        modal.close();
 
+    })
 })
 
 document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
@@ -145,7 +143,7 @@ document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
 
     const type = el.dataset.type;
 
-    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null});
+    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null });
     sliders[sliderComponent.params.name] = sliderComponent;
 });
 
@@ -219,10 +217,10 @@ importButton.addEventListener('click', (e) => {
 })
 
 parent.postMessage({
-    pluginMessage: {type: 'LOADED'}
+    pluginMessage: { type: 'LOADED' }
 }, "*");
 
- 
+
 loadSettings(form, defaultSettings);
 
 
