@@ -33,7 +33,7 @@
             ]
         },
         "lg": {
-            "$value": "10",
+            "$value": "11",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -41,7 +41,15 @@
             ]
         },
         "xl": {
-            "$value": "13",
+            "$value": "14",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "CORNER_RADIUS"
+            ]
+        },
+        "xl2": {
+            "$value": "22",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

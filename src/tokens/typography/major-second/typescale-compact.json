@@ -17,7 +17,7 @@
             ]
         },
         "sm": {
-            "$value": "12",
+            "$value": "11",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -65,7 +65,7 @@
             ]
         },
         "xl3": {
-            "$value": "23",
+            "$value": "24",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
@@ -73,7 +73,7 @@
             ]
         },
         "xl4": {
-            "$value": "26",
+            "$value": "27",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
