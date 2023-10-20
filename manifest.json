@@ -1,14 +1,8 @@
 {
-  "name": "Source Foundation",
-  "id": "1131528333142948222",
+  "name": "Source Colors Lite",
+  "id": "1297031341980383999",
   "api": "1.0.0",
   "main": "dist/plugin.js",
-  "editorType": [
-    "figma"
-  ],
-  "menu": [
-    { "command": "import", "name": "Make Tokens" },
-    { "command": "fixLayers", "name": "Fix Layers" }
-  ],
-  "ui": { "import": "dist/import.html", "export": "dist/export.html" }   
+  "editorType": ["figma"],
+  "ui": "dist/import.html"
 }

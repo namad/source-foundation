@@ -13,7 +13,7 @@ module.exports = (env, argv) => ({
 
   entry: {
     import: './src/ui/import.ts', // The entry point for your UI code
-    export: './src/ui/export.ts', // The entry point for your UI code
+    //export: './src/ui/export.ts', // The entry point for your UI code
     plugin: './src/main.ts', // The entry point for your plugin code
   },
 
@@ -49,13 +49,15 @@ module.exports = (env, argv) => ({
     new webpack.DefinePlugin({
         'global': {} // Fix missing symbol error when running in developer VM
     }),
+    /*
     new HtmlWebpackPlugin({
       template: './src/ui/export.html',
       filename: 'export.html',
       inject: "body",
       inlineSource: '.(js|css)$',
       chunks: ['export'],
-    }),
+    }), 
+    */
     new HtmlWebpackPlugin({
       template: './src/ui/import.html',
       filename: 'import.html',

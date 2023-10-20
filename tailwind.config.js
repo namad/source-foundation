@@ -5,10 +5,6 @@ module.exports = {
         './dist/*.html',
         './src/**/*.{ts, html, css}',
     ],
-    purge: [
-        './dist/*.html',
-        './src/**/*.{ts, html, css}',
-    ],
     theme: {
         extend: {
             flex: {

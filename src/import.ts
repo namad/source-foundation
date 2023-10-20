@@ -1,4 +1,4 @@
-import { defaultAccentHUEs, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
+import { defaultAccentHUEs, defaultSettings, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
 import * as radii from "./radii-tokens";
 import * as typescale from "./typescale-tokens";
 import * as spacing from "./spacing-tokens";
@@ -127,6 +127,7 @@ export function collectValues(form): ImportFormData {
 export function getFormData(form): ImportFormData {
     return {
         type: 'IMPORT',
+        ...defaultSettings,
         ...collectValues(form)
     };
 }
@@ -134,19 +135,6 @@ export function getFormData(form): ImportFormData {
 export function generateMiniPreview(masterData: ImportFormData) {
     const presetsListElement = document.getElementById('presetsList');
     const presets = getPresets();
-    
-    const previewColorNames = [
-        'fill/base/200',
-        'fill/base/300',
-        'fill/base/400',
-        'fill/base/500',
-        'fill/base/600',
-        'primary/400',
-        'info/400',
-        'success/400',
-        'warning/400',
-        'danger/400'
-    ]
 
     presetsListElement.innerHTML = '';
     
@@ -169,9 +157,6 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     // set colours on neutrals hue & sdaturation sliders
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
-
-    const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
-    exportCodeTextarea.value = JSON.stringify(data);
 
     const primaryColorHUE = data.primary
     const shades = getGlobalAccent(

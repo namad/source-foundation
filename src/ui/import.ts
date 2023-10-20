@@ -36,7 +36,6 @@ const el = document.querySelector(".card-sticky");
 const sentinal = document.querySelector('.sentinal');
 
 const observer = new IntersectionObserver((entries) => {
-  console.log(entries)
   // entries is an array of observed dom nodes
   // we're only interested in the first one at [0]
   // because that's our .sentinal node.
@@ -50,44 +49,50 @@ const observer = new IntersectionObserver((entries) => {
 
 observer.observe(sentinal);
 
-document.getElementById('copyExportedCodeButton').addEventListener('click', (e) => {
-    e.preventDefault();
-    const modal = document.getElementById('exportModal') as HTMLDialogElement;
-    const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
-    textarea.select();
-    document.execCommand("copy");
+document.querySelectorAll('#copyExportedCodeButton').forEach((btn: HTMLButtonElement) => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('exportModal') as HTMLDialogElement;
+        const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
+        textarea.select();
+        document.execCommand("copy");
 
-    parent.postMessage({
-        pluginMessage: {type: 'ALERT', params: "Copied to clipboard"}
-    }, "*");
+        parent.postMessage({
+            pluginMessage: {type: 'ALERT', params: "Copied to clipboard"}
+        }, "*");
 
-    modal.close();
-})
-document.getElementById('importThemeButton').addEventListener('click', (e) => {
-    e.preventDefault();
-    const modal = document.getElementById('importModal') as HTMLDialogElement;
-    const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
-    const code = textarea.value;
-    const settings = collectValues(modal);
-    let data;
+        modal.close();
+    })
+});
 
-    if(code.length > 0) {
-        try {
-            data = JSON.parse(code);
+document.querySelectorAll('#importThemeButton').forEach((btn: HTMLButtonElement) => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const modal = document.getElementById('importModal') as HTMLDialogElement;
+        const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
+        const code = textarea.value;
+        const settings = collectValues(modal);
+        let data;
+
+        if(code.length > 0) {
+            try {
+                data = JSON.parse(code);
+            }
+            catch(e) {
+                throw(e);
+            }
         }
-        catch(e) {
-            throw(e);
+        else {
+            const themeNumber = settings.theme;
+            data = getPresets()[themeNumber];
         }
-    }
-    else {
-        const themeNumber = settings.theme;
-        data = getPresets()[themeNumber];
-    }
 
-    loadSettings(form, data);
-    modal.close();
+        loadSettings(form, data);
+        modal.close();
 
+    })
 })
+
 
 document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
@@ -105,7 +110,7 @@ document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
 });
 
 
-document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
+document.querySelectorAll('[data-modal]').forEach((el: HTMLAnchorElement) => {
     const modalID = el.dataset.modal;
     const modal = document.getElementById(modalID) as HTMLDialogElement;
 

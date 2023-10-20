@@ -1,85 +1,21 @@
 <form id="importForm">
-    <dialog class="simple" id="typographyScaleModal">
-        <div class="modal-container">
-            <div class="header">
-                <h3 class="font-bold text-lg">Typography</h3>
-                <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
-                </button>
-            </div>
-            <div class="body">
-                <p class="text-sm opacity-75">Select base font size / line height to generate text styles.
-                    Please note, the plugin will create set of styles based on base selected typography scale.
-                </p>
-                <div data-type="typography"
-                    data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
-                </div>
-                <div class="flex flex-row mt-2">
-                    <div class="w-1/5">Scale</div>
-                    <div class="flex flex-col gap-3 flex-1" style="margin: 0 var(--slider-margin) 0;">
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorThird"
-                                checked /><span>Major Third (1.250)</span></label>
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird"
-                                checked /><span>Minor Third (1.200)</span></label>
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale"
-                                value="majorSecond" /><span>Major Second (1.125)</span></label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <dialog class="simple" id="spacingScaleModal">
-        <div class="modal-container">
-            <div class="header">
-                <h3 class="font-bold text-lg">Spacing</h3>
-                <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
-                </button>
-            </div>
-            <div class="body">
-                <p class="text-sm opacity-75">Select base spacing</p>
-                <div data-type="spacing"
-                    data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
-    <dialog class="simple" id="radiiScaleModal">
-        <div class="modal-container">
-            <div class="header">
-                <h3 class="font-bold text-lg">Radii Scale</h3>
-                <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
-                </button>
-            </div>
-            <div class="body">
-                <p class="text-sm opacity-75">Select base border radius</p>
-                <div data-type="radii"
-                    data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
-                </div>
-            </div>
-        </div>
-    </dialog>
-
     <div class="flex flex-col container relative">
         <div class="sentinal"></div>
         <div class="card-sticky">
             <div class="card color-preview">
                 <div class="flex flex-row justify-between items-center">
-                    <h4 class="font-bold text-md">Palette Preview</h4>
+                    <h3 class="font-bold text-lg">Theme</h3>
                     <div class="radio-segment">
                         <label>
                             <input type="radio" name="theme" value="light" />
                             <span class="container">
-                                <span class="icon icon-sun"></span>
+                                <span class="icon icon-sun"></span> <span>Light</span>
                             </span>
                         </label>
                         <label>
                             <input type="radio" name="theme" value="dark" />
                             <span class="container">
-                                <span class="icon icon-moon"></span>
+                                <span class="icon icon-moon"></span> <span>Dark</span>
                             </span>
                         </label>
                     </div>
@@ -319,183 +255,14 @@
 
             </div>
         </div>
-
-        <div class="card" id="ui-scale">
-            <h3 class="font-bold text-lg">UI Scale</h3>
-            <p class="text-sm opacity-75">
-                Select default mode for spacing, radii and typography
-            </p>
-            <ul class="action-list">
-                <li>
-                    <a href="#" data-modal="spacingScaleModal">
-                        <span>Spacing</span><span data-value="spacing" data-type="spacing"
-                            class="icon gap-2 icon-chevron-right"></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-modal="radiiScaleModal">
-                        <span>Radii</span><span data-value="radii" data-type="radii"
-                            class="icon gap-2 icon-chevron-right"></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" data-modal="typographyScaleModal">
-                        <span>Typography</span>
-                        <span class="flex flex-row gap-2 icon icon-chevron-right">
-                            <span data-value="typeScale" data-type="typography"></span> /
-                            <span data-value="baseFontSize" data-type="typography"></span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-            <hr class="mb-y-base">
-            <label class="checkbox flex flex-row gap-x-sm align-top items-start">
-                <input type="checkbox" name="singleCollection" value="true" />
-                <span class="flex flex-col gap-y-xs">
-                    <span>Import Spacing, Radii and Type Scale tokens as sinlge collection</span>
-                    <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection.
-                        Otherwise different token types to get their own collections.</span>
-                </span>
-            </label>
-        </div>
-
-
     </div>
+
     <div class="py-sm px-base text-right flex flex-row justify-between">
-        <div class="flex gap-2">
-            <button id="exportButton" data-modal="exportModal" title="Export settings"><span
-                    class="icon icon-upload"></span></button>
-            <button id="importButton" data-modal="importModal" title="Import settings"><span
-                    class="icon icon-download"></span></button>
-        </div>
+        <div class="flex gap-2"></div>
         <div class="flex gap-2">
             <button id="resetDefaultsButton">Reset</button>
-            <button id="importVariablesButton" class="primary">Generate Variables</button>
+            <button id="importVariablesButton" class="primary">Generate Colors</button>
         </div>
     </div>
 
 </form>
-<dialog id="importModal">
-
-    <div class="modal-container">
-        <div class="header">
-            <h3 class="font-bold text-md">Import Theme</h3>
-            <button class="close" value="cancel">
-                <span class="icon icon-close"></span>
-            </button>
-        </div>
-        <div class="body">
-            <p class="text-sm opacity-75">
-                Paste preset code to the textarea below
-            </p>
-            <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" name="importCodeTextarea"
-                id="importCodeTextarea" class="h-80 resize-none"></textarea>
-            <p class="text-sm opacity-75">
-                Or select one of the presets
-            </p>
-        </div>
-        <div class="presets-list mb-sy-base" id="presetsList">
-            <label class="theme-item">
-                <input type="radio" name="theme" value="2" />
-                <span class="text-base hidden">Theme 1</span>
-                <span class="swatches neutral-swatches">
-                    <span class="swatch swatch-1"></span>
-                    <span class="swatch swatch-2"></span>
-                    <span class="swatch swatch-3"></span>
-                    <span class="swatch swatch-4"></span>
-                    <span class="swatch swatch-5"></span>
-                </span>
-                <span class="swatches semantic-swatches">
-                    <span class="swatch swatch-1"></span>
-                    <span class="swatch swatch-2"></span>
-                    <span class="swatch swatch-3"></span>
-                    <span class="swatch swatch-4"></span>
-                    <span class="swatch swatch-5"></span>
-                </span>
-                <span class="info">
-                    <span class="icon icon-info"></span>
-                    <span>
-                        <span class="text-text-base-500">Spacing</span>
-                        <span class="text-text-base-600" data-value="spacing"></span>
-                    </span>
-                    <span>
-                        <span class="text-text-base-500">Radii</span>
-                        <span class="text-text-base-600" data-value="radii"></span>
-                    </span>
-                    <span>
-                        <span class="text-text-base-500">Typography</span>
-                        <span class="text-text-base-600" data-value="typeScale"></span> / 
-                        <span class="text-text-base-600" data-value="baseFontSize"></span>
-                    </span>
-                </span>
-            </label>
-
-            <label class="theme-item">
-                <input type="radio" name="theme" value="2" />
-                <span class="col-info">
-                    <span class="info-item">
-                        <span class="icon icon-16 icon-colors" title="Color pattern"></span>                
-                        <span>
-                            <span class="text-text-base-600" data-value="distance">2</span><span class="text-text-base-400">%</span>
-                        </span>
-                    </span>
-                    <span class="info-item">
-                        <span class="icon icon-16 icon-typography" title="Typography"></span>
-                        <span>
-                            <span class="text-text-base-600" data-value="typeScale">Minor Third</span> / 
-                            <span class="text-text-base-600" data-value="baseFontSize">Base</span>
-                        </span>
-                    </span>
-                    <span class="flex flex-row gap-sx-base">
-                        <span class="info-item">
-                            <span class="icon icon-16 icon-spacing" title="Spacing"></span>                
-                            <span class="text-text-base-600" data-value="spacing">Base</span>
-                        </span>
-                        <span class="info-item">
-                            <span class="icon icon-16 icon-radii" title="Radii"></span>
-                            <span class="text-text-base-600" data-value="radii">Base</span>
-                        </span>
-                    </span>                
-                </span>
-                <span class="col-swatches">
-                    <span class="swatches">
-                        <span class="swatch bg-fill-base-200"></span>
-                        <span class="swatch bg-fill-base-300"></span>
-                        <span class="swatch bg-fill-base-400"></span>
-                        <span class="swatch bg-fill-base-500"></span>
-                    </span>
-                    <span class="swatches">
-                        <span class="swatch bg-primary-500"></span>
-                        <span class="swatch bg-primary-400"></span>
-                        <span class="swatch bg-primary-300"></span>
-                        <span class="swatch bg-primary-200"></span>
-                    </span>
-                </span>
-            </label>
-        </div>
-        <div class="footer">
-            <button class="primary" id="importThemeButton">Import Theme</button>
-        </div>
-    </div>
-</dialog>
-
-<dialog id="exportModal" class="modal">
-    <div class="modal-container">
-        <div class="header">
-            <h3 class="font-bold text-md">Export Theme</h3>
-            <button class="close" value="cancel">
-                <span class="icon icon-close"></span>
-            </button>
-        </div>
-        <div class="body max-h-">
-            <p class="text-sm opacity-75">
-                Copy the code below to save a preset
-            </p>
-            <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea"
-                readonly class="h-80 resize-none"></textarea>
-        </div>
-        <div class="footer">
-            <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">Copy Code</button>
-        </div>
-    </div>
-</dialog>

@@ -26,40 +26,11 @@ console.clear();
 
 let GlobalTokens;
 
-(async () => {
-    await Promise.all(
-        typescale.getFontDetails().map(async item =>
-            await figma.loadFontAsync(item as FontName)
-        )
-    );
-
-    if (figma.command === "import") {
-        figma.showUI(__uiFiles__["import"], {
-            width: 560,
-            height: 720,
-            themeColors: true,
-        });
-    }
-
-    if (figma.command === "export") {
-        figma.showUI(__uiFiles__["export"], {
-            width: 500,
-            height: 500,
-            themeColors: true,
-        });
-    }
-
-    if (figma.command == "bindToStyles") {
-        bindVariablesAndStyles();
-        figma.closePlugin();
-    }
-
-    if (figma.command == "fixLayers") {
-
-        await processComponents();
-        figma.closePlugin();
-    }
-})()
+figma.showUI(__html__, {
+    width: 560,
+    height: 720,
+    themeColors: true,
+});
 
 
 interface MessagePayload {
@@ -73,7 +44,7 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
 
     if (eventData.type === "IMPORT") {
 
-        importAllTokens(params);
+        importThemeColors(params);
 
     } else if (eventData.type === "EXPORT") {
         // exportToJSON(eventData.format);
@@ -207,6 +178,25 @@ function importSystemColorTokens(params: ImportFormData) {
         collectionName: "Color Theme",
         modeName: "Dark Elevated",
         data: themeColors
+    });
+}
+
+function importThemeColors(params: ImportFormData) {
+    const themeName = params.theme == 'light' ? 'lightBase' : 'darkElevated';
+    const modeName = params.theme == 'light' ? 'Light' : 'Dark';
+    let themeColors = getThemeColors(themeName, params);
+
+    GlobalTokens = {
+        ...getGlobalNeutrals(),
+        ...themeColors
+    };
+
+    importVariables({
+        collectionName: "Color Theme",
+        modeName: modeName,
+        modeIndex: 0,
+        data: themeColors,
+        sortFn: sortColorTokens
     });
 }
 
