@@ -106,153 +106,13 @@ function initiateImport(params: ImportFormData) {
    getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
+        modeIndex: 0,
+        isSingleMode: true,
         data: getThemeColors('lightBase', params),
         sortFn: sortColorTokens
     });
-
-    // getCollectionAndPrepareTokens({
-    //     collectionName: collectionNames.get('brandColors'),
-    //     modeName: toTitleCase(params.primary),
-    //     data: getBrandColors(params.primary),
-    //     sortFn: sortColorTokens
-    // });
-
-    getCollectionAndPrepareTokens({
-        collectionName: collectionNames.get('spacing'),
-        modeName: toTitleCase(params.spacing),
-        data: spacing[params.spacing],
-        sortFn: sortSizeTokens,
-    });
-    
-    getCollectionAndPrepareTokens({
-        collectionName: collectionNames.get('radii'),
-        modeName: toTitleCase(params.radii),
-        data: radii[params.radii],
-        sortFn: sortSizeTokens,
-    });
-    
-    getCollectionAndPrepareTokens({
-        collectionName: collectionNames.get('iconScale'),
-        modeName: toTitleCase("base"),
-        data: sizing["base"],
-        sortFn: sortSizeTokens,
-    });
 }
 
-
-function importAllTokens(params: ImportFormData) {
-    figma.root.setPluginData('SDS', JSON.stringify(params));
-
-    importColorTheme(params);
-
-    // importVariables({
-    //     collectionName: collectionNames.get('brandColors'),
-    //     modeName: toTitleCase(params.primary),
-    //     data: getBrandColors(params.primary)
-    // });
-
-    importVariables({
-        collectionName: collectionNames.get('componentColors'),
-        modeName: "Default",
-        data: getComponentColors()
-    });
-
-    importSizeTokens({
-        type: 'spacing',
-        collectionName: collectionNames.get('spacing'),
-        params: params,
-        defaultMode: params.spacing,
-        defaultOrder: spacingSizeName,
-        tokens: spacing
-    });
-
-    importSizeTokens({
-        type: 'radii',
-        collectionName: collectionNames.get('radii'),
-        params: params,
-        defaultMode: params.radii,
-        defaultOrder: radiiSizeName,
-        tokens: radii
-    });
-
-    importSizeTokens({
-        type: 'typeScale',
-        collectionName: 'Type Scale',
-        params: params,
-        defaultMode: params.baseFontSize,
-        defaultOrder: typographySizeName,
-        tokens: typescale,
-        isSingleMode: true
-    });
-
-    // ICONS SCALE
-    importSizeTokens({
-        type: 'iconScale',
-        collectionName: collectionNames.get('iconScale'),
-        params: params,
-        defaultMode: 'base',
-        defaultOrder: iconSizeName,
-        tokens: sizing
-    });
-
-    globalTokens = {
-        ...globalTokens,
-        ...typescale.getTypograohyTokens(params.baseFontSize, params.typeScale)
-    };
-    importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
-
-    importEffects();
-
-    figma.notify("✅ Figma variables has been imported");
-}
-
-function importEffects() {
-    // import effects for default theme which is light one
-    importEffectStyles(effects.elevation);
-    updateElevationComponents(effects.getElevationTokens());
-}
-function importColorTheme(params: ImportFormData) {
-    let themeColors = getThemeColors('lightBase', params);
-    const brandColors = getBrandColors(params.primary);
-
-    globalTokens = {
-        ...getGlobalNeutrals(),
-        ...getComponentColors(),
-        ...brandColors,
-        ...themeColors
-    };
-
-    console.log('Importing Light Base', themeColors);
-
-   importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: "Light Base",
-        data: themeColors,
-        sortFn: sortColorTokens
-    });
-
-    themeColors = getThemeColors('darkBase', params);
-    globalTokens = Object.assign(globalTokens, themeColors);
-
-    console.log('Importing Dark Base', themeColors);
-
-    importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: "Dark Base",
-        data: themeColors
-    });
-
-    themeColors = getThemeColors('darkElevated', params);
-    globalTokens = Object.assign(globalTokens, themeColors);
-
-    console.log('Importing Dark Elevated', themeColors);
-
-    importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: "Dark Elevated",
-        data: themeColors
-    });
-}
 
 function importThemeColors(params: ImportFormData) {
     const themeName = params.theme == 'light' ? 'lightBase' : 'darkElevated';
@@ -260,47 +120,19 @@ function importThemeColors(params: ImportFormData) {
     let themeColors = getThemeColors(themeName, params);
 
     globalTokens = {
+        ...getBrandColors(params.primary),
         ...getGlobalNeutrals(),
         ...themeColors
     };
 
     importVariables({
-        collectionName: "Color Theme",
+        collectionName: collectionNames.get('themeColors'),
         modeName: modeName,
         modeIndex: 0,
         data: themeColors,
-        sortFn: sortColorTokens
+        sortFn: sortColorTokens,
+        isSingleMode: true
     });
-}
-
-function importSizeTokens(data: {
-    type: "spacing" | "radii" | "typeScale" | "iconScale";
-    defaultMode: string;
-    params: ImportFormData, 
-    collectionName: string,
-    defaultOrder: string[],
-    tokens: any;
-    isSingleMode?: boolean;
-}) {
-    const tokens = data.tokens;
-    const isSingleMode = data.isSingleMode || false;
-    const singleCollection = data.params.singleCollection;
-    const defaultMode = data.defaultMode;
-
-    const defaultOrder = data.defaultOrder.filter(item => item != defaultMode)
-    defaultOrder.splice(0, 0, defaultMode);
-
-    defaultOrder.length = isSingleMode ? 1 : defaultOrder.length;
-
-    defaultOrder.forEach((modeName, index) => {
-        importVariables({
-            collectionName: singleCollection ? "UI Scale" : data.collectionName,
-            modeName: toTitleCase(modeName),
-            modeIndex: index,
-            data: tokens[modeName],
-            isSingleMode: isSingleMode
-        });
-    })
 }
 
 function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
