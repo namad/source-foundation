@@ -3,10 +3,12 @@ import { roundTwoDigits } from "../utils/round-two-digits";
 import { findTokenReferences, parseReferenceGlobal } from "../utils/token-references";
 import { ImportFormData } from "../import";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
+import { DesignToken } from "../main";
 
 interface DesignTokenValue {
     $value: string;
     $type: 'color' | 'number' | 'string' | 'boolean';
+    private?: boolean;
 }
 
 interface SystemAccentList {
@@ -24,39 +26,45 @@ interface SystemAccentList {
 }
 
 interface ColorShadesScale {
-    [key: string]: DesignTokenValue;
+    [key: string]: DesignToken;
 }
 
 interface GlobalAccentList {
     [key: string]: ColorShadesScale;
 }
 
-export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
+export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShadesScale {
     if (theme == 'light') {
         return {
             "100": {
                 "$value": "rgba({200}, 0.10)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 10%`
             },
             "200": {
                 "$value": "rgba({200}, 0.20)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 20%`
             },
             "300": {
                 "$value": "{300}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.300`
             },
             "400": {
                 "$value": "{400}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.400`
             },
             "500": {
                 "$value": "{500}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.500`
             },
             "600": {
                 "$value": "{100}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.100`
             }
         }
     }
@@ -65,27 +73,33 @@ export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
         return {
             "100": {
                 "$value": "rgba({200}, 0.20)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 20%`
             },
             "200": {
                 "$value": "rgba({200}, 0.40)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 40%`
             },
             "300": {
                 "$value": "{300}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.300`
             },
             "400": {
                 "$value": "{400}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.400`
             },
             "500": {
                 "$value": "{100}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.100`
             },
             "600": {
                 "$value": "{100}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.100`
             }
         }
     }
@@ -112,17 +126,17 @@ export function generateSystemAccentPalette(theme, params: ImportFormData): Syst
     const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
 
     let accents: SystemAccentList = {
-        red: getShadesTemplate(theme),
-        amber: getShadesTemplate(theme),
-        brown: getShadesTemplate(theme),
-        green: getShadesTemplate(theme),
-        teal: getShadesTemplate(theme),
-        cyan: getShadesTemplate(theme),
-        blue: getShadesTemplate(theme),
-        indigo: getShadesTemplate(theme),
-        violet: getShadesTemplate(theme),
-        purple: getShadesTemplate(theme),
-        pink: getShadesTemplate(theme)
+        red: getShadesTemplate(theme, 'red'),
+        amber: getShadesTemplate(theme, 'amber'),
+        brown: getShadesTemplate(theme, 'brown'),
+        green: getShadesTemplate(theme, 'green'),
+        teal: getShadesTemplate(theme, 'teal'),
+        cyan: getShadesTemplate(theme, 'cyan'),
+        blue: getShadesTemplate(theme, 'blue'),
+        indigo: getShadesTemplate(theme, 'indigo'),
+        violet: getShadesTemplate(theme, 'violet'),
+        purple: getShadesTemplate(theme, 'purple'),
+        pink: getShadesTemplate(theme, 'pink')
     };
 
     for (const [name, scale] of Object.entries(accents)) {
@@ -166,6 +180,9 @@ function getThemeScale(input: ColorShadesScale, dictionary: ColorShadesScale) {
     return output;
 }
 
+/*
+    colors: getRangeOfThree()
+*/
 function getScale(colors, count = 9): ColorShadesScale {
     let tokens: ColorShadesScale = {};
     // chroma scale returns array of hex values
@@ -173,7 +190,8 @@ function getScale(colors, count = 9): ColorShadesScale {
     scale.forEach((color, index) => {
         tokens[`${index + 1}00`] = {
             $value: color,
-            $type: 'color'
+            $type: 'color',
+            private: true
         }
     });
     return tokens;

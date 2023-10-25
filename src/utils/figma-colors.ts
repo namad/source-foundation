@@ -1,6 +1,6 @@
 import chroma from 'chroma-js';
 
-import { parseReferenceGlobal } from './token-references';
+import { findTokenReferences, findVariableByReferences, parseReferenceGlobal } from './token-references';
 import { DesignToken } from '../main';
 
 export interface FigmaRGB {
@@ -96,6 +96,7 @@ export function convertToFigmaColor(input, adjustments?: HSLAdjustments): { gl: 
 
 export function parseColor(token: DesignToken, dictionary, output = 'gl') {
     let color = token.$value as string;
+
     color = parseReferenceGlobal(color.trim(), dictionary);
     const result = convertToFigmaColor(color, token.adjustments);
 

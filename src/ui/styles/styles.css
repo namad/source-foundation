@@ -116,12 +116,6 @@ button:hover {
     background-color: var(--primary-100);
 }
 
-input,
-textarea {
-    padding: var(--sy-xs) var(--sx-sm);
-    border-radius: var(--radii-base);
-}
-
 button.primary {
     background-color: var(--primary-400);
     border: none;
@@ -133,13 +127,35 @@ button.primary:hover {
 }
 
 input,
+select,
 textarea {
+    padding: var(--sy-xs) var(--sx-sm);
+    border-radius: var(--radii-base);
     background-color: var(--fill-base-100);
     color: var(--text-base-600);
     border: 1px solid var(--stroke-base-400);
 }
 
-input:hover {
+.custom-select {
+    position: relative;
+}
+
+.custom-select select {
+    appearance: none;
+    width: 100%;
+}
+
+.custom-select .icon-chevron-down {
+    position: absolute;
+    right: var(--sx-xs);
+    top: var(--sy-xs);
+    pointer-events: none;
+    color: var(--text-base-action);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
     border-color: var(--primary-500);
 }
 

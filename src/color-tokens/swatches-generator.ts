@@ -6,7 +6,11 @@ export function renderShades(parentNode, name, shades, colors) {
     let frame: FrameNode = figma.createFrame();
     frame.resizeWithoutConstraints(320, frame.height);
     frame.layoutMode = "VERTICAL";
+    frame.counterAxisSizingMode = "AUTO";
+    frame.primaryAxisSizingMode = "AUTO";
     frame.name = name;
+    frame.fills = [];
+
 
     for (const [shadeName, color] of Object.entries(shades)) {
         renderColor(frame, `accent/${name}/${shadeName}`, color, colors);

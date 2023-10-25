@@ -162,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ":root {\n    --global-accent-100: rgb(99,173,243);\n    --global-accent-200: rgb(73,149,243);\n    --global-accent-300: rgb(46,126,242);\n    --global-accent-400: rgb(20,102,242);\n    --global-accent-500: rgb(24,94,241);\n    --global-accent-600: rgb(28,86,239);\n    --global-accent-700: rgb(32,78,238);\n    --primary-600: #5FABF3;\n    --primary-500: #1C5FF0;\n    --primary-400: #216EF3;\n    --primary-300: #4A97F3;\n    --primary-200: rgba(74, 151, 243, 0.2);\n    --primary-100: rgba(74, 151, 243, 0.1);\n    --fill-base-600: #DCDFE5;\n    --fill-base-500: #E8EAEE;\n    --fill-base-400: #EDEFF2;\n    --fill-base-300: #F3F4F6;\n    --fill-base-200: #F9FAFB;\n    --fill-base-100: #FFFFFF;\n    --fill-contrast-600: #1B1D22;\n    --fill-contrast-500: #24272E;\n    --fill-contrast-400: #282C33;\n    --fill-contrast-300: #2D3139;\n    --fill-contrast-200: #31363F;\n    --fill-contrast-100: #363A45;\n    --text-base-warning: #B0500A;\n    --text-base-success: #077E20;\n    --text-base-info: #0B72AE;\n    --text-base-danger: #D51A0C;\n    --text-base-action: #1C5FF0;\n    --text-base-600: #0E0F11;\n    --text-base-500: rgba(14, 15, 17, 0.65);\n    --text-base-400: rgba(14, 15, 17, 0.45);\n    --text-contrast-warning: #F18C48;\n    --text-contrast-success: #0FC020;\n    --text-contrast-info: #11B4DD;\n    --text-contrast-danger: #F5867E;\n    --text-contrast-action: #5FABF3;\n    --text-contrast-600: #FFFFFF;\n    --text-contrast-500: rgba(255, 255, 255, 0.65);\n    --text-contrast-400: rgba(255, 255, 255, 0.45);\n    --stroke-base-600: #9CA1AB;\n    --stroke-base-500: #ACB0B9;\n    --stroke-base-400: #D2D5DA;\n    --stroke-base-300: #D8DADE;\n    --stroke-base-200: #E3E5E8;\n    --stroke-base-100: #E9EAED;\n    --stroke-contrast-600: #6C727F;\n    --stroke-contrast-500: #5A5E68;\n    --stroke-contrast-400: #4B4F58;\n    --stroke-contrast-300: #474A52;\n    --stroke-contrast-200: #42454D;\n    --stroke-contrast-100: #3D4047;\n    --info-600: #11B4DD;\n    --info-500: #0B72AE;\n    --info-400: #0A7DB6;\n    --info-300: #0FA2D0;\n    --info-200: rgba(15, 162, 208, 0.2);\n    --info-100: rgba(15, 162, 208, 0.1);\n    --success-600: #0FC020;\n    --success-500: #077E20;\n    --success-400: #07891F;\n    --success-300: #0CAE20;\n    --success-200: rgba(12, 174, 32, 0.2);\n    --success-100: rgba(12, 174, 32, 0.1);\n    --warning-600: #F18C48;\n    --warning-500: #B0500A;\n    --warning-400: #C1560A;\n    --warning-300: #E17A33;\n    --warning-200: rgba(225, 122, 51, 0.2);\n    --warning-100: rgba(225, 122, 51, 0.1);\n    --danger-600: #F5867E;\n    --danger-500: #D51A0C;\n    --danger-400: #E81B0C;\n    --danger-300: #F16258;\n    --danger-200: rgba(241, 98, 88, 0.2);\n    --danger-100: rgba(241, 98, 88, 0.1);\n    --alt-base-600: rgba(0, 24, 71, 0.32);\n    --alt-base-500: rgba(0, 24, 71, 0.24);\n    --alt-base-400: rgba(0, 24, 71, 0.16);\n    --alt-base-300: rgba(0, 24, 71, 0.12);\n    --alt-base-200: rgba(0, 24, 71, 0.08);\n    --alt-base-100: rgba(0, 24, 71, 0.04);\n    --alt-contrast-600: rgba(255, 255, 255, 0.32);\n    --alt-contrast-500: rgba(255, 255, 255, 0.24);\n    --alt-contrast-400: rgba(255, 255, 255, 0.16);\n    --alt-contrast-300: rgba(255, 255, 255, 0.12);\n    --alt-contrast-200: rgba(255, 255, 255, 0.08);\n    --alt-contrast-100: rgba(255, 255, 255, 0.04);\n    --utility-white: #FFFFFF;\n    --utility-transparent: rgba(255, 255, 255, 0);\n    --utility-tint-600: #FFFFFF;\n    --utility-tint-500: rgba(255, 255, 255, 0.9);\n    --utility-tint-400: rgba(255, 255, 255, 0.8);\n    --utility-tint-300: rgba(255, 255, 255, 0.7);\n    --utility-tint-200: rgba(255, 255, 255, 0.6);\n    --utility-tint-100: rgba(255, 255, 255, 0.5);\n    --utility-shade-600: rgba(0, 16, 41, 0.32);\n    --utility-shade-500: rgba(0, 16, 41, 0.24);\n    --utility-shade-400: rgba(0, 16, 41, 0.16);\n    --utility-shade-300: rgba(0, 16, 41, 0.12);\n    --utility-shade-200: rgba(0, 16, 41, 0.08);\n    --utility-shade-100: rgba(0, 16, 41, 0.04);\n    --utility-black: #090A0B;\n    --accent-red-600: #F5867E;\n    --accent-red-500: #D51A0C;\n    --accent-red-400: #E81B0C;\n    --accent-red-300: #F16258;\n    --accent-red-200: rgba(241, 98, 88, 0.2);\n    --accent-red-100: rgba(241, 98, 88, 0.1);\n    --accent-amber-600: #F18C48;\n    --accent-amber-500: #B0500A;\n    --accent-amber-400: #C1560A;\n    --accent-amber-300: #E17A33;\n    --accent-amber-200: rgba(225, 122, 51, 0.2);\n    --accent-amber-100: rgba(225, 122, 51, 0.1);\n    --accent-brown-600: #ED9018;\n    --accent-brown-500: #9A5E09;\n    --accent-brown-400: #A96609;\n    --accent-brown-300: #D68213;\n    --accent-brown-200: rgba(214, 130, 19, 0.2);\n    --accent-brown-100: rgba(214, 130, 19, 0.1);\n    --accent-green-600: #0FC020;\n    --accent-green-500: #077E20;\n    --accent-green-400: #07891F;\n    --accent-green-300: #0CAE20;\n    --accent-green-200: rgba(12, 174, 32, 0.2);\n    --accent-green-100: rgba(12, 174, 32, 0.1);\n    --accent-teal-600: #0EBAA5;\n    --accent-teal-500: #07787C;\n    --accent-teal-400: #078383;\n    --accent-teal-300: #0CA89A;\n    --accent-teal-200: rgba(12, 168, 154, 0.2);\n    --accent-teal-100: rgba(12, 168, 154, 0.1);\n    --accent-cyan-600: #11B4DD;\n    --accent-cyan-500: #0B72AE;\n    --accent-cyan-400: #0A7DB6;\n    --accent-cyan-300: #0FA2D0;\n    --accent-cyan-200: rgba(15, 162, 208, 0.2);\n    --accent-cyan-100: rgba(15, 162, 208, 0.1);\n    --accent-blue-600: #5FABF3;\n    --accent-blue-500: #1C5FF0;\n    --accent-blue-400: #216EF3;\n    --accent-blue-300: #4A97F3;\n    --accent-blue-200: rgba(74, 151, 243, 0.2);\n    --accent-blue-100: rgba(74, 151, 243, 0.1);\n    --accent-indigo-600: #90A1F7;\n    --accent-indigo-500: #5C51F4;\n    --accent-indigo-400: #6262F7;\n    --accent-indigo-300: #818CF7;\n    --accent-indigo-200: rgba(129, 140, 247, 0.2);\n    --accent-indigo-100: rgba(129, 140, 247, 0.1);\n    --accent-violet-600: #A899F7;\n    --accent-violet-500: #843CEF;\n    --accent-violet-400: #8952F6;\n    --accent-violet-300: #9E81F7;\n    --accent-violet-200: rgba(158, 129, 247, 0.2);\n    --accent-violet-100: rgba(158, 129, 247, 0.1);\n    --accent-purple-600: #C190F7;\n    --accent-purple-500: #A923DD;\n    --accent-purple-400: #B22EF4;\n    --accent-purple-300: #BC6FF6;\n    --accent-purple-200: rgba(188, 111, 246, 0.2);\n    --accent-purple-100: rgba(188, 111, 246, 0.1);\n    --accent-pink-600: #F57DC1;\n    --accent-pink-500: #D60D43;\n    --accent-pink-400: #E70C55;\n    --accent-pink-300: #F0579D;\n    --accent-pink-200: rgba(240, 87, 157, 0.2);\n    --accent-pink-100: rgba(240, 87, 157, 0.1);\n\t--radii-none: 0px;\n\t--radii-xl: 13px;\n\t--radii-lg: 10px;\n\t--radii-round: 999px;\n\t--radii-md: 8px;\n\t--radii-base: 6px;\n\t--radii-sm: 5px;\n\t--sy-xl5: 68px;\n\t--sx-xl5: 72px;\n\t--sy-xl4: 56px;\n\t--sx-xl3: 48px;\n\t--sy-xl2: 36px;\n\t--sx-xl2: 40px;\n\t--sy-xl: 28px;\n\t--sx-xl4: 60px;\n\t--sx-xl: 32px;\n\t--sy-lg: 24px;\n\t--sx-lg: 28px;\n\t--sy-md: 20px;\n\t--sx-md: 24px;\n\t--sy-base: 16px;\n\t--sx-base: 20px;\n\t--sx-sm: 16px;\n\t--sy-xs: 8px;\n\t--sx-xs: 12px;\n\t--sy-xs2: 6px;\n\t--sx-xs2: 8px;\n\t--sy-xs3: 4px;\n\t--sy-sm: 12px;\n\t--sy-xl3: 44px;\n\t--sx-xs3: 6px;\n\t--sy-xs4: 2px;\n\t--sx-xs4: 4px;\n\t--line-height-xl7: 86px;\n\t--line-height-xs2: 12px;\n\t--font-size-xl7: 77px;\n\t--line-height-xl6: 72px;\n\t--font-size-xl6: 64px;\n\t--line-height-xl5: 60px;\n\t--font-size-xl3: 37px;\n\t--line-height-xl2: 36px;\n\t--font-size-xl2: 31px;\n\t--line-height-xl: 32px;\n\t--font-size-xl: 26px;\n\t--line-height-lg: 28px;\n\t--font-size-lg: 22px;\n\t--line-height-md: 24px;\n\t--line-height-xl3: 44px;\n\t--font-size-md: 18px;\n\t--font-size-xs2: 10px;\n\t--font-size-xl5: 54px;\n\t--line-height-base: 20px;\n\t--font-size-xl4: 45px;\n\t--line-height-sm: 16px;\n\t--font-size-sm: 12px;\n\t--line-height-xs: 14px;\n\t--line-height-xl4: 48px;\n\t--font-size-xs: 11px;\n\t--paragraph-spacing-paragraph: 16px;\n\t--paragraph-spacing-label: 12px;\n\t--font-size-base: 15px;\n\t--paragraph-spacing-display: 20px;\n    --elevatoin-1: 0px 1px 0.5px 0px var(--utility-shade-100);\n    --elevation-2: 0px 2px 3px -1px var(--utility-shade-100), 0px 1px 2px -1px var(--utility-shade-100);\n    --elevation-3: 0px 2px 4px -2px var(--utility-shade-100), 0px 4px 6px -1px var(--utility-shade-100);\n    --elevation-4: 0px 4px 6px -4px var(--utility-shade-100), 0px 10px 15px -3px var(--utility-shade-200);\n    --elevation-5: 0px 8px 10px -6px var(--utility-shade-100), 0px 20px 25px -5px var(--utility-shade-200);\n    --elevation-6: 0px 16px 10px -7px var(--utility-shade-100), 0px 24px 28px -8px var(--utility-shade-200), 0px 24px 48px -10px var(--utility-shade-200);\n}", "",{"version":3,"sources":["webpack://./src/ui/styles/source-vars.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --global-accent-100: rgb(99,173,243);\n    --global-accent-200: rgb(73,149,243);\n    --global-accent-300: rgb(46,126,242);\n    --global-accent-400: rgb(20,102,242);\n    --global-accent-500: rgb(24,94,241);\n    --global-accent-600: rgb(28,86,239);\n    --global-accent-700: rgb(32,78,238);\n}\n:root {\n    --primary-600: #5FABF3;\n    --primary-500: #1C5FF0;\n    --primary-400: #216EF3;\n    --primary-300: #4A97F3;\n    --primary-200: rgba(74, 151, 243, 0.2);\n    --primary-100: rgba(74, 151, 243, 0.1);\n    --fill-base-600: #DCDFE5;\n    --fill-base-500: #E8EAEE;\n    --fill-base-400: #EDEFF2;\n    --fill-base-300: #F3F4F6;\n    --fill-base-200: #F9FAFB;\n    --fill-base-100: #FFFFFF;\n    --fill-contrast-600: #1B1D22;\n    --fill-contrast-500: #24272E;\n    --fill-contrast-400: #282C33;\n    --fill-contrast-300: #2D3139;\n    --fill-contrast-200: #31363F;\n    --fill-contrast-100: #363A45;\n    --text-base-warning: #B0500A;\n    --text-base-success: #077E20;\n    --text-base-info: #0B72AE;\n    --text-base-danger: #D51A0C;\n    --text-base-action: #1C5FF0;\n    --text-base-600: #0E0F11;\n    --text-base-500: rgba(14, 15, 17, 0.65);\n    --text-base-400: rgba(14, 15, 17, 0.45);\n    --text-contrast-warning: #F18C48;\n    --text-contrast-success: #0FC020;\n    --text-contrast-info: #11B4DD;\n    --text-contrast-danger: #F5867E;\n    --text-contrast-action: #5FABF3;\n    --text-contrast-600: #FFFFFF;\n    --text-contrast-500: rgba(255, 255, 255, 0.65);\n    --text-contrast-400: rgba(255, 255, 255, 0.45);\n    --stroke-base-600: #9CA1AB;\n    --stroke-base-500: #ACB0B9;\n    --stroke-base-400: #D2D5DA;\n    --stroke-base-300: #D8DADE;\n    --stroke-base-200: #E3E5E8;\n    --stroke-base-100: #E9EAED;\n    --stroke-contrast-600: #6C727F;\n    --stroke-contrast-500: #5A5E68;\n    --stroke-contrast-400: #4B4F58;\n    --stroke-contrast-300: #474A52;\n    --stroke-contrast-200: #42454D;\n    --stroke-contrast-100: #3D4047;\n    --info-600: #11B4DD;\n    --info-500: #0B72AE;\n    --info-400: #0A7DB6;\n    --info-300: #0FA2D0;\n    --info-200: rgba(15, 162, 208, 0.2);\n    --info-100: rgba(15, 162, 208, 0.1);\n    --success-600: #0FC020;\n    --success-500: #077E20;\n    --success-400: #07891F;\n    --success-300: #0CAE20;\n    --success-200: rgba(12, 174, 32, 0.2);\n    --success-100: rgba(12, 174, 32, 0.1);\n    --warning-600: #F18C48;\n    --warning-500: #B0500A;\n    --warning-400: #C1560A;\n    --warning-300: #E17A33;\n    --warning-200: rgba(225, 122, 51, 0.2);\n    --warning-100: rgba(225, 122, 51, 0.1);\n    --danger-600: #F5867E;\n    --danger-500: #D51A0C;\n    --danger-400: #E81B0C;\n    --danger-300: #F16258;\n    --danger-200: rgba(241, 98, 88, 0.2);\n    --danger-100: rgba(241, 98, 88, 0.1);\n    --alt-base-600: rgba(0, 24, 71, 0.32);\n    --alt-base-500: rgba(0, 24, 71, 0.24);\n    --alt-base-400: rgba(0, 24, 71, 0.16);\n    --alt-base-300: rgba(0, 24, 71, 0.12);\n    --alt-base-200: rgba(0, 24, 71, 0.08);\n    --alt-base-100: rgba(0, 24, 71, 0.04);\n    --alt-contrast-600: rgba(255, 255, 255, 0.32);\n    --alt-contrast-500: rgba(255, 255, 255, 0.24);\n    --alt-contrast-400: rgba(255, 255, 255, 0.16);\n    --alt-contrast-300: rgba(255, 255, 255, 0.12);\n    --alt-contrast-200: rgba(255, 255, 255, 0.08);\n    --alt-contrast-100: rgba(255, 255, 255, 0.04);\n    --utility-white: #FFFFFF;\n    --utility-transparent: rgba(255, 255, 255, 0);\n    --utility-tint-600: #FFFFFF;\n    --utility-tint-500: rgba(255, 255, 255, 0.9);\n    --utility-tint-400: rgba(255, 255, 255, 0.8);\n    --utility-tint-300: rgba(255, 255, 255, 0.7);\n    --utility-tint-200: rgba(255, 255, 255, 0.6);\n    --utility-tint-100: rgba(255, 255, 255, 0.5);\n    --utility-shade-600: rgba(0, 16, 41, 0.32);\n    --utility-shade-500: rgba(0, 16, 41, 0.24);\n    --utility-shade-400: rgba(0, 16, 41, 0.16);\n    --utility-shade-300: rgba(0, 16, 41, 0.12);\n    --utility-shade-200: rgba(0, 16, 41, 0.08);\n    --utility-shade-100: rgba(0, 16, 41, 0.04);\n    --utility-black: #090A0B;\n    --accent-red-600: #F5867E;\n    --accent-red-500: #D51A0C;\n    --accent-red-400: #E81B0C;\n    --accent-red-300: #F16258;\n    --accent-red-200: rgba(241, 98, 88, 0.2);\n    --accent-red-100: rgba(241, 98, 88, 0.1);\n    --accent-amber-600: #F18C48;\n    --accent-amber-500: #B0500A;\n    --accent-amber-400: #C1560A;\n    --accent-amber-300: #E17A33;\n    --accent-amber-200: rgba(225, 122, 51, 0.2);\n    --accent-amber-100: rgba(225, 122, 51, 0.1);\n    --accent-brown-600: #ED9018;\n    --accent-brown-500: #9A5E09;\n    --accent-brown-400: #A96609;\n    --accent-brown-300: #D68213;\n    --accent-brown-200: rgba(214, 130, 19, 0.2);\n    --accent-brown-100: rgba(214, 130, 19, 0.1);\n    --accent-green-600: #0FC020;\n    --accent-green-500: #077E20;\n    --accent-green-400: #07891F;\n    --accent-green-300: #0CAE20;\n    --accent-green-200: rgba(12, 174, 32, 0.2);\n    --accent-green-100: rgba(12, 174, 32, 0.1);\n    --accent-teal-600: #0EBAA5;\n    --accent-teal-500: #07787C;\n    --accent-teal-400: #078383;\n    --accent-teal-300: #0CA89A;\n    --accent-teal-200: rgba(12, 168, 154, 0.2);\n    --accent-teal-100: rgba(12, 168, 154, 0.1);\n    --accent-cyan-600: #11B4DD;\n    --accent-cyan-500: #0B72AE;\n    --accent-cyan-400: #0A7DB6;\n    --accent-cyan-300: #0FA2D0;\n    --accent-cyan-200: rgba(15, 162, 208, 0.2);\n    --accent-cyan-100: rgba(15, 162, 208, 0.1);\n    --accent-blue-600: #5FABF3;\n    --accent-blue-500: #1C5FF0;\n    --accent-blue-400: #216EF3;\n    --accent-blue-300: #4A97F3;\n    --accent-blue-200: rgba(74, 151, 243, 0.2);\n    --accent-blue-100: rgba(74, 151, 243, 0.1);\n    --accent-indigo-600: #90A1F7;\n    --accent-indigo-500: #5C51F4;\n    --accent-indigo-400: #6262F7;\n    --accent-indigo-300: #818CF7;\n    --accent-indigo-200: rgba(129, 140, 247, 0.2);\n    --accent-indigo-100: rgba(129, 140, 247, 0.1);\n    --accent-violet-600: #A899F7;\n    --accent-violet-500: #843CEF;\n    --accent-violet-400: #8952F6;\n    --accent-violet-300: #9E81F7;\n    --accent-violet-200: rgba(158, 129, 247, 0.2);\n    --accent-violet-100: rgba(158, 129, 247, 0.1);\n    --accent-purple-600: #C190F7;\n    --accent-purple-500: #A923DD;\n    --accent-purple-400: #B22EF4;\n    --accent-purple-300: #BC6FF6;\n    --accent-purple-200: rgba(188, 111, 246, 0.2);\n    --accent-purple-100: rgba(188, 111, 246, 0.1);\n    --accent-pink-600: #F57DC1;\n    --accent-pink-500: #D60D43;\n    --accent-pink-400: #E70C55;\n    --accent-pink-300: #F0579D;\n    --accent-pink-200: rgba(240, 87, 157, 0.2);\n    --accent-pink-100: rgba(240, 87, 157, 0.1);\n}\n\n:root {\n\t--radii-none: 0px;\n\t--radii-xl: 13px;\n\t--radii-lg: 10px;\n\t--radii-round: 999px;\n\t--radii-md: 8px;\n\t--radii-base: 6px;\n\t--radii-sm: 5px;\n}\n\n:root {\n\t--sy-xl5: 68px;\n\t--sx-xl5: 72px;\n\t--sy-xl4: 56px;\n\t--sx-xl3: 48px;\n\t--sy-xl2: 36px;\n\t--sx-xl2: 40px;\n\t--sy-xl: 28px;\n\t--sx-xl4: 60px;\n\t--sx-xl: 32px;\n\t--sy-lg: 24px;\n\t--sx-lg: 28px;\n\t--sy-md: 20px;\n\t--sx-md: 24px;\n\t--sy-base: 16px;\n\t--sx-base: 20px;\n\t--sx-sm: 16px;\n\t--sy-xs: 8px;\n\t--sx-xs: 12px;\n\t--sy-xs2: 6px;\n\t--sx-xs2: 8px;\n\t--sy-xs3: 4px;\n\t--sy-sm: 12px;\n\t--sy-xl3: 44px;\n\t--sx-xs3: 6px;\n\t--sy-xs4: 2px;\n\t--sx-xs4: 4px;\n}\n\n:root {\n\t--line-height-xl7: 86px;\n\t--line-height-xs2: 12px;\n\t--font-size-xl7: 77px;\n\t--line-height-xl6: 72px;\n\t--font-size-xl6: 64px;\n\t--line-height-xl5: 60px;\n\t--font-size-xl3: 37px;\n\t--line-height-xl2: 36px;\n\t--font-size-xl2: 31px;\n\t--line-height-xl: 32px;\n\t--font-size-xl: 26px;\n\t--line-height-lg: 28px;\n\t--font-size-lg: 22px;\n\t--line-height-md: 24px;\n\t--line-height-xl3: 44px;\n\t--font-size-md: 18px;\n\t--font-size-xs2: 10px;\n\t--font-size-xl5: 54px;\n\t--line-height-base: 20px;\n\t--font-size-xl4: 45px;\n\t--line-height-sm: 16px;\n\t--font-size-sm: 12px;\n\t--line-height-xs: 14px;\n\t--line-height-xl4: 48px;\n\t--font-size-xs: 11px;\n\t--paragraph-spacing-paragraph: 16px;\n\t--paragraph-spacing-label: 12px;\n\t--font-size-base: 15px;\n\t--paragraph-spacing-display: 20px;\n}\n\n:root {\n    --elevatoin-1: 0px 1px 0.5px 0px var(--utility-shade-100);\n    --elevation-2: 0px 2px 3px -1px var(--utility-shade-100), 0px 1px 2px -1px var(--utility-shade-100);\n    --elevation-3: 0px 2px 4px -2px var(--utility-shade-100), 0px 4px 6px -1px var(--utility-shade-100);\n    --elevation-4: 0px 4px 6px -4px var(--utility-shade-100), 0px 10px 15px -3px var(--utility-shade-200);\n    --elevation-5: 0px 8px 10px -6px var(--utility-shade-100), 0px 20px 25px -5px var(--utility-shade-200);\n    --elevation-6: 0px 16px 10px -7px var(--utility-shade-100), 0px 24px 28px -8px var(--utility-shade-200), 0px 24px 48px -10px var(--utility-shade-200);\n}"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, ":root {\n    --global-accent-100: rgb(99,173,243);\n    --global-accent-200: rgb(73,149,243);\n    --global-accent-300: rgb(46,126,242);\n    --global-accent-400: rgb(20,102,242);\n    --global-accent-500: rgb(24,94,241);\n    --global-accent-600: rgb(28,86,239);\n    --global-accent-700: rgb(32,78,238);\n    --primary-600: #5FABF3;\n    --primary-500: #1C5FF0;\n    --primary-400: #216EF3;\n    --primary-300: #4A97F3;\n    --primary-200: rgba(74, 151, 243, 0.2);\n    --primary-100: rgba(74, 151, 243, 0.1);\n    --fill-base-600: #DCDFE5;\n    --fill-base-500: #E8EAEE;\n    --fill-base-400: #EDEFF2;\n    --fill-base-300: #F3F4F6;\n    --fill-base-200: #F9FAFB;\n    --fill-base-100: #FFFFFF;\n    --fill-contrast-600: #1B1D22;\n    --fill-contrast-500: #24272E;\n    --fill-contrast-400: #282C33;\n    --fill-contrast-300: #2D3139;\n    --fill-contrast-200: #31363F;\n    --fill-contrast-100: #363A45;\n    --text-base-warning: #B0500A;\n    --text-base-success: #077E20;\n    --text-base-info: #0B72AE;\n    --text-base-danger: #D51A0C;\n    --text-base-action: #1C5FF0;\n    --text-base-600: #0E0F11;\n    --text-base-500: rgba(14, 15, 17, 0.65);\n    --text-base-400: rgba(14, 15, 17, 0.45);\n    --text-contrast-warning: #F18C48;\n    --text-contrast-success: #0FC020;\n    --text-contrast-info: #11B4DD;\n    --text-contrast-danger: #F5867E;\n    --text-contrast-action: #5FABF3;\n    --text-contrast-600: #FFFFFF;\n    --text-contrast-500: rgba(255, 255, 255, 0.65);\n    --text-contrast-400: rgba(255, 255, 255, 0.45);\n    --stroke-base-600: #9CA1AB;\n    --stroke-base-500: #ACB0B9;\n    --stroke-base-400: #D2D5DA;\n    --stroke-base-300: #D8DADE;\n    --stroke-base-200: #E3E5E8;\n    --stroke-base-100: #E9EAED;\n    --stroke-contrast-600: #6C727F;\n    --stroke-contrast-500: #5A5E68;\n    --stroke-contrast-400: #4B4F58;\n    --stroke-contrast-300: #474A52;\n    --stroke-contrast-200: #42454D;\n    --stroke-contrast-100: #3D4047;\n    --info-600: #11B4DD;\n    --info-500: #0B72AE;\n    --info-400: #0A7DB6;\n    --info-300: #0FA2D0;\n    --info-200: rgba(15, 162, 208, 0.2);\n    --info-100: rgba(15, 162, 208, 0.1);\n    --success-600: #0FC020;\n    --success-500: #077E20;\n    --success-400: #07891F;\n    --success-300: #0CAE20;\n    --success-200: rgba(12, 174, 32, 0.2);\n    --success-100: rgba(12, 174, 32, 0.1);\n    --warning-600: #F18C48;\n    --warning-500: #B0500A;\n    --warning-400: #C1560A;\n    --warning-300: #E17A33;\n    --warning-200: rgba(225, 122, 51, 0.2);\n    --warning-100: rgba(225, 122, 51, 0.1);\n    --danger-600: #F5867E;\n    --danger-500: #D51A0C;\n    --danger-400: #E81B0C;\n    --danger-300: #F16258;\n    --danger-200: rgba(241, 98, 88, 0.2);\n    --danger-100: rgba(241, 98, 88, 0.1);\n    --alt-base-600: rgba(0, 24, 71, 0.32);\n    --alt-base-500: rgba(0, 24, 71, 0.24);\n    --alt-base-400: rgba(0, 24, 71, 0.16);\n    --alt-base-300: rgba(0, 24, 71, 0.12);\n    --alt-base-200: rgba(0, 24, 71, 0.08);\n    --alt-base-100: rgba(0, 24, 71, 0.04);\n    --alt-contrast-600: rgba(255, 255, 255, 0.32);\n    --alt-contrast-500: rgba(255, 255, 255, 0.24);\n    --alt-contrast-400: rgba(255, 255, 255, 0.16);\n    --alt-contrast-300: rgba(255, 255, 255, 0.12);\n    --alt-contrast-200: rgba(255, 255, 255, 0.08);\n    --alt-contrast-100: rgba(255, 255, 255, 0.04);\n    --utility-white: #FFFFFF;\n    --utility-transparent: rgba(255, 255, 255, 0);\n    --utility-tint-600: #FFFFFF;\n    --utility-tint-500: rgba(255, 255, 255, 0.9);\n    --utility-tint-400: rgba(255, 255, 255, 0.8);\n    --utility-tint-300: rgba(255, 255, 255, 0.7);\n    --utility-tint-200: rgba(255, 255, 255, 0.6);\n    --utility-tint-100: rgba(255, 255, 255, 0.5);\n    --utility-shade-600: rgba(0, 16, 41, 0.32);\n    --utility-shade-500: rgba(0, 16, 41, 0.24);\n    --utility-shade-400: rgba(0, 16, 41, 0.16);\n    --utility-shade-300: rgba(0, 16, 41, 0.12);\n    --utility-shade-200: rgba(0, 16, 41, 0.08);\n    --utility-shade-100: rgba(0, 16, 41, 0.04);\n    --utility-black: #090A0B;\n    --accent-red-600: #F5867E;\n    --accent-red-500: #D51A0C;\n    --accent-red-400: #E81B0C;\n    --accent-red-300: #F16258;\n    --accent-red-200: rgba(241, 98, 88, 0.2);\n    --accent-red-100: rgba(241, 98, 88, 0.1);\n    --accent-amber-600: #F18C48;\n    --accent-amber-500: #B0500A;\n    --accent-amber-400: #C1560A;\n    --accent-amber-300: #E17A33;\n    --accent-amber-200: rgba(225, 122, 51, 0.2);\n    --accent-amber-100: rgba(225, 122, 51, 0.1);\n    --accent-brown-600: #ED9018;\n    --accent-brown-500: #9A5E09;\n    --accent-brown-400: #A96609;\n    --accent-brown-300: #D68213;\n    --accent-brown-200: rgba(214, 130, 19, 0.2);\n    --accent-brown-100: rgba(214, 130, 19, 0.1);\n    --accent-green-600: #0FC020;\n    --accent-green-500: #077E20;\n    --accent-green-400: #07891F;\n    --accent-green-300: #0CAE20;\n    --accent-green-200: rgba(12, 174, 32, 0.2);\n    --accent-green-100: rgba(12, 174, 32, 0.1);\n    --accent-teal-600: #0EBAA5;\n    --accent-teal-500: #07787C;\n    --accent-teal-400: #078383;\n    --accent-teal-300: #0CA89A;\n    --accent-teal-200: rgba(12, 168, 154, 0.2);\n    --accent-teal-100: rgba(12, 168, 154, 0.1);\n    --accent-blue-600: #5FABF3;\n    --accent-blue-500: #1C5FF0;\n    --accent-blue-400: #216EF3;\n    --accent-blue-300: #4A97F3;\n    --accent-blue-200: rgba(74, 151, 243, 0.2);\n    --accent-blue-100: rgba(74, 151, 243, 0.1);\n    --accent-indigo-600: #90A1F7;\n    --accent-indigo-500: #5C51F4;\n    --accent-indigo-400: #6262F7;\n    --accent-indigo-300: #818CF7;\n    --accent-indigo-200: rgba(129, 140, 247, 0.2);\n    --accent-indigo-100: rgba(129, 140, 247, 0.1);\n    --accent-violet-600: #A899F7;\n    --accent-violet-500: #843CEF;\n    --accent-violet-400: #8952F6;\n    --accent-violet-300: #9E81F7;\n    --accent-violet-200: rgba(158, 129, 247, 0.2);\n    --accent-violet-100: rgba(158, 129, 247, 0.1);\n    --accent-purple-600: #C190F7;\n    --accent-purple-500: #A923DD;\n    --accent-purple-400: #B22EF4;\n    --accent-purple-300: #BC6FF6;\n    --accent-purple-200: rgba(188, 111, 246, 0.2);\n    --accent-purple-100: rgba(188, 111, 246, 0.1);\n    --accent-pink-600: #F57DC1;\n    --accent-pink-500: #D60D43;\n    --accent-pink-400: #E70C55;\n    --accent-pink-300: #F0579D;\n    --accent-pink-200: rgba(240, 87, 157, 0.2);\n    --accent-pink-100: rgba(240, 87, 157, 0.1);\n\t--radii-none: 0px;\n\t--radii-xl: 13px;\n\t--radii-lg: 10px;\n\t--radii-round: 999px;\n\t--radii-md: 8px;\n\t--radii-base: 6px;\n\t--radii-sm: 5px;\n\t--sy-xl5: 68px;\n\t--sx-xl5: 72px;\n\t--sy-xl4: 56px;\n\t--sx-xl3: 48px;\n\t--sy-xl2: 36px;\n\t--sx-xl2: 40px;\n\t--sy-xl: 28px;\n\t--sx-xl4: 60px;\n\t--sx-xl: 32px;\n\t--sy-lg: 24px;\n\t--sx-lg: 28px;\n\t--sy-md: 20px;\n\t--sx-md: 24px;\n\t--sy-base: 16px;\n\t--sx-base: 20px;\n\t--sx-sm: 16px;\n\t--sy-xs: 8px;\n\t--sx-xs: 12px;\n\t--sy-xs2: 6px;\n\t--sx-xs2: 8px;\n\t--sy-xs3: 4px;\n\t--sy-sm: 12px;\n\t--sy-xl3: 44px;\n\t--sx-xs3: 6px;\n\t--sy-xs4: 2px;\n\t--sx-xs4: 4px;\n\t--line-height-xl7: 86px;\n\t--line-height-xs2: 12px;\n\t--font-size-xl7: 77px;\n\t--line-height-xl6: 72px;\n\t--font-size-xl6: 64px;\n\t--line-height-xl5: 60px;\n\t--font-size-xl3: 37px;\n\t--line-height-xl2: 36px;\n\t--font-size-xl2: 31px;\n\t--line-height-xl: 32px;\n\t--font-size-xl: 26px;\n\t--line-height-lg: 28px;\n\t--font-size-lg: 22px;\n\t--line-height-md: 24px;\n\t--line-height-xl3: 44px;\n\t--font-size-md: 18px;\n\t--font-size-xs2: 10px;\n\t--font-size-xl5: 54px;\n\t--line-height-base: 20px;\n\t--font-size-xl4: 45px;\n\t--line-height-sm: 16px;\n\t--font-size-sm: 12px;\n\t--line-height-xs: 14px;\n\t--line-height-xl4: 48px;\n\t--font-size-xs: 11px;\n\t--paragraph-spacing-paragraph: 16px;\n\t--paragraph-spacing-label: 12px;\n\t--font-size-base: 15px;\n\t--paragraph-spacing-display: 20px;\n    --elevatoin-1: 0px 1px 0.5px 0px var(--utility-shade-100);\n    --elevation-2: 0px 2px 3px -1px var(--utility-shade-100), 0px 1px 2px -1px var(--utility-shade-100);\n    --elevation-3: 0px 2px 4px -2px var(--utility-shade-100), 0px 4px 6px -1px var(--utility-shade-100);\n    --elevation-4: 0px 4px 6px -4px var(--utility-shade-100), 0px 10px 15px -3px var(--utility-shade-200);\n    --elevation-5: 0px 8px 10px -6px var(--utility-shade-100), 0px 20px 25px -5px var(--utility-shade-200);\n    --elevation-6: 0px 16px 10px -7px var(--utility-shade-100), 0px 24px 28px -8px var(--utility-shade-200), 0px 24px 48px -10px var(--utility-shade-200);\n}", "",{"version":3,"sources":["webpack://./src/ui/styles/source-vars.css"],"names":[],"mappings":"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","sourcesContent":[":root {\n    --global-accent-100: rgb(99,173,243);\n    --global-accent-200: rgb(73,149,243);\n    --global-accent-300: rgb(46,126,242);\n    --global-accent-400: rgb(20,102,242);\n    --global-accent-500: rgb(24,94,241);\n    --global-accent-600: rgb(28,86,239);\n    --global-accent-700: rgb(32,78,238);\n}\n:root {\n    --primary-600: #5FABF3;\n    --primary-500: #1C5FF0;\n    --primary-400: #216EF3;\n    --primary-300: #4A97F3;\n    --primary-200: rgba(74, 151, 243, 0.2);\n    --primary-100: rgba(74, 151, 243, 0.1);\n    --fill-base-600: #DCDFE5;\n    --fill-base-500: #E8EAEE;\n    --fill-base-400: #EDEFF2;\n    --fill-base-300: #F3F4F6;\n    --fill-base-200: #F9FAFB;\n    --fill-base-100: #FFFFFF;\n    --fill-contrast-600: #1B1D22;\n    --fill-contrast-500: #24272E;\n    --fill-contrast-400: #282C33;\n    --fill-contrast-300: #2D3139;\n    --fill-contrast-200: #31363F;\n    --fill-contrast-100: #363A45;\n    --text-base-warning: #B0500A;\n    --text-base-success: #077E20;\n    --text-base-info: #0B72AE;\n    --text-base-danger: #D51A0C;\n    --text-base-action: #1C5FF0;\n    --text-base-600: #0E0F11;\n    --text-base-500: rgba(14, 15, 17, 0.65);\n    --text-base-400: rgba(14, 15, 17, 0.45);\n    --text-contrast-warning: #F18C48;\n    --text-contrast-success: #0FC020;\n    --text-contrast-info: #11B4DD;\n    --text-contrast-danger: #F5867E;\n    --text-contrast-action: #5FABF3;\n    --text-contrast-600: #FFFFFF;\n    --text-contrast-500: rgba(255, 255, 255, 0.65);\n    --text-contrast-400: rgba(255, 255, 255, 0.45);\n    --stroke-base-600: #9CA1AB;\n    --stroke-base-500: #ACB0B9;\n    --stroke-base-400: #D2D5DA;\n    --stroke-base-300: #D8DADE;\n    --stroke-base-200: #E3E5E8;\n    --stroke-base-100: #E9EAED;\n    --stroke-contrast-600: #6C727F;\n    --stroke-contrast-500: #5A5E68;\n    --stroke-contrast-400: #4B4F58;\n    --stroke-contrast-300: #474A52;\n    --stroke-contrast-200: #42454D;\n    --stroke-contrast-100: #3D4047;\n    --info-600: #11B4DD;\n    --info-500: #0B72AE;\n    --info-400: #0A7DB6;\n    --info-300: #0FA2D0;\n    --info-200: rgba(15, 162, 208, 0.2);\n    --info-100: rgba(15, 162, 208, 0.1);\n    --success-600: #0FC020;\n    --success-500: #077E20;\n    --success-400: #07891F;\n    --success-300: #0CAE20;\n    --success-200: rgba(12, 174, 32, 0.2);\n    --success-100: rgba(12, 174, 32, 0.1);\n    --warning-600: #F18C48;\n    --warning-500: #B0500A;\n    --warning-400: #C1560A;\n    --warning-300: #E17A33;\n    --warning-200: rgba(225, 122, 51, 0.2);\n    --warning-100: rgba(225, 122, 51, 0.1);\n    --danger-600: #F5867E;\n    --danger-500: #D51A0C;\n    --danger-400: #E81B0C;\n    --danger-300: #F16258;\n    --danger-200: rgba(241, 98, 88, 0.2);\n    --danger-100: rgba(241, 98, 88, 0.1);\n    --alt-base-600: rgba(0, 24, 71, 0.32);\n    --alt-base-500: rgba(0, 24, 71, 0.24);\n    --alt-base-400: rgba(0, 24, 71, 0.16);\n    --alt-base-300: rgba(0, 24, 71, 0.12);\n    --alt-base-200: rgba(0, 24, 71, 0.08);\n    --alt-base-100: rgba(0, 24, 71, 0.04);\n    --alt-contrast-600: rgba(255, 255, 255, 0.32);\n    --alt-contrast-500: rgba(255, 255, 255, 0.24);\n    --alt-contrast-400: rgba(255, 255, 255, 0.16);\n    --alt-contrast-300: rgba(255, 255, 255, 0.12);\n    --alt-contrast-200: rgba(255, 255, 255, 0.08);\n    --alt-contrast-100: rgba(255, 255, 255, 0.04);\n    --utility-white: #FFFFFF;\n    --utility-transparent: rgba(255, 255, 255, 0);\n    --utility-tint-600: #FFFFFF;\n    --utility-tint-500: rgba(255, 255, 255, 0.9);\n    --utility-tint-400: rgba(255, 255, 255, 0.8);\n    --utility-tint-300: rgba(255, 255, 255, 0.7);\n    --utility-tint-200: rgba(255, 255, 255, 0.6);\n    --utility-tint-100: rgba(255, 255, 255, 0.5);\n    --utility-shade-600: rgba(0, 16, 41, 0.32);\n    --utility-shade-500: rgba(0, 16, 41, 0.24);\n    --utility-shade-400: rgba(0, 16, 41, 0.16);\n    --utility-shade-300: rgba(0, 16, 41, 0.12);\n    --utility-shade-200: rgba(0, 16, 41, 0.08);\n    --utility-shade-100: rgba(0, 16, 41, 0.04);\n    --utility-black: #090A0B;\n    --accent-red-600: #F5867E;\n    --accent-red-500: #D51A0C;\n    --accent-red-400: #E81B0C;\n    --accent-red-300: #F16258;\n    --accent-red-200: rgba(241, 98, 88, 0.2);\n    --accent-red-100: rgba(241, 98, 88, 0.1);\n    --accent-amber-600: #F18C48;\n    --accent-amber-500: #B0500A;\n    --accent-amber-400: #C1560A;\n    --accent-amber-300: #E17A33;\n    --accent-amber-200: rgba(225, 122, 51, 0.2);\n    --accent-amber-100: rgba(225, 122, 51, 0.1);\n    --accent-brown-600: #ED9018;\n    --accent-brown-500: #9A5E09;\n    --accent-brown-400: #A96609;\n    --accent-brown-300: #D68213;\n    --accent-brown-200: rgba(214, 130, 19, 0.2);\n    --accent-brown-100: rgba(214, 130, 19, 0.1);\n    --accent-green-600: #0FC020;\n    --accent-green-500: #077E20;\n    --accent-green-400: #07891F;\n    --accent-green-300: #0CAE20;\n    --accent-green-200: rgba(12, 174, 32, 0.2);\n    --accent-green-100: rgba(12, 174, 32, 0.1);\n    --accent-teal-600: #0EBAA5;\n    --accent-teal-500: #07787C;\n    --accent-teal-400: #078383;\n    --accent-teal-300: #0CA89A;\n    --accent-teal-200: rgba(12, 168, 154, 0.2);\n    --accent-teal-100: rgba(12, 168, 154, 0.1);\n    --accent-blue-600: #5FABF3;\n    --accent-blue-500: #1C5FF0;\n    --accent-blue-400: #216EF3;\n    --accent-blue-300: #4A97F3;\n    --accent-blue-200: rgba(74, 151, 243, 0.2);\n    --accent-blue-100: rgba(74, 151, 243, 0.1);\n    --accent-indigo-600: #90A1F7;\n    --accent-indigo-500: #5C51F4;\n    --accent-indigo-400: #6262F7;\n    --accent-indigo-300: #818CF7;\n    --accent-indigo-200: rgba(129, 140, 247, 0.2);\n    --accent-indigo-100: rgba(129, 140, 247, 0.1);\n    --accent-violet-600: #A899F7;\n    --accent-violet-500: #843CEF;\n    --accent-violet-400: #8952F6;\n    --accent-violet-300: #9E81F7;\n    --accent-violet-200: rgba(158, 129, 247, 0.2);\n    --accent-violet-100: rgba(158, 129, 247, 0.1);\n    --accent-purple-600: #C190F7;\n    --accent-purple-500: #A923DD;\n    --accent-purple-400: #B22EF4;\n    --accent-purple-300: #BC6FF6;\n    --accent-purple-200: rgba(188, 111, 246, 0.2);\n    --accent-purple-100: rgba(188, 111, 246, 0.1);\n    --accent-pink-600: #F57DC1;\n    --accent-pink-500: #D60D43;\n    --accent-pink-400: #E70C55;\n    --accent-pink-300: #F0579D;\n    --accent-pink-200: rgba(240, 87, 157, 0.2);\n    --accent-pink-100: rgba(240, 87, 157, 0.1);\n}\n\n:root {\n\t--radii-none: 0px;\n\t--radii-xl: 13px;\n\t--radii-lg: 10px;\n\t--radii-round: 999px;\n\t--radii-md: 8px;\n\t--radii-base: 6px;\n\t--radii-sm: 5px;\n}\n\n:root {\n\t--sy-xl5: 68px;\n\t--sx-xl5: 72px;\n\t--sy-xl4: 56px;\n\t--sx-xl3: 48px;\n\t--sy-xl2: 36px;\n\t--sx-xl2: 40px;\n\t--sy-xl: 28px;\n\t--sx-xl4: 60px;\n\t--sx-xl: 32px;\n\t--sy-lg: 24px;\n\t--sx-lg: 28px;\n\t--sy-md: 20px;\n\t--sx-md: 24px;\n\t--sy-base: 16px;\n\t--sx-base: 20px;\n\t--sx-sm: 16px;\n\t--sy-xs: 8px;\n\t--sx-xs: 12px;\n\t--sy-xs2: 6px;\n\t--sx-xs2: 8px;\n\t--sy-xs3: 4px;\n\t--sy-sm: 12px;\n\t--sy-xl3: 44px;\n\t--sx-xs3: 6px;\n\t--sy-xs4: 2px;\n\t--sx-xs4: 4px;\n}\n\n:root {\n\t--line-height-xl7: 86px;\n\t--line-height-xs2: 12px;\n\t--font-size-xl7: 77px;\n\t--line-height-xl6: 72px;\n\t--font-size-xl6: 64px;\n\t--line-height-xl5: 60px;\n\t--font-size-xl3: 37px;\n\t--line-height-xl2: 36px;\n\t--font-size-xl2: 31px;\n\t--line-height-xl: 32px;\n\t--font-size-xl: 26px;\n\t--line-height-lg: 28px;\n\t--font-size-lg: 22px;\n\t--line-height-md: 24px;\n\t--line-height-xl3: 44px;\n\t--font-size-md: 18px;\n\t--font-size-xs2: 10px;\n\t--font-size-xl5: 54px;\n\t--line-height-base: 20px;\n\t--font-size-xl4: 45px;\n\t--line-height-sm: 16px;\n\t--font-size-sm: 12px;\n\t--line-height-xs: 14px;\n\t--line-height-xl4: 48px;\n\t--font-size-xs: 11px;\n\t--paragraph-spacing-paragraph: 16px;\n\t--paragraph-spacing-label: 12px;\n\t--font-size-base: 15px;\n\t--paragraph-spacing-display: 20px;\n}\n\n:root {\n    --elevatoin-1: 0px 1px 0.5px 0px var(--utility-shade-100);\n    --elevation-2: 0px 2px 3px -1px var(--utility-shade-100), 0px 1px 2px -1px var(--utility-shade-100);\n    --elevation-3: 0px 2px 4px -2px var(--utility-shade-100), 0px 4px 6px -1px var(--utility-shade-100);\n    --elevation-4: 0px 4px 6px -4px var(--utility-shade-100), 0px 10px 15px -3px var(--utility-shade-200);\n    --elevation-5: 0px 8px 10px -6px var(--utility-shade-100), 0px 20px 25px -5px var(--utility-shade-200);\n    --elevation-6: 0px 16px 10px -7px var(--utility-shade-100), 0px 24px 28px -8px var(--utility-shade-200), 0px 24px 48px -10px var(--utility-shade-200);\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -1078,6 +1078,7 @@ module.exports = styleTagTransform;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getBrandColors: () => (/* binding */ getBrandColors),
 /* harmony export */   getComponentColors: () => (/* binding */ getComponentColors),
 /* harmony export */   getGlobalNeutrals: () => (/* binding */ getGlobalNeutrals),
 /* harmony export */   getSemanticAccentSettings: () => (/* binding */ getSemanticAccentSettings),
@@ -1125,25 +1126,31 @@ function getGlobalNeutrals() {
 function getComponentColors() {
     return (0,_utils_flatten_object__WEBPACK_IMPORTED_MODULE_12__.flattenObject)(_tokens_colors_components_component_tokens_base_json__WEBPACK_IMPORTED_MODULE_0__);
 }
-function getThemeColors(theme, params) {
+function getBrandColors(name, flat) {
+    const palette = {
+        primary: generateSemanticShades(name)
+    };
+    return flat ? (0,_utils_flatten_object__WEBPACK_IMPORTED_MODULE_12__.flattenObject)(palette) : palette;
+}
+function getThemeColors(theme, formData) {
+    let params = Object.assign({}, formData);
     GlobalNeutrals = (0,_color_tokens_neutrals_palette_generator__WEBPACK_IMPORTED_MODULE_14__.generateNeutrals)({
         hue: params.hue,
         saturation: params.saturation,
         distance: params.distance
     });
     const semanticAccents = {
-        primary: params.primary,
         info: params.info,
         success: params.success,
         warning: params.warning,
         danger: params.danger,
     };
-    const lightAccentTokens = (0,_color_tokens_accent_palette_generator__WEBPACK_IMPORTED_MODULE_13__.generateSystemAccentPalette)('light', params);
-    const darkAccentTokens = (0,_color_tokens_accent_palette_generator__WEBPACK_IMPORTED_MODULE_13__.generateSystemAccentPalette)('dark', params);
+    let lightAccentTokens = (0,_color_tokens_accent_palette_generator__WEBPACK_IMPORTED_MODULE_13__.generateSystemAccentPalette)('light', params);
+    let darkAccentTokens = (0,_color_tokens_accent_palette_generator__WEBPACK_IMPORTED_MODULE_13__.generateSystemAccentPalette)('dark', params);
     const lightSemanticTokens = generateSemanticPalette(semanticAccents, lightAccentTokens);
     const darkSemanticTokens = generateSemanticPalette(semanticAccents, darkAccentTokens);
-    const lightCommonTokens = Object.assign(Object.assign({ accent: lightAccentTokens }, _tokens_colors_system_light_common_json__WEBPACK_IMPORTED_MODULE_1__), lightSemanticTokens);
-    const darkCommonTokens = Object.assign(Object.assign({ accent: darkAccentTokens }, _tokens_colors_system_dark_common_json__WEBPACK_IMPORTED_MODULE_5__), darkSemanticTokens);
+    const lightCommonTokens = Object.assign(Object.assign(Object.assign(Object.assign({}, getBrandColors(params.primary)), { accent: lightAccentTokens }), _tokens_colors_system_light_common_json__WEBPACK_IMPORTED_MODULE_1__), lightSemanticTokens);
+    const darkCommonTokens = Object.assign(Object.assign(Object.assign(Object.assign({}, getBrandColors(params.primary)), { accent: darkAccentTokens }), _tokens_colors_system_dark_common_json__WEBPACK_IMPORTED_MODULE_5__), darkSemanticTokens);
     let commonColors = {};
     let themeColors = {};
     if (theme === "lightBase") {
@@ -1227,32 +1234,38 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function getShadesTemplate(theme) {
+function getShadesTemplate(theme, colorName) {
     if (theme == 'light') {
         return {
             "100": {
                 "$value": "rgba({200}, 0.10)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 10%`
             },
             "200": {
                 "$value": "rgba({200}, 0.20)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 20%`
             },
             "300": {
                 "$value": "{300}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.300`
             },
             "400": {
                 "$value": "{400}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.400`
             },
             "500": {
                 "$value": "{500}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.500`
             },
             "600": {
                 "$value": "{100}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.100`
             }
         };
     }
@@ -1260,27 +1273,33 @@ function getShadesTemplate(theme) {
         return {
             "100": {
                 "$value": "rgba({200}, 0.20)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 20%`
             },
             "200": {
                 "$value": "rgba({200}, 0.40)",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.200, 40%`
             },
             "300": {
                 "$value": "{300}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.300`
             },
             "400": {
                 "$value": "{400}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.400`
             },
             "500": {
                 "$value": "{100}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.100`
             },
             "600": {
                 "$value": "{100}",
-                "$type": "color"
+                "$type": "color",
+                "description": `${colorName}.100`
             }
         };
     }
@@ -1303,17 +1322,17 @@ function getColorParams(theme, params) {
 function generateSystemAccentPalette(theme, params) {
     const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
     let accents = {
-        red: getShadesTemplate(theme),
-        amber: getShadesTemplate(theme),
-        brown: getShadesTemplate(theme),
-        green: getShadesTemplate(theme),
-        teal: getShadesTemplate(theme),
-        cyan: getShadesTemplate(theme),
-        blue: getShadesTemplate(theme),
-        indigo: getShadesTemplate(theme),
-        violet: getShadesTemplate(theme),
-        purple: getShadesTemplate(theme),
-        pink: getShadesTemplate(theme)
+        red: getShadesTemplate(theme, 'red'),
+        amber: getShadesTemplate(theme, 'amber'),
+        brown: getShadesTemplate(theme, 'brown'),
+        green: getShadesTemplate(theme, 'green'),
+        teal: getShadesTemplate(theme, 'teal'),
+        cyan: getShadesTemplate(theme, 'cyan'),
+        blue: getShadesTemplate(theme, 'blue'),
+        indigo: getShadesTemplate(theme, 'indigo'),
+        violet: getShadesTemplate(theme, 'violet'),
+        purple: getShadesTemplate(theme, 'purple'),
+        pink: getShadesTemplate(theme, 'pink')
     };
     for (const [name, scale] of Object.entries(accents)) {
         const hue = params[name];
@@ -1350,6 +1369,9 @@ function getThemeScale(input, dictionary) {
     });
     return output;
 }
+/*
+    colors: getRangeOfThree()
+*/
 function getScale(colors, count = 9) {
     let tokens = {};
     // chroma scale returns array of hex values
@@ -1357,7 +1379,8 @@ function getScale(colors, count = 9) {
     scale.forEach((color, index) => {
         tokens[`${index + 1}00`] = {
             $value: color,
-            $type: 'color'
+            $type: 'color',
+            private: true
         };
     });
     return tokens;
@@ -1403,17 +1426,21 @@ function generateNeutrals(params) {
         const color = chroma_js__WEBPACK_IMPORTED_MODULE_0___default().hsl(hue, saturation * sMod, value / 100);
         tokens[`grey-${value}`] = {
             '$value': color.hex(),
-            '$type': 'color'
+            '$type': 'color',
+            'private': true
         };
         value++;
     }
     tokens["grey-100"] = {
         "$value": "#FFFFFF",
-        '$type': 'color'
+        '$type': 'color',
+        'private': true
     };
     return tokens;
 }
 function renderNeutrals(colors, name) {
+    const existingNode = figma.currentPage.findChild((node) => node.name.startsWith('Global Neutrals'));
+    existingNode === null || existingNode === void 0 ? void 0 : existingNode.remove();
     let frame = figma.createFrame();
     frame.layoutMode = 'HORIZONTAL';
     frame.counterAxisSizingMode = "AUTO";
@@ -1421,7 +1448,7 @@ function renderNeutrals(colors, name) {
     frame.itemSpacing = 0;
     frame.name = name || 'Global Neutrals';
     frame.x = 0;
-    frame.y = 0;
+    frame.y = -156;
     for (const [name, color] of Object.entries(colors)) {
         (0,_swatches_generator__WEBPACK_IMPORTED_MODULE_1__.renderColor)(frame, name, color, colors);
     }
@@ -1455,7 +1482,10 @@ function renderShades(parentNode, name, shades, colors) {
     let frame = figma.createFrame();
     frame.resizeWithoutConstraints(320, frame.height);
     frame.layoutMode = "VERTICAL";
+    frame.counterAxisSizingMode = "AUTO";
+    frame.primaryAxisSizingMode = "AUTO";
     frame.name = name;
+    frame.fills = [];
     for (const [shadeName, color] of Object.entries(shades)) {
         renderColor(frame, `accent/${name}/${shadeName}`, color, colors);
     }
@@ -1592,7 +1622,6 @@ const systemAccentList = [
     "brown",
     "green",
     "teal",
-    "cyan",
     "blue",
     "indigo",
     "violet",
@@ -1605,7 +1634,6 @@ const defaultAccentHUEs = {
     "brown": 33,
     "green": 150,
     "teal": 180,
-    "cyan": 200,
     "blue": 210,
     "indigo": 240,
     "violet": 260,
@@ -1618,17 +1646,19 @@ const defaultSettings = {
     hue: 190,
     saturation: 0.2,
     distance: 0.02,
+    preferedPrimaryColor: 'accent',
+    customPrimaryColor: '',
     primary: 'blue',
     info: 'cyan',
     success: 'green',
     warning: 'amber',
     danger: 'red',
+    custom: 0,
     red: 4,
     amber: 25,
     brown: 33,
     green: 150,
     teal: 180,
-    cyan: 200,
     blue: 210,
     indigo: 240,
     violet: 260,
@@ -1638,7 +1668,7 @@ const defaultSettings = {
     typeScale: 'minorThird',
     createStyles: true,
     accentSaturation: 0.9,
-    accentMaxLuminance: 0.60,
+    accentMaxLuminance: 0.45,
     accentMidLuminance: 0.18,
     accentMinLuminance: 0.10,
     radii: 'base',
@@ -1646,8 +1676,7 @@ const defaultSettings = {
     singleCollection: false
 };
 const defaultSemanticAccents = {
-    primary: 'blue',
-    info: 'cyan',
+    info: 'teal',
     success: 'green',
     warning: 'amber',
     danger: 'red'
@@ -1685,9 +1714,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_figma_colors__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utils/figma-colors */ "./src/utils/figma-colors.ts");
 /* harmony import */ var _color_tokens_swatches_generator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./color-tokens/swatches-generator */ "./src/color-tokens/swatches-generator.ts");
 /* harmony import */ var _utils_flatten_object__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./utils/flatten-object */ "./src/utils/flatten-object.ts");
-/* harmony import */ var _utils_token_references__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./utils/token-references */ "./src/utils/token-references.ts");
-/* harmony import */ var _presets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./presets */ "./src/presets.ts");
-
+/* harmony import */ var _presets__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./presets */ "./src/presets.ts");
 
 
 
@@ -1705,6 +1732,10 @@ function transformValue(name, value, direction) {
     let val = parseInt(value);
     let valueMap;
     switch (name) {
+        case 'customPrimaryColor': {
+            val = value;
+            break;
+        }
         case 'baseFontSize': {
             valueMap = _defaults__WEBPACK_IMPORTED_MODULE_0__.typographySizeName;
             break;
@@ -1767,6 +1798,9 @@ function collectValues(form) {
     });
     return rawValues;
 }
+function inputCustomPrimary(element) {
+    debugger;
+}
 function getFormData(form) {
     return Object.assign(Object.assign({ type: 'IMPORT' }, _defaults__WEBPACK_IMPORTED_MODULE_0__.defaultSettings), collectValues(form));
 }
@@ -1778,14 +1812,16 @@ function generateMiniPreview(masterData) {
         const themeColors = (0,_color_tokens__WEBPACK_IMPORTED_MODULE_8__.getThemeColors)(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
         const label = document.createElement('label');
         label.classList.add('theme-item');
-        label.innerHTML = (0,_presets__WEBPACK_IMPORTED_MODULE_13__.getPresetContentTemplate)(index);
+        label.innerHTML = (0,_presets__WEBPACK_IMPORTED_MODULE_12__.getPresetContentTemplate)(index);
         presetsListElement.appendChild(label);
-        generateCSSVars(themeColors, label);
+        generateCSSVars(Object.assign(Object.assign({}, themeColors), (0,_color_tokens__WEBPACK_IMPORTED_MODULE_8__.getBrandColors)(data.primary)), label);
         updateValuesDisplay(data, label);
     });
 }
 function generatePreview(form, sliders) {
     let data = getFormData(form);
+    if (data === null)
+        return;
     // set colours on neutrals hue & sdaturation sliders
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma_js__WEBPACK_IMPORTED_MODULE_4___default().hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma_js__WEBPACK_IMPORTED_MODULE_4___default().hsl(data.hue, data.saturation, 0.5).hex());
@@ -1795,7 +1831,8 @@ function generatePreview(form, sliders) {
         'global-accent': shades
     });
     const themeColors = (0,_color_tokens__WEBPACK_IMPORTED_MODULE_8__.getThemeColors)(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
-    generateCSSVars(Object.assign(Object.assign({}, themeColors), globalAccent));
+    const branColors = (0,_color_tokens__WEBPACK_IMPORTED_MODULE_8__.getBrandColors)(data.primary);
+    generateCSSVars(Object.assign(Object.assign(Object.assign({}, themeColors), globalAccent), branColors));
     generateAccentsPreview(themeColors, data);
     generateCSSVars(_radii_tokens__WEBPACK_IMPORTED_MODULE_1__[data.radii]);
     generateCSSVars(_typescale_tokens__WEBPACK_IMPORTED_MODULE_2__.getTypograohyTokens(data.baseFontSize, data.typeScale));
@@ -1804,18 +1841,14 @@ function generatePreview(form, sliders) {
     generateMiniPreview(data);
 }
 function generateAccentsPreview(themeColors, data, context = document.documentElement) {
-    const systemAccentShades = (0,_color_tokens_accent_palette_generator__WEBPACK_IMPORTED_MODULE_6__.getShadesTemplate)(data.theme);
+    const systemAccentShades = (0,_color_tokens_accent_palette_generator__WEBPACK_IMPORTED_MODULE_6__.getShadesTemplate)(data.theme, data.primary);
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
-            const value = token['$value'];
-            console.log(`input color: ${name}, value: ${token['$value']}, alias: ${themeColors[name]['$value']}`);
             const index = name.split('/')[2];
-            const { gl, rgb } = (0,_utils_figma_colors__WEBPACK_IMPORTED_MODULE_9__.convertToFigmaColor)(token['$value']);
+            const { rgb } = (0,_utils_figma_colors__WEBPACK_IMPORTED_MODULE_9__.convertToFigmaColor)(token['$value']);
             let chromaColor = chroma_js__WEBPACK_IMPORTED_MODULE_4___default()(rgb);
-            console.log(`converted ${chromaColor.css()}`);
             const systemToken = systemAccentShades[index]['$value'];
-            const references = (0,_utils_token_references__WEBPACK_IMPORTED_MODULE_12__.findTokenReferences)(systemToken);
-            const resolvedTo = systemToken.replace(/{/g, "{global.");
+            const resolvedTo = typeof systemToken == "string" ? systemToken.replace(/{/g, "{global.") : 'N/A';
             const toolTip = context.querySelector(`.color-box.primary-${index} .toolip-body`);
             const valueEl = context.querySelector(`.color-box.primary-${index} .token-value`);
             const alpha = chromaColor.alpha();
@@ -1880,6 +1913,7 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
     });
 }
 function loadSettings(form, data, silent = false) {
+    data = Object.assign({}, _defaults__WEBPACK_IMPORTED_MODULE_0__.defaultSettings, data);
     const formElements = form.querySelectorAll(`input[name]`);
     formElements.forEach((formEl) => {
         const name = formEl.name;
@@ -2339,12 +2373,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   findFigmaVariableByName: () => (/* binding */ findFigmaVariableByName),
 /* harmony export */   getFigmaCollection: () => (/* binding */ getFigmaCollection),
+/* harmony export */   resolveVariableType: () => (/* binding */ resolveVariableType),
 /* harmony export */   setFigmaVariable: () => (/* binding */ setFigmaVariable)
 /* harmony export */ });
-function findFigmaVariableByName(name) {
-    const figmaVariables = figma.variables.getLocalVariables();
-    const matches = figmaVariables.filter(vairable => vairable.name === name);
-    return figmaVariables.find(vairable => vairable.name === name);
+function findVariableInCollection(variableName, collectionName) {
+    const figmaCollections = figma.variables.getLocalVariableCollections();
+    const collection = figmaCollections.find(collection => collection.name === collectionName);
+    let figmaVirable;
+    if (collection) {
+        collection.variableIds.forEach(id => {
+            const figmaVariableInColleciton = figma.variables.getVariableById(id);
+            const match = figmaVariableInColleciton.name === variableName;
+            if (match) {
+                figmaVirable = figmaVariableInColleciton;
+                return true;
+            }
+            return false;
+        });
+    }
+    return figmaVirable;
+}
+function findFigmaVariableByName(variableName, collectionName) {
+    if (collectionName) {
+        return findVariableInCollection(variableName, collectionName);
+    }
+    else {
+        const figmaVariables = figma.variables.getLocalVariables();
+        return figmaVariables.find(vairable => vairable.name === variableName);
+    }
 }
 function getFigmaCollection(name) {
     const figmaCollections = figma.variables.getLocalVariableCollections();
@@ -2356,24 +2412,30 @@ function getFigmaCollection(name) {
     }
     return { collection, isNew };
 }
-function setFigmaVariable(collection, modeId, type, name, value, scopes = [], description = null) {
-    let figmaVariable;
-    let figmaVariableId = collection.variableIds.find(id => {
-        let figmaVariable = figma.variables.getVariableById(id);
-        return figmaVariable.name === name;
-    });
-    if (figmaVariableId) {
-        figmaVariable = figma.variables.getVariableById(figmaVariableId);
+function resolveVariableType(typeName) {
+    switch (typeName) {
+        case 'color': return 'COLOR';
+        case 'boolean': return 'BOOLEAN';
+        case 'number': return 'FLOAT';
+        default: return 'STRING';
     }
-    else {
-        figmaVariable = figma.variables.createVariable(name, collection.id, type);
+}
+function setFigmaVariable(collection, modeId, type, variableName, value = null, scopes = [], description = null) {
+    let figmaVariable = findFigmaVariableByName(variableName, collection.name);
+    if (!figmaVariable) {
+        try {
+            figmaVariable = figma.variables.createVariable(variableName, collection.id, type);
+        }
+        catch (e) {
+            debugger;
+        }
     }
-    console.log(`{type: ${type}}`);
-    console.log(`{var type: ${figmaVariable.resolvedType}}`);
     if (type != figmaVariable.resolvedType) {
         debugger;
     }
-    figmaVariable.setValueForMode(modeId, value);
+    if (value) {
+        figmaVariable.setValueForMode(modeId, value);
+    }
     if (scopes.length) {
         figmaVariable.scopes = scopes;
     }
@@ -2521,7 +2583,7 @@ function findVariableByReferences(value) {
             results.push(figmaVariable);
         }
         else {
-            console.warn(`parseReferences() call failed -> cannot find value for ${reference}`);
+            console.warn(`findVariableByReferences() call failed -> cannot find value for ${reference}`);
         }
     });
     return results[0];
@@ -2544,7 +2606,7 @@ function parseReferenceGlobal(value, dictionary) {
         }
         else {
             debugger;
-            console.warn(`parseReferences() call failed -> cannot find reference for ${value}`);
+            console.warn(`parseReferenceGlobal() call failed -> cannot find reference for ${value}`);
         }
     });
     const check = findTokenReferences(result);
@@ -8624,7 +8686,7 @@ function initialize(target, originalOptions) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.03,"hue":31,"saturation":0.05,"primary":"amber","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":35,"brown":54,"green":104,"teal":171,"cyan":196,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.9,"accentMinLuminance":0.1,"accentMidLuminance":0.34,"accentMaxLuminance":0.62,"singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.03,"hue":31,"saturation":0.05,"primary":"amber","info":"blue","success":"green","warning":"amber","danger":"red","red":4,"amber":35,"brown":54,"green":104,"teal":171,"blue":196,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.9,"accentMinLuminance":0.1,"accentMidLuminance":0.34,"accentMaxLuminance":0.62,"singleCollection":false}');
 
 /***/ }),
 
@@ -8635,7 +8697,7 @@ module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.03,"hue":194,"saturation":0.22,"primary":"teal","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":93,"teal":184,"cyan":200,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.9,"accentMinLuminance":0.09,"accentMidLuminance":0.27,"accentMaxLuminance":0.51,"singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.03,"hue":194,"saturation":0.22,"primary":"teal","info":"blue","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":93,"teal":184,"blue":200,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.9,"accentMinLuminance":0.09,"accentMidLuminance":0.27,"accentMaxLuminance":0.51,"singleCollection":false}');
 
 /***/ }),
 
@@ -8646,7 +8708,7 @@ module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","theme":"light","hue":190,"saturation":0.2,"distance":0.02,"primary":"blue","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":130,"teal":180,"cyan":200,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"baseFontSize":"base","typeScale":"minorThird","createStyles":true,"accentSaturation":0.9,"accentMaxLuminance":0.6,"accentMidLuminance":0.18,"accentMinLuminance":0.1,"radii":"base","spacing":"base","singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","theme":"light","hue":190,"saturation":0.2,"distance":0.02,"primary":"blue","info":"teal","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":130,"teal":184,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"baseFontSize":"base","typeScale":"minorThird","createStyles":true,"accentSaturation":0.9,"accentMaxLuminance":0.6,"accentMidLuminance":0.18,"accentMinLuminance":0.1,"radii":"base","spacing":"base","singleCollection":false}');
 
 /***/ }),
 
@@ -8657,7 +8719,7 @@ module.exports = JSON.parse('{"type":"IMPORT","theme":"light","hue":190,"saturat
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.02,"hue":142,"saturation":0.3,"primary":"green","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":120,"teal":180,"cyan":200,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.56,"accentMinLuminance":0.1,"accentMidLuminance":0.3,"accentMaxLuminance":0.63,"singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.02,"hue":142,"saturation":0.3,"primary":"green","info":"blue","success":"teal","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":120,"teal":170,"blue":200,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.56,"accentMinLuminance":0.1,"accentMidLuminance":0.3,"accentMaxLuminance":0.63,"singleCollection":false}');
 
 /***/ }),
 
@@ -8668,7 +8730,7 @@ module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.02,"hue":243,"saturation":0.1,"primary":"indigo","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":93,"teal":184,"cyan":200,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":1,"accentMinLuminance":0.09,"accentMidLuminance":0.17,"accentMaxLuminance":0.39,"singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.02,"hue":243,"saturation":0.1,"primary":"indigo","info":"blue","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":93,"teal":184,"blue":200,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":1,"accentMinLuminance":0.09,"accentMidLuminance":0.17,"accentMaxLuminance":0.39,"singleCollection":false}');
 
 /***/ }),
 
@@ -8679,7 +8741,7 @@ module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.02,"hue":360,"saturation":0.13,"primary":"pink","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":93,"teal":184,"cyan":200,"blue":210,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.8,"accentMinLuminance":0.1,"accentMidLuminance":0.22,"accentMaxLuminance":0.44,"singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"minorThird","spacing":"base","radii":"base","theme":"light","distance":0.02,"hue":360,"saturation":0.13,"primary":"pink","info":"blue","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":93,"teal":184,"blue":200,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":0.8,"accentMinLuminance":0.1,"accentMidLuminance":0.22,"accentMaxLuminance":0.44,"singleCollection":false}');
 
 /***/ }),
 
@@ -8690,7 +8752,7 @@ module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"majorSecond","spacing":"base","radii":"large","theme":"light","distance":0.02,"hue":227,"saturation":0.16,"primary":"blue","info":"cyan","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":150,"teal":184,"cyan":200,"blue":226,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":1,"accentMinLuminance":0.08,"accentMidLuminance":0.15,"accentMaxLuminance":0.5,"singleCollection":false}');
+module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":"majorSecond","spacing":"base","radii":"large","theme":"light","distance":0.02,"hue":227,"saturation":0.16,"primary":"blue","info":"teal","success":"green","warning":"amber","danger":"red","red":4,"amber":25,"brown":33,"green":150,"teal":200,"blue":226,"indigo":240,"violet":260,"purple":280,"pink":340,"accentSaturation":1,"accentMinLuminance":0.08,"accentMidLuminance":0.15,"accentMaxLuminance":0.5,"singleCollection":false}');
 
 /***/ }),
 
@@ -8701,7 +8763,7 @@ module.exports = JSON.parse('{"type":"IMPORT","baseFontSize":"base","typeScale":
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"button":{"bg":{"rest":{"$value":"{utility.tint.400}","$type":"color","description":"utility/tint/400"},"hover":{"$value":"{alt.base.100}","$type":"color","description":"alt/base/100"},"active":{"$value":"{utility.tint.200}","$type":"color","description":"utility/tint/200"},"primary":{"$value":"{primary.400}","type":"color"},"danger":{"$value":"{danger.400}","type":"color"},"success":{"$value":"{success.400}","type":"color"}},"border":{"rest":{"$value":"{stroke.base.400}","$type":"color","description":"stroke/base/300"},"hover":{"$value":"{stroke.base.500}","$type":"color","description":"stroke/base/400"},"active":{"$value":"{stroke.base.400}","$type":"color","description":"stroke/base/300"}}},"ui-element":{"bg":{"rest":{"$value":"{utility.transparent}","type":"color"},"hover":{"$value":"{alt.base.100}","type":"color"},"active":{"$value":"{alt.base.200}","type":"color"},"selected":{"$value":"{primary.400}","type":"color"},"disabled":{"$value":"{alt.base.600}","type":"color"}},"border":{"rest":{"$value":"{alt.base.100}","type":"color","description":"alt/base/100"},"hover":{"$value":"{alt.base.200}","type":"color","description":"alt/base/200"},"active":{"$value":"{alt.base.300}","type":"color","description":"alt/base/300"},"selected":{"$value":"{primary.500}","type":"color","description":"primary/500"},"disabled":{"$value":"{alt.base.600}","type":"color","description":"alt/base/600"}}},"form-element":{"bg":{"rest":{"$value":"{fill.base.100}","type":"color"},"hover":{"$value":"{fill.base.100}","type":"color"},"readonly":{"$value":"{fill.base.200}","type":"color"}},"border":{"rest":{"$value":"{stroke.base.400}","type":"color"},"hover":{"$value":"{stroke.base.500}","type":"color"},"readonly":{"$value":"{stroke.base.400}","type":"color"}}},"card":{"bg":{"primary":{"$value":"{fill.base.100}","type":"color","description":"fill/base/100"},"secondary":{"$value":"{fill.base.200}","type":"color","description":"fill/base/200"}},"border":{"inner":{"$value":"{stroke.base.100}","type":"color"},"outer":{"$value":"{stroke.base.200}","type":"color"}}},"overlay":{"bg":{"$value":"{card.bg.primary}","type":"color"},"border":{"$value":"{alt.base.400}","type":"color","description":"alt/base/400"}}}');
+module.exports = JSON.parse('{"button":{"bg":{"rest":{"$value":"{utility.tint.400}","$type":"color"},"hover":{"$value":"{alt.base.100}","$type":"color"},"active":{"$value":"{utility.tint.200}","$type":"color"}},"border":{"rest":{"$value":"{stroke.base.400}","$type":"color"},"hover":{"$value":"{stroke.base.500}","$type":"color"},"active":{"$value":"{stroke.base.400}","$type":"color"}}},"ui-element":{"bg":{"rest":{"$value":"{utility.transparent}","$type":"color"},"hover":{"$value":"{alt.base.100}","$type":"color"},"active":{"$value":"{alt.base.200}","$type":"color"},"selected":{"$value":"{primary.400}","$type":"color"},"disabled":{"$value":"{alt.base.600}","$type":"color"}},"border":{"rest":{"$value":"{alt.base.100}","$type":"color"},"hover":{"$value":"{alt.base.200}","$type":"color"},"active":{"$value":"{alt.base.300}","$type":"color"},"selected":{"$value":"{primary.500}","$type":"color"},"disabled":{"$value":"{alt.base.600}","$type":"color"}}},"form-element":{"bg":{"rest":{"$value":"{fill.base.100}","$type":"color"},"hover":{"$value":"{fill.base.100}","$type":"color"},"readonly":{"$value":"{fill.base.200}","$type":"color"}},"border":{"rest":{"$value":"{stroke.base.400}","$type":"color"},"hover":{"$value":"{stroke.base.500}","$type":"color"},"readonly":{"$value":"{stroke.base.400}","$type":"color"}}},"card":{"bg":{"primary":{"$value":"{fill.base.100}","$type":"color"},"secondary":{"$value":"{fill.base.200}","$type":"color"}},"border":{"inner":{"$value":"{stroke.base.100}","$type":"color"},"outer":{"$value":"{stroke.base.200}","$type":"color"}}},"overlay":{"bg":{"$value":"{card.bg.primary}","$type":"color"},"border":{"$value":"{alt.base.400}","$type":"color"}}}');
 
 /***/ }),
 
@@ -8822,7 +8884,7 @@ module.exports = JSON.parse('{"fill":{"base":{"100":{"$value":"{grey-100}","$typ
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"text":{"base":{"400":{"$value":"rgba({grey-6}, 0.45)","$type":"color","description":"utility/black, 0.45"},"500":{"$value":"rgba({grey-6}, 0.65)","$type":"color","description":"utility/black, 0.65"},"600":{"$value":"{grey-6}","$type":"color","description":"utility/black"},"action":{"$value":"{primary.500}","$type":"color"},"info":{"$value":"{info.500}","$type":"color"},"success":{"$value":"{success.500}","$type":"color"},"warning":{"$value":"{warning.500}","$type":"color"},"danger":{"$value":"{danger.500}","$type":"color"}},"contrast":{"400":{"$value":"rgba(#FFFFFF, 0.45)","$type":"color","description":"utility/white, 0.45"},"500":{"$value":"rgba(255, 255, 255, 0.65)","$type":"color","description":"utility/white, 0.65"},"600":{"$value":"#ffffff","$type":"color","description":"utility/white"},"action":{"$value":"{primary.600}","$type":"color"},"info":{"$value":"{info.600}","$type":"color"},"success":{"$value":"{success.600}","$type":"color"},"warning":{"$value":"{warning.600}","$type":"color"},"danger":{"$value":"{danger.600}","$type":"color"}}},"alt":{"base":{"100":{"$value":"rgba({grey-14}, 0.04)","$type":"color","adjustments":{"s":"1"}},"200":{"$value":"rgba({grey-14}, 0.08)","$type":"color","adjustments":{"s":"1"}},"300":{"$value":"rgba({grey-14}, 0.12)","$type":"color","adjustments":{"s":"1"}},"400":{"$value":"rgba({grey-14}, 0.16)","$type":"color","adjustments":{"s":"1"}},"500":{"$value":"rgba({grey-14}, 0.24)","$type":"color","adjustments":{"s":"1"}},"600":{"$value":"rgba({grey-14}, 0.32)","$type":"color","adjustments":{"s":"1"}}},"contrast":{"100":{"$value":"rgba(#FFFFFF, 0.04)","$type":"color"},"200":{"$value":"rgba(#FFFFFF, 0.08)","$type":"color"},"300":{"$value":"rgba(#FFFFFF, 0.12)","$type":"color"},"400":{"$value":"rgba(#FFFFFF, 0.16)","$type":"color"},"500":{"$value":"rgba(#FFFFFF, 0.24)","$type":"color"},"600":{"$value":"rgba(#FFFFFF, 0.32)","$type":"color"}}},"utility":{"white":{"$value":"{grey-100}","$type":"color"},"black":{"$value":"{grey-4}","$type":"color"},"transparent":{"$value":"rgba(255, 255, 255, 0)","$type":"color"},"shade":{"100":{"$value":"rgba({grey-8}, 0.04)","$type":"color","adjustments":{"s":"1"}},"200":{"$value":"rgba({grey-8}, 0.08)","$type":"color","adjustments":{"s":"1"}},"300":{"$value":"rgba({grey-8}, 0.12)","$type":"color","adjustments":{"s":"1"}},"400":{"$value":"rgba({grey-8}, 0.16)","$type":"color","adjustments":{"s":"1"}},"500":{"$value":"rgba({grey-8}, 0.24)","$type":"color","adjustments":{"s":"1"}},"600":{"$value":"rgba({grey-8}, 0.32)","$type":"color","adjustments":{"s":"1"}}},"tint":{"100":{"$value":"rgba({grey-100}, 0.5)","$type":"color"},"200":{"$value":"rgba({grey-100}, 0.6)","$type":"color"},"300":{"$value":"rgba({grey-100}, 0.7)","$type":"color"},"400":{"$value":"rgba({grey-100}, 0.8)","$type":"color"},"500":{"$value":"rgba({grey-100}, 0.9)","$type":"color"},"600":{"$value":"{grey-100}","$type":"color"}}}}');
+module.exports = JSON.parse('{"text":{"base":{"400":{"$value":"rgba({grey-6}, 0.45)","$type":"color"},"500":{"$value":"rgba({grey-6}, 0.65)","$type":"color"},"600":{"$value":"{grey-6}","$type":"color"},"action":{"$value":"{primary.500}","$type":"color"},"info":{"$value":"{info.500}","$type":"color"},"success":{"$value":"{success.500}","$type":"color"},"warning":{"$value":"{warning.500}","$type":"color"},"danger":{"$value":"{danger.500}","$type":"color"}},"contrast":{"400":{"$value":"rgba(#FFFFFF, 0.45)","$type":"color"},"500":{"$value":"rgba(255, 255, 255, 0.65)","$type":"color"},"600":{"$value":"#ffffff","$type":"color"},"action":{"$value":"{primary.600}","$type":"color"},"info":{"$value":"{info.600}","$type":"color"},"success":{"$value":"{success.600}","$type":"color"},"warning":{"$value":"{warning.600}","$type":"color"},"danger":{"$value":"{danger.600}","$type":"color"}}},"alt":{"base":{"100":{"$value":"rgba({grey-14}, 0.04)","$type":"color","adjustments":{"s":"1"}},"200":{"$value":"rgba({grey-14}, 0.08)","$type":"color","adjustments":{"s":"1"}},"300":{"$value":"rgba({grey-14}, 0.12)","$type":"color","adjustments":{"s":"1"}},"400":{"$value":"rgba({grey-14}, 0.16)","$type":"color","adjustments":{"s":"1"}},"500":{"$value":"rgba({grey-14}, 0.24)","$type":"color","adjustments":{"s":"1"}},"600":{"$value":"rgba({grey-14}, 0.32)","$type":"color","adjustments":{"s":"1"}}},"contrast":{"100":{"$value":"rgba(#FFFFFF, 0.04)","$type":"color"},"200":{"$value":"rgba(#FFFFFF, 0.08)","$type":"color"},"300":{"$value":"rgba(#FFFFFF, 0.12)","$type":"color"},"400":{"$value":"rgba(#FFFFFF, 0.16)","$type":"color"},"500":{"$value":"rgba(#FFFFFF, 0.24)","$type":"color"},"600":{"$value":"rgba(#FFFFFF, 0.32)","$type":"color"}}},"utility":{"white":{"$value":"{grey-100}","$type":"color"},"black":{"$value":"{grey-4}","$type":"color"},"transparent":{"$value":"rgba(255, 255, 255, 0)","$type":"color"},"shade":{"100":{"$value":"rgba({grey-8}, 0.04)","$type":"color","adjustments":{"s":"1"}},"200":{"$value":"rgba({grey-8}, 0.08)","$type":"color","adjustments":{"s":"1"}},"300":{"$value":"rgba({grey-8}, 0.12)","$type":"color","adjustments":{"s":"1"}},"400":{"$value":"rgba({grey-8}, 0.16)","$type":"color","adjustments":{"s":"1"}},"500":{"$value":"rgba({grey-8}, 0.24)","$type":"color","adjustments":{"s":"1"}},"600":{"$value":"rgba({grey-8}, 0.32)","$type":"color","adjustments":{"s":"1"}}},"tint":{"100":{"$value":"rgba({grey-100}, 0.5)","$type":"color"},"200":{"$value":"rgba({grey-100}, 0.6)","$type":"color"},"300":{"$value":"rgba({grey-100}, 0.7)","$type":"color"},"400":{"$value":"rgba({grey-100}, 0.8)","$type":"color"},"500":{"$value":"rgba({grey-100}, 0.9)","$type":"color"},"600":{"$value":"{grey-100}","$type":"color"}}}}');
 
 /***/ }),
 
@@ -9148,6 +9210,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/debounce */ "./src/utils/debounce.ts");
 /* harmony import */ var _import__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../import */ "./src/import.ts");
 /* harmony import */ var _presets__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../presets */ "./src/presets.ts");
+/* harmony import */ var chroma_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! chroma-js */ "./node_modules/chroma-js/chroma.js");
+/* harmony import */ var chroma_js__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(chroma_js__WEBPACK_IMPORTED_MODULE_14__);
+
 
 
 
@@ -9166,12 +9231,9 @@ __webpack_require__.r(__webpack_exports__);
     UI INITIALIZATION
 */
 const form = document.querySelector('form');
-const colorPreviewCard = document.querySelector('.color-preview');
 const accentSlidersContainer = document.getElementById('accentColorsSliders');
 let importButton = document.getElementById('importVariablesButton');
 let resetDefaultsButton = document.getElementById('resetDefaultsButton');
-const importConfigButton = document.getElementById('importButton');
-const exportConfigButton = document.getElementById('exportButton');
 let sliders = {};
 const el = document.querySelector(".card-sticky");
 const sentinal = document.querySelector('.sentinal');
@@ -9313,7 +9375,8 @@ luminanceSliderVals.forEach((element, index) => {
         luminanceSlider['noUiSlider'].set(val);
     });
 });
-form.addEventListener("input", (0,_utils_debounce__WEBPACK_IMPORTED_MODULE_11__.debounce)(() => {
+form.addEventListener("input", (0,_utils_debounce__WEBPACK_IMPORTED_MODULE_11__.debounce)((e) => {
+    console.log(e.target.name);
     (0,_import__WEBPACK_IMPORTED_MODULE_12__.generatePreview)(form, sliders);
 }, 1));
 resetDefaultsButton.addEventListener('click', (e) => {

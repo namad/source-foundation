@@ -16,21 +16,18 @@ import { debounce } from "../utils/debounce";
 import { ImportFormData, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import";
 import { getPresets } from "../presets";
 
+import chroma from 'chroma-js';
+
 /*
     UI INITIALIZATION
 */
 
 const form = document.querySelector('form') as HTMLFormElement;
-const colorPreviewCard = document.querySelector('.color-preview') as HTMLDivElement;
 const accentSlidersContainer = document.getElementById('accentColorsSliders') as HTMLDivElement;
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
 
-const importConfigButton = document.getElementById('importButton');
-const exportConfigButton = document.getElementById('exportButton');
-
 let sliders = {};
-
 
 const el = document.querySelector(".card-sticky");
 const sentinal = document.querySelector('.sentinal');
@@ -74,12 +71,12 @@ document.querySelectorAll('#importThemeButton').forEach((btn: HTMLButtonElement)
         const settings = collectValues(modal);
         let data;
 
-        if(code.length > 0) {
+        if (code.length > 0) {
             try {
                 data = JSON.parse(code);
             }
-            catch(e) {
-                throw(e);
+            catch (e) {
+                throw (e);
             }
         }
         else {
@@ -87,6 +84,8 @@ document.querySelectorAll('#importThemeButton').forEach((btn: HTMLButtonElement)
             data = getPresets()[themeNumber];
         }
 
+        loadSettings(form, data);
+        modal.close();
         loadSettings(form, data);
         modal.close();
 
@@ -106,6 +105,18 @@ document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
             }
         }, "*");
 
+    });
+});
+
+document.querySelectorAll('[data-radio-toggle]').forEach((el: HTMLFormElement) => {
+    el.addEventListener('input', (e) => {
+        const name = el.name;
+        document.querySelectorAll(`input[type=radio][name=${name}]`).forEach((radiobutton: HTMLFormElement) => {
+            const containerId = radiobutton.dataset.radioToggle;
+            const isChecked = radiobutton.checked;
+            const container = document.getElementById(containerId) as HTMLDivElement;
+            container.style.display = isChecked ? '' : 'none';
+        });
     });
 });
 
@@ -150,7 +161,7 @@ document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
 
     const type = el.dataset.type;
 
-    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null});
+    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null });
     sliders[sliderComponent.params.name] = sliderComponent;
 });
 
@@ -201,7 +212,8 @@ luminanceSliderVals.forEach((element, index) => {
     });
 });
 
-form.addEventListener("input", debounce(() => {
+form.addEventListener("input", debounce((e) => {
+    console.log(e.target.name);
     generatePreview(form, sliders);
 }, 1));
 
@@ -224,10 +236,10 @@ importButton.addEventListener('click', (e) => {
 })
 
 parent.postMessage({
-    pluginMessage: {type: 'LOADED'}
+    pluginMessage: { type: 'LOADED' }
 }, "*");
 
- 
+
 loadSettings(form, defaultSettings);
 
 

@@ -25,7 +25,7 @@ export function findVariableByReferences(value: string): Variable {
             results.push(figmaVariable);
         }
         else {
-            console.warn(`parseReferences() call failed -> cannot find value for ${reference}`);
+            console.warn(`findVariableByReferences() call failed -> cannot find value for ${reference}`);
         }
     })
 
@@ -53,7 +53,7 @@ export function parseReferenceGlobal(value, dictionary) {
         }
         else {
             debugger;
-            console.warn(`parseReferences() call failed -> cannot find reference for ${value}`);
+            console.warn(`parseReferenceGlobal() call failed -> cannot find reference for ${value}`);
         }
     });
 

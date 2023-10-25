@@ -23,7 +23,6 @@
             </div>
         </div>
 
-
         <div class="card">
             <div class="flex flex-row justify-between items-baseline">
                 <h3 class="font-bold text-lg">Neutral Colours </h3>
@@ -41,10 +40,8 @@
             </div>
 
             <h4 class="font-bold text-md mt-3">Color Pattern</h4>
-            <p class="text-sm opacity-75">Difference in lightness percent between two adjacent colours. Wider steps
-                outcome
-                greater
-                contrast overall
+            <p class="text-sm opacity-75">Difference in lightness percent between two adjacent colours. 
+                Wider steps outcome greater contrast overall
             </p>
             <div
                 data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
@@ -88,8 +85,39 @@
                 </div>
             </div>
 
-            <h4 class="font-bold text-md mt-3">Brand Colour</h4>
-            <div data-type="semantics"
+            <div class="flex flex-row justify-between items-baseline">
+                <h4 class="font-bold text-md mt-3">Brand Colour</h4>
+                <a href="#" data-modal="customBrandColor" title="Set custom brand colour">Custom Brand Colour</a>
+            </div>
+
+            
+
+            <p class="text-sm opacity-75">
+                Select you primary / brand colour. You can either pick one from existing accents 
+                or specify you custom value
+            </p>
+
+            <!--div class="flex flex-row mt-2">
+                <div class="w-1/5">Based on</div>
+                <div class="flex flex-row gap-3 flex-1" style="margin: 0 var(--slider-margin) 0;">
+                    <label class="flex flex-row gap-2">
+                        <input type="radio" name="preferedPrimaryColor" data-radio-toggle="brandAccent" value="accent" checked /><span>Accent Colour</span>
+                    </label>
+                    <label class="flex flex-row gap-2">
+                        <input type="radio" name="preferedPrimaryColor" data-radio-toggle="brandCustom" value="custom"/><span>Custom</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="flex flex-row items-center" id="brandCustom">
+                <div class="w-1/5">Primary</div>
+                <label class="flex flex-row flex-1 gap-3 items-center" style="margin: 0 var(--slider-margin) 0;">
+                    <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7" name="customPrimaryColor" />
+                    <span class="text-sm text-text-base-500">HEX Value</span>
+                </label>
+            </div-->
+
+            <div data-type="semantics" id="brandAccent"
                 data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
 
             <h4 class="font-bold text-md mt-3">Semantic Colours</h4>
@@ -121,6 +149,8 @@
             <p class="text-sm opacity-75">Finetune each accent colour with custom hue value.
                 Lightness of the base colour to be set to fit into WCAG2 Level AA. Global saturation controls are below
             </p>
+
+            <input type="hidden" name="custom" id="customHUE" />
 
             <div class="flex flex-col gap-y-sm" id="accentColorsSliders"></div>
             <hr>

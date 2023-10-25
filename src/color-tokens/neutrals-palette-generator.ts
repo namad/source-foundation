@@ -20,7 +20,8 @@ export function generateNeutrals(params) {
 
     tokens[`grey-${value}`] = {
       '$value': color.hex(),
-      '$type': 'color'
+      '$type': 'color',
+      'private': true
     }
     
     value++;
@@ -28,12 +29,17 @@ export function generateNeutrals(params) {
 
   tokens["grey-100"] = {
     "$value": "#FFFFFF",
-    '$type': 'color'
+    '$type': 'color',
+    'private': true
   }
   return tokens;
 }
 
 export function renderNeutrals(colors, name?): FrameNode {
+
+    const existingNode = figma.currentPage.findChild((node) => node.name.startsWith('Global Neutrals'));
+    existingNode?.remove();
+
     let frame = figma.createFrame();
     frame.layoutMode = 'HORIZONTAL';
     frame.counterAxisSizingMode = "AUTO";
@@ -43,7 +49,7 @@ export function renderNeutrals(colors, name?): FrameNode {
     frame.name = name || 'Global Neutrals'
     
     frame.x = 0;
-    frame.y = 0;
+    frame.y = -156;
 
     for (const [name, color] of Object.entries(colors)) {
         renderColor(frame, name, color, colors)

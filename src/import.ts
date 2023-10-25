@@ -6,13 +6,14 @@ import chroma from 'chroma-js';
 import { camelToTitle, toTitleCase } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-tokens/accent-palette-generator";
 import { roundTwoDigits } from "./utils/round-two-digits";
-import { getGlobalNeutrals, getThemeColors } from "./color-tokens";
+import { getBrandColors, getGlobalNeutrals, getThemeColors } from "./color-tokens";
 import { convertToFigmaColor, parseColor } from "./utils/figma-colors";
 import { outputHSL } from "./color-tokens/swatches-generator";
 import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
 import { findTokenReferences } from "./utils/token-references";
 import { getPresetContentTemplate, getPresets } from "./presets";
+import { debounce } from "./utils/debounce";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -20,17 +21,19 @@ export interface ImportFormData {
     hue: number;
     saturation: number;
     distance: number;
+    preferedPrimaryColor: 'accent' | 'custom';
+    customPrimaryColor: string;
     primary: string;
     info: string;
     success: string;
     warning: string;
     danger: string;
+    custom: number;
     red: number;
     amber: number;
     brown: number;
     green: number;
     teal: number;
-    cyan: number;
     blue: number;
     indigo: number;
     violet: number;
@@ -53,6 +56,10 @@ export function transformValue(name: string, value: any, direction?): string | n
     let valueMap;
 
     switch (name) {
+        case 'customPrimaryColor': {
+            val = value;
+            break;
+        }
         case 'baseFontSize': {
             valueMap = typographySizeName;
             break;
@@ -124,7 +131,36 @@ export function collectValues(form): ImportFormData {
     return rawValues as ImportFormData;
 }
 
+function inputCustomPrimary(element) {
+    debugger;
+}
+
 export function getFormData(form): ImportFormData {
+    let data = collectValues(form);
+
+    // if (data.preferedPrimaryColor === 'custom') {
+    //     const customPrimaryValue = data.customPrimaryColor.replace('#', '');
+
+    //     if (customPrimaryValue.length) {
+    //         const customPrimaryColor = chroma(`#${customPrimaryValue}`);
+    //         const customAccentLuminanceMid = customPrimaryColor.luminance();
+    //         const customAccentHUE = customPrimaryColor.get('hsl.h');
+            
+    //         data.primary = data.preferedPrimaryColor; // set to custom
+
+    //         data.custom = customAccentHUE;
+    //         data.accentMinLuminance = customAccentLuminanceMid * 0.55;
+    //         data.accentMidLuminance = customAccentLuminanceMid;
+    //         data.accentMaxLuminance = customAccentLuminanceMid * 3.33;
+
+    //         loadSettings(form, data);
+            
+    //         return null;
+
+    //     }
+
+    // }
+
     return {
         type: 'IMPORT',
         ...defaultSettings,
@@ -146,13 +182,15 @@ export function generateMiniPreview(masterData: ImportFormData) {
         label.innerHTML = getPresetContentTemplate(index);
         presetsListElement.appendChild(label);
 
-        generateCSSVars(themeColors, label);
+        generateCSSVars({...themeColors, ...getBrandColors(data.primary)}, label);
         updateValuesDisplay(data, label);
     })
 }
 
 export function generatePreview(form: HTMLFormElement, sliders) {
     let data = getFormData(form);
+
+    if (data === null) return;
 
     // set colours on neutrals hue & sdaturation sliders
     sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
@@ -171,8 +209,9 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     })
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
+    const branColors = getBrandColors(data.primary);
 
-    generateCSSVars({ ...themeColors, ...globalAccent });
+    generateCSSVars({ ...themeColors, ...globalAccent, ...branColors });
 
     generateAccentsPreview(themeColors, data);
 
@@ -186,24 +225,17 @@ export function generatePreview(form: HTMLFormElement, sliders) {
 }
 
 function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
-    const systemAccentShades = getShadesTemplate(data.theme);
+    const systemAccentShades = getShadesTemplate(data.theme, data.primary);
 
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
 
-            const value = token['$value'];
-
-            console.log(`input color: ${name}, value: ${token['$value']}, alias: ${themeColors[name]['$value']}`);
-
             const index = name.split('/')[2];
-            const { gl, rgb } = convertToFigmaColor(token['$value']);
+            const { rgb } = convertToFigmaColor(token['$value']);
             let chromaColor = chroma(rgb);
 
-            console.log(`converted ${chromaColor.css()}`);
-
             const systemToken = systemAccentShades[index]['$value'];
-            const references = findTokenReferences(systemToken);
-            const resolvedTo = systemToken.replace(/{/g, "{global.");
+            const resolvedTo = typeof systemToken == "string" ? systemToken.replace(/{/g, "{global.") : 'N/A';
 
             const toolTip = context.querySelector(`.color-box.primary-${index} .toolip-body`) as HTMLDivElement;
             const valueEl = context.querySelector(`.color-box.primary-${index} .token-value`) as HTMLDivElement;
@@ -280,6 +312,9 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
 
 
 export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
+
+    data = Object.assign({}, defaultSettings, data);
+
     const formElements = form.querySelectorAll(`input[name]`);
 
     formElements.forEach((formEl: HTMLFormElement) => {
