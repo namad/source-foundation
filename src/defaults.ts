@@ -74,8 +74,6 @@ export const defaultSettings: ImportFormData = {
     hue: 190,
     saturation: 0.2,
     distance: 0.02,
-    preferedPrimaryColor: 'accent',
-    customPrimaryColor: '',
     primary: 'blue',
     info: 'teal',
     success: 'green',

@@ -21,8 +21,6 @@ export interface ImportFormData {
     hue: number;
     saturation: number;
     distance: number;
-    preferedPrimaryColor: 'accent' | 'custom';
-    customPrimaryColor: string;
     primary: string;
     info: string;
     success: string;
