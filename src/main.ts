@@ -1,6 +1,6 @@
 import { convertFigmaColorToRgb, parseColor } from './utils/figma-colors';
-import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
-import { getFigmaCollection, setFigmaVariable } from "./utils/figma-variables";
+import { getBrandColors, getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
+import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 import { sortColorTokens } from './utils/sort-palette';
 
 import * as spacing from './spacing-tokens';
@@ -21,10 +21,20 @@ import { ImportFormData } from './import';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
+import { delayAsync } from './utils/delay-async';
 
 console.clear();
 
-let GlobalTokens;
+let globalTokens;
+
+const collectionNames = new Map<string, string>([
+    ["brandColors", "Color Theme"/*"Brand Color"*/],
+    ["themeColors", "Color Theme"],
+    ["componentColors", "Component Tokens"],
+    ["spacing", "Spacing"],
+    ["radii", "Radii"],
+    ["iconScale", "Icon Scale"],
+]);
 
 (async () => {
     await Promise.all(
@@ -55,7 +65,6 @@ let GlobalTokens;
     }
 
     if (figma.command == "fixLayers") {
-
         await processComponents();
         figma.closePlugin();
     }
@@ -72,12 +81,13 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     const params = eventData.params;
 
     if (eventData.type === "IMPORT") {
-
+        initiateImport(params);
         importAllTokens(params);
-
-    } else if (eventData.type === "EXPORT") {
+    } 
+    else if (eventData.type === "EXPORT") {
         // exportToJSON(eventData.format);
-    } else if (eventData.type === "ALERT") {
+    }
+    else if (eventData.type === "ALERT") {
         figma.notify(`✅ ${eventData.params}`);
     }
     else if (eventData.type === "RENDER_ACCENTS") {
@@ -112,22 +122,71 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     }
 };
 
-
-function importAllTokens(params: ImportFormData) {
-    figma.root.setPluginData('SDS', JSON.stringify(params));
-
-    importSystemColorTokens(params);
-
-    importAliases({
-        collectionName: "Component Tokens",
+function initiateImport(params: ImportFormData) {
+    getCollectionAndPrepareTokens({
+        collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors(),
         sortFn: sortColorTokens
     });
 
+   getCollectionAndPrepareTokens({
+        collectionName: collectionNames.get('themeColors'),
+        modeName: "Light Base",
+        data: getThemeColors('lightBase', params),
+        sortFn: sortColorTokens
+    });
+
+    // getCollectionAndPrepareTokens({
+    //     collectionName: collectionNames.get('brandColors'),
+    //     modeName: toTitleCase(params.primary),
+    //     data: getBrandColors(params.primary),
+    //     sortFn: sortColorTokens
+    // });
+
+    getCollectionAndPrepareTokens({
+        collectionName: collectionNames.get('spacing'),
+        modeName: toTitleCase(params.spacing),
+        data: spacing[params.spacing],
+        sortFn: sortSizeTokens,
+    });
+    
+    getCollectionAndPrepareTokens({
+        collectionName: collectionNames.get('radii'),
+        modeName: toTitleCase(params.radii),
+        data: radii[params.radii],
+        sortFn: sortSizeTokens,
+    });
+    
+    getCollectionAndPrepareTokens({
+        collectionName: collectionNames.get('iconScale'),
+        modeName: toTitleCase("base"),
+        data: sizing["base"],
+        sortFn: sortSizeTokens,
+    });
+}
+
+
+function importAllTokens(params: ImportFormData) {
+    figma.root.setPluginData('SDS', JSON.stringify(params));
+
+    importColorTheme(params);
+
+    // importVariables({
+    //     collectionName: collectionNames.get('brandColors'),
+    //     modeName: toTitleCase(params.primary),
+    //     data: getBrandColors(params.primary)
+    // });
+
+    importVariables({
+        collectionName: collectionNames.get('componentColors'),
+        modeName: "Default",
+        data: getComponentColors()
+    });
+
     importSizeTokens({
         type: 'spacing',
-        collectionName: 'Spacing',
+        collectionName: collectionNames.get('spacing'),
         params: params,
         defaultMode: params.spacing,
         defaultOrder: spacingSizeName,
@@ -136,7 +195,7 @@ function importAllTokens(params: ImportFormData) {
 
     importSizeTokens({
         type: 'radii',
-        collectionName: 'Radii',
+        collectionName: collectionNames.get('radii'),
         params: params,
         defaultMode: params.radii,
         defaultOrder: radiiSizeName,
@@ -156,15 +215,15 @@ function importAllTokens(params: ImportFormData) {
     // ICONS SCALE
     importSizeTokens({
         type: 'iconScale',
-        collectionName: 'Icon Scale',
+        collectionName: collectionNames.get('iconScale'),
         params: params,
         defaultMode: 'base',
         defaultOrder: iconSizeName,
         tokens: sizing
     });
 
-    GlobalTokens = {
-        ...GlobalTokens,
+    globalTokens = {
+        ...globalTokens,
         ...typescale.getTypograohyTokens(params.baseFontSize, params.typeScale)
     };
     importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
@@ -175,36 +234,44 @@ function importAllTokens(params: ImportFormData) {
     figma.notify("✅ Figma variables has been imported");
 }
 
-function importSystemColorTokens(params: ImportFormData) {
+function importColorTheme(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
+    const brandColors = getBrandColors(params.primary);
 
-    GlobalTokens = {
+    globalTokens = {
         ...getGlobalNeutrals(),
+        ...getComponentColors(),
+        ...brandColors,
         ...themeColors
     };
 
-    importVariables({
-        collectionName: "Color Theme",
+    console.log('Importing Light Base', themeColors);
+
+   importVariables({
+        collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: themeColors,
         sortFn: sortColorTokens
     });
 
-
     themeColors = getThemeColors('darkBase', params);
-    GlobalTokens = Object.assign(GlobalTokens, themeColors);
+    globalTokens = Object.assign(globalTokens, themeColors);
+
+    console.log('Importing Dark Base', themeColors);
 
     importVariables({
-        collectionName: "Color Theme",
+        collectionName: collectionNames.get('themeColors'),
         modeName: "Dark Base",
         data: themeColors
     });
 
     themeColors = getThemeColors('darkElevated', params);
-    GlobalTokens = Object.assign(GlobalTokens, themeColors);
+    globalTokens = Object.assign(globalTokens, themeColors);
+
+    console.log('Importing Dark Elevated', themeColors);
 
     importVariables({
-        collectionName: "Color Theme",
+        collectionName: collectionNames.get('themeColors'),
         modeName: "Dark Elevated",
         data: themeColors
     });
@@ -235,17 +302,9 @@ function importSizeTokens(data: {
             modeName: toTitleCase(modeName),
             modeIndex: index,
             data: tokens[modeName],
-            sortFn: sortSizeTokens,
             isSingleMode: isSingleMode
         });
     })
-}
-
-function createVariableAlias(collection, modeId, variableName, sourceVariable: Variable, type?) {
-    return setFigmaVariable(collection, modeId, type || sourceVariable.resolvedType, variableName, {
-        type: "VARIABLE_ALIAS",
-        id: `${sourceVariable.id}`,
-    });
 }
 
 function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
@@ -255,28 +314,38 @@ function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -
     if (isNew || isSingleMode) {
         modeId = collection.modes[0].modeId;
         collection.renameMode(modeId, modeName);
-    } else {
+    } 
+    else {
         const mode = modeIndex < 0 ? collection.modes.find(mode => mode.name === modeName) : collection.modes[modeIndex];
-
         if (!mode) {
             modeId = collection.addMode(modeName)
-        } else {
+        } 
+        else {
             modeId = mode.modeId;
             collection.renameMode(modeId, modeName);
         }
     }
 
-    let transformedTokens = [];
-
-    Object.entries(data).forEach(([key, object]) => {
-        object["name"] = key;
-        transformedTokens.push(object);
-    });
+    let transformedTokens = Object.entries(data as DesignTokensRaw).map(([key, object]) => {
+        return {
+            name: key,
+            ...object
+        }
+    })
 
     let sortedTokens = transformedTokens;
 
     if (sortFn != null) {
         sortedTokens = transformedTokens.sort(sortFn);
+    }
+
+    if (isNew) {
+        // create variables straight away so there is a way to make 
+        // references / aliases without additional pass
+        sortedTokens.forEach(token => {
+            const type = resolveVariableType(token.$type);
+            setFigmaVariable(collection, modeId, type, token.name)
+        });
     }
 
     return {
@@ -303,77 +372,20 @@ function importVariables({ collectionName, modeName, modeIndex = -1, data, sortF
             variableName: token.name,
             token: token
         });
-    })
-}
-
-function importAliases({ collectionName, modeName, data, sortFn = null }) {
-    const {
-        tokens,
-        collection,
-        modeId,
-        type
-    } = getCollectionAndPrepareTokens({ collectionName, modeName, data, sortFn })
-
-    loopAliases(tokens, collection, modeId, data);
-}
-
-function loopAliases(tokens: any[], collection: VariableCollection, modeId: any, data: any) {
-
-    const missedTokens = tokens.filter(token => {
-        const result = processAlias({
-            collection,
-            modeId,
-            type: data.$type,
-            variableName: token.name,
-            token: token
-        });
-
-        return (result.success !== true);
     });
 
-    if (missedTokens.length) {
-        return loopAliases(missedTokens, collection, modeId, data)
-    }
+    
 }
 
-function processAlias({
-    collection,
-    modeId,
-    type,
-    variableName,
-    token
-}) {
-    const value = token.$value;
-    const sourceVariable = findVariableByReferences(value);
-
-    if (sourceVariable) {
-        return {
-            success: true,
-            result: createVariableAlias(collection, modeId, variableName, sourceVariable, type)
-        }
-    }
-    else {
-        return {
-            success: false,
-            result: {
-                collection,
-                modeId,
-                type,
-                variableName,
-                token
-            }
-        }
-    }
-}
-
-function isAlias(value) {
-    return value.toString().trim().charAt(0) === "{";
+export interface DesignTokensRaw {
+    [key: string]: DesignToken
 }
 
 export interface DesignToken {
     $value: string | object[];
     $type: string;
-    name: string;
+    name?: string;
+    private?: boolean;
     scopes?: string[];
     description?: string;
     adjustments?: any;
@@ -394,12 +406,24 @@ function processToken({
 
     if (token.$value !== undefined) {
         if (type === "color") {
+            let colorValue = parseColor(token, globalTokens);
+            let referenceVar = findVariableByReferences(token.$value.trim());
+
+            if(referenceVar) {
+                colorValue = {
+                    type: "VARIABLE_ALIAS",
+                    id: referenceVar.id,
+                }
+            }
+
             return setFigmaVariable(
                 collection,
                 modeId,
                 "COLOR",
                 variableName,
-                parseColor(token, GlobalTokens)
+                colorValue,
+                [],
+                token.description || null
             );
         }
         if (type === "number") {
@@ -420,7 +444,7 @@ function processToken({
                 modeId,
                 "STRING",
                 variableName,
-                parseReferenceGlobal(token.$value, GlobalTokens),
+                parseReferenceGlobal(token.$value, globalTokens),
                 token.scopes,
                 token.description || null
             );

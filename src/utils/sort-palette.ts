@@ -36,6 +36,7 @@ const paletteOrder = [
     'ui-element/border/active',
     'ui-element/border/selected',
     'ui-element/border/disabled',
+    'ui-element/text',
 
     'button/bg/rest',
     'button/bg/hover',

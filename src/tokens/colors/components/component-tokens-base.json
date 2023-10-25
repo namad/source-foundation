@@ -3,47 +3,29 @@
         "bg": {
             "rest": {
                 "$value": "{utility.tint.400}",
-                "$type": "color",
-                "description": "utility/tint/400"
+                "$type": "color"
             },
             "hover": {
                 "$value": "{alt.base.100}",
-                "$type": "color",
-                "description": "alt/base/100"
+                "$type": "color"
             },
             "active": {
                 "$value": "{utility.tint.200}",
-                "$type": "color",
-                "description": "utility/tint/200"
-            },
-            "primary": {
-                "$value": "{primary.400}",
-                "type": "color"
-            },
-            "danger": {
-                "$value": "{danger.400}",
-                "type": "color"
-            },
-            "success": {
-                "$value": "{success.400}",
-                "type": "color"
+                "$type": "color"
             }
         },
         "border": {
             "rest": {
                 "$value": "{stroke.base.400}",
-                "$type": "color",
-                "description": "stroke/base/300"
+                "$type": "color"
             },
             "hover": {
                 "$value": "{stroke.base.500}",
-                "$type": "color",
-                "description": "stroke/base/400"
+                "$type": "color"
             },
             "active": {
                 "$value": "{stroke.base.400}",
-                "$type": "color",
-                "description": "stroke/base/300"
+                "$type": "color"
             }
         }
     },
@@ -51,50 +33,45 @@
         "bg": {
             "rest": {
                 "$value": "{utility.transparent}",
-                "type": "color"
+                "$type": "color"
             },
             "hover": {
                 "$value": "{alt.base.100}",
-                "type": "color"
+                "$type": "color"
             },
             "active": {
                 "$value": "{alt.base.200}",
-                "type": "color"
+                "$type": "color"
             },
             "selected": {
                 "$value": "{primary.400}",
-                "type": "color"
+                "$type": "color"
             },
             "disabled": {
                 "$value": "{alt.base.600}",
-                "type": "color"
+                "$type": "color"
             }
         },
         "border": {
             "rest": {
                 "$value": "{alt.base.100}",
-                "type": "color",
-                "description": "alt/base/100"
+                "$type": "color"
             },
             "hover": {
                 "$value": "{alt.base.200}",
-                "type": "color",
-                "description": "alt/base/200"
+                "$type": "color"
             },
             "active": {
                 "$value": "{alt.base.300}",
-                "type": "color",
-                "description": "alt/base/300"
+                "$type": "color"
             },
             "selected": {
                 "$value": "{primary.500}",
-                "type": "color",
-                "description": "primary/500"
+                "$type": "color"
             },
             "disabled": {
                 "$value": "{alt.base.600}",
-                "type": "color",
-                "description": "alt/base/600"
+                "$type": "color"
             }
         }
     },
@@ -102,29 +79,29 @@
         "bg": {
             "rest": {
                     "$value": "{fill.base.100}",
-                    "type": "color"
+                    "$type": "color"
             },
             "hover": {
                     "$value": "{fill.base.100}",
-                    "type": "color"
+                    "$type": "color"
             },
             "readonly": {
                     "$value": "{fill.base.200}",
-                    "type": "color"
+                    "$type": "color"
             }
         },
         "border": {
             "rest": {
                     "$value": "{stroke.base.400}",
-                    "type": "color"
+                    "$type": "color"
             },
             "hover": {
                     "$value": "{stroke.base.500}",
-                    "type": "color"
+                    "$type": "color"
             },
             "readonly": {
                     "$value": "{stroke.base.400}",
-                    "type": "color"
+                    "$type": "color"
             }
         }
     },
@@ -132,35 +109,32 @@
         "bg": {
             "primary": {
                 "$value": "{fill.base.100}",
-                "type": "color",
-                "description": "fill/base/100"
+                "$type": "color"
             },
             "secondary": {
                 "$value": "{fill.base.200}",
-                "type": "color",
-                "description": "fill/base/200"
+                "$type": "color"
             }
         },
         "border": {
             "inner": {
                 "$value": "{stroke.base.100}",
-                "type": "color"
+                "$type": "color"
             },
             "outer": {
                 "$value": "{stroke.base.200}",
-                "type": "color"
+                "$type": "color"
             }
         }
     },
     "overlay": {
         "bg": {
             "$value": "{card.bg.primary}",
-            "type": "color"
+            "$type": "color"
         },
         "border": {
             "$value": "{alt.base.400}",
-            "type": "color",
-            "description": "alt/base/400"
+            "$type": "color"
         }
     }
 }

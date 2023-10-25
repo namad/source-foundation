@@ -16,10 +16,11 @@ import paletteDarkBase3 from './tokens/colors/system/dark-base-3.json';
 import paletteDarkBase4 from './tokens/colors/system/dark-base-4.json';
 
 import { flattenObject } from './utils/flatten-object';
-import { generateSystemAccentPalette } from './color-tokens/accent-palette-generator';
+import { generateSystemAccentPalette, getGlobalAccent, getShadesTemplate } from './color-tokens/accent-palette-generator';
 import { generateNeutrals } from './color-tokens/neutrals-palette-generator';
 import { ImportFormData } from './import';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';
+import chroma from "chroma-js";
 
 let GlobalNeutrals;
 
@@ -35,7 +36,18 @@ export function getComponentColors() {
     return flattenObject(componentTokens);
 }
 
-export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated', params: ImportFormData) {
+export function getBrandColors(name, flat?: boolean) {
+    const palette = {
+        primary: generateSemanticShades(name)
+    };
+    return flat? flattenObject(palette) : palette;
+}
+
+export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated', formData: ImportFormData) {
+
+    let params = {
+        ...formData
+    }
 
     GlobalNeutrals = generateNeutrals({
         hue: params.hue,
@@ -44,26 +56,29 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     });
 
     const semanticAccents: SemanticAccentColors = {
-        primary: params.primary,
         info: params.info,
         success: params.success,
         warning: params.warning,
         danger: params.danger,
     };
-    
 
-    const lightAccentTokens = generateSystemAccentPalette('light', params);
-    const darkAccentTokens = generateSystemAccentPalette('dark', params);
+    let lightAccentTokens = generateSystemAccentPalette('light', params);
+    let darkAccentTokens = generateSystemAccentPalette('dark', params);
+
+
     const lightSemanticTokens = generateSemanticPalette(semanticAccents, lightAccentTokens);
     const darkSemanticTokens = generateSemanticPalette(semanticAccents, darkAccentTokens);
 
+
     const lightCommonTokens = {
+        ...getBrandColors(params.primary),
         accent: lightAccentTokens,
         ...paletteLightCommon,
         ...lightSemanticTokens,
     }
 
     const darkCommonTokens = {
+        ...getBrandColors(params.primary),
         accent: darkAccentTokens,
         ...paletteDarkCommon,
         ...darkSemanticTokens

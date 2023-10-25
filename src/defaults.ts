@@ -48,7 +48,6 @@ export const systemAccentList = [
     "brown",
     "green",
     "teal",
-    "cyan",
     "blue",
     "indigo",
     "violet",
@@ -62,7 +61,6 @@ export const defaultAccentHUEs = {
     "brown": 33,
     "green": 150,
     "teal": 180,
-    "cyan": 200,
     "blue": 210,
     "indigo": 240,
     "violet": 260,
@@ -76,17 +74,19 @@ export const defaultSettings: ImportFormData = {
     hue: 190,
     saturation: 0.2,
     distance: 0.02,
+    preferedPrimaryColor: 'accent',
+    customPrimaryColor: '',
     primary: 'blue',
     info: 'cyan',
     success: 'green',
     warning: 'amber',
     danger: 'red',
+    custom: 0,
     red: 4,
     amber: 25,
     brown: 33,
     green: 150,
     teal: 180,
-    cyan: 200,
     blue: 210,
     indigo: 240,
     violet: 260,
@@ -96,7 +96,7 @@ export const defaultSettings: ImportFormData = {
     typeScale: 'minorThird',
     createStyles: true,
     accentSaturation: 0.9,
-    accentMaxLuminance: 0.60,
+    accentMaxLuminance: 0.45,
     accentMidLuminance: 0.18,
     accentMinLuminance: 0.10,
     radii: 'base',
@@ -105,7 +105,6 @@ export const defaultSettings: ImportFormData = {
 }
 
 export interface SemanticAccentColors {
-    primary: string;
     info: string;
     success: string;
     warning: string;
@@ -113,8 +112,7 @@ export interface SemanticAccentColors {
 }
 
 export const defaultSemanticAccents: SemanticAccentColors = {
-    primary: 'blue',
-    info: 'cyan',
+    info: 'teal',
     success: 'green',
     warning: 'amber',
     danger: 'red'

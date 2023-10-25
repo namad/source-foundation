@@ -1,12 +1,23 @@
-
-
-function delayAsync(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-}
+import { delayAsync } from "./utils/delay-async";
 
 export async function processComponents() {
     figma.skipInvisibleInstanceChildren = true;
-    let pageComponents = figma.currentPage.findAllWithCriteria({types: ['COMPONENT']});
+    let pageComponents: ComponentNode[] = [];
+
+    debugger;
+
+    if (figma.currentPage.selection.length) {
+        figma.currentPage.selection.forEach((node: any) => {
+            if (node.findAllWithCriteria) {
+                const components = node.findAllWithCriteria({types: ['COMPONENT']});
+                pageComponents = pageComponents.concat(components);
+            }
+        })
+    }
+    else {
+        pageComponents = figma.currentPage.findAllWithCriteria({types: ['COMPONENT']});
+    }
+
     const size = pageComponents.length;
     let count = 0;
 

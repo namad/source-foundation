@@ -16,6 +16,8 @@ import { debounce } from "../utils/debounce";
 import { ImportFormData, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import";
 import { getPresets } from "../presets";
 
+import chroma from 'chroma-js';
+
 /*
     UI INITIALIZATION
 */
@@ -43,6 +45,42 @@ const observer = new IntersectionObserver((entries) => {
 });
 
 observer.observe(sentinal);
+
+document.querySelector('#setCustomBrandColor').addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    const el = document.querySelector('dialog input[name=customPrimaryColor') as HTMLFormElement;
+    const value = el.value;
+
+    let data = getFormData(form);
+
+    debugger;
+
+
+    const customPrimaryValue = value.replace('#', '');
+
+    if (customPrimaryValue.length) {
+        const customPrimaryColor = chroma(`#${customPrimaryValue}`);
+        const customAccentLuminanceMid = customPrimaryColor.luminance();
+        const customAccentHUE = customPrimaryColor.get('hsl.h');
+        
+        const updatedData = {
+            primary: 'custom',
+            custom: customAccentHUE,
+            accentMinLuminance: customAccentLuminanceMid * 0.55,
+            accentMidLuminance: customAccentLuminanceMid,
+            accentMaxLuminance: Math.max(1, customAccentLuminanceMid * 3.33),
+        }
+
+        loadSettings(form, {
+            ...getFormData(form),
+            ...updatedData
+        });
+    }
+
+    return false
+})
 
 document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -99,6 +137,18 @@ document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
             }
         }, "*");
 
+    });
+});
+
+document.querySelectorAll('[data-radio-toggle]').forEach((el: HTMLFormElement) => {
+    el.addEventListener('input', (e) => {
+        const name = el.name;
+        document.querySelectorAll(`input[type=radio][name=${name}]`).forEach((radiobutton: HTMLFormElement) => {
+            const containerId = radiobutton.dataset.radioToggle;
+            const isChecked = radiobutton.checked;
+            const container = document.getElementById(containerId) as HTMLDivElement;
+            container.style.display = isChecked ? '' : 'none';
+        });
     });
 });
 
@@ -194,7 +244,8 @@ luminanceSliderVals.forEach((element, index) => {
     });
 });
 
-form.addEventListener("input", debounce(() => {
+form.addEventListener("input", debounce((e) => {
+    console.log(e.target.name);
     generatePreview(form, sliders);
 }, 1));
 

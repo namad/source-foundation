@@ -1,7 +1,32 @@
-export function findFigmaVariableByName(name): Variable {
-    const figmaVariables = figma.variables.getLocalVariables();
-    const matches = figmaVariables.filter(vairable => vairable.name === name);
-    return figmaVariables.find(vairable => vairable.name === name);
+function findVariableInCollection(variableName: string, collectionName: string): Variable {
+    const figmaCollections = figma.variables.getLocalVariableCollections();
+    const collection = figmaCollections.find(collection => collection.name === collectionName);
+
+    let figmaVirable: Variable;
+
+    if (collection) {
+        collection.variableIds.forEach(id => {
+            const figmaVariableInColleciton = figma.variables.getVariableById(id)
+            const match = figmaVariableInColleciton.name === variableName;
+
+            if (match) {
+                figmaVirable = figmaVariableInColleciton;
+                return true;
+            }
+            return  false;
+        });
+    }
+
+    return figmaVirable;
+}
+export function findFigmaVariableByName(variableName: string, collectionName?: string): Variable {
+    if (collectionName) {
+        return findVariableInCollection(variableName, collectionName);
+    }
+    else {
+        const figmaVariables = figma.variables.getLocalVariables();
+        return figmaVariables.find(vairable => vairable.name === variableName);
+    }
 }
 
 export function getFigmaCollection(name) {
@@ -18,44 +43,49 @@ export function getFigmaCollection(name) {
     return {collection, isNew};
 }
 
+export function resolveVariableType(typeName): VariableResolvedDataType {
+    switch (typeName) {
+        case 'color': return 'COLOR';
+        case 'boolean': return 'BOOLEAN';
+        case 'number': return 'FLOAT';
+        default: return 'STRING';
+    }
+}
+
 export function setFigmaVariable(
         collection: VariableCollection,
         modeId: string,
         type: VariableResolvedDataType,
-        name: string,
-        value,
+        variableName: string,
+        value = null,
         scopes = [],
         description: string = null
     ): Variable {
 
-    let figmaVariable: Variable;
+    let figmaVariable = findFigmaVariableByName(variableName, collection.name);
 
-    let figmaVariableId = collection.variableIds.find(id => {
-        let figmaVariable = figma.variables.getVariableById(id)
-        return figmaVariable.name === name;
-    });
-
-    if (figmaVariableId) {
-        figmaVariable = figma.variables.getVariableById(figmaVariableId);
-    }
-    else {
-        figmaVariable = figma.variables.createVariable(name, collection.id, type);
+    if (!figmaVariable) {
+        try {
+            figmaVariable = figma.variables.createVariable(variableName, collection.id, type);
+        }
+        catch (e) {
+            debugger;
+        }
     }
 
-    console.log(`{type: ${type}}`);
-    console.log(`{var type: ${figmaVariable.resolvedType}}`);
-
-    if(type != figmaVariable.resolvedType) {
+    if (type != figmaVariable.resolvedType) {
         debugger;
     }
 
-    figmaVariable.setValueForMode(modeId, value);
+    if (value) {
+        figmaVariable.setValueForMode(modeId, value);
+    }
 
-    if(scopes.length) {
+    if (scopes.length) {
         figmaVariable.scopes = scopes
     }
 
-    if(description != null) {
+    if (description != null) {
         figmaVariable.description = description;
     }
 

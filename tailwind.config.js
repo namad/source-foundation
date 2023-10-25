@@ -5,10 +5,6 @@ module.exports = {
         './dist/*.html',
         './src/**/*.{ts, html, css}',
     ],
-    purge: [
-        './dist/*.html',
-        './src/**/*.{ts, html, css}',
-    ],
     theme: {
         extend: {
             flex: {
@@ -194,12 +190,6 @@ module.exports = {
             "accent-teal-300": "var(--accent-teal-300)",
             "accent-teal-200": "var(--accent-teal-200)",
             "accent-teal-100": "var(--accent-teal-100)",
-            "accent-cyan-600": "var(--accent-cyan-600)",
-            "accent-cyan-500": "var(--accent-cyan-500)",
-            "accent-cyan-400": "var(--accent-cyan-400)",
-            "accent-cyan-300": "var(--accent-cyan-300)",
-            "accent-cyan-200": "var(--accent-cyan-200)",
-            "accent-cyan-100": "var(--accent-cyan-100)",
             "accent-blue-600": "var(--accent-blue-600)",
             "accent-blue-500": "var(--accent-blue-500)",
             "accent-blue-400": "var(--accent-blue-400)",
