@@ -1,16 +1,8 @@
+import { EffectToken } from "../effect-tokens";
 import { DesignToken } from "../main";
 import { convertToFigmaColor } from "./figma-colors";
 import { parseReferenceGlobal, findVariableByReferences } from "./token-references";
 
-
-interface EffectToken {
-    "color": string;
-    "type": string;
-    "x": string;
-    "y": string;
-    "blur": string;
-    "spread": string;
-}
 
 /*
     This method reads shadow color values directly from Figma Variables
@@ -74,11 +66,11 @@ function convertEffectStyleToFigma(value: {
         type: "DROP_SHADOW",
         color: value.color,
         offset: {
-            x: parseInt(value.x),
-            y: parseInt(value.y)
+            x: parseFloat(value.x),
+            y: parseFloat(value.y)
         },
-        radius: parseInt(value.blur),
-        spread: parseInt(value.spread),
+        radius: parseFloat(value.blur),
+        spread: parseFloat(value.spread),
         visible: true,
         blendMode: "NORMAL",
         showShadowBehindNode: parseBoolean(value.showShadowBehindNode)

@@ -22,6 +22,7 @@ import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from
 import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { delayAsync } from './utils/delay-async';
+import { updateElevationComponents } from './utils/update-elevation-components';
 
 console.clear();
 
@@ -228,12 +229,16 @@ function importAllTokens(params: ImportFormData) {
     };
     importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
 
-    // import effects for default theme which is light one
-    importEffectStyles(effects.elevation);
+    importEffects();
 
     figma.notify("✅ Figma variables has been imported");
 }
 
+function importEffects() {
+    // import effects for default theme which is light one
+    importEffectStyles(effects.elevation);
+    updateElevationComponents(effects.getElevationTokens());
+}
 function importColorTheme(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
     const brandColors = getBrandColors(params.primary);
