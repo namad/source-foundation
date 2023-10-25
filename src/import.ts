@@ -28,7 +28,6 @@ export interface ImportFormData {
     success: string;
     warning: string;
     danger: string;
-    custom: number;
     red: number;
     amber: number;
     brown: number;
