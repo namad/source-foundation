@@ -120,7 +120,7 @@
     position: absolute;
     display: none;
     min-width: 200%;
-    padding: var(--sy-sm) var(--sx-sm);
+    padding: var(--spacing-secondary-sm) var(--spacing-primary-sm);
     background: var(--fill-contrast-100);
     border: 1px solid var(--alt-base-500);
     color: var(--text-contrast-600);

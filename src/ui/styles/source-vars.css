@@ -178,32 +178,32 @@
 }
 
 :root {
-	--sy-xl5: 68px;
-	--sx-xl5: 72px;
-	--sy-xl4: 56px;
-	--sx-xl3: 48px;
-	--sy-xl2: 36px;
-	--sx-xl2: 40px;
-	--sy-xl: 28px;
-	--sx-xl4: 60px;
-	--sx-xl: 32px;
-	--sy-lg: 24px;
-	--sx-lg: 28px;
-	--sy-md: 20px;
-	--sx-md: 24px;
-	--sy-base: 16px;
-	--sx-base: 20px;
-	--sx-sm: 16px;
-	--sy-xs: 8px;
-	--sx-xs: 12px;
-	--sy-xs2: 6px;
-	--sx-xs2: 8px;
-	--sy-xs3: 4px;
-	--sy-sm: 12px;
-	--sy-xl3: 44px;
-	--sx-xs3: 6px;
-	--sy-xs4: 2px;
-	--sx-xs4: 4px;
+	--spacing-secondary-xl5: 68px;
+	--spacing-primary-xl5: 72px;
+	--spacing-secondary-xl4: 56px;
+	--spacing-primary-xl3: 48px;
+	--spacing-secondary-xl2: 36px;
+	--spacing-primary-xl2: 40px;
+	--spacing-secondary-xl: 28px;
+	--spacing-primary-xl4: 60px;
+	--spacing-primary-xl: 32px;
+	--spacing-secondary-lg: 24px;
+	--spacing-primary-lg: 28px;
+	--spacing-secondary-md: 20px;
+	--spacing-primary-md: 24px;
+	--spacing-secondary-base: 16px;
+	--spacing-primary-base: 20px;
+	--spacing-primary-sm: 16px;
+	--spacing-secondary-xs: 8px;
+	--spacing-primary-xs: 12px;
+	--spacing-secondary-xs2: 6px;
+	--spacing-primary-xs2: 8px;
+	--spacing-secondary-xs3: 4px;
+	--spacing-secondary-sm: 12px;
+	--spacing-secondary-xl3: 44px;
+	--spacing-primary-xs3: 6px;
+	--spacing-secondary-xs4: 2px;
+	--spacing-primary-xs4: 4px;
 }
 
 :root {

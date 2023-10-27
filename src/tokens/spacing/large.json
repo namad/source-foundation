@@ -1,5 +1,5 @@
 {
-    "sx": {
+    "spacing/primary": {
         "xs4": {
             "$value": "4",
             "$type": "number",
@@ -100,7 +100,7 @@
             ]
         }
     },
-    "sy": {
+    "spacing/secondary": {
         "xs4": {
             "$value": "2",
             "$type": "number",

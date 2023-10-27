@@ -4,7 +4,7 @@
 
 :root {
     --spacing: 0.5rem 1rem;
-    --slider-thumb-size: calc(var(--line-height-md) + var(--sy-xs));
+    --slider-thumb-size: calc(var(--line-height-md) + var(--spacing-secondary-xs));
     --slider-track-size: calc(var(--slider-thumb-size) / 4);
     --slider-margin: var(--slider-thumb-size);
     --scrollbar-width: 8px;
@@ -59,8 +59,8 @@ a:hover {
 .card {
     background-color: var(--fill-base-100);
     border-radius: var(--radii-md);
-    padding: var(--sy-md) var(--sx-md);
-    gap: var(--sy-base);
+    padding: var(--spacing-secondary-md) var(--spacing-primary-md);
+    gap: var(--spacing-secondary-base);
 
     @apply flex flex-col;
 }
@@ -69,12 +69,12 @@ a:hover {
     position: sticky;
     top: 0;
     z-index: 10;
-    padding-top: var(--sx-xs2);
+    padding-top: var(--spacing-primary-xs2);
     background-image: linear-gradient(180deg, var(--fill-base-300) 70%, transparent)
 }
 
 .sentinal {
-    height: var(--sx-xs2);
+    height: var(--spacing-primary-xs2);
     position: absolute;
     top: 0;
     left: 0;
@@ -98,17 +98,17 @@ form {
 form .container {
     flex: 1;
     overflow: auto;
-    gap: var(--sx-xs2);
+    gap: var(--spacing-primary-xs2);
 }
 
 form .container .card {
-    margin: 0 var(--sx-xs2);
+    margin: 0 var(--spacing-primary-xs2);
 }
 
 button {
     appearance: none;
     border-radius: var(--radii-base);
-    padding: var(--sy-xs) var(--sx-sm);
+    padding: var(--spacing-secondary-xs) var(--spacing-primary-sm);
     color: var(--text-base-action);
 }
 
@@ -129,7 +129,7 @@ button.primary:hover {
 input,
 select,
 textarea {
-    padding: var(--sy-xs) var(--sx-sm);
+    padding: var(--spacing-secondary-xs) var(--spacing-primary-sm);
     border-radius: var(--radii-base);
     background-color: var(--fill-base-100);
     color: var(--text-base-600);
@@ -147,8 +147,8 @@ textarea {
 
 .custom-select .icon-chevron-down {
     position: absolute;
-    right: var(--sx-xs);
-    top: var(--sy-xs);
+    right: var(--spacing-primary-xs);
+    top: var(--spacing-secondary-xs);
     pointer-events: none;
     color: var(--text-base-action);
 }
@@ -193,8 +193,8 @@ input[type=radio]:checked {
     flex-flow: row;
     align-items: center;
     justify-content: center;
-    gap: var(--sx-xs2);
-    padding: var(--sy-xs) var(--sx-sm);
+    gap: var(--spacing-primary-xs2);
+    padding: var(--spacing-secondary-xs) var(--spacing-primary-sm);
     min-height: var(--line-height-base);
     min-width: var(--line-height-base);
     border-radius: var(--radii-base);
@@ -331,7 +331,7 @@ fieldset {
 }
 
 #luminanceSlider {
-    margin: var(--sy-sm) 0;
+    margin: var(--spacing-secondary-sm) 0;
 }
 
 .sliders label {
@@ -425,7 +425,7 @@ fieldset {
 main {
     display: flex;
     flex-direction: column;
-    gap: var(--sy-base);
+    gap: var(--spacing-secondary-base);
     height: 100%;
 }
 
@@ -489,7 +489,7 @@ hr {
 a[data-expander] {
     display: inline-flex;
     flex-flow: row;
-    gap: var(--sx-xs2);
+    gap: var(--spacing-primary-xs2);
     transition: transform 150ms ease-in-out;
 }
 
@@ -556,7 +556,7 @@ a[data-expanded=yes]::after {
 
 .action-list li {
     display: block;
-    padding: var(--sy-xs3) 0;
+    padding: var(--spacing-secondary-xs3) 0;
     border-bottom: 1px solid var(--stroke-base-100);
 }
 
@@ -566,12 +566,12 @@ a[data-expanded=yes]::after {
 
 .action-list li a {
     border-radius: var(--radii-base);
-    margin: 0 calc(var(--sx-sm) * -1);
+    margin: 0 calc(var(--spacing-primary-sm) * -1);
     color: var(--text-base-600);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: var(--sy-sm) var(--sx-sm);
+    padding: var(--spacing-secondary-sm) var(--spacing-primary-sm);
 }
 
 .action-list li a:hover {
