@@ -11,9 +11,9 @@ import * as effects from './effect-tokens';
 
 import { sortSizeTokens } from './utils/sort-sizes';
 import { importTextStyles } from './utils/figma-text-styles';
-import { renderAccents } from "./color-tokens/render-accents";
-import { generateGlobalAccentPalette } from './color-tokens/accent-palette-generator';
-import { generateNeutrals, renderNeutrals } from './color-tokens/neutrals-palette-generator';
+import { renderAccents } from "./color-generators/render-accents";
+import { generateGlobalAccentPalette } from './color-generators/accent-palette-generator';
+import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
@@ -241,12 +241,10 @@ function importEffects() {
 }
 function importColorTheme(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
-    const brandColors = getBrandColors(params.primary);
 
     globalTokens = {
         ...getGlobalNeutrals(),
         ...getComponentColors(),
-        ...brandColors,
         ...themeColors
     };
 

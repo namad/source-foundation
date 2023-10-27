@@ -25,7 +25,7 @@ interface SystemAccentList {
     pink: ColorShadesScale;
 }
 
-interface ColorShadesScale {
+export interface ColorShadesScale {
     [key: string]: DesignToken;
 }
 
@@ -39,32 +39,32 @@ export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShad
             "100": {
                 "$value": "rgba({200}, 0.10)",
                 "$type": "color",
-                "description": `${colorName}.200, 10%`
+                "description": `Subtle semitransparent accent`
             },
             "200": {
                 "$value": "rgba({200}, 0.20)",
                 "$type": "color",
-                "description": `${colorName}.200, 20%`
+                "description": `Light semitransparent accent`
             },
             "300": {
                 "$value": "{300}",
                 "$type": "color",
-                "description": `${colorName}.300`
+                "description": `Non textual elements`
             },
             "400": {
                 "$value": "{400}",
                 "$type": "color",
-                "description": `${colorName}.400`
+                "description": `Base background color`
             },
             "500": {
                 "$value": "{500}",
                 "$type": "color",
-                "description": `${colorName}.500`
+                "description": `Text on light surface`
             },
             "600": {
                 "$value": "{100}",
                 "$type": "color",
-                "description": `${colorName}.100`
+                "description": `Text on dark surface`
             }
         }
     }
@@ -74,32 +74,32 @@ export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShad
             "100": {
                 "$value": "rgba({200}, 0.20)",
                 "$type": "color",
-                "description": `${colorName}.200, 20%`
+                "description": `Subtle semitransparent accent`
             },
             "200": {
                 "$value": "rgba({200}, 0.40)",
                 "$type": "color",
-                "description": `${colorName}.200, 40%`
+                "description": `Light semitransparent accent`
             },
             "300": {
                 "$value": "{300}",
                 "$type": "color",
-                "description": `${colorName}.300`
+                "description": `Non textual elements`
             },
             "400": {
                 "$value": "{400}",
                 "$type": "color",
-                "description": `${colorName}.400`
+                "description": `Base background color`
             },
             "500": {
                 "$value": "{100}",
                 "$type": "color",
-                "description": `${colorName}.100`
+                "description": `Text on light surface`
             },
             "600": {
                 "$value": "{100}",
                 "$type": "color",
-                "description": `${colorName}.100`
+                "description": `Text on dark surface`
             }
         }
     }

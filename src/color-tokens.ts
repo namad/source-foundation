@@ -16,8 +16,8 @@ import paletteDarkBase3 from './tokens/colors/system/dark-base-3.json';
 import paletteDarkBase4 from './tokens/colors/system/dark-base-4.json';
 
 import { flattenObject } from './utils/flatten-object';
-import { generateSystemAccentPalette, getGlobalAccent, getShadesTemplate } from './color-tokens/accent-palette-generator';
-import { generateNeutrals } from './color-tokens/neutrals-palette-generator';
+import { ColorShadesScale, generateSystemAccentPalette, getGlobalAccent, getShadesTemplate } from './color-generators/accent-palette-generator';
+import { generateNeutrals } from './color-generators/neutrals-palette-generator';
 import { ImportFormData } from './import';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';
 import chroma from "chroma-js";
@@ -36,9 +36,9 @@ export function getComponentColors() {
     return flattenObject(componentTokens);
 }
 
-export function getBrandColors(name, flat?: boolean) {
+export function getBrandColors(name, accentShades, flat?: boolean) {
     const palette = {
-        primary: generateSemanticShades(name)
+        primary: generateSemanticShades(name, accentShades)
     };
     return flat? flattenObject(palette) : palette;
 }
@@ -56,6 +56,7 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     });
 
     const semanticAccents: SemanticAccentColors = {
+        primary: params.primary,
         info: params.info,
         success: params.success,
         warning: params.warning,
@@ -69,16 +70,13 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     const lightSemanticTokens = generateSemanticPalette(semanticAccents, lightAccentTokens);
     const darkSemanticTokens = generateSemanticPalette(semanticAccents, darkAccentTokens);
 
-
     const lightCommonTokens = {
-        ...getBrandColors(params.primary),
         accent: lightAccentTokens,
         ...paletteLightCommon,
         ...lightSemanticTokens,
     }
 
     const darkCommonTokens = {
-        ...getBrandColors(params.primary),
         accent: darkAccentTokens,
         ...paletteDarkCommon,
         ...darkSemanticTokens
@@ -131,13 +129,14 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     }
 }
 
-function generateSemanticShades(aliasName) {
-    let output = {};
+function generateSemanticShades(aliasName, accentShades): ColorShadesScale {
+    let output: ColorShadesScale = {};
 
     for (var a = 1, b = 7; a < b; a++) {
         output[`${a}00`] = {
             "$value": `{accent.${aliasName}.${a}00}`,
-            "$type": "color"
+            "$type": "color",
+            "description": accentShades[`${a}00`].description
         }
     }
 
@@ -147,7 +146,7 @@ function generateSemanticShades(aliasName) {
 function generateSemanticPalette(accents: SemanticAccentColors, palette) {
     let result = {};
     Object.entries(accents).forEach(([name, alias]) => {
-        result[name] = generateSemanticShades(alias);
+        result[name] = generateSemanticShades(alias, palette[alias]);
     });
 
     return result;

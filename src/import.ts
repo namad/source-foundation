@@ -4,11 +4,11 @@ import * as typescale from "./typescale-tokens";
 import * as spacing from "./spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle, toTitleCase } from "./utils/text-to-title-case";
-import { getGlobalAccent, getShadesTemplate } from "./color-tokens/accent-palette-generator";
+import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
 import { roundTwoDigits } from "./utils/round-two-digits";
 import { getBrandColors, getGlobalNeutrals, getThemeColors } from "./color-tokens";
 import { convertToFigmaColor, parseColor } from "./utils/figma-colors";
-import { outputHSL } from "./color-tokens/swatches-generator";
+import { outputHSL } from "./color-generators/swatches-generator";
 import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
 import { findTokenReferences } from "./utils/token-references";
@@ -21,8 +21,6 @@ export interface ImportFormData {
     hue: number;
     saturation: number;
     distance: number;
-    preferedPrimaryColor: 'accent' | 'custom';
-    customPrimaryColor: string;
     primary: string;
     info: string;
     success: string;
@@ -181,7 +179,7 @@ export function generateMiniPreview(masterData: ImportFormData) {
         label.innerHTML = getPresetContentTemplate(index);
         presetsListElement.appendChild(label);
 
-        generateCSSVars({...themeColors, ...getBrandColors(data.primary)}, label);
+        generateCSSVars({...themeColors}, label);
         updateValuesDisplay(data, label);
     })
 }
@@ -211,9 +209,8 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     })
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
-    const branColors = getBrandColors(data.primary);
 
-    generateCSSVars({ ...themeColors, ...globalAccent, ...branColors });
+    generateCSSVars({ ...themeColors, ...globalAccent });
 
     generateAccentsPreview(themeColors, data);
 

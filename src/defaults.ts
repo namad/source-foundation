@@ -74,10 +74,8 @@ export const defaultSettings: ImportFormData = {
     hue: 190,
     saturation: 0.2,
     distance: 0.02,
-    preferedPrimaryColor: 'accent',
-    customPrimaryColor: '',
     primary: 'blue',
-    info: 'cyan',
+    info: 'teal',
     success: 'green',
     warning: 'amber',
     danger: 'red',
@@ -86,7 +84,7 @@ export const defaultSettings: ImportFormData = {
     amber: 25,
     brown: 33,
     green: 150,
-    teal: 180,
+    teal: 185,
     blue: 210,
     indigo: 240,
     violet: 260,
@@ -105,6 +103,7 @@ export const defaultSettings: ImportFormData = {
 }
 
 export interface SemanticAccentColors {
+    primary: string;
     info: string;
     success: string;
     warning: string;
@@ -112,6 +111,7 @@ export interface SemanticAccentColors {
 }
 
 export const defaultSemanticAccents: SemanticAccentColors = {
+    primary: 'blue',
     info: 'teal',
     success: 'green',
     warning: 'amber',
