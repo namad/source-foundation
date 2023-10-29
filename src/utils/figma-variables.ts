@@ -58,7 +58,7 @@ export function setFigmaVariable(
         type: VariableResolvedDataType,
         variableName: string,
         value = null,
-        scopes = [],
+        scopes: VariableScope[] = ['ALL_SCOPES'],
         description: string = null
     ): Variable {
 
@@ -81,9 +81,7 @@ export function setFigmaVariable(
         figmaVariable.setValueForMode(modeId, value);
     }
 
-    if (scopes.length) {
-        figmaVariable.scopes = scopes
-    }
+    figmaVariable.scopes = scopes;
 
     if (description != null) {
         figmaVariable.description = description;

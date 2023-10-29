@@ -3,6 +3,8 @@ import { getBrandColors, getComponentColors, getGlobalNeutrals, getThemeColors }
 import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 import { sortColorTokens } from './utils/sort-palette';
 
+import chroma from 'chroma-js';
+
 import * as spacing from './spacing-tokens';
 import * as radii from './radii-tokens';
 import * as typescale from './typescale-tokens';
@@ -12,7 +14,7 @@ import * as effects from './effect-tokens';
 import { sortSizeTokens } from './utils/sort-sizes';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-generators/render-accents";
-import { generateGlobalAccentPalette } from './color-generators/accent-palette-generator';
+import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
@@ -23,6 +25,8 @@ import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { delayAsync } from './utils/delay-async';
 import { updateElevationComponents } from './utils/update-elevation-components';
+import { flattenObject } from './utils/flatten-object';
+import { roundTwoDigits } from './utils/round-two-digits';
 
 console.clear();
 
@@ -65,6 +69,15 @@ const collectionNames = new Map<string, string>([
         figma.closePlugin();
     }
 
+    if (figma.command == "setPlayground") {
+        const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
+        figma.root.setPluginData('SDSPlayground', isPlayground ? '' : 'true');
+
+        figma.notify(`${isPlayground ? '❎' : '✅'} Playground is ${isPlayground ? 'disabled' : 'enabled'}`);
+
+        figma.closePlugin();
+    }
+
     if (figma.command == "fixLayers") {
         await processComponents();
         figma.closePlugin();
@@ -84,7 +97,7 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     if (eventData.type === "IMPORT") {
         initiateImport(params);
         importAllTokens(params);
-    } 
+    }
     else if (eventData.type === "EXPORT") {
         // exportToJSON(eventData.format);
     }
@@ -100,15 +113,15 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     }
     else if (eventData.type === "RENDER_NEUTRALS") {
         const neutralTokens = generateNeutrals(params);
-        const step = params.distance * 100;
-        let filteredTokens = {};
+        // const step = params.distance * 100;
+        // let filteredTokens = {};
 
-        Object.entries(neutralTokens).forEach(([name, value], index) => {
-            if (index % step == 0) {
-                filteredTokens[name] = value;
-            }
-        });
-        renderNeutrals(filteredTokens, `Global Neutrals ${eventData.params.distance * 100}% Distance`);
+        // Object.entries(neutralTokens).forEach(([name, value], index) => {
+        //     if (index % step == 0) {
+        //         filteredTokens[name] = value;
+        //     }
+        // });
+        renderNeutrals(neutralTokens, `Global Neutrals`);
     }
     else if (eventData.type === "LOADED") {
         try {
@@ -131,7 +144,7 @@ function initiateImport(params: ImportFormData) {
         sortFn: sortColorTokens
     });
 
-   getCollectionAndPrepareTokens({
+    getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: getThemeColors('lightBase', params),
@@ -151,14 +164,14 @@ function initiateImport(params: ImportFormData) {
         data: spacing[params.spacing],
         sortFn: sortSizeTokens,
     });
-    
+
     getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('radii'),
         modeName: toTitleCase(params.radii),
         data: radii[params.radii],
         sortFn: sortSizeTokens,
     });
-    
+
     getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('iconScale'),
         modeName: toTitleCase("base"),
@@ -167,9 +180,88 @@ function initiateImport(params: ImportFormData) {
     });
 }
 
+function generateVariablesForPlayground(data: ImportFormData, isPlayground = false) {
+    debugger;
+
+    if (isPlayground === false) {
+        return
+    };
+
+    const contrastRatios = {};
+
+    const primaryColorHUE = data.primary;
+    const shades = getGlobalAccent(
+        data[primaryColorHUE],
+        data.accentSaturation,
+        data.accentMinLuminance,
+        data.accentMidLuminance,
+        data.accentMaxLuminance
+    );
+
+    Object.entries(shades).forEach(([name, token]) => {
+        token.scopes = [];
+
+        let chromaColor = chroma(token.$value);
+        const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1 - data.distance * 2]), chromaColor));
+        const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
+
+        contrastRatios[`_accent_${name}_vs_light`] = {
+            "$value": contrast1.toString(),
+            "$type": "string",
+            "scopes": []
+        }
+        contrastRatios[`_accent_${name}_vs_dark`] = {
+            "$value": contrast2.toString(),
+            "$type": "string",
+            "scopes": []
+        }
+    });
+
+    importVariables({
+        collectionName: "_Playground",
+        modeName: "Default",
+        data: {
+            ...flattenObject({ '_global-accent': shades }),
+            ...contrastRatios,
+            '_primary-color-hue': {
+                "$value": data[data.primary].toString(),
+                "$type": "string",
+                "scopes": []
+            },            
+            '_primary-color': {
+                "$value": data.primary,
+                "$type": "string",
+                "scopes": []
+            },
+            '_success-color': {
+                "$value": data.success,
+                "$type": "string",
+                "scopes": []
+            },
+            '_warning-color': {
+                "$value": data.warning,
+                "$type": "string",
+                "scopes": []
+            },
+            '_danger-color': {
+                "$value": data.danger,
+                "$type": "string",
+                "scopes": []
+            },
+            '_info-color': {
+                "$value": data.info,
+                "$type": "string",
+                "scopes": []
+            },
+        }
+    });
+}
 
 function importAllTokens(params: ImportFormData) {
     figma.root.setPluginData('SDS', JSON.stringify(params));
+
+    const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
+    generateVariablesForPlayground(params, isPlayground);
 
     importColorTheme(params);
 
@@ -250,7 +342,7 @@ function importColorTheme(params: ImportFormData) {
 
     console.log('Importing Light Base', themeColors);
 
-   importVariables({
+    importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: themeColors,
@@ -283,7 +375,7 @@ function importColorTheme(params: ImportFormData) {
 function importSizeTokens(data: {
     type: "spacing" | "radii" | "typeScale" | "iconScale";
     defaultMode: string;
-    params: ImportFormData, 
+    params: ImportFormData,
     collectionName: string,
     defaultOrder: string[],
     tokens: any;
@@ -317,12 +409,12 @@ function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -
     if (isNew || isSingleMode) {
         modeId = collection.modes[0].modeId;
         collection.renameMode(modeId, modeName);
-    } 
+    }
     else {
         const mode = modeIndex < 0 ? collection.modes.find(mode => mode.name === modeName) : collection.modes[modeIndex];
         if (!mode) {
             modeId = collection.addMode(modeName)
-        } 
+        }
         else {
             modeId = mode.modeId;
             collection.renameMode(modeId, modeName);
@@ -377,7 +469,7 @@ function importVariables({ collectionName, modeName, modeIndex = -1, data, sortF
         });
     });
 
-    
+
 }
 
 export interface DesignTokensRaw {
@@ -412,7 +504,7 @@ function processToken({
             let colorValue = parseColor(token, globalTokens);
             let referenceVar = findVariableByReferences(token.$value.trim());
 
-            if(referenceVar) {
+            if (referenceVar) {
                 colorValue = {
                     type: "VARIABLE_ALIAS",
                     id: referenceVar.id,
@@ -425,7 +517,7 @@ function processToken({
                 "COLOR",
                 variableName,
                 colorValue,
-                [],
+                token.scopes || ['ALL_SCOPES'],
                 token.description || null
             );
         }

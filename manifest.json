@@ -8,6 +8,7 @@
   ],
   "menu": [
     { "command": "import", "name": "Make Tokens" },
+    { "command": "setPlayground", "name": "Set Playground" },
     { "command": "fixLayers", "name": "Fix Layers" }
   ],
   "ui": { "import": "dist/import.html", "export": "dist/export.html" }   

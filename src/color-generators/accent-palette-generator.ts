@@ -17,7 +17,6 @@ interface SystemAccentList {
     brown: ColorShadesScale;
     green: ColorShadesScale;
     teal: ColorShadesScale;
-    cyan: ColorShadesScale;
     blue: ColorShadesScale;
     indigo: ColorShadesScale;
     violet: ColorShadesScale;
@@ -37,12 +36,12 @@ export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShad
     if (theme == 'light') {
         return {
             "100": {
-                "$value": "rgba({200}, 0.10)",
+                "$value": "rgba({200}, 0.125)",
                 "$type": "color",
                 "description": `Subtle semitransparent accent`
             },
             "200": {
-                "$value": "rgba({200}, 0.20)",
+                "$value": "rgba({200}, 0.25)",
                 "$type": "color",
                 "description": `Light semitransparent accent`
             },
@@ -131,7 +130,6 @@ export function generateSystemAccentPalette(theme, params: ImportFormData): Syst
         brown: getShadesTemplate(theme, 'brown'),
         green: getShadesTemplate(theme, 'green'),
         teal: getShadesTemplate(theme, 'teal'),
-        cyan: getShadesTemplate(theme, 'cyan'),
         blue: getShadesTemplate(theme, 'blue'),
         indigo: getShadesTemplate(theme, 'indigo'),
         violet: getShadesTemplate(theme, 'violet'),

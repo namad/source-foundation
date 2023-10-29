@@ -244,7 +244,7 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                 chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl');
             }
 
-            const contrast1 = roundTwoDigits(chroma.contrast("white", chromaColor));
+            const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1 - data.distance * 2]), chromaColor));
             const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
             const hsl = outputHSL(chromaColor).join(", ");
             let contrastWarn = 'none';
