@@ -2,21 +2,23 @@
     <dialog class="simple" id="typographyScaleModal">
         <div class="modal-container">
             <div class="header">
-                <h3 class="font-bold text-lg">Typography</h3>
+                <h3 class="text-lg font-bold">Typography</h3>
                 <button class="close" value="cancel">
                     <span class="icon icon-close"></span>
                 </button>
             </div>
             <div class="body">
-                <p class="text-sm opacity-75">Select base font size / line height to generate text styles.
-                    Please note, the plugin will create set of styles based on base selected typography scale.
+                <p class="color-text-base-500">
+                    Select base font size / line height to generate text styles. Please
+                    note, the plugin will create set of styles based on base selected
+                    typography scale.
                 </p>
                 <div data-type="typography"
                     data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
                 </div>
-                <div class="flex flex-row mt-2">
+                <div class="mt-2 flex flex-row">
                     <div class="w-1/5">Scale</div>
-                    <div class="flex flex-col gap-3 flex-1" style="margin: 0 var(--slider-margin) 0;">
+                    <div class="flex flex-1 flex-col gap-3" style="margin: 0 var(--slider-margin) 0">
                         <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorThird"
                                 checked /><span>Major Third (1.250)</span></label>
                         <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird"
@@ -32,13 +34,13 @@
     <dialog class="simple" id="spacingScaleModal">
         <div class="modal-container">
             <div class="header">
-                <h3 class="font-bold text-lg">Spacing</h3>
+                <h3 class="text-lg font-bold">Spacing</h3>
                 <button class="close" value="cancel">
                     <span class="icon icon-close"></span>
                 </button>
             </div>
             <div class="body">
-                <p class="text-sm opacity-75">Select base spacing</p>
+                <p class="color-text-base-500">Select base spacing</p>
                 <div data-type="spacing"
                     data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
                 </div>
@@ -49,13 +51,13 @@
     <dialog class="simple" id="radiiScaleModal">
         <div class="modal-container">
             <div class="header">
-                <h3 class="font-bold text-lg">Radii Scale</h3>
+                <h3 class="text-lg font-bold">Radii Scale</h3>
                 <button class="close" value="cancel">
                     <span class="icon icon-close"></span>
                 </button>
             </div>
             <div class="body">
-                <p class="text-sm opacity-75">Select base border radius</p>
+                <p class="color-text-base-500">Select base border radius</p>
                 <div data-type="radii"
                     data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
                 </div>
@@ -63,14 +65,12 @@
         </div>
     </dialog>
 
-
-
-    <div class="flex flex-col container relative">
+    <div class="container relative flex flex-col">
         <div class="sentinal"></div>
         <div class="card-sticky">
             <div class="card color-preview">
-                <div class="flex flex-row justify-between items-center">
-                    <h4 class="font-bold text-md">Palette Preview</h4>
+                <div class="flex flex-row items-center justify-between">
+                    <h4 class="text-md font-bold">Palette Preview</h4>
                     <div class="radio-segment">
                         <label>
                             <input type="radio" name="theme" value="light" />
@@ -90,13 +90,13 @@
         </div>
 
         <div class="card">
-            <div class="flex flex-row justify-between items-baseline">
-                <h3 class="font-bold text-lg">Neutral Colours </h3>
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Neutral Colours</h3>
                 <a href="#" data-command="RENDER_NEUTRALS" title="Get palette colours as Figma frames">Extract Neutrals
                     Palette</a>
             </div>
             <div class="flex flex-col gap-y-xs">
-                <div class="flex flex-row gap-0 rounded overflow-hidden">
+                <div class="flex flex-row gap-0 overflow-hidden rounded">
                     <div class="color-box flex-1 bg-fill-base-200"></div>
                     <div class="color-box flex-1 bg-fill-base-300"></div>
                     <div class="color-box flex-1 bg-fill-base-400"></div>
@@ -105,16 +105,19 @@
                 </div>
             </div>
 
-            <h4 class="font-bold text-md mt-3">Color Pattern</h4>
-            <p class="text-sm opacity-75">Difference in lightness percent between two adjacent colours. 
-                Wider steps outcome greater contrast overall
+            <h4 class="mt-3 text-md font-bold">Color Pattern</h4>
+            <p class="color-text-base-500">
+                Difference in lightness percent between two adjacent colours. Wider
+                steps outcome greater contrast overall
             </p>
             <div
                 data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
 
-            <h4 class="font-bold text-md mt-3">Parameters</h4>
-            <p class="text-sm opacity-75">Set the tone with hue slider and select intensity using saturation slider
+            <h4 class="mt-3 text-md font-bold">Parameters</h4>
+            <p class="color-text-base-500">
+                Set the tone with hue slider and select intensity using saturation
+                slider
             </p>
 
             <div data-neutrals
@@ -126,10 +129,10 @@
         </div>
 
         <div class="card">
-            <h3 class="font-bold text-lg">Semantic Colours </h3>
+            <h3 class="text-lg font-bold">Semantic Colours</h3>
 
-            <div class="flex flex-row gap-0 rounded overflow-hidden">
-                <div class="color-box flex-1 bg-primary-400 rounded mr-xs">
+            <div class="flex flex-row gap-0 overflow-hidden rounded">
+                <div class="color-box mr-xs flex-1 rounded bg-primary-400">
                     <div>Primary</div>
                     <div class="token-value opacity-70" data-value="primary"></div>
                 </div>
@@ -151,16 +154,15 @@
                 </div>
             </div>
 
-            <div class="flex flex-row justify-between items-baseline">
-                <h4 class="font-bold text-md mt-3">Brand Colour</h4>
-                <a href="#" data-modal="customBrandColor" title="Set custom brand colour" class="hidden">Custom Brand Colour</a>
+            <div class="flex flex-row items-baseline justify-between">
+                <h4 class="mt-3 text-md font-bold">Brand Colour</h4>
+                <a href="#" data-modal="customBrandColor" title="Set custom brand colour" class="hidden">Custom Brand
+                    Colour</a>
             </div>
 
-            
-
-            <p class="text-sm opacity-75">
-                Select you primary / brand colour. You can either pick one from existing accents 
-                or specify you custom value
+            <p class="color-text-base-500">
+                Select you primary / brand colour. You can either pick one from existing
+                accents or specify you custom value
             </p>
 
             <!--div class="flex flex-row mt-2">
@@ -179,18 +181,18 @@
                 <div class="w-1/5">Primary</div>
                 <label class="flex flex-row flex-1 gap-3 items-center" style="margin: 0 var(--slider-margin) 0;">
                     <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7" name="customPrimaryColor" />
-                    <span class="text-sm text-text-base-500">HEX Value</span>
+                    <span class="text-sm color-text-base-500">HEX Value</span>
                 </label>
             </div-->
 
             <div data-type="semantics" id="brandAccent"
                 data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
 
-            <h4 class="font-bold text-md mt-3">Semantic Colours</h4>
+            <h4 class="mt-3 text-md font-bold">Semantic Colours</h4>
             <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">
                 <span>Finetune other semantics like success and danger</span>
             </a>
-            <div data-expander data-role="container" class="flex flex-col gap-y-sm" style="display: none;">
+            <div data-expander data-role="container" class="flex flex-col gap-y-sm" style="display: none">
                 <div data-type="semantics"
                     data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
                 <div data-type="semantics"
@@ -204,131 +206,134 @@
                 </div>
             </div>
         </div>
-
         <div class="card" id="accentColors">
-            <div class="flex flex-row justify-between items-baseline">
-                <h3 class="font-bold text-lg">Accent Colours</h3>
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Accent Colours</h3>
                 <a href="#" data-command="RENDER_ACCENTS" title="Get palette colours as Figma frames">Extract Accent
                     Palette</a>
             </div>
 
-            <p class="text-sm opacity-75">Finetune each accent colour with custom hue value.
-                Lightness of the base colour to be set to fit into WCAG2 Level AA. Global saturation controls are below
+            <p class="color-text-base-500">
+                Finetune each accent colour with custom hue value. Lightness of the base
+                colour to be set to fit into WCAG2 Level AA. Global saturation controls
+                are below
             </p>
 
             <input type="hidden" name="custom" id="customHUE" />
 
             <div class="flex flex-col gap-y-sm" id="accentColorsSliders"></div>
-            <hr>
+            <hr />
             <div
                 data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "syncValue": true}'>
             </div>
-            <p class="text-sm opacity-75">Global saturation level for all accent colours. Please note, saturation
-                is 15%
-                lower in dark mode</p>
-            <hr>
+            <p class="color-text-base-500">
+                Global saturation level for all accent colours. Please note, saturation
+                is 15% lower in dark mode
+            </p>
+            <hr />
 
             <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Advanced Settings</a>
 
-            <div data-expander data-role="container" class="flex flex-col gap-y-base" style="display: none;">
-
-                <h4 class="font-bold text-md">Global accent preview</h4>
-                <p class="text-sm opacity-75">
-                    Global accents are generated programatically based on accent luminancy slider values below
+            <div data-expander data-role="container" class="flex flex-col gap-y-base" style="display: none">
+                <h4 class="text-md font-bold">Global accent preview</h4>
+                <p class="color-text-base-500">
+                    Global accents are generated programatically based on accent luminancy
+                    slider values below
                 </p>
-                <div class="flex flex-row gap-0 mb-y-base">
-                    <div class="color-box flex-1 global-accent-600 rounded-l">
+                <div class="mb-y-base flex flex-row gap-0">
+                    <div class="color-box global-accent-600 flex-1 rounded-l">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">600</span>
                         </div>
                     </div>
-                    <div class="color-box flex-1 global-accent-500">
+                    <div class="color-box global-accent-500 flex-1">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">500</span>
                         </div>
                     </div>
-                    <div class="color-box flex-1 global-accent-400">
+                    <div class="color-box global-accent-400 flex-1">
                         <div class="flex flex-row gap-1 font-bold">
                             <span class="text-size-xs">400</span>
                         </div>
                     </div>
-                    <div class="color-box flex-1 global-accent-300">
+                    <div class="color-box global-accent-300 flex-1">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">300</span>
                         </div>
                     </div>
-                    <div class="color-box flex-1 global-accent-200">
+                    <div class="color-box global-accent-200 flex-1">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">200</span>
                         </div>
                     </div>
-                    <div class="color-box flex-1 global-accent-100 rounded-r">
+                    <div class="color-box global-accent-100 flex-1 rounded-r">
                         <div class="flex flex-row gap-1">
                             <span class="text-size-xs opacity-70">100</span>
                         </div>
                     </div>
                 </div>
 
-                <h4 class="font-bold text-md mt-3">System accent preview</h4>
-                <p class="text-sm opacity-75">
-                    System accents are dervided from global ones. Hover over to see additional details
+                <h4 class="mt-3 text-md font-bold">System accent preview</h4>
+                <p class="color-text-base-500">
+                    System accents are dervided from global ones. Hover over to see
+                    additional details
                 </p>
-                <div class="flex flex-row gap-0 mb-y-base">
+                <div class="mb-y-base flex flex-row gap-0">
                     <!-- <div class="color-box flex-1 primary-700"><div><span class="token-value"></span> : 1</div></div> -->
-                    <div class="color-box flex-1 primary-600 rounded-l">
+                    <div class="color-box primary-600 flex-1 rounded-l">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value text-text-base-600">600</span>
+                            <span class="token-value color-text-base-600">600</span>
                         </div>
                         <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Text on dark surface</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-500" id="colorPreview0">
+                    <div class="color-box primary-500 flex-1" id="colorPreview0">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value text-text-contrast-600">500</span>
+                            <span class="token-value color-text-contrast-600">500</span>
                         </div>
                         <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Text on light surface</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-400" id="colorPreview1">
+                    <div class="color-box primary-400 flex-1" id="colorPreview1">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value text-text-contrast-600">400</span>
+                            <span class="token-value color-text-contrast-600">400</span>
                         </div>
                         <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Background color</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-300" id="colorPreview2">
+                    <div class="color-box primary-300 flex-1" id="colorPreview2">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value text-text-contrast-600">300</span>
+                            <span class="token-value color-text-contrast-600">300</span>
                         </div>
                         <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Non-textual element</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-200" style="color: var(--text-base-action)">
+                    <div class="color-box primary-200 flex-1 color-text-base-action">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value text-text-base-600">200</span>
+                            <span class="token-value color-text-base-600">200</span>
                         </div>
                         <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Light background</div>
                             <div class="toolip-body"></div>
                         </div>
                     </div>
-                    <div class="color-box flex-1 primary-100 rounded-r" style="color: var(--text-base-action)">
+                    <div class="color-box primary-100 flex-1 rounded-r color-text-base-action">
                         <div class="flex flex-row gap-1">
-                            <span class="token-value text-text-base-600">100</span>
+                            <span class="token-value color-text-base-600">100</span>
                         </div>
                         <div class="tooltip flex flex-col gap-y-sm">
                             <div class="row">Subtle background</div>
                             <div class="toolip-body">
                                 <div class="row flex flex-row justify-between gap-3">
-                                    <span class="text-size-xs opacity-70 whitespace-nowrap">alias</span>
+                                    <span class="text-size-xs whitespace-nowrap opacity-70">alias</span>
                                     <span class="text-size-xs whitespace-nowrap">{resolvedTo}</span>
                                 </div>
                             </div>
@@ -336,143 +341,141 @@
                     </div>
                 </div>
 
-                <h4 class="font-bold text-md mt-3">Accent color luminance</h4>
+                <h4 class="mt-3 text-md font-bold">Accent color luminance</h4>
                 <div class="sliders flex flex-row items-center">
                     <div id="luminanceSlider" class="slider"></div>
                     <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
                     <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
                     <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
                 </div>
-                <p class="text-sm opacity-75">
-                    First value affects the darkest shade.
-                    Second value sets base shade.
+                <p class="color-text-base-500">
+                    First value affects the darkest shade. Second value sets base shade.
                     Third value defines the lightest shade.
                 </p>
-
             </div>
         </div>
 
         <div class="card" id="ui-scale">
-            <h3 class="font-bold text-lg">UI Scale</h3>
-            <p class="text-sm opacity-75">
+            <h3 class="text-lg font-bold">UI Scale</h3>
+            <p class="color-text-base-500">
                 Select default mode for spacing, radii and typography
             </p>
             <ul class="action-list">
                 <li>
                     <a href="#" data-modal="spacingScaleModal">
                         <span>Spacing</span><span data-value="spacing" data-type="spacing"
-                            class="icon gap-2 icon-chevron-right"></span>
+                            class="icon icon-chevron-right gap-2"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="radiiScaleModal">
                         <span>Radii</span><span data-value="radii" data-type="radii"
-                            class="icon gap-2 icon-chevron-right"></span>
+                            class="icon icon-chevron-right gap-2"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="typographyScaleModal">
                         <span>Typography</span>
-                        <span class="flex flex-row gap-2 icon icon-chevron-right">
+                        <span class="icon icon-chevron-right flex flex-row gap-2">
                             <span data-value="typeScale" data-type="typography"></span> /
                             <span data-value="baseFontSize" data-type="typography"></span>
                         </span>
                     </a>
                 </li>
             </ul>
-            <hr class="mb-y-base">
-            <label class="checkbox flex flex-row gap-x-sm align-top items-start">
+            <hr class="mb-y-base" />
+            <label class="checkbox flex flex-row items-start gap-x-sm align-top">
                 <input type="checkbox" name="singleCollection" value="true" />
                 <span class="flex flex-col gap-y-xs">
-                    <span>Import Spacing, Radii and Type Scale tokens as sinlge collection</span>
-                    <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection.
-                        Otherwise different token types to get their own collections.</span>
+                    <span>Import Spacing, Radii and Type Scale tokens as sinlge
+                        collection</span>
+                    <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise
+                        different token types to get their own collections.</span>
                 </span>
             </label>
         </div>
-
-
     </div>
 
-    <div class="py-sm px-base text-right flex flex-row justify-between">
+    <div class="flex flex-row justify-between px-base py-sm text-right">
         <div class="flex gap-2">
-            <button id="exportButton" data-modal="exportModal" title="Export settings"><span
-                    class="icon icon-upload"></span></button>
-            <button id="importButton" data-modal="importModal" title="Import settings"><span
-                    class="icon icon-download"></span></button>
+            <button id="exportButton" data-modal="exportModal" title="Export settings">
+                <span class="icon icon-upload"></span>
+            </button>
+            <button id="importButton" data-modal="importModal" title="Import settings">
+                <span class="icon icon-download"></span>
+            </button>
         </div>
         <div class="flex gap-2">
             <button id="resetDefaultsButton">Reset</button>
-            <button id="importVariablesButton" class="primary">Generate Variables</button>
+            <button id="importVariablesButton" class="primary">
+                Generate Variables
+            </button>
         </div>
     </div>
-
 </form>
 
-    <dialog class="simple" id="customBrandColor">
-        <div class="modal-container">
-            <div class="header">
-                <h3 class="font-bold text-lg">Custom Brand Colour</h3>
-                <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
-                </button>
-            </div>
-            <div class="body">
-                <p class="text-sm opacity-75">Set custom brand colour</p>
-
-                <div class="flex flex-col gap-secondary-sm">
-                    <div class="flex flex-row items-center gap-3">
-                        <span class="w-1/5">Color</span>
-                        <div class="custom-select flex-1">
-                            <select>
-                                <option value="red">red</option>
-                                <option value="amber">amber</option>
-                                <option value="brown">brown</option>
-                                <option value="green">green</option>
-                                <option value="teal">teal</option>
-                                <option value="cyan">cyan</option>
-                                <option value="blue">blue</option>
-                                <option value="indigo">indigo</option>
-                                <option value="violet">violet</option>
-                                <option value="purple">purple</option>
-                                <option value="pink">pink</option>
-                            </select>
-                            <span class="icon icon-chevron-down"></span>
-                        </div>
-                    </div>
-                    <label class="flex flex-row items-center gap-3">
-                        <span class="w-1/5">Value</span>
-                        <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7" name="customPrimaryColor" />
-                        <button id="setCustomBrandColor" class="primary flex-1">Set Brand Colour</button>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </dialog>
-    
-<dialog id="importModal">
-
+<dialog class="simple" id="customBrandColor">
     <div class="modal-container">
         <div class="header">
-            <h3 class="font-bold text-md">Import Theme</h3>
+            <h3 class="text-lg font-bold">Custom Brand Colour</h3>
             <button class="close" value="cancel">
                 <span class="icon icon-close"></span>
             </button>
         </div>
         <div class="body">
-            <p class="text-sm opacity-75">
-                Paste preset code to the textarea below
-            </p>
+            <p class="color-text-base-500">Set custom brand colour</p>
+
+            <div class="flex flex-col gap-secondary-sm">
+                <div class="flex flex-row items-center gap-3">
+                    <span class="w-1/5">Color</span>
+                    <div class="custom-select flex-1">
+                        <select>
+                            <option value="red">red</option>
+                            <option value="amber">amber</option>
+                            <option value="brown">brown</option>
+                            <option value="green">green</option>
+                            <option value="teal">teal</option>
+                            <option value="cyan">cyan</option>
+                            <option value="blue">blue</option>
+                            <option value="indigo">indigo</option>
+                            <option value="violet">violet</option>
+                            <option value="purple">purple</option>
+                            <option value="pink">pink</option>
+                        </select>
+                        <span class="icon icon-chevron-down"></span>
+                    </div>
+                </div>
+                <label class="flex flex-row items-center gap-3">
+                    <span class="w-1/5">Value</span>
+                    <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7"
+                        name="customPrimaryColor" />
+                    <button id="setCustomBrandColor" class="primary flex-1">
+                        Set Brand Colour
+                    </button>
+                </label>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="importModal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Import Theme</h3>
+            <button class="close" value="cancel">
+                <span class="icon icon-close"></span>
+            </button>
+        </div>
+        <div class="body">
+            <p class="color-text-base-500">Paste preset code to the textarea below</p>
             <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" name="importCodeTextarea"
                 id="importCodeTextarea" class="h-80 resize-none"></textarea>
-            <p class="text-sm opacity-75">
-                Or select one of the presets
-            </p>
+            <p class="color-text-base-500">Or select one of the presets</p>
         </div>
         <div class="presets-list mb-secondary-base" id="presetsList">
             <label class="theme-item">
                 <input type="radio" name="theme" value="2" />
-                <span class="text-base hidden">Theme 1</span>
+                <span class="hidden text-base">Theme 1</span>
                 <span class="swatches neutral-swatches">
                     <span class="swatch swatch-1"></span>
                     <span class="swatch swatch-2"></span>
@@ -490,17 +493,17 @@
                 <span class="info">
                     <span class="icon icon-info"></span>
                     <span>
-                        <span class="text-text-base-500">Spacing</span>
-                        <span class="text-text-base-600" data-value="spacing"></span>
+                        <span class="color-text-base-500">Spacing</span>
+                        <span class="color-text-base-600" data-value="spacing"></span>
                     </span>
                     <span>
-                        <span class="text-text-base-500">Radii</span>
-                        <span class="text-text-base-600" data-value="radii"></span>
+                        <span class="color-text-base-500">Radii</span>
+                        <span class="color-text-base-600" data-value="radii"></span>
                     </span>
                     <span>
-                        <span class="text-text-base-500">Typography</span>
-                        <span class="text-text-base-600" data-value="typeScale"></span> / 
-                        <span class="text-text-base-600" data-value="baseFontSize"></span>
+                        <span class="color-text-base-500">Typography</span>
+                        <span class="color-text-base-600" data-value="typeScale"></span> /
+                        <span class="color-text-base-600" data-value="baseFontSize"></span>
                     </span>
                 </span>
             </label>
@@ -509,28 +512,30 @@
                 <input type="radio" name="theme" value="2" />
                 <span class="col-info">
                     <span class="info-item">
-                        <span class="icon icon-16 icon-colors" title="Color pattern"></span>                
+                        <span class="icon icon-16 icon-colors" title="Color pattern"></span>
                         <span>
-                            <span class="text-text-base-600" data-value="distance">2</span><span class="text-text-base-400">%</span>
+                            <span class="color-text-base-600" data-value="distance">2</span><span
+                                class="color-text-base-400">%</span>
                         </span>
                     </span>
                     <span class="info-item">
                         <span class="icon icon-16 icon-typography" title="Typography"></span>
                         <span>
-                            <span class="text-text-base-600" data-value="typeScale">Minor Third</span> / 
-                            <span class="text-text-base-600" data-value="baseFontSize">Base</span>
+                            <span class="color-text-base-600" data-value="typeScale">Minor Third</span>
+                            /
+                            <span class="color-text-base-600" data-value="baseFontSize">Base</span>
                         </span>
                     </span>
                     <span class="flex flex-row gap-primary-base">
                         <span class="info-item">
-                            <span class="icon icon-16 icon-spacing" title="Spacing"></span>                
-                            <span class="text-text-base-600" data-value="spacing">Base</span>
+                            <span class="icon icon-16 icon-spacing" title="Spacing"></span>
+                            <span class="color-text-base-600" data-value="spacing">Base</span>
                         </span>
                         <span class="info-item">
                             <span class="icon icon-16 icon-radii" title="Radii"></span>
-                            <span class="text-text-base-600" data-value="radii">Base</span>
+                            <span class="color-text-base-600" data-value="radii">Base</span>
                         </span>
-                    </span>                
+                    </span>
                 </span>
                 <span class="col-swatches">
                     <span class="swatches">
@@ -557,20 +562,20 @@
 <dialog id="exportModal" class="modal">
     <div class="modal-container">
         <div class="header">
-            <h3 class="font-bold text-md">Export Theme</h3>
+            <h3 class="text-md font-bold">Export Theme</h3>
             <button class="close" value="cancel">
                 <span class="icon icon-close"></span>
             </button>
         </div>
         <div class="body max-h-">
-            <p class="text-sm opacity-75">
-                Copy the code below to save a preset
-            </p>
+            <p class="color-text-base-500">Copy the code below to save a preset</p>
             <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea"
                 readonly class="h-80 resize-none"></textarea>
         </div>
         <div class="footer">
-            <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">Copy Code</button>
+            <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">
+                Copy Code
+            </button>
         </div>
     </div>
 </dialog>
