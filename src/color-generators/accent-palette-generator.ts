@@ -1,15 +1,8 @@
 import chroma from "chroma-js";
-import { roundTwoDigits } from "../utils/round-two-digits";
-import { findTokenReferences, parseReferenceGlobal } from "../utils/token-references";
+import { parseReferenceGlobal } from "../utils/token-references";
 import { ImportFormData } from "../import";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
 import { DesignToken } from "../main";
-
-interface DesignTokenValue {
-    $value: string;
-    $type: 'color' | 'number' | 'string' | 'boolean';
-    private?: boolean;
-}
 
 interface SystemAccentList {
     red: ColorShadesScale;
@@ -103,12 +96,11 @@ export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShad
         }
     }
 
-    debugger;
     throw new Error(`Theme: ${theme} is invalid`);
 }
 
 function getColorParams(theme, params: ImportFormData) {
-    let colorParams ={
+    let colorParams = {
         saturation: params.accentSaturation, //0.9 is default value
         minLuminance: params.accentMinLuminance,
         midLuminance: params.accentMidLuminance,
@@ -151,7 +143,7 @@ export function generateGlobalAccentPalette(theme: string, params: ImportFormDat
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
         const hue = params[name];
-        accents[name] = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance/*, 0.9, 15 */);
+        accents[name] = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance);
     })
     return accents;
 }

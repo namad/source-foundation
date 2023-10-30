@@ -1,4 +1,4 @@
-import componentTokens from './tokens/colors/components/component-tokens-base.json';
+import componentTokens from './tokens/colors/components/component-tokens.json';
 import paletteLightCommon from './tokens/colors/system/light-common.json';
 
 import paletteLight2 from './tokens/colors/system/light-2.json';
