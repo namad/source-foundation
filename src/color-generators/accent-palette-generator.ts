@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import { parseReferenceGlobal } from "../utils/token-references";
-import { ImportFormData } from "../import";
+import { ImportFormData } from "../import-ui";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
 import { DesignToken } from "../main";
 

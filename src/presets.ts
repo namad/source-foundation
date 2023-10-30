@@ -6,7 +6,7 @@ import pink from './presets/pink.json';
 import green from './presets/green.json';
 import amber from './presets/amber.json';
 
-import { ImportFormData } from './import';
+import { ImportFormData } from './import-ui';
 
 
 export function getPresets(): ImportFormData[] {

@@ -13,7 +13,7 @@ import { toTitleCase } from "../utils/text-to-title-case";
 import { defaultAccentHUEs, defaultSettings, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
 
 import { debounce } from "../utils/debounce";
-import { ImportFormData, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import";
+import { ImportFormData, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import-ui";
 import { getPresets } from "../presets";
 
 import chroma from 'chroma-js';

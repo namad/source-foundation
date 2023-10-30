@@ -1,5 +1,5 @@
 import { convertFigmaColorToRgb, parseColor } from './utils/figma-colors';
-import { getBrandColors, getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
+import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
 import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 import { sortColorTokens } from './utils/sort-palette';
 
@@ -19,7 +19,7 @@ import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-pa
 import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
-import { ImportFormData } from './import';
+import { ImportFormData } from './import-ui';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
@@ -331,6 +331,7 @@ function importEffects() {
     importEffectStyles(effects.elevation);
     updateElevationComponents(effects.getElevationTokens());
 }
+
 function importColorTheme(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
 

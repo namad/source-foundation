@@ -1,4 +1,4 @@
-import { ImportFormData } from "./import"
+import { ImportFormData } from "./import-ui"
 
 export const radiiSizeName = [
     "compact",
