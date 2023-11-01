@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import { roundTwoDigits } from "../utils/round-two-digits";
-import { parseColor } from "../utils/figma-colors";
+import { parseColorToken } from "../utils/figma-colors";
 
 export function renderShades(parentNode, name, shades, colors) {
     let frame: FrameNode = figma.createFrame();
@@ -34,7 +34,7 @@ export function renderColor(parentNode, name, color, colors) {
 
     const {
         r, g, b, a
-    } = parseColor(color, colors);
+    } = parseColorToken(color, colors);
     const chromaColor = chroma.gl(r, g, b, a);
 
 

@@ -7,7 +7,7 @@ import { camelToTitle, toTitleCase } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
 import { roundTwoDigits } from "./utils/round-two-digits";
 import { getBrandColors, getGlobalNeutrals, getThemeColors } from "./color-tokens";
-import { convertToFigmaColor, parseColor } from "./utils/figma-colors";
+import { parseColorValue, parseColorToken } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
 import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
@@ -143,7 +143,7 @@ export function getFormData(form): ImportFormData {
     //         const customPrimaryColor = chroma(`#${customPrimaryValue}`);
     //         const customAccentLuminanceMid = customPrimaryColor.luminance();
     //         const customAccentHUE = customPrimaryColor.get('hsl.h');
-            
+
     //         data.primary = data.preferedPrimaryColor; // set to custom
 
     //         data.custom = customAccentHUE;
@@ -152,7 +152,7 @@ export function getFormData(form): ImportFormData {
     //         data.accentMaxLuminance = customAccentLuminanceMid * 3.33;
 
     //         loadSettings(form, data);
-            
+
     //         return null;
 
     //     }
@@ -170,7 +170,7 @@ export function generateMiniPreview(masterData: ImportFormData) {
     const presets = getPresets();
 
     presetsListElement.innerHTML = '';
-    
+
     presets.forEach((data, index) => {
         const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
 
@@ -179,7 +179,7 @@ export function generateMiniPreview(masterData: ImportFormData) {
         label.innerHTML = getPresetContentTemplate(index);
         presetsListElement.appendChild(label);
 
-        generateCSSVars({...themeColors}, label);
+        generateCSSVars({ ...themeColors }, label);
         updateValuesDisplay(data, label);
     })
 }
@@ -230,7 +230,7 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
         if (name.includes(data.primary)) {
 
             const index = name.split('/')[2];
-            const { rgb } = convertToFigmaColor(token['$value']);
+            const { rgb } = parseColorValue(token['$value']);
             let chromaColor = chroma(rgb);
 
             const systemToken = systemAccentShades[index]['$value'];
@@ -303,7 +303,7 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
         }
 
         if (type == 'color') {
-            const rgb = parseColor(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
+            const rgb = parseColorToken(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
             context.style.setProperty(varName, `${rgb}`);
         }
     })

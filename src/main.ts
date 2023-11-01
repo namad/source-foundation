@@ -1,4 +1,4 @@
-import { convertFigmaColorToRgb, parseColor } from './utils/figma-colors';
+import { convertFigmaColorToRgb, parseColorToken } from './utils/figma-colors';
 import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
 import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 import { sortColorTokens } from './utils/sort-palette';
@@ -227,7 +227,7 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
                 "$value": data[data.primary].toString(),
                 "$type": "string",
                 "scopes": []
-            },            
+            },
             '_primary-color': {
                 "$value": data.primary,
                 "$type": "string",
@@ -502,7 +502,7 @@ function processToken({
 
     if (token.$value !== undefined) {
         if (type === "color") {
-            let colorValue = parseColor(token, globalTokens);
+            let colorValue = parseColorToken(token, globalTokens);
             let referenceVar = findVariableByReferences(token.$value.trim());
 
             if (referenceVar) {

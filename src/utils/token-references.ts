@@ -5,7 +5,7 @@ const aliasRegex = /\{(.+?)(.+?)\}/g;
 export function findTokenReferences(tokenValue: string) {
     return tokenValue?.toString().match(aliasRegex)
 };
-function getReferenceName(reference: string) {
+export function getReferenceName(reference: string) {
     let name = reference.replace(/{/g, "");
     name = name.replace(/}/g, "");
     return name;

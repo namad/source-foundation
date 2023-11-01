@@ -1,6 +1,6 @@
 import { EffectToken } from "../effect-tokens";
 import { DesignToken } from "../main";
-import { convertToFigmaColor } from "./figma-colors";
+import { parseColorValue } from "./figma-colors";
 import { parseReferenceGlobal, findVariableByReferences } from "./token-references";
 
 

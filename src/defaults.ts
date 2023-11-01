@@ -1,5 +1,11 @@
 import { ImportFormData } from "./import-ui"
 
+export const themes = [
+    'lightBase',
+    'darkBase',
+    'darkElevated'
+]
+
 export const radiiSizeName = [
     "compact",
     "base",

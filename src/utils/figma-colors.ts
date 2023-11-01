@@ -27,7 +27,7 @@ export function convertFigmaColorToRgb(input: FigmaRGB, format?) {
 
     debugger;
 
-    switch(format) {
+    switch (format) {
         case 'hex': {
             return color.hex();
         }
@@ -47,19 +47,19 @@ interface HSLAdjustments {
     a?: number;
 }
 
-export function convertToFigmaColor(input, adjustments?: HSLAdjustments): { gl: RGBA, rgb: string } {
+export function parseColorValue(input, adjustments?: HSLAdjustments): { gl: RGBA, rgb: string, hsl: string, hex: string } {
     let color;
     try {
         if (input.startsWith('rgb')) {
             const rgbValues = input.replace(/^rgba?\(|\s+|\)$/g, '').split(',');
 
-            if(hexColorRegex.test(rgbValues[0])) {
+            if (hexColorRegex.test(rgbValues[0])) {
                 color = chroma(rgbValues[0]); // hexToFigmaRGB(rgbValues[0]);
                 const alpha = parseFloat(rgbValues[1]);
                 color = color.alpha(alpha);
             }
             else {
-                color = chroma(input);   
+                color = chroma(input);
             }
         }
         else {
@@ -71,38 +71,40 @@ export function convertToFigmaColor(input, adjustments?: HSLAdjustments): { gl: 
         debugger;
         return null;
     }
-  
-    if(adjustments) {
-        if(adjustments.h) {
+
+    if (adjustments) {
+        if (adjustments.h) {
             color = color.set('hsl.h', `${adjustments.h}`);
         }
-        if(adjustments.s) {
+        if (adjustments.s) {
             color = color.set('hsl.s', `${adjustments.s}`);
         }
-        if(adjustments.l) {
+        if (adjustments.l) {
             color = color.set('hsl.l', `${adjustments.l}`);
         }
-        if(adjustments.a) {
+        if (adjustments.a) {
             color = color.set('hsl.a', `${adjustments.a}`);
         }
     }
 
-    const [ r, g, b, a ] = color.gl(); 
+    const [r, g, b, a] = color.gl();
     return {
         gl: { r, g, b, a },
-        rgb: color.css() as string
+        rgb: color.css(),
+        hsl: color.css('hsl'),
+        hex: color.hex()
     };
 }
 
-export function parseColor(token: DesignToken, dictionary, output = 'gl') {
+export function parseColorToken(token: DesignToken, dictionary, output = 'gl') {
     let color = token.$value as string;
 
     color = parseReferenceGlobal(color.trim(), dictionary);
-    const result = convertToFigmaColor(color, token.adjustments);
+    const result = parseColorValue(color, token.adjustments);
 
-    if(result) {
+    if (result) {
         return result[output];
-    } 
+    }
     else {
         debugger;
         throw new Error("Invalid color format");

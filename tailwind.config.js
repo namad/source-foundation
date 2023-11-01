@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
     mode: 'jit',
     content: [
@@ -262,6 +263,19 @@ module.exports = {
             "round": "var(--radii-round)",
         },
     },
-    plugins: [],
+    plugins: [
+        plugin(function ({ matchUtilities, theme }) {
+            matchUtilities(
+                {
+                    color: (value) => ({
+                        color: value
+                    }),
+                },
+                { 
+                    values: theme('colors') 
+                }
+            )
+        })
+    ],
 }
 
