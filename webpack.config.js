@@ -108,7 +108,7 @@ module.exports = ((env, argv) => {
             output: {
                 publicPath: '/',
                 filename: 'index.js',
-                path: path.resolve(__dirname, 'bin'), // Compile into a folder called "lib"
+                path: path.resolve(__dirname, 'cli'), // Compile into a folder called "lib"
             },
 
             // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it

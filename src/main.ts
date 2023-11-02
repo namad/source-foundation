@@ -181,8 +181,6 @@ function initiateImport(params: ImportFormData) {
 }
 
 function generateVariablesForPlayground(data: ImportFormData, isPlayground = false) {
-    debugger;
-
     if (isPlayground === false) {
         return
     };

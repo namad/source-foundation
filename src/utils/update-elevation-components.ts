@@ -32,10 +32,16 @@ function processComponent(effects: EffectToken[], component: ComponentNode) {
     const shadowLayers = component.findChildren(node => {
         const name = node.name.toLocaleLowerCase();
         return name.startsWith('shadow');
-    });
+    }) as VectorNode [];
+
+    const maskLayer = component.findChild(node => {
+        return node.name.toLocaleLowerCase() === 'mask';
+    }) as BooleanOperationNode;
+
+    maskLayer.visible = false;
 
     effects.forEach((shadowSettings, index) => {
-        const shadowLayer = shadowLayers[index] as VectorNode;
+        const shadowLayer = shadowLayers[index];
 
         const x = parseFloat(shadowSettings.x);
         const y = parseFloat(shadowSettings.y);
@@ -58,5 +64,28 @@ function processComponent(effects: EffectToken[], component: ComponentNode) {
         shadowLayer.resize(width, height);
         shadowLayer.x = left;
         shadowLayer.y = top;
-    })
+    });
+
+    debugger;
+
+    const absoluteBoundingBox = component.absoluteBoundingBox;
+    const absoluteRenderBounds = component.absoluteRenderBounds;
+
+    const maskWidth = absoluteRenderBounds.width;
+    const maskHeight = absoluteRenderBounds.height;
+    const maskLeft = (absoluteRenderBounds.x - absoluteBoundingBox.x) ;
+    const maskTop = (absoluteRenderBounds.y - absoluteBoundingBox.y);
+
+    const innerLayer = maskLayer.findChild(node => node.name === 'inner') as VectorNode;
+    const outerLayer = maskLayer.findChild(node => node.name === 'outer') as VectorNode;
+
+    outerLayer.resize(maskWidth, maskHeight);
+    outerLayer.x = maskLeft;
+    outerLayer.y = maskTop;
+
+    innerLayer.resize(component.width, component.height);
+    innerLayer.x = 0;
+    innerLayer.y = 0;
+
+    maskLayer.visible = true;
 }
