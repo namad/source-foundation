@@ -1,19 +1,17 @@
-import { defaultAccentHUEs, defaultSettings, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
+import { defaultSettings, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
 import * as radii from "./radii-tokens";
 import * as typescale from "./typescale-tokens";
 import * as spacing from "./spacing-tokens";
 import chroma from 'chroma-js';
-import { camelToTitle, toTitleCase } from "./utils/text-to-title-case";
+import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
 import { roundTwoDigits } from "./utils/round-two-digits";
-import { getBrandColors, getGlobalNeutrals, getThemeColors } from "./color-tokens";
+import { getGlobalNeutrals, getThemeColors } from "./color-tokens";
 import { parseColorValue, parseColorToken } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
 import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
-import { findTokenReferences } from "./utils/token-references";
 import { getPresetContentTemplate, getPresets } from "./presets";
-import { debounce } from "./utils/debounce";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -21,12 +19,11 @@ export interface ImportFormData {
     hue: number;
     saturation: number;
     distance: number;
-    primary: string;
-    info: string;
-    success: string;
-    warning: string;
-    danger: string;
-    custom: number;
+    primary: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+    info: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+    success: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+    warning: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+    danger: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
     red: number;
     amber: number;
     brown: number;
@@ -37,15 +34,15 @@ export interface ImportFormData {
     violet: number;
     purple: number;
     pink: number;
-    baseFontSize: string;
-    typeScale: string;
+    baseFontSize: "compact" | "base" | "large";
+    typeScale: "majorThird" | "minorThird" | "majorSecond";
     createStyles: boolean;
     accentSaturation: number;
     accentMinLuminance: number;
     accentMidLuminance: number;
     accentMaxLuminance: number;
-    radii: string;
-    spacing: string;
+    radii: "compact" | "base" | "large";
+    spacing: "compact" | "base" | "large" | "touch";
     singleCollection: boolean;
 }
 

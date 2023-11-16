@@ -85,7 +85,6 @@ export const defaultSettings: ImportFormData = {
     success: 'green',
     warning: 'amber',
     danger: 'red',
-    custom: 0,
     red: 4,
     amber: 25,
     brown: 33,

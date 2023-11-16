@@ -1,13 +1,13 @@
 {
   "name": "source-foundation-cli",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Build json tokens / css variables  / tailwind config that supports source design system features",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "src-tokens": "index.js"
+    "source-css": "index.js"
   },
   "author": "Pavel Kiselev",
   "license": "MIT"

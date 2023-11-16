@@ -1,107 +1,105 @@
 {
     "spacing": {
-        "primary": {
-            "xs4": {
-                "$value": "4",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "xs3": {
-                "$value": "8",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "xs2": {
-                "$value": "12",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "xs": {
-                "$value": "16",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "sm": {
-                "$value": "20",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "base": {
-                "$value": "24",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "md": {
-                "$value": "28",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "lg": {
-                "$value": "36",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "xl": {
-                "$value": "44",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "xl2": {
-                "$value": "52",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            },
-            "xl3": {
-                "$value": "64",
-                "$type": "number",
-                "scopes": [
-                    "TEXT_CONTENT",
-                    "WIDTH_HEIGHT",
-                    "GAP"
-                ]
-            }
+        "xs4": {
+            "$value": "4",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
         },
-        "secondary": {
+        "xs3": {
+            "$value": "8",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "xs2": {
+            "$value": "12",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "xs": {
+            "$value": "16",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "sm": {
+            "$value": "20",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "base": {
+            "$value": "24",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "md": {
+            "$value": "28",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "lg": {
+            "$value": "36",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "xl": {
+            "$value": "44",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "xl2": {
+            "$value": "52",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "xl3": {
+            "$value": "64",
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT",
+                "WIDTH_HEIGHT",
+                "GAP"
+            ]
+        },
+        "minor": {
             "xs4": {
                 "$value": "2",
                 "$type": "number",

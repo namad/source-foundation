@@ -46,41 +46,40 @@ const observer = new IntersectionObserver((entries) => {
 
 observer.observe(sentinal);
 
-document.querySelector('#setCustomBrandColor').addEventListener('click', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
+// document.querySelector('#setCustomBrandColor').addEventListener('click', (e) => {
+//     e.stopPropagation();
+//     e.preventDefault();
 
-    const el = document.querySelector('dialog input[name=customPrimaryColor') as HTMLFormElement;
-    const value = el.value;
+//     const el = document.querySelector('dialog input[name=customPrimaryColor') as HTMLFormElement;
+//     const value = el.value;
 
-    let data = getFormData(form);
+//     let data = getFormData(form);
 
-    debugger;
+//     debugger;
 
 
-    const customPrimaryValue = value.replace('#', '');
+//     const customPrimaryValue = value.replace('#', '');
 
-    if (customPrimaryValue.length) {
-        const customPrimaryColor = chroma(`#${customPrimaryValue}`);
-        const customAccentLuminanceMid = customPrimaryColor.luminance();
-        const customAccentHUE = customPrimaryColor.get('hsl.h');
+//     if (customPrimaryValue.length) {
+//         const customPrimaryColor = chroma(`#${customPrimaryValue}`);
+//         const customAccentLuminanceMid = customPrimaryColor.luminance();
+//         const customAccentHUE = customPrimaryColor.get('hsl.h');
         
-        const updatedData = {
-            primary: 'custom',
-            custom: customAccentHUE,
-            accentMinLuminance: customAccentLuminanceMid * 0.55,
-            accentMidLuminance: customAccentLuminanceMid,
-            accentMaxLuminance: Math.max(1, customAccentLuminanceMid * 3.33),
-        }
+//         const updatedData = {
+//             primary: 'custom',
+//             accentMinLuminance: customAccentLuminanceMid * 0.55,
+//             accentMidLuminance: customAccentLuminanceMid,
+//             accentMaxLuminance: Math.max(1, customAccentLuminanceMid * 3.33),
+//         }
 
-        loadSettings(form, {
-            ...getFormData(form),
-            ...updatedData
-        });
-    }
+//         loadSettings(form, {
+//             ...getFormData(form),
+//             ...updatedData
+//         });
+//     }
 
-    return false
-})
+//     return false
+// })
 
 document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {

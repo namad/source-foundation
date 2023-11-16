@@ -17,7 +17,7 @@
             ]
         },
         "sm": {
-            "$value": "12",
+            "$value": "13",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",

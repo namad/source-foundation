@@ -16,12 +16,13 @@ import * as effects from '../effect-tokens';
 
 import fs from 'fs';
 import path from "path";
+import { EffectToken } from "../effect-tokens";
 
 function isAlias(value) {
     return value.toString().trim().charAt(0) === "{";
 }
 
-function makeFolder(filePath) {
+export function makeFolder(filePath) {
     var dirname = path.dirname(filePath);
     if (fs.existsSync(dirname)) {
         return true;
@@ -30,61 +31,67 @@ function makeFolder(filePath) {
     fs.mkdirSync(dirname);
 }
 
-let defaultOutputFolder = "./dist";
-let defaultOutputName = 'variables.css'
-let settings = defaultSettings as ImportFormData
-let output = process.argv.slice(2)[0] || `${defaultOutputFolder}/${defaultOutputName}`;
+const configName = 'source.config.json';
+const configFilePath = path.resolve(`./${configName}`);
+
+const defaultOutputFolder = "./dist";
+const defaultOutputName = 'variables.css';
+
+let settings = {};
+
+const { 
+    hue,
+    saturation,
+    distance,
+    primary,
+    info,
+    success,
+    warning,
+    danger,
+    red,
+    amber,
+    brown,
+    green,
+    teal,
+    blue,
+    indigo,
+    violet,
+    purple,
+    pink,
+    typeScale,
+    accentSaturation,
+    accentMaxLuminance,
+    accentMidLuminance,
+    accentMinLuminance,
+} = defaultSettings;
+
+let command = process.argv.slice(2)[0] || `${defaultOutputFolder}/${defaultOutputName}`;
 
 try {
-    let configFile = path.resolve(`./source.config.json`);
-    let configData = fs.readFileSync(configFile, 'utf8');
+    let configData = fs.readFileSync(configFilePath, 'utf8');
     settings = JSON.parse(configData) as ImportFormData;
 }
 catch (e) {
     console.warn('No config available, using default settings', defaultSettings);
 }
 
-/*
-console.log(themeColors);
-
-var stream = fs.createWriteStream(output);
-stream.once('open', function (fd) {
-    stream.write(":root {\n");
-
-    Object.entries(themeColors as DesignTokensRaw).forEach(([name, token]) => {
-        let value = token.$value;
-
-        if (typeof token.$value != 'string') return;
-
-        if (isAlias(token.$value)) {
-            const aliasName = getReferenceName(token.$value);
-            value = `var(--${aliasName.replace(/\./g, "-")})`;
-        }
-
-        else if (token.$value.startsWith('rgba(#')) {
-            value = convertToFigmaColor(token.$value, token.adjustments).hsl;
-        }
-        else {
-            value = parseColor(token, {}, 'hsl');
-        }
-
-        stream.write(`--${name.replace(/\//g, "-")}: ${value};\n`);
-    })
-
-    stream.write("}\n");
-    stream.end();
-});
-*/
-
-function writeChunk(stream, className, data, output) {
-
-    stream.write(`.${className} {\n`);
-
+export function writeCSSChunk(stream, append = '', data) {
+    stream.write(`${append} {\n`);
     data.forEach(({ name, value }) => {
         stream.write(`    --${name.replace(/\//g, "-")}: ${value};\n`);
     })
-
     stream.write("}\n");
+}
+
+export function writeJSONChunk(stream, data) {
+    stream.write(`{\n`);
+
+    let output = Object.entries(data).map(([key, value], i) => {
+        return `    "${key}": "${value}"`;
+    })
+
+    stream.write(output.join(',\n'));
+    stream.write("\n}\n");
 }
 
 function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated', settings: ImportFormData) {
@@ -113,58 +120,143 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     })
 }
 
-function writeRadiiVariables(stream, output) {
+function writeSizingVariables(stream) {
+    defaults.iconSizeName.forEach(size => {
+        const tokens = sizing[size] as DesignTokensRaw;
+        const data = Object.entries(tokens).map(([name, token]) => {
+            return { name, value: `${token.$value}px` };
+        })
+        writeCSSChunk(stream, `[data-icons=${size}], .icons-${size}`, data);
+    });
+}
+
+function writeRadiiVariables(stream) {
     defaults.radiiSizeName.forEach(size => {
         const tokens = radii[size] as DesignTokensRaw;
         const data = Object.entries(tokens).map(([name, token]) => {
             return { name, value: `${token.$value}px` };
         })
-        writeChunk(stream, `radii-${size}`, data, output);
+        writeCSSChunk(stream, `[data-radii=${size}], .radii-${size}`, data);
     });
 }
 
-function writeSpacingVariables(stream, output) {
+function writeSpacingVariables(stream) {
     defaults.spacingSizeName.forEach(size => {
         const tokens = spacing[size] as DesignTokensRaw;
         const data = Object.entries(tokens).map(([name, token]) => {
             return { name, value: `${token.$value}px` };
         })
-        writeChunk(stream, `spacing-${size}`, data, output);
+        writeCSSChunk(stream, `[data-spacing=${size}], .spacing-${size}`, data);
     });
 }
 
-function writeTypographyVariables(settings: ImportFormData, stream, output) {
+function writeTypographyVariables(typeScale: string, stream) {
     defaults.typographySizeName.forEach(size => {
-        const tokens = typescale.getTypograohyTokens(size, settings.typeScale) as DesignTokensRaw;
+        const tokens = typescale.getTypograohyTokens(size, typeScale) as DesignTokensRaw;
         const data = Object.entries(tokens).filter(([name, token]) => {
             return token.$type == 'number';
         }).map(([name, token]) => {
             return { name, value: `${token.$value}px` };
         })
 
-        writeChunk(stream, `typography-${size}`, data, output);
+        writeCSSChunk(stream, `[data-typography=${size}], .typography-${size}`, data);
     });
 }
 
-if (!path.extname(output)) {
-    console.warn('No output file specified, using default name instead', defaultOutputName)
-    output += `/${defaultOutputName}`;
+export function writeTheFileIntoDirectory(stream, dataFn) {
+    return new Promise((resolve, reject) => {
+        stream.on('open', dataFn).on('close', () => resolve(true));
+    });
 }
 
-makeFolder(output);
-var stream = fs.createWriteStream(output);
+function writeElevationVariables(stream) {
+    const tokens = effects.getElevationTokens();
+    
+    const data = Object.keys(tokens.elevation).map((name, index) => {
+        const variants = tokens.elevation[name];
+        const [ shade, token ] = Object.entries(variants)[0];
+        const settings = token['$value'] as EffectToken[];
 
-writeChunk(stream, 'theme-light', collectColorVariables('lightBase', settings), output);
-writeChunk(stream, 'theme-dark-base', collectColorVariables('darkBase', settings), output);
-writeChunk(stream, 'theme-dark-elevated', collectColorVariables('darkElevated', settings), output);
+        const cssString = settings.map((shadowSettings) => {
+            return `${shadowSettings.x}px ${shadowSettings.y}px ${shadowSettings.blur}px ${shadowSettings.spread}px var(--box-shadow-color)`
+        }).join(', ');
 
-writeRadiiVariables(stream, output);
-writeSpacingVariables(stream, output);
-writeTypographyVariables(settings, stream, output);
+        return { name: `elevation-${index}`, value: cssString}
+    });
 
-stream.close();
+    writeCSSChunk(stream, `.elevation`, data);
 
-console.log();
+    return data;
+}
 
-console.log('✅ Done!', output)
+(async() => {
+    const data = { 
+        hue,
+        saturation,
+        distance,
+        primary,
+        info,
+        success,
+        warning,
+        danger,
+        red,
+        amber,
+        brown,
+        green,
+        teal,
+        blue,
+        indigo,
+        violet,
+        purple,
+        pink,
+        typeScale,
+        accentSaturation,
+        accentMaxLuminance,
+        accentMidLuminance,
+        accentMinLuminance,
+    };
 
+    if (command === 'init') {
+        const isConfigThere = fs.existsSync(configFilePath);
+        if (isConfigThere != true) {
+            console.log('No config yet, working...');
+            let stream = fs.createWriteStream(`./${configName}`);
+
+            await writeTheFileIntoDirectory(stream, () => {
+                writeJSONChunk(stream, data);
+                stream.close()
+            })
+            process.exit();
+        }
+        else {
+            console.log('Config file already exist, cya!');
+            process.exit();
+        }
+    }
+    else {
+        let output = command;
+
+        if (!path.extname(output)) {
+            console.warn('No output file specified, using default name instead', defaultOutputName)
+            output += `/${defaultOutputName}`;
+        }
+
+        makeFolder(output);
+        const stream = fs.createWriteStream(output);
+
+        await writeTheFileIntoDirectory(stream, () => {
+            writeCSSChunk(stream, '[data-theme=light], .theme-light', collectColorVariables('lightBase', data as ImportFormData));
+            writeCSSChunk(stream, '[data-theme=dark-base], .theme-dark-base', collectColorVariables('darkBase', data as ImportFormData));
+            writeCSSChunk(stream, '[data-theme=dark-elevated], .theme-dark-elevated', collectColorVariables('darkElevated', data as ImportFormData));
+
+            writeRadiiVariables(stream);
+            writeSpacingVariables(stream);
+            writeElevationVariables(stream);
+            writeSizingVariables(stream);
+            writeTypographyVariables(typeScale, stream);
+
+            stream.close()
+        })
+        console.log('✅ Done!', output)    
+    }
+})();
