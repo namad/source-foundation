@@ -9,7 +9,9 @@
     "watch": "npx webpack --mode=development --target=web --watch",
     "make": "npx webpack --mode=development --target=web",
     "make-cli": "npx webpack --mode=production --target=node",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "pack-cli": "npm pack ./cli --pack-destination ~",
+    "pack-tw": "npm pack ./tw --pack-destination ~"
   },
   "author": "",
   "license": "",
