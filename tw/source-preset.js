@@ -241,9 +241,9 @@ module.exports = {
             "xl": ["var(--font-size-xl)", "var(--line-height-xl)"],
             "xl2": ["var(--font-size-xl2)", "var(--line-height-xl2)"],
             "xl3": ["var(--font-size-xl3)", "var(--line-height-xl3)"],
-            "xl5": ["var(--font-size-xl5)", "var(--line-height-xl4)"],
-            "xl6": ["var(--font-size-xl6)", "var(--line-height-xl5)"],
-            "xl4": ["var(--font-size-xl4)", "var(--line-height-xl6)"],
+            "xl4": ["var(--font-size-xl4)", "var(--line-height-xl4)"],
+            "xl5": ["var(--font-size-xl5)", "var(--line-height-xl5)"],
+            "xl6": ["var(--font-size-xl6)", "var(--line-height-xl6)"],
             "xl7": ["var(--font-size-xl7)", "var(--line-height-xl7)"],
         },
         lineHeight: {

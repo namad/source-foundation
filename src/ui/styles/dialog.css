@@ -32,24 +32,24 @@ dialog .modal-container {
     outline: 1px solid var(--alt-base-400);
     max-height: 95vh;
     animation: open-modal 250ms ease-in-out;
-    @apply shadow-2xl;
+    @apply shadow-6;
 }
 
 dialog .header {
-    padding: var(--spacing-secondary-md) var(--spacing-primary-md) 0;
+    padding: var(--spacing-minor-md) var(--spacing-md) 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 dialog .body {
-    padding: var(--spacing-secondary-lg) var(--spacing-primary-lg);
+    padding: var(--spacing-minor-lg) var(--spacing-lg);
     @apply flex flex-col gap-y-base;
     flex: 1;
 }
 
 dialog .footer {
-    padding: 0 var(--spacing-primary-lg) var(--spacing-secondary-lg);
+    padding: 0 var(--spacing-lg) var(--spacing-minor-lg);
     @apply flex flex-row justify-end;
 }
 
@@ -73,8 +73,8 @@ button.close:hover {
 }
 
 .presets-list {
-    @apply flex flex-col flex-1 gap-secondary-xs4 px-lg mb-secondary-lg overflow-auto overflow-y-visible;
-    padding-right: calc(var(--spacing-primary-lg) - var(--scrollbar-width));
+    @apply flex flex-col flex-1 gap-minor-xs4 px-lg mb-minor-lg overflow-auto overflow-y-visible;
+    padding-right: calc(var(--spacing-lg) - var(--scrollbar-width));
 }
 
 .theme-item {
@@ -110,14 +110,14 @@ dialog .body + .presets-list {
 }
 
 .theme-item .col-info {
-    @apply flex flex-col flex-1 justify-center px-base gap-secondary-xs3
+    @apply flex flex-col flex-1 justify-center px-base gap-minor-xs3
 }
 .theme-item .col-info .info-item {
-    @apply flex flex-row gap-primary-xs2 text-sm flex-nowrap whitespace-nowrap items-center;
+    @apply flex flex-row gap-xs2 text-sm flex-nowrap whitespace-nowrap items-center;
 }
 
 .theme-item .col-swatches {
-    @apply flex flex-col gap-primary-xs p-primary-xs flex-1
+    @apply flex flex-col gap-xs p-xs flex-1
 }
 
 .swatches {

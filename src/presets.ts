@@ -38,7 +38,7 @@ export function getPresetContentTemplate(index) {
                     <span class="text-text-base-600" data-value="baseFontSize">Base</span>
                 </span>
             </span>
-            <span class="flex flex-row gap-primary-base">
+            <span class="flex flex-row gap-base">
                 <span class="info-item">
                     <span class="icon icon-16 icon-spacing" title="Spacing"></span>                
                     <span class="text-text-base-600" data-value="spacing">Base</span>

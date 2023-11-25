@@ -4,7 +4,7 @@
 
 :root {
     --spacing: 0.5rem 1rem;
-    --slider-thumb-size: calc(var(--line-height-md) + var(--spacing-secondary-xs));
+    --slider-thumb-size: calc(var(--line-height-md) + var(--spacing-minor-xs));
     --slider-track-size: calc(var(--slider-thumb-size) / 4);
     --slider-margin: var(--slider-thumb-size);
     --scrollbar-width: 8px;
@@ -59,22 +59,46 @@ a:hover {
 .card {
     background-color: var(--fill-base-100);
     border-radius: var(--radii-md);
-    padding: var(--spacing-secondary-md) var(--spacing-primary-md);
-    gap: var(--spacing-secondary-base);
+    padding: var(--spacing-minor-md) var(--spacing-md);
+    gap: var(--spacing-minor-base);
 
     @apply flex flex-col;
 }
 
+.brand-card {
+    --bg-color: var(--primary-400);
+    background-color: var(--bg-color);
+    color: var(--text-contrast-600);
+
+    &.disabled > * {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+}
+
 .card-sticky {
     position: sticky;
-    top: 0;
+    top:  0;
     z-index: 10;
-    padding-top: var(--spacing-primary-xs2);
-    background-image: linear-gradient(180deg, var(--fill-base-300) 70%, transparent)
+
+    &::before {
+        content: "";
+        display: block;
+        pointer-events: none;
+        position: absolute;
+        inset: calc(-1 * var(--spacing-xs2));
+        bottom: 33%;
+        background-image: linear-gradient(180deg, var(--fill-base-300) 70%, transparent);
+        z-index: -1;
+    }
+
+    .card {
+        position: relative;
+    }
 }
 
 .sentinal {
-    height: var(--spacing-primary-xs2);
+    height: var(--spacing-xs2);
     position: absolute;
     top: 0;
     left: 0;
@@ -83,9 +107,21 @@ a:hover {
 }
 
 .is-pinned .card {
-    outline: 1px solid var(--alt-base-400);
-    @apply shadow-lg;
+    transition: all 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    @apply shadow-5 shadow-utility-shade-300 bg-opacity-90 backdrop-blur-md;
+
+    & .instruction {
+        display: none;
+    }
+    & .radio-segment {
+        background-color: var(--alt-contrast-200);
+        outline-color: var(--alt-contrast-200);
+    }
+    & .radio-segment input[type=radio]:checked+.container {
+        color: var(--text-base-600)
+    }
 }
+
 
 form {
     display: flex;
@@ -98,17 +134,14 @@ form {
 form .container {
     flex: 1;
     overflow: auto;
-    gap: var(--spacing-primary-xs2);
-}
-
-form .container .card {
-    margin: 0 var(--spacing-primary-xs2);
+    padding: var(--spacing-xs2);
+    gap: var(--spacing-xs2);
 }
 
 button {
     appearance: none;
     border-radius: var(--radii-base);
-    padding: var(--spacing-secondary-xs) var(--spacing-primary-sm);
+    padding: var(--spacing-minor-xs) var(--spacing-sm);
     color: var(--text-base-action);
 }
 
@@ -129,7 +162,7 @@ button.primary:hover {
 input,
 select,
 textarea {
-    padding: var(--spacing-secondary-xs) var(--spacing-primary-sm);
+    padding: var(--spacing-minor-xs) var(--spacing-sm);
     border-radius: var(--radii-base);
     background-color: var(--fill-base-100);
     color: var(--text-base-600);
@@ -147,8 +180,8 @@ textarea {
 
 .custom-select .icon-chevron-down {
     position: absolute;
-    right: var(--spacing-primary-xs);
-    top: var(--spacing-secondary-xs);
+    right: var(--spacing-xs);
+    top: var(--spacing-minor-xs);
     pointer-events: none;
     color: var(--text-base-action);
 }
@@ -193,8 +226,8 @@ input[type=radio]:checked {
     flex-flow: row;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-primary-xs2);
-    padding: var(--spacing-secondary-xs) var(--spacing-primary-sm);
+    gap: var(--spacing-xs2);
+    padding: var(--spacing-minor-xs) var(--spacing-sm);
     min-height: var(--line-height-base);
     min-width: var(--line-height-base);
     border-radius: var(--radii-base);
@@ -243,7 +276,7 @@ input[type=radio]:checked {
 
 .radiogroup input[type=radio]:checked {
     opacity: 1;
-    @apply shadow
+    @apply shadow-1;
 }
 
 input:focus,
@@ -331,7 +364,7 @@ fieldset {
 }
 
 #luminanceSlider {
-    margin: var(--spacing-secondary-sm) 0;
+    margin: var(--spacing-minor-sm) 0;
 }
 
 .sliders label {
@@ -402,7 +435,7 @@ fieldset {
     border-color: var(--stroke-base-300);
     color: var(--text-base-600);
     border-radius: var(--radii-base);
-    @apply shadow-lg;
+    @apply shadow-5;
 }
 
 .sliders .slider .noUi-handle:hover {
@@ -425,7 +458,7 @@ fieldset {
 main {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-secondary-base);
+    gap: var(--spacing-minor-base);
     height: 100%;
 }
 
@@ -489,15 +522,13 @@ hr {
 a[data-expander] {
     display: inline-flex;
     flex-flow: row;
-    gap: var(--spacing-primary-xs2);
+    gap: var(--spacing-xs2);
     transition: transform 150ms ease-in-out;
+
+    @apply icon-chevron-right;
 }
 
-a[data-expander]::after {
-    --icon-svg: var(--chevron-right-icon-svg);
-}
-
-a[data-expanded=yes]::after {
+a[data-expanded=yes]::before {
     transform: rotate(90deg);
 }
 
@@ -556,7 +587,7 @@ a[data-expanded=yes]::after {
 
 .action-list li {
     display: block;
-    padding: var(--spacing-secondary-xs3) 0;
+    padding: var(--spacing-minor-xs3) 0;
     border-bottom: 1px solid var(--stroke-base-100);
 }
 
@@ -566,12 +597,12 @@ a[data-expanded=yes]::after {
 
 .action-list li a {
     border-radius: var(--radii-base);
-    margin: 0 calc(var(--spacing-primary-sm) * -1);
+    margin: 0 calc(var(--spacing-sm) * -1);
     color: var(--text-base-600);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: var(--spacing-secondary-sm) var(--spacing-primary-sm);
+    padding: var(--spacing-minor-sm) var(--spacing-sm);
 }
 
 .action-list li a:hover {
@@ -583,4 +614,22 @@ a[data-expanded=yes]::after {
 :focus-visible {
     outline: var(--primary-500) auto 2px;
     outline-offset: 2px;
+}
+
+#brandAccent {
+    --thumb-color: color-mix(in srgb, var(--primary-300), white 10%);
+
+    & .slider {
+        background-color: var(--alt-contrast-300);
+    }
+
+    & .noUi-connect {
+        background-color: var(--text-contrast-400);
+    }
+
+    & input[type=text] {
+        background-color: var(--alt-contrast-200);
+        border-color: var(--alt-contrast-300);
+        color: var(--text-contrast-600)
+    }
 }

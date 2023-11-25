@@ -4,7 +4,7 @@
             <div class="header">
                 <h3 class="text-lg font-bold">Typography</h3>
                 <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
+                    <span class="icon icon-x"></span>
                 </button>
             </div>
             <div class="body">
@@ -36,7 +36,7 @@
             <div class="header">
                 <h3 class="text-lg font-bold">Spacing</h3>
                 <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
+                    <span class="icon icon-x"></span>
                 </button>
             </div>
             <div class="body">
@@ -53,7 +53,7 @@
             <div class="header">
                 <h3 class="text-lg font-bold">Radii Scale</h3>
                 <button class="close" value="cancel">
-                    <span class="icon icon-close"></span>
+                    <span class="icon icon-x"></span>
                 </button>
             </div>
             <div class="body">
@@ -67,7 +67,7 @@
 
     <div class="container relative flex flex-col">
         <div class="sentinal"></div>
-        <div class="card-sticky">
+        <div class="-card-sticky">
             <div class="card color-preview">
                 <div class="flex flex-row items-center justify-between">
                     <h4 class="text-md font-bold">Palette Preview</h4>
@@ -86,6 +86,18 @@
                         </label>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="card-sticky">
+            <div class="card brand-card gradient-tint-10 bg-blend-overlay" id="brandCard">
+                <h3 class="instruction text-lg font-bold">Primary / Brand Colour</h3>
+                <p class="instruction color-text-contrast-500">
+                    Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
+                </p>
+
+                <div data-type="semantics" id="brandAccent"
+                    data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
             </div>
         </div>
 
@@ -128,84 +140,7 @@
             </div>
         </div>
 
-        <div class="card">
-            <h3 class="text-lg font-bold">Semantic Colours</h3>
 
-            <div class="flex flex-row gap-0 overflow-hidden rounded">
-                <div class="color-box mr-xs flex-1 rounded bg-primary-400">
-                    <div>Primary</div>
-                    <div class="token-value opacity-70" data-value="primary"></div>
-                </div>
-                <div class="color-box flex-1 rounded-l bg-info-400">
-                    <div>Info</div>
-                    <div class="token-value opacity-70" data-value="info"></div>
-                </div>
-                <div class="color-box flex-1 bg-success-400">
-                    <div>Success</div>
-                    <div class="token-value opacity-70" data-value="success"></div>
-                </div>
-                <div class="color-box flex-1 bg-warning-400">
-                    <div>Warning</div>
-                    <div class="token-value opacity-70" data-value="warning"></div>
-                </div>
-                <div class="color-box flex-1 bg-danger-400">
-                    <div>Danger</div>
-                    <div class="token-value opacity-70" data-value="danger"></div>
-                </div>
-            </div>
-
-            <div class="flex flex-row items-baseline justify-between">
-                <h4 class="mt-3 text-md font-bold">Brand Colour</h4>
-                <a href="#" data-modal="customBrandColor" title="Set custom brand colour" class="hidden">Custom Brand
-                    Colour</a>
-            </div>
-
-            <p class="color-text-base-500">
-                Select you primary / brand colour. You can either pick one from existing
-                accents or specify you custom value
-            </p>
-
-            <!--div class="flex flex-row mt-2">
-                <div class="w-1/5">Based on</div>
-                <div class="flex flex-row gap-3 flex-1" style="margin: 0 var(--slider-margin) 0;">
-                    <label class="flex flex-row gap-2">
-                        <input type="radio" name="preferedPrimaryColor" data-radio-toggle="brandAccent" value="accent" checked /><span>Accent Colour</span>
-                    </label>
-                    <label class="flex flex-row gap-2">
-                        <input type="radio" name="preferedPrimaryColor" data-radio-toggle="brandCustom" value="custom"/><span>Custom</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="flex flex-row items-center" id="brandCustom">
-                <div class="w-1/5">Primary</div>
-                <label class="flex flex-row flex-1 gap-3 items-center" style="margin: 0 var(--slider-margin) 0;">
-                    <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7" name="customPrimaryColor" />
-                    <span class="text-sm color-text-base-500">HEX Value</span>
-                </label>
-            </div-->
-
-            <div data-type="semantics" id="brandAccent"
-                data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 10, "step": 1, "value": 6}'></div>
-
-            <h4 class="mt-3 text-md font-bold">Semantic Colours</h4>
-            <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">
-                <span>Finetune other semantics like success and danger</span>
-            </a>
-            <div data-expander data-role="container" class="flex flex-col gap-y-sm" style="display: none">
-                <div data-type="semantics"
-                    data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
-                <div data-type="semantics"
-                    data-slider='{"label": "Success", "name": "success", "min": 0, "max": 10, "step": 1, "value": 3}'>
-                </div>
-                <div data-type="semantics"
-                    data-slider='{"label": "Warning", "name": "warning", "min": 0, "max": 10, "step": 1, "value": 1}'>
-                </div>
-                <div data-type="semantics"
-                    data-slider='{"label": "Danger", "name": "danger", "min": 0, "max": 10, "step": 1, "value": 0}'>
-                </div>
-            </div>
-        </div>
         <div class="card" id="accentColors">
             <div class="flex flex-row items-baseline justify-between">
                 <h3 class="text-lg font-bold">Accent Colours</h3>
@@ -355,6 +290,43 @@
             </div>
         </div>
 
+        <div class="card">
+            <h3 class="text-lg font-bold">Semantic Colours</h3>
+
+            <div class="flex flex-row gap-0 overflow-hidden rounded">
+                <div class="color-box flex-1 rounded-l bg-info-400">
+                    <div>Info</div>
+                    <div class="token-value opacity-70" data-value="info"></div>
+                </div>
+                <div class="color-box flex-1 bg-success-400">
+                    <div>Success</div>
+                    <div class="token-value opacity-70" data-value="success"></div>
+                </div>
+                <div class="color-box flex-1 bg-warning-400">
+                    <div>Warning</div>
+                    <div class="token-value opacity-70" data-value="warning"></div>
+                </div>
+                <div class="color-box flex-1 bg-danger-400">
+                    <div>Danger</div>
+                    <div class="token-value opacity-70" data-value="danger"></div>
+                </div>
+            </div>
+
+            <div data-expander data-role="container" class="flex flex-col gap-y-sm">
+                <div data-type="semantics"
+                    data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
+                <div data-type="semantics"
+                    data-slider='{"label": "Success", "name": "success", "min": 0, "max": 10, "step": 1, "value": 3}'>
+                </div>
+                <div data-type="semantics"
+                    data-slider='{"label": "Warning", "name": "warning", "min": 0, "max": 10, "step": 1, "value": 1}'>
+                </div>
+                <div data-type="semantics"
+                    data-slider='{"label": "Danger", "name": "danger", "min": 0, "max": 10, "step": 1, "value": 0}'>
+                </div>
+            </div>
+        </div>
+
         <div class="card" id="ui-scale">
             <h3 class="text-lg font-bold">UI Scale</h3>
             <p class="color-text-base-500">
@@ -363,23 +335,31 @@
             <ul class="action-list">
                 <li>
                     <a href="#" data-modal="spacingScaleModal">
-                        <span>Spacing</span><span data-value="spacing" data-type="spacing"
-                            class="icon icon-chevron-right gap-2"></span>
+                        <span>Spacing</span>
+                        <span class="flex flex-row gap-2">
+                            <span data-value="spacing" data-type="spacing"></span>
+                            <span class="icon icon-chevron-right"></span>
+                        </span>                        
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="radiiScaleModal">
-                        <span>Radii</span><span data-value="radii" data-type="radii"
-                            class="icon icon-chevron-right gap-2"></span>
+                        <span>Radii</span>
+                        <span class="flex flex-row gap-2">
+                            <span data-value="radii" data-type="radii"></span>
+                            <span class="icon icon-chevron-right"></span>
+                        </span>                        
                     </a>
                 </li>
                 <li>
                     <a href="#" data-modal="typographyScaleModal">
                         <span>Typography</span>
-                        <span class="icon icon-chevron-right flex flex-row gap-2">
+                        <span class="flex flex-row gap-2">
                             <span data-value="typeScale" data-type="typography"></span> /
                             <span data-value="baseFontSize" data-type="typography"></span>
+                            <span class="icon icon-chevron-right"></span>
                         </span>
+
                     </a>
                 </li>
             </ul>
@@ -393,6 +373,36 @@
                         different token types to get their own collections.</span>
                 </span>
             </label>
+        </div>
+
+        <div class="card">
+            <h3 class="text-lg font-bold">More Tools</h3>
+            <p class="color-text-base-500">
+                Connect Source Foundation with development
+            </p>
+            <ul class="flex flex-col gap-minor-sm">
+                <li class="icon icon-tailwind gap-xs2 items-start color-text-base-action">
+                    <div>
+                        <a href="https://namad.github.io/source-foundation-docs/" target="_blank">
+                            Tailwind CSS Intergation
+                        </a>
+                        <p class="text-sm color-text-base-500" >
+                            Integrade Source Foundation with Tailwind CSS
+                        </p>
+                    </div> 
+                </li>
+                <li class="icon icon-terminal-window gap-xs2 items-start color-text-base-action">
+                    <div>
+                        <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">
+                            Node CLI Generator
+                        </a>
+                        <p class="text-sm color-text-base-500" >
+                            Export settings to build CSS variables file with command line tool
+                        </p>
+                    </div>
+
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -419,13 +429,13 @@
         <div class="header">
             <h3 class="text-lg font-bold">Custom Brand Colour</h3>
             <button class="close" value="cancel">
-                <span class="icon icon-close"></span>
+                <span class="icon icon-x"></span>
             </button>
         </div>
         <div class="body">
             <p class="color-text-base-500">Set custom brand colour</p>
 
-            <div class="flex flex-col gap-secondary-sm">
+            <div class="flex flex-col gap-minor-sm">
                 <div class="flex flex-row items-center gap-3">
                     <span class="w-1/5">Color</span>
                     <div class="custom-select flex-1">
@@ -463,7 +473,7 @@
         <div class="header">
             <h3 class="text-md font-bold">Import Theme</h3>
             <button class="close" value="cancel">
-                <span class="icon icon-close"></span>
+                <span class="icon icon-x"></span>
             </button>
         </div>
         <div class="body">
@@ -472,7 +482,7 @@
                 id="importCodeTextarea" class="h-80 resize-none"></textarea>
             <p class="color-text-base-500">Or select one of the presets</p>
         </div>
-        <div class="presets-list mb-secondary-base" id="presetsList">
+        <div class="presets-list mb-minor-base" id="presetsList">
             <label class="theme-item">
                 <input type="radio" name="theme" value="2" />
                 <span class="hidden text-base">Theme 1</span>
@@ -526,7 +536,7 @@
                             <span class="color-text-base-600" data-value="baseFontSize">Base</span>
                         </span>
                     </span>
-                    <span class="flex flex-row gap-primary-base">
+                    <span class="flex flex-row gap-base">
                         <span class="info-item">
                             <span class="icon icon-16 icon-spacing" title="Spacing"></span>
                             <span class="color-text-base-600" data-value="spacing">Base</span>
@@ -564,11 +574,11 @@
         <div class="header">
             <h3 class="text-md font-bold">Export Theme</h3>
             <button class="close" value="cancel">
-                <span class="icon icon-close"></span>
+                <span class="icon icon-x"></span>
             </button>
         </div>
         <div class="body max-h-">
-            <p class="color-text-base-500">Copy the code below to save a preset</p>
+            <p class="color-text-base-500">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
             <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea"
                 readonly class="h-80 resize-none"></textarea>
         </div>

@@ -132,7 +132,18 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
         catch (e) {
             console.warn('failed to read plugin data', e);
         }
-
+    }
+    else if (eventData.type == 'RESIZE') {
+        switch (params.baseFontSize) {
+            default: {
+                figma.ui.resize(500, 720)
+                break;
+            }
+            case 'large': {
+                figma.ui.resize(560, 720)
+                break;
+            }
+        }    
     }
 };
 

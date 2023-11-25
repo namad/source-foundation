@@ -79,7 +79,8 @@ module.exports = ((env, argv) => {
             target: 'node',
 
             entry: {
-                export: './src/cli/export.ts', // The entry point for your plugin code
+                index: './src/cli/export.ts', // The entry point for your plugin code
+                icons: './src/cli/icons.ts', // The entry point for your plugin code
             },
 
             stats: {
@@ -107,7 +108,7 @@ module.exports = ((env, argv) => {
 
             output: {
                 publicPath: '/',
-                filename: 'index.js',
+                filename: '[name].js',
                 path: path.resolve(__dirname, 'cli'), // Compile into a folder called "lib"
             },
 
