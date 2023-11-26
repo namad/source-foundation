@@ -91,11 +91,14 @@
 
         <div class="card-sticky">
             <div class="card brand-card gradient-tint-10 bg-blend-overlay" id="brandCard">
-                <h3 class="instruction text-lg font-bold">Primary / Brand Colour</h3>
-                <p class="instruction color-text-contrast-500">
-                    Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
-                </p>
-
+                <div class="height-expander">
+                    <div class="flex flex-col gap-minor-sm overflow-hidden">
+                        <h3 class="text-lg font-bold">Primary / Brand Colour</h3>
+                        <p class="color-text-contrast-500">
+                            Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
+                        </p>
+                    </div>
+                </div>
                 <div data-type="semantics" id="brandAccent"
                     data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
             </div>
@@ -117,16 +120,6 @@
                 </div>
             </div>
 
-            <h4 class="mt-3 text-md font-bold">Color Pattern</h4>
-            <p class="color-text-base-500">
-                Difference in lightness percent between two adjacent colours. Wider
-                steps outcome greater contrast overall
-            </p>
-            <div
-                data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
-            </div>
-
-            <h4 class="mt-3 text-md font-bold">Parameters</h4>
             <p class="color-text-base-500">
                 Set the tone with hue slider and select intensity using saturation
                 slider
@@ -137,6 +130,15 @@
             </div>
             <div data-neutrals
                 data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "syncValue": true}'>
+            </div>
+
+            <h4 class="mt-3 text-md font-bold">Color Pattern</h4>
+            <p class="color-text-base-500">
+                Difference in lightness percent between two adjacent colours. Wider
+                steps outcome greater contrast overall
+            </p>
+            <div
+                data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
         </div>
 
@@ -167,126 +169,127 @@
             </p>
             <hr />
 
-            <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Advanced Settings</a>
-
-            <div data-expander data-role="container" class="flex flex-col gap-y-base" style="display: none">
-                <h4 class="text-md font-bold">Global accent preview</h4>
-                <p class="color-text-base-500">
-                    Global accents are generated programatically based on accent luminancy
-                    slider values below
-                </p>
-                <div class="mb-y-base flex flex-row gap-0">
-                    <div class="color-box global-accent-600 flex-1 rounded-l">
-                        <div class="flex flex-row gap-1">
-                            <span class="text-size-xs opacity-70">600</span>
-                        </div>
-                    </div>
-                    <div class="color-box global-accent-500 flex-1">
-                        <div class="flex flex-row gap-1">
-                            <span class="text-size-xs opacity-70">500</span>
-                        </div>
-                    </div>
-                    <div class="color-box global-accent-400 flex-1">
-                        <div class="flex flex-row gap-1 font-bold">
-                            <span class="text-size-xs">400</span>
-                        </div>
-                    </div>
-                    <div class="color-box global-accent-300 flex-1">
-                        <div class="flex flex-row gap-1">
-                            <span class="text-size-xs opacity-70">300</span>
-                        </div>
-                    </div>
-                    <div class="color-box global-accent-200 flex-1">
-                        <div class="flex flex-row gap-1">
-                            <span class="text-size-xs opacity-70">200</span>
-                        </div>
-                    </div>
-                    <div class="color-box global-accent-100 flex-1 rounded-r">
-                        <div class="flex flex-row gap-1">
-                            <span class="text-size-xs opacity-70">100</span>
-                        </div>
-                    </div>
-                </div>
-
-                <h4 class="mt-3 text-md font-bold">System accent preview</h4>
-                <p class="color-text-base-500">
-                    System accents are dervided from global ones. Hover over to see
-                    additional details
-                </p>
-                <div class="mb-y-base flex flex-row gap-0">
-                    <!-- <div class="color-box flex-1 primary-700"><div><span class="token-value"></span> : 1</div></div> -->
-                    <div class="color-box primary-600 flex-1 rounded-l">
-                        <div class="flex flex-row gap-1">
-                            <span class="token-value color-text-base-600">600</span>
-                        </div>
-                        <div class="tooltip flex flex-col gap-y-sm">
-                            <div class="row">Text on dark surface</div>
-                            <div class="toolip-body"></div>
-                        </div>
-                    </div>
-                    <div class="color-box primary-500 flex-1" id="colorPreview0">
-                        <div class="flex flex-row gap-1">
-                            <span class="token-value color-text-contrast-600">500</span>
-                        </div>
-                        <div class="tooltip flex flex-col gap-y-sm">
-                            <div class="row">Text on light surface</div>
-                            <div class="toolip-body"></div>
-                        </div>
-                    </div>
-                    <div class="color-box primary-400 flex-1" id="colorPreview1">
-                        <div class="flex flex-row gap-1">
-                            <span class="token-value color-text-contrast-600">400</span>
-                        </div>
-                        <div class="tooltip flex flex-col gap-y-sm">
-                            <div class="row">Background color</div>
-                            <div class="toolip-body"></div>
-                        </div>
-                    </div>
-                    <div class="color-box primary-300 flex-1" id="colorPreview2">
-                        <div class="flex flex-row gap-1">
-                            <span class="token-value color-text-contrast-600">300</span>
-                        </div>
-                        <div class="tooltip flex flex-col gap-y-sm">
-                            <div class="row">Non-textual element</div>
-                            <div class="toolip-body"></div>
-                        </div>
-                    </div>
-                    <div class="color-box primary-200 flex-1 color-text-base-action">
-                        <div class="flex flex-row gap-1">
-                            <span class="token-value color-text-base-600">200</span>
-                        </div>
-                        <div class="tooltip flex flex-col gap-y-sm">
-                            <div class="row">Light background</div>
-                            <div class="toolip-body"></div>
-                        </div>
-                    </div>
-                    <div class="color-box primary-100 flex-1 rounded-r color-text-base-action">
-                        <div class="flex flex-row gap-1">
-                            <span class="token-value color-text-base-600">100</span>
-                        </div>
-                        <div class="tooltip flex flex-col gap-y-sm">
-                            <div class="row">Subtle background</div>
-                            <div class="toolip-body">
-                                <div class="row flex flex-row justify-between gap-3">
-                                    <span class="text-size-xs whitespace-nowrap opacity-70">alias</span>
-                                    <span class="text-size-xs whitespace-nowrap">{resolvedTo}</span>
+            <div>
+                <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Advanced Settings</a>
+                <div data-expander data-role="container" class="height-expander collapsed">
+                    <div class="flex flex-col gap-y-base">
+                        <h4 class="text-md font-bold mt-minor-base">Global accent preview</h4>
+                        <p class="color-text-base-500">
+                            Global accents are generated programatically based on accent luminancy
+                            slider values below
+                        </p>
+                        <div class="mb-y-base flex flex-row gap-0">
+                            <div class="color-box global-accent-600 flex-1 rounded-l">
+                                <div class="flex flex-row gap-1">
+                                    <span class="text-size-xs opacity-70">600</span>
+                                </div>
+                            </div>
+                            <div class="color-box global-accent-500 flex-1">
+                                <div class="flex flex-row gap-1">
+                                    <span class="text-size-xs opacity-70">500</span>
+                                </div>
+                            </div>
+                            <div class="color-box global-accent-400 flex-1">
+                                <div class="flex flex-row gap-1 font-bold">
+                                    <span class="text-size-xs">400</span>
+                                </div>
+                            </div>
+                            <div class="color-box global-accent-300 flex-1">
+                                <div class="flex flex-row gap-1">
+                                    <span class="text-size-xs opacity-70">300</span>
+                                </div>
+                            </div>
+                            <div class="color-box global-accent-200 flex-1">
+                                <div class="flex flex-row gap-1">
+                                    <span class="text-size-xs opacity-70">200</span>
+                                </div>
+                            </div>
+                            <div class="color-box global-accent-100 flex-1 rounded-r">
+                                <div class="flex flex-row gap-1">
+                                    <span class="text-size-xs opacity-70">100</span>
                                 </div>
                             </div>
                         </div>
+                        <h4 class="mt-3 text-md font-bold">System accent preview</h4>
+                        <p class="color-text-base-500">
+                            System accents are dervided from global ones. Hover over to see
+                            additional details
+                        </p>
+                        <div class="mb-y-base flex flex-row gap-0">
+                            <!-- <div class="color-box flex-1 primary-700"><div><span class="token-value"></span> : 1</div></div> -->
+                            <div class="color-box primary-600 flex-1 rounded-l">
+                                <div class="flex flex-row gap-1">
+                                    <span class="token-value color-text-base-600">600</span>
+                                </div>
+                                <div class="tooltip flex flex-col gap-y-sm">
+                                    <div class="row">Text on dark surface</div>
+                                    <div class="toolip-body"></div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-500 flex-1" id="colorPreview0">
+                                <div class="flex flex-row gap-1">
+                                    <span class="token-value color-text-contrast-600">500</span>
+                                </div>
+                                <div class="tooltip flex flex-col gap-y-sm">
+                                    <div class="row">Text on light surface</div>
+                                    <div class="toolip-body"></div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-400 flex-1" id="colorPreview1">
+                                <div class="flex flex-row gap-1">
+                                    <span class="token-value color-text-contrast-600">400</span>
+                                </div>
+                                <div class="tooltip flex flex-col gap-y-sm">
+                                    <div class="row">Background color</div>
+                                    <div class="toolip-body"></div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-300 flex-1" id="colorPreview2">
+                                <div class="flex flex-row gap-1">
+                                    <span class="token-value color-text-contrast-600">300</span>
+                                </div>
+                                <div class="tooltip flex flex-col gap-y-sm">
+                                    <div class="row">Non-textual element</div>
+                                    <div class="toolip-body"></div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-200 flex-1 color-text-base-action">
+                                <div class="flex flex-row gap-1">
+                                    <span class="token-value color-text-base-600">200</span>
+                                </div>
+                                <div class="tooltip flex flex-col gap-y-sm">
+                                    <div class="row">Light background</div>
+                                    <div class="toolip-body"></div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-100 flex-1 rounded-r color-text-base-action">
+                                <div class="flex flex-row gap-1">
+                                    <span class="token-value color-text-base-600">100</span>
+                                </div>
+                                <div class="tooltip flex flex-col gap-y-sm">
+                                    <div class="row">Subtle background</div>
+                                    <div class="toolip-body">
+                                        <div class="row flex flex-row justify-between gap-3">
+                                            <span class="text-size-xs whitespace-nowrap opacity-70">alias</span>
+                                            <span class="text-size-xs whitespace-nowrap">{resolvedTo}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="mt-3 text-md font-bold">Accent color luminance</h4>
+                        <div class="sliders flex flex-row items-center">
+                            <div id="luminanceSlider" class="slider"></div>
+                            <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
+                            <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
+                            <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
+                        </div>
+                        <p class="color-text-base-500">
+                            First knob sets the darkest shade. Second knob is for base shade.
+                            Third knob defines the lightest shade.
+                        </p>
                     </div>
                 </div>
-
-                <h4 class="mt-3 text-md font-bold">Accent color luminance</h4>
-                <div class="sliders flex flex-row items-center">
-                    <div id="luminanceSlider" class="slider"></div>
-                    <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
-                    <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
-                    <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
-                </div>
-                <p class="color-text-base-500">
-                    First value affects the darkest shade. Second value sets base shade.
-                    Third value defines the lightest shade.
-                </p>
             </div>
         </div>
 
@@ -364,9 +367,9 @@
                 </li>
             </ul>
             <hr class="mb-y-base" />
-            <label class="checkbox flex flex-row items-start gap-x-sm align-top">
+            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
                 <input type="checkbox" name="singleCollection" value="true" />
-                <span class="flex flex-col gap-y-xs">
+                <span class="flex flex-col gap-minor-xs">
                     <span>Import Spacing, Radii and Type Scale tokens as sinlge
                         collection</span>
                     <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise
@@ -380,14 +383,14 @@
             <p class="color-text-base-500">
                 Connect Source Foundation with development
             </p>
-            <ul class="flex flex-col gap-minor-sm">
+            <ul class="flex flex-col gap-minor-base">
                 <li class="icon icon-tailwind gap-xs2 items-start color-text-base-action">
                     <div>
                         <a href="https://namad.github.io/source-foundation-docs/" target="_blank">
-                            Tailwind CSS Intergation
+                            Tailwind CSS Integration
                         </a>
                         <p class="text-sm color-text-base-500" >
-                            Integrade Source Foundation with Tailwind CSS
+                            Integrate Source Foundation with Tailwind CSS
                         </p>
                     </div> 
                 </li>

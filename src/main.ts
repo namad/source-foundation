@@ -102,7 +102,7 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
         // exportToJSON(eventData.format);
     }
     else if (eventData.type === "ALERT") {
-        figma.notify(`✅ ${eventData.params}`);
+        figma.notify(`${eventData.params}`);
     }
     else if (eventData.type === "RENDER_ACCENTS") {
         const lightAccentTokens = generateGlobalAccentPalette('light', params);
@@ -136,11 +136,11 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     else if (eventData.type == 'RESIZE') {
         switch (params.baseFontSize) {
             default: {
-                figma.ui.resize(500, 720)
+                figma.ui.resize(500, 800)
                 break;
             }
             case 'large': {
-                figma.ui.resize(560, 720)
+                figma.ui.resize(560, 800)
                 break;
             }
         }    
@@ -332,7 +332,7 @@ function importAllTokens(params: ImportFormData) {
 
     importEffects();
 
-    figma.notify("✅ Figma variables has been imported");
+    figma.notify("Figma variables has been imported");
 }
 
 function importEffects() {

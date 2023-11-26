@@ -173,8 +173,8 @@ document.querySelectorAll('[data-expander][data-role="trigger"]').forEach((el: H
     if (next.dataset.role == 'container') {
         el.addEventListener('click', (e) => {
             e.preventDefault();
-            next.style.display = next.style.display == 'none' ? 'inherit' : 'none';
-            el.setAttribute('data-expanded', next.style.display == 'none' ? 'no' : 'yes');
+            next.classList.toggle('collapsed');
+            el.setAttribute('data-expanded', `${!next.classList.contains('collapsed')}`);
         })
     }
     else {
@@ -215,10 +215,10 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
     let initialValue;
 
     sliderCompoent.slider.on('start', () => {
+        const data = getFormData(form);
         brandCard.classList.add('disabled');
         label.innerHTML = `${toTitleCase(name)}`;
-        displayValueBox.value = `${toTitleCase(name)}`;
-        const data = getFormData(form);
+        displayValueBox.value = `${data[name]}`;
         initialValue = data.primary;
         brandCard.style.setProperty('--bg-color', `var(--accent-${name}-400)`);
         brandAccent.style.setProperty('--thumb-color', `var(--accent-${name}-400)`);
@@ -228,7 +228,7 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
     });
     sliderCompoent.slider.on('slide', (values, handle)  => {
         label.innerHTML = `${toTitleCase(name)}`;
-        displayValueBox.value = `${toTitleCase(name)}`;
+        displayValueBox.value = `${parseInt(values[0])}`;
         brandCard.style.setProperty('--bg-color', `var(--accent-${name}-400)`);
         brandAccent.style.setProperty('--thumb-color', `var(--accent-${name}-400)`);
     });    

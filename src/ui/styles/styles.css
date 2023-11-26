@@ -70,9 +70,30 @@ a:hover {
     background-color: var(--bg-color);
     color: var(--text-contrast-600);
 
-    &.disabled > * {
-        opacity: 0.4;
+    & .slider {
+        transition:  opacity 200ms ease-in-out;
+    }
+
+    &.disabled .slider {
+        opacity: 0;
         pointer-events: none;
+    }
+}
+
+.height-expander {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: all 200ms ease-out;
+    align-items: end;
+    overflow: hidden;
+
+    &.collapsed {
+        opacity: 0;
+        grid-template-rows: 0fr;    
+    }
+
+    & > * {
+        overflow: hidden;
     }
 }
 
@@ -107,12 +128,18 @@ a:hover {
 }
 
 .is-pinned .card {
-    transition: all 600ms cubic-bezier(0.075, 0.82, 0.165, 1);
-    @apply shadow-5 shadow-utility-shade-300 bg-opacity-90 backdrop-blur-md;
+    @apply shadow-5 shadow-utility-shade-300;
 
-    & .instruction {
-        display: none;
+    & .height-expander {
+        opacity: 0;
+        grid-template-rows: 0fr;
+        margin-bottom: calc(var(--spacing-minor-base) * -1);
     }
+
+    /* & .instruction {
+        display: none;
+    } */
+
     & .radio-segment {
         background-color: var(--alt-contrast-200);
         outline-color: var(--alt-contrast-200);
@@ -521,14 +548,18 @@ hr {
 
 a[data-expander] {
     display: inline-flex;
-    flex-flow: row;
+    flex-flow: row-reverse;
     gap: var(--spacing-xs2);
     transition: transform 150ms ease-in-out;
 
     @apply icon-chevron-right;
+
+    &::before {
+        transition: transform 200ms ease-in-out;
+    }
 }
 
-a[data-expanded=yes]::before {
+a[data-expanded=true]::before {
     transform: rotate(90deg);
 }
 
