@@ -391,7 +391,17 @@ fieldset {
 }
 
 #luminanceSlider {
+    flex: 1;
+    border-radius: var(--radii-round);
+    background-color: var(--alt-base-300);
     margin: var(--spacing-minor-sm) 0;
+    padding-left: calc(var(--slider-thumb-size) / 2 + 2px);
+    padding-right: calc(var(--slider-thumb-size) / 2 + 2px);
+}
+
+#luminanceSlider .slider {
+    background-color: transparent;
+   margin:0;
 }
 
 .sliders label {
@@ -442,7 +452,7 @@ fieldset {
     width: var(--slider-thumb-size);
 
     top: calc((var(--slider-thumb-size) - var(--slider-track-size)) / -2);
-    right: calc((var(--slider-thumb-size) - var(--slider-track-size)) / -2);
+    right: calc(var(--slider-thumb-size) / -2);
 
     box-shadow: 0px 1px 2px -1px rgba(0, 35, 41, 0.04), 0px 1px 3px 0px rgba(0, 35, 41, 0.04), 0px 0px 0px 1px rgba(0, 35, 41, 0.1);
 

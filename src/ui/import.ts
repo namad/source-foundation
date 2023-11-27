@@ -242,7 +242,7 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
     });    
 });
 
-const luminanceSlider = document.getElementById('luminanceSlider');
+const luminanceSlider = document.querySelector('#luminanceSlider .slider') as HTMLDivElement;
 const luminanceSliderVals = [
     document.getElementById('luminanceValMin') as HTMLInputElement,
     document.getElementById('luminanceValMid') as HTMLInputElement,
