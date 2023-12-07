@@ -34,7 +34,7 @@ export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShad
                 "description": `Subtle semitransparent accent`
             },
             "200": {
-                "$value": "rgba({200}, 0.25)",
+                "$value": "rgba({200}, 0.33)",
                 "$type": "color",
                 "description": `Light semitransparent accent`
             },
@@ -69,7 +69,7 @@ export function getShadesTemplate(theme: 'light' | 'dark', colorName): ColorShad
                 "description": `Subtle semitransparent accent`
             },
             "200": {
-                "$value": "rgba({200}, 0.40)",
+                "$value": "rgba({200}, 0.45)",
                 "$type": "color",
                 "description": `Light semitransparent accent`
             },

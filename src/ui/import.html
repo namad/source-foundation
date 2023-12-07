@@ -138,7 +138,7 @@
                 steps outcome greater contrast overall
             </p>
             <div
-                data-slider='{"label": "Distance", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
+                data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
         </div>
 
@@ -407,11 +407,33 @@
                     </div>
 
                 </li>
+                <hr>
+                <li class="icon icon-upload gap-xs2 items-start color-text-base-action">
+                    <div>
+                        <a href="#" data-modal="exportModal">
+                            Export Theme
+                        </a>
+                        <p class="text-sm color-text-base-500" >
+                            Get the code snippet that you can use with CLI generator
+                        </p>
+                    </div> 
+                </li>
+                <li class="icon icon-download gap-xs2 items-start color-text-base-action">
+                    <div>
+                        <a href="#" data-modal="importModal">
+                           Import Theme
+                        </a>
+                        <p class="text-sm color-text-base-500" >
+                            Paste the code snippet to import previously saved theme
+                        </p>
+                    </div>
+
+                </li>
             </ul>
         </div>
     </div>
 
-    <div class="flex flex-row justify-between px-base py-sm text-right">
+    <div class="flex flex-row justify-between px-sm py-sm text-right">
         <div class="flex gap-2">
             <button id="exportButton" data-modal="exportModal" title="Export settings">
                 <span class="icon icon-upload"></span>
@@ -423,7 +445,10 @@
         <div class="flex gap-2">
             <button id="resetDefaultsButton">Reset</button>
             <button id="importVariablesButton" class="primary">
-                Generate Variables
+                <span class="flex flex-row gap-xs2">
+                    <span class="spinner"></span>
+                    <span class="text-label">Generate Variables</span>
+                </span>
             </button>
         </div>
     </div>

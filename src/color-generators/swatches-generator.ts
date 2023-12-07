@@ -26,6 +26,7 @@ export function renderColor(parentNode, name, color, colors) {
     let frame = figma.createFrame();
     frame.layoutMode = "VERTICAL";
     frame.layoutAlign = 'STRETCH';
+    frame.itemSpacing = 4;
     frame.name = name;
 
 
@@ -49,25 +50,34 @@ export function renderColor(parentNode, name, color, colors) {
         chroma.contrast(chroma.hsl([0, 0, 0.22]), mixedColor)
     ];
 
+    let nameRow = getRow(frame, contrast[0] > 2.5);
     let contrastWhiteRow = getRow(frame, contrast[0] > 2.5);
     let contrastBlackRow = getRow(frame, contrast[0] > 2.5);
-    let luminanceRow = getRow(frame, contrast[0] > 2.5);
     let hslRow = getRow(frame, contrast[0] > 2.5);
+    let luminanceRow = getRow(frame, contrast[0] > 2.5);
 
     // await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+
+    nameRow.root.name = "nameRow";
+    contrastWhiteRow.root.name = "contrastWhiteRow";
+    contrastBlackRow.root.name = "contrastBlackRow";
+    hslRow.root.name = "hslRow";
+    luminanceRow.root.name = "luminanceRow";
 
     contrastWhiteRow.labelNode.characters = "vs white";
     contrastWhiteRow.valueNode.characters = `${roundTwoDigits(contrast[0])}`;
     contrastBlackRow.labelNode.characters = "vs black";
     contrastBlackRow.valueNode.characters = `${roundTwoDigits(contrast[1])}`;
-    luminanceRow.labelNode.characters = "luminance";
-    luminanceRow.valueNode.characters = `${roundTwoDigits(chromaColor.luminance())}`;
+    nameRow.labelNode.characters = `{global.${name.replace(/\//g, ".")}}`;
+    nameRow.valueNode.characters = ` `;
     hslRow.labelNode.characters = "hsl";
-    hslRow.valueNode.characters = `${outputHSL(chromaColor).join(", ")}`;
+    hslRow.valueNode.characters = `${outputHSL(chromaColor).join(" ")}`;
+    luminanceRow.labelNode.characters = "luminance";
+    luminanceRow.valueNode.characters = `${ Math.round(roundTwoDigits(chromaColor.luminance()) * 100) }%`;
 
     parentNode.appendChild(frame);
 
-    frame.resize(200, frame.height);
+    frame.resize(240, frame.height);
 
     return parentNode;
 }
@@ -105,11 +115,11 @@ function getRow(parentNode, isWhite: boolean) {
     parentNode.appendChild(frame);
 
     return {
-        labelNode: textNode, valueNode: valueLabel
+        labelNode: textNode, valueNode: valueLabel, root: frame
     };
 }
 
 export function outputHSL(chromaColor) {
     const [h, s, l] = chromaColor.hsl();
-    return [Math.round(h), roundTwoDigits(s), roundTwoDigits(l)];
+    return [`${Math.round(h)|| 0}deg`, `${Math.round(roundTwoDigits(s)*100)}%`, `${Math.round(roundTwoDigits(l)*100)}%`];
 }

@@ -24,7 +24,8 @@ export function importEffectStyles(tokens) {
                 const figmaEffect = Object.assign({}, value, {
                     color: figmaVariable.valuesByMode[defaultMode] as RGBA
                 })
-                return convertEffectStyleToFigma(figmaEffect);
+                const effect = convertEffectStyleToFigma(figmaEffect);
+                return figma.variables.setBoundVariableForEffect(effect, 'color', figmaVariable)
             })
 
             figmaStyle.name = name;

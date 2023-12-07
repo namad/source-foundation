@@ -8,6 +8,7 @@
     --slider-track-size: calc(var(--slider-thumb-size) / 4);
     --slider-margin: var(--slider-thumb-size);
     --scrollbar-width: 8px;
+    --form-gap: var(--spacing-sm);
 }
 
 * {
@@ -71,7 +72,7 @@ a:hover {
     color: var(--text-contrast-600);
 
     & .slider {
-        transition:  opacity 200ms ease-in-out;
+        transition: opacity 200ms ease-in-out;
     }
 
     &.disabled .slider {
@@ -89,17 +90,17 @@ a:hover {
 
     &.collapsed {
         opacity: 0;
-        grid-template-rows: 0fr;    
+        grid-template-rows: 0fr;
     }
 
-    & > * {
+    &>* {
         overflow: hidden;
     }
 }
 
 .card-sticky {
     position: sticky;
-    top:  0;
+    top: 0;
     z-index: 10;
 
     &::before {
@@ -107,7 +108,7 @@ a:hover {
         display: block;
         pointer-events: none;
         position: absolute;
-        inset: calc(-1 * var(--spacing-xs2));
+        inset: calc(-1 * var(--form-gap));
         bottom: 33%;
         background-image: linear-gradient(180deg, var(--fill-base-300) 70%, transparent);
         z-index: -1;
@@ -144,6 +145,7 @@ a:hover {
         background-color: var(--alt-contrast-200);
         outline-color: var(--alt-contrast-200);
     }
+
     & .radio-segment input[type=radio]:checked+.container {
         color: var(--text-base-600)
     }
@@ -161,8 +163,10 @@ form {
 form .container {
     flex: 1;
     overflow: auto;
-    padding: var(--spacing-xs2);
-    gap: var(--spacing-xs2);
+    overflow-x: hidden;
+    padding: var(--form-gap);
+    padding-right: calc(var(--form-gap) - var(--scrollbar-width));
+    gap: var(--form-gap);
 }
 
 button {
@@ -170,6 +174,24 @@ button {
     border-radius: var(--radii-base);
     padding: var(--spacing-minor-xs) var(--spacing-sm);
     color: var(--text-base-action);
+
+    & .spinner {
+        display: none;
+    }
+
+    &.loading {
+        position: relative;
+    }
+
+    &.loading .spinner {
+        display: block;
+        position: absolute;
+        left: calc(50% - var(--line-height-base)/2);
+    }
+
+     &.loading .text-label {
+        visibility: hidden;
+     }
 }
 
 button:hover {
@@ -401,7 +423,7 @@ fieldset {
 
 #luminanceSlider .slider {
     background-color: transparent;
-   margin:0;
+    margin: 0;
 }
 
 .sliders label {
@@ -672,5 +694,43 @@ a[data-expanded=true]::before {
         background-color: var(--alt-contrast-200);
         border-color: var(--alt-contrast-300);
         color: var(--text-contrast-600)
+    }
+}
+
+.spinner {
+    width: var(--line-height-base);
+    height: var(--line-height-base);
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-left: 2px solid currentColor;
+    border-radius: 100%;
+
+    transform: translateZ(0);
+    animation: spin 1.2s linear infinite;
+}
+
+.spinner::after {
+    content: '';
+    display: block;
+    position: absolute;
+    inset: -2px;
+    border: 2px solid currentColor;
+    opacity: 0.2;
+    border-radius: 100%;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0turn)
+    }
+
+    100% {
+        transform: rotate(1turn)
     }
 }

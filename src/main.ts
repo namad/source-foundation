@@ -113,14 +113,6 @@ figma.ui.onmessage = (eventData: MessagePayload) => {
     }
     else if (eventData.type === "RENDER_NEUTRALS") {
         const neutralTokens = generateNeutrals(params);
-        // const step = params.distance * 100;
-        // let filteredTokens = {};
-
-        // Object.entries(neutralTokens).forEach(([name, value], index) => {
-        //     if (index % step == 0) {
-        //         filteredTokens[name] = value;
-        //     }
-        // });
         renderNeutrals(neutralTokens, `Global Neutrals`);
     }
     else if (eventData.type === "LOADED") {
@@ -211,7 +203,7 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
         token.scopes = [];
 
         let chromaColor = chroma(token.$value);
-        const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1 - data.distance * 2]), chromaColor));
+        const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1]), chromaColor));
         const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
 
         contrastRatios[`_accent_${name}_vs_light`] = {
@@ -333,6 +325,8 @@ function importAllTokens(params: ImportFormData) {
     importEffects();
 
     figma.notify("Figma variables has been imported");
+
+    figma.ui.postMessage("importCompleted");
 }
 
 function importEffects() {

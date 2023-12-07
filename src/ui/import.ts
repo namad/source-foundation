@@ -17,6 +17,7 @@ import { ImportFormData, collectValues, generateMiniPreview, generatePreview, ge
 import { getPresets } from "../presets";
 
 import chroma from 'chroma-js';
+import { delayAsync } from "../utils/delay-async";
 
 /*
     UI INITIALIZATION
@@ -292,8 +293,12 @@ resetDefaultsButton.addEventListener('click', (e) => {
     loadSettings(form, defaultSettings);
 });
 
-importButton.addEventListener('click', (e) => {
+importButton.addEventListener('click', async (e) => {
     e.preventDefault();
+
+    importButton.classList.add('loading');
+    
+    await delayAsync(50);
 
     let message = {
         type: "IMPORT",
@@ -313,9 +318,15 @@ loadSettings(form, defaultSettings);
 
 onmessage = (event) => {
     console.log("got this from the plugin code", event.data.pluginMessage)
-    const data = event.data.pluginMessage as ImportFormData;
 
-    // convert string values into numbers for sliders
+    if(event.data.pluginMessage == 'importCompleted') {
+        importButton.classList.remove('loading');
+    }
+    else {
+        const data = event.data.pluginMessage as ImportFormData;
 
-    loadSettings(form, data);
+        // convert string values into numbers for sliders
+
+        loadSettings(form, data);
+    }
 }
