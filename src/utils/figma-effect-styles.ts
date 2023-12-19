@@ -15,7 +15,7 @@ export function importEffectStyles(tokens) {
             let figmaStyle = getStyleByName(name) || figma.createEffectStyle();
             const values = token.$value as EffectToken[];
 
-            const resolved = values.map(value => {
+            const effects = values.map(value => {
                 const figmaVariable = findVariableByReferences(value.color);
                 const collectionID = figmaVariable.variableCollectionId;
                 const collection = figma.variables.getVariableCollectionById(collectionID);
@@ -24,12 +24,18 @@ export function importEffectStyles(tokens) {
                 const figmaEffect = Object.assign({}, value, {
                     color: figmaVariable.valuesByMode[defaultMode] as RGBA
                 })
-                const effect = convertEffectStyleToFigma(figmaEffect);
-                return figma.variables.setBoundVariableForEffect(effect, 'color', figmaVariable)
+                
+                const effect = convertEffectStyleToFigma(figmaEffect) as DropShadowEffect;
+                const effectVar = figma.variables.setBoundVariableForEffect(effect, 'color', figmaVariable) as any;
+                effectVar.spread = effect.spread;
+
+                return effect;
             })
 
             figmaStyle.name = name;
-            figmaStyle.effects = resolved;
+            figmaStyle.effects = effects;
+            figmaStyle.description = token.description || figmaStyle.description;
+            // figmaStyle.documentationLinks = token.documentationLink ? [token.documentationLink] : figmaStyle.documentationLinks;
         }
     })
 }
@@ -62,7 +68,6 @@ function convertEffectStyleToFigma(value: {
     "spread": string;
     "showShadowBehindNode"?: string;
 }): Effect {
-
     return {
         type: "DROP_SHADOW",
         color: value.color,
@@ -75,6 +80,6 @@ function convertEffectStyleToFigma(value: {
         visible: true,
         blendMode: "NORMAL",
         showShadowBehindNode: parseBoolean(value.showShadowBehindNode)
-    }
+    };
 
 }

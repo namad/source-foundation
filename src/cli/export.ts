@@ -172,8 +172,8 @@ export function writeTheFileIntoDirectory(stream, dataFn) {
 function writeElevationVariables(stream) {
     const tokens = effects.getElevationTokens();
     
-    const data = Object.keys(tokens.elevation).map((name, index) => {
-        const variants = tokens.elevation[name];
+    const data = Object.keys(tokens).map((name, index) => {
+        const variants = tokens[name];
         const [ shade, token ] = Object.entries(variants)[0];
         const settings = token['$value'] as EffectToken[];
 
@@ -181,10 +181,10 @@ function writeElevationVariables(stream) {
             return `${shadowSettings.x}px ${shadowSettings.y}px ${shadowSettings.blur}px ${shadowSettings.spread}px var(--box-shadow-color)`
         }).join(', ');
 
-        return { name: `elevation-${index}`, value: cssString}
+        return { name: `shadow-${index}`, value: cssString}
     });
 
-    writeCSSChunk(stream, `.elevation`, data);
+    writeCSSChunk(stream, `.shadow`, data);
 
     return data;
 }

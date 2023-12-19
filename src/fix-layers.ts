@@ -8,7 +8,10 @@ export async function processComponents() {
 
     if (figma.currentPage.selection.length) {
         figma.currentPage.selection.forEach((node: any) => {
-            if (node.findAllWithCriteria) {
+            if (node.type == 'COMPONENT') {
+                pageComponents = pageComponents.concat(node);
+            }
+            else if (node.findAllWithCriteria) {
                 const components = node.findAllWithCriteria({types: ['COMPONENT']});
                 pageComponents = pageComponents.concat(components);
             }

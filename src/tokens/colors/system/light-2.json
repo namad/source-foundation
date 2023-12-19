@@ -91,7 +91,7 @@
         }
       },
       "600": {
-        "$value": "{grey-64}",
+        "$value": "{grey-56}",
         "$type": "color",
         "adjustments": {
           "s": "*0.6"

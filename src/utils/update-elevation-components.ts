@@ -2,22 +2,23 @@ import { EffectToken } from "../effect-tokens";
 import { DesignToken } from "../main";
 
 export function updateElevationComponents(tokens) {
+    debugger;
     figma.skipInvisibleInstanceChildren = true;
-    const pageComponents = figma.currentPage.findAllWithCriteria({types: ['COMPONENT']});
+    const pageComponents = figma.currentPage.findAllWithCriteria({ types: ['COMPONENT'] });
     const elevationComponents = pageComponents.filter(node => {
         const name = node.name.toLocaleLowerCase();
-        return name.startsWith('elevation');
+        return name.startsWith('shadow');
     });
 
     if (elevationComponents.length == 0) {
         return console.warn('No elevation components has been found');
     }
 
-    Object.keys(tokens.elevation).forEach(name => {
-        const variants = tokens.elevation[name];
-        const [ shade, token ] = Object.entries(variants)[0];
+    Object.keys(tokens).forEach(name => {
+        const variants = tokens[name];
+        const [shade, token] = Object.entries(variants)[0];
         const settings = token['$value'] as EffectToken[];
-        
+
         const elevationComponent = elevationComponents.find(node => {
             return node.name.indexOf(name) > -1;
         })
@@ -27,12 +28,35 @@ export function updateElevationComponents(tokens) {
     })
 }
 
+function clone(val) {
+    const type = typeof val
+    if (val === null) {
+        return null
+    } else if (type === 'undefined' || type === 'number' ||
+        type === 'string' || type === 'boolean') {
+        return val
+    } else if (type === 'object') {
+        if (val instanceof Array) {
+            return val.map(x => clone(x))
+        } else if (val instanceof Uint8Array) {
+            return new Uint8Array(val)
+        } else {
+            let o = {}
+            for (const key in val) {
+                o[key] = clone(val[key])
+            }
+            return o
+        }
+    }
+    throw 'unknown'
+}
+
 function processComponent(effects: EffectToken[], component: ComponentNode) {
 
     const shadowLayers = component.findChildren(node => {
         const name = node.name.toLocaleLowerCase();
         return name.startsWith('shadow');
-    }) as VectorNode [];
+    }) as VectorNode[];
 
     const maskLayer = component.findChild(node => {
         return node.name.toLocaleLowerCase() === 'mask';
@@ -54,7 +78,7 @@ function processComponent(effects: EffectToken[], component: ComponentNode) {
         const left = x - spread;
         const top = y - spread;
 
-        const blur: Effect = {
+        const blur: BlurEffect = {
             type: "LAYER_BLUR",
             radius: radius,
             visible: true
@@ -66,14 +90,12 @@ function processComponent(effects: EffectToken[], component: ComponentNode) {
         shadowLayer.y = top;
     });
 
-    debugger;
-
     const absoluteBoundingBox = component.absoluteBoundingBox;
     const absoluteRenderBounds = component.absoluteRenderBounds;
 
     const maskWidth = absoluteRenderBounds.width;
     const maskHeight = absoluteRenderBounds.height;
-    const maskLeft = (absoluteRenderBounds.x - absoluteBoundingBox.x) ;
+    const maskLeft = (absoluteRenderBounds.x - absoluteBoundingBox.x);
     const maskTop = (absoluteRenderBounds.y - absoluteBoundingBox.y);
 
     const innerLayer = maskLayer.findChild(node => node.name === 'inner') as VectorNode;

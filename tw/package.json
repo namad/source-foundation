@@ -1,6 +1,6 @@
 {
   "name": "source-tailwindcss",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Design system foundation on TailwindCSS",
   "main": "source-preset.js",
   "theme": "source-theme.js",

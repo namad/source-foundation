@@ -69,6 +69,11 @@ const collectionNames = new Map<string, string>([
         figma.closePlugin();
     }
 
+    if (figma.command == "updateElevationComponents") {
+        updateElevationComponents(effects.getElevationTokens());
+        figma.closePlugin();
+    }
+
     if (figma.command == "setPlayground") {
         const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
         figma.root.setPluginData('SDSPlayground', isPlayground ? '' : 'true');
@@ -487,6 +492,7 @@ export interface DesignToken {
     private?: boolean;
     scopes?: string[];
     description?: string;
+    documentationLink?: DocumentationLink;
     adjustments?: any;
 }
 
