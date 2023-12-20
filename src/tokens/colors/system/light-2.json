@@ -1,146 +1,146 @@
 {
-  "fill": {
-    "base": {
-      "100": {
-        "$value": "{grey-100}",
-        "$type": "color"
-      },
-      "200": {
-        "$value": "{grey-98}",
-        "$type": "color"
-      },
-      "300": {
-        "$value": "{grey-96}",
-        "$type": "color"
-      },
-      "400": {
-        "$value": "{grey-94}",
-        "$type": "color"
-      },
-      "500": {
-        "$value": "{grey-92}",
-        "$type": "color"
-      },
-      "600": {
-        "$value": "{grey-88}",
-        "$type": "color"
-      }
+    "fill": {
+        "base": {
+            "100": {
+                "$value": "{grey-100}",
+                "$type": "color"
+            },
+            "200": {
+                "$value": "{grey-98}",
+                "$type": "color"
+            },
+            "300": {
+                "$value": "{grey-96}",
+                "$type": "color"
+            },
+            "400": {
+                "$value": "{grey-94}",
+                "$type": "color"
+            },
+            "500": {
+                "$value": "{grey-92}",
+                "$type": "color"
+            },
+            "600": {
+                "$value": "{grey-88}",
+                "$type": "color"
+            }
+        },
+        "contrast": {
+            "100": {
+                "$value": "{grey-24}",
+                "$type": "color"
+            },
+            "200": {
+                "$value": "{grey-22}",
+                "$type": "color"
+            },
+            "300": {
+                "$value": "{grey-20}",
+                "$type": "color"
+            },
+            "400": {
+                "$value": "{grey-18}",
+                "$type": "color"
+            },
+            "500": {
+                "$value": "{grey-16}",
+                "$type": "color"
+            },
+            "600": {
+                "$value": "{grey-14}",
+                "$type": "color"
+            }
+        }
     },
-    "contrast": {
-      "100": {
-        "$value": "{grey-24}",
-        "$type": "color"
-      },
-      "200": {
-        "$value": "{grey-22}",
-        "$type": "color"
-      },
-      "300": {
-        "$value": "{grey-20}",
-        "$type": "color"
-      },
-      "400": {
-        "$value": "{grey-18}",
-        "$type": "color"
-      },
-      "500": {
-        "$value": "{grey-16}",
-        "$type": "color"
-      },
-      "600": {
-        "$value": "{grey-12}",
-        "$type": "color"
-      }
+    "stroke": {
+        "base": {
+            "100": {
+                "$value": "{grey-93}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "200": {
+                "$value": "{grey-88}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "300": {
+                "$value": "{grey-85}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "400": {
+                "$value": "{grey-82}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "500": {
+                "$value": "{grey-70}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "600": {
+                "$value": "{grey-56}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            }
+        },
+        "contrast": {
+            "100": {
+                "$value": "{grey-28}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "200": {
+                "$value": "{grey-30}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "300": {
+                "$value": "{grey-33}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "400": {
+                "$value": "{grey-36}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "500": {
+                "$value": "{grey-39}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            },
+            "600": {
+                "$value": "{grey-45}",
+                "$type": "color",
+                "adjustments": {
+                    "s": "*0.6"
+                }
+            }
+        }
     }
-  },
-  "stroke": {
-    "base": {
-      "100": {
-        "$value": "{grey-93}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "200": {
-        "$value": "{grey-87}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "300": {
-        "$value": "{grey-85}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "400": {
-        "$value": "{grey-82}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "500": {
-        "$value": "{grey-70}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "600": {
-        "$value": "{grey-56}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      }
-    },
-    "contrast": {
-      "100": {
-        "$value": "{grey-28}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "200": {
-        "$value": "{grey-30}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "300": {
-        "$value": "{grey-33}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "400": {
-        "$value": "{grey-36}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "500": {
-        "$value": "{grey-39}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      },
-      "600": {
-        "$value": "{grey-45}",
-        "$type": "color",
-        "adjustments": {
-          "s": "*0.6"
-        }
-      }
-    }
-  }
 }

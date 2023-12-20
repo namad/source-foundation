@@ -20,7 +20,13 @@ export function updateElevationComponents(tokens) {
         const settings = token['$value'] as EffectToken[];
 
         const elevationComponent = elevationComponents.find(node => {
-            return node.name.indexOf(name) > -1;
+
+            const nameNormalized = name.toLocaleLowerCase().replace(/-/g, " ");
+            const nodeNameNormalized = node.name.toLocaleLowerCase().replace(/-/g, " ");
+
+            console.log(nameNormalized, nodeNameNormalized);
+
+            return nodeNameNormalized.indexOf(nameNormalized) > -1
         })
 
         processComponent(settings, elevationComponent);
@@ -52,6 +58,10 @@ function clone(val) {
 }
 
 function processComponent(effects: EffectToken[], component: ComponentNode) {
+
+    if (!component) {
+        throw('Elevation component was not found')
+    }
 
     const shadowLayers = component.findChildren(node => {
         const name = node.name.toLocaleLowerCase();
