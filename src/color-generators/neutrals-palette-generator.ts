@@ -1,6 +1,18 @@
 import chroma from "chroma-js";
 import { renderColor } from "./swatches-generator";
 
+
+function getSaturationModifier(l) {
+  return 1 - getSaturationModifierValue(0) + getSaturationModifierValue(l);
+}
+
+
+function getSaturationModifierValue(l) {
+  const x = (l-50)/10;
+  return Math.abs((Math.pow(x, 2) / -70));  
+}
+
+
 export function generateNeutrals(params) {
   const {
     hue = 200,
@@ -16,7 +28,7 @@ export function generateNeutrals(params) {
   
   while (value <= max ) {
     const sMod = 1 / Math.pow(1.3, (max - value) / 100);
-    const color = chroma.hsl(hue, saturation * sMod, value/100);
+    const color = chroma.hsl(hue, saturation * getSaturationModifier(value), value/100);
 
     tokens[`grey-${value}`] = {
       '$value': color.hex(),
