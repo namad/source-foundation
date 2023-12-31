@@ -29,7 +29,7 @@ export function importEffectStyles(tokens) {
                 const effectVar = figma.variables.setBoundVariableForEffect(effect, 'color', figmaVariable) as any;
                 effectVar.spread = effect.spread;
 
-                return effect;
+                return effectVar;
             })
 
             figmaStyle.name = name;

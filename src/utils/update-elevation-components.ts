@@ -2,7 +2,6 @@ import { EffectToken } from "../effect-tokens";
 import { DesignToken } from "../main";
 
 export function updateElevationComponents(tokens) {
-    debugger;
     figma.skipInvisibleInstanceChildren = true;
     const pageComponents = figma.currentPage.findAllWithCriteria({ types: ['COMPONENT'] });
     const elevationComponents = pageComponents.filter(node => {
