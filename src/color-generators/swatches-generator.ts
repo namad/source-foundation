@@ -2,6 +2,30 @@ import chroma from "chroma-js";
 import { roundTwoDigits } from "../utils/round-two-digits";
 import { parseColorToken } from "../utils/figma-colors";
 
+function getBoundVariables(node: SceneNode) {
+    const boundVariables = Object.entries(node.boundVariables);
+
+    for (const [propName, propValue] of boundVariables) {
+        const isArray = Array.isArray(propValue);
+
+        if (isArray) {
+            propValue.forEach((alias, i) => {
+                processBoundVariable(figma.variables.getVariableById(alias.id));
+            })
+        }
+        else {
+            let varId = propValue.id;
+            if (typeof varId != 'string') { // it is 
+                varId = varId.id;
+            }
+            processBoundVariable(figma.variables.getVariableById(varId))
+        }
+    }
+}
+
+function processBoundVariable(variable: Variable) {
+}
+
 export function renderShades(parentNode, name, shades, colors) {
     let frame: FrameNode = figma.createFrame();
     frame.resizeWithoutConstraints(320, frame.height);
@@ -11,6 +35,7 @@ export function renderShades(parentNode, name, shades, colors) {
     frame.name = name;
     frame.fills = [];
 
+    getBoundVariables(frame);
 
     for (const [shadeName, color] of Object.entries(shades)) {
         renderColor(frame, `accent/${name}/${shadeName}`, color, colors);
