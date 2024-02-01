@@ -25,7 +25,7 @@ export function findFigmaVariableByName(variableName: string, collectionName?: s
     }
     else {
         const figmaVariables = figma.variables.getLocalVariables();
-        return figmaVariables.find(vairable => vairable.name === variableName);
+        return figmaVariables.find(variable => variable.name === variableName);
     }
 }
 
