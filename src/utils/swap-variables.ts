@@ -127,35 +127,9 @@ function bindPropertyVariables(props, figmaFn) {
 function bindVariable(node: SceneNode, propName: any, variableBinding: any): SceneNode {
 
     if (propName == 'fills' && 'fills' in node) {
-        // const fillsCopy = _clone(node.fills).map(fill => {
-        //     Object.keys(fill.boundVariables).forEach((field: VariableBindablePaintField) => {
-        //         const alias = fill.boundVariables[field];
-        //         const variable = findVariableMatch(alias.id);
-        //         fill.boundVariables = {};
-        //         if (variable) {
-        //             fill = figma.variables.setBoundVariableForPaint(fill, field, null);
-        //             fill = figma.variables.setBoundVariableForPaint(fill, field, variable);
-        //         }
-        //     });
-
-        //     return fill;
-        // });
         node.fills = bindPropertyVariables(node.fills, figma.variables.setBoundVariableForPaint);
     }
     else if (propName == 'strokes' && 'strokes' in node) {
-        // const strokesCopy = _clone(node.strokes).map(stroke => {
-        //     Object.keys(stroke.boundVariables).forEach((field: VariableBindablePaintField) => {
-        //         const alias = stroke.boundVariables[field];
-        //         const variable = findVariableMatch(alias.id);
-        //         stroke.boundVariables = {};
-        //         if (variable) {
-        //             stroke = figma.variables.setBoundVariableForPaint(stroke, field, null);
-        //             stroke = figma.variables.setBoundVariableForPaint(stroke, field, variable);
-        //         }
-        //     });
-
-        //     return stroke;
-        // });
         node.strokes = bindPropertyVariables(node.strokes, figma.variables.setBoundVariableForPaint);
     }    
     else if (propName == 'effects' && 'effects' in node) {
@@ -170,20 +144,6 @@ function bindVariable(node: SceneNode, propName: any, variableBinding: any): Sce
             node.effectStyleId = localStyle ? localStyle.id : "";
             return node;
         }
-
-        // let effectsCopy = _clone(node.effects).map(effect => {
-        //     Object.keys(effect.boundVariables).forEach((field: VariableBindableEffectField) => {
-        //         const alias = effect.boundVariables[field];
-        //         const variable = findVariableMatch(alias.id);
-        //         debugger;
-        //         if (variable) {
-        //             effect = figma.variables.setBoundVariableForEffect(effect, field, null);
-        //             effect = figma.variables.setBoundVariableForEffect(effect, field, variable);
-        //         }
-        //     });
-
-        //     return effect;
-        // });
 
         node.effects = bindPropertyVariables(node.effects, figma.variables.setBoundVariableForEffect);
     }
