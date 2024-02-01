@@ -27,6 +27,7 @@ import { delayAsync } from './utils/delay-async';
 import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
+import { swapVariables } from './utils/swap-variables';
 
 console.clear();
 
@@ -85,6 +86,16 @@ const collectionNames = new Map<string, string>([
 
     if (figma.command == "fixLayers") {
         await processComponents();
+        figma.closePlugin();
+    }
+
+    if (figma.command == "swapVariables") {
+        await swapVariables().catch(err => {
+            console.error(err);
+            figma.notify(err, {error: true});
+            throw err;
+        });
+        await delayAsync(1000);
         figma.closePlugin();
     }
 })()
@@ -422,7 +433,14 @@ function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -
     else {
         const mode = modeIndex < 0 ? collection.modes.find(mode => mode.name === modeName) : collection.modes[modeIndex];
         if (!mode) {
-            modeId = collection.addMode(modeName)
+            try {
+                modeId = collection.addMode(modeName)
+            }
+            catch(e) {
+                figma.notify("Cannot create more than one mode. Is your file under Pro team or org plan?");
+                console.error(e);
+                figma.closePlugin();
+            }
         }
         else {
             modeId = mode.modeId;

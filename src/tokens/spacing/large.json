@@ -6,7 +6,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "xs3": {
@@ -15,7 +16,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "xs2": {
@@ -24,7 +26,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "xs": {
@@ -33,7 +36,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "sm": {
@@ -42,7 +46,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "base": {
@@ -51,7 +56,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "md": {
@@ -60,7 +66,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "lg": {
@@ -69,7 +76,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "xl": {
@@ -78,7 +86,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "xl2": {
@@ -87,7 +96,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "xl3": {
@@ -96,7 +106,8 @@
             "scopes": [
                 "TEXT_CONTENT",
                 "WIDTH_HEIGHT",
-                "GAP"
+                "GAP",
+                "STROKE_FLOAT"
             ]
         },
         "minor": {
@@ -106,7 +117,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "xs3": {
@@ -115,7 +127,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "xs2": {
@@ -124,7 +137,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "xs": {
@@ -133,7 +147,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "sm": {
@@ -142,7 +157,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "base": {
@@ -151,7 +167,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "md": {
@@ -160,7 +177,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "lg": {
@@ -169,7 +187,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "xl": {
@@ -178,7 +197,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "xl2": {
@@ -187,7 +207,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             },
             "xl3": {
@@ -196,7 +217,8 @@
                 "scopes": [
                     "TEXT_CONTENT",
                     "WIDTH_HEIGHT",
-                    "GAP"
+                    "GAP",
+                    "STROKE_FLOAT"
                 ]
             }
         }

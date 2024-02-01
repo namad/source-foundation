@@ -6,7 +6,7 @@
     "target": "ES6",
     "checkJs": false,
     "module": "ES6",
-    "lib": ["ES2019", "ES2020", "dom", "dom.iterable"],
+    "lib": ["ES2019", "ES2020", "dom", "dom.iterable", "ES2021.String"],
     "jsx": "react",
     "typeRoots": [
       "./node_modules/@types",

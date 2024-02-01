@@ -11,6 +11,7 @@
     { "command": "import", "name": "Open" },
     { "name": "Utils", "menu": [
         { "command": "fixLayers", "name": "Fix Layers" },
+        { "command": "swapVariables", "name": "Swap Variables" },
         { "command": "bindToStyles", "name": "Create Color Styles" },
         { "command": "updateElevationComponents", "name": "Update Elevation Components" },
         { "command": "setPlayground", "name": "Set Playground" }

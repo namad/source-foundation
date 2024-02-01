@@ -2,14 +2,14 @@ import chroma from "chroma-js";
 import { renderColor } from "./swatches-generator";
 
 
-function getSaturationModifier(l) {
+function getSaturationModifier(lightness) {
     // visual representation
     // https://www.desmos.com/calculator/02ufrfsuzy
 
-    const o = 50; // ranges goes from 0 to 100, 50 is the lowest value 
-    const k = 70; // sets how much to modify, higher values outputs smaller modifier
-    const v = 1 + (Math.pow(l - o, 2) / k - Math.pow(o, 2) / k) / 100;
-    return v;
+    const offset = 50; // ligthness range is [0, 100], for saturation we need to offset the curve to make [-50, 50] range 
+    const magnitude = 70; // sets how much to modify, higher values outputs smaller modifier
+    const saturationModifier = 1 + (Math.pow(lightness - offset, 2) / magnitude - Math.pow(offset, 2) / magnitude) / 100;
+    return saturationModifier;
 }
 
 
