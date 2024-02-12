@@ -73,6 +73,8 @@ function processComponent(effects: EffectToken[], component: ComponentNode) {
 
     maskLayer.visible = false;
 
+    debugger;
+
     effects.forEach((shadowSettings, index) => {
         const shadowLayer = shadowLayers[index];
 

@@ -2,10 +2,20 @@ import { delayAsync } from "./delay-async";
 import { _clone } from "./clone";
 import { findFigmaVariableByName } from "./figma-variables";
 
+let totalLayersCount = 0;
+let reboundLayersCount = 0;
+let skippedLayersCount = 0;
+let missingLayersCount = 0;
 
 export async function swapVariables() {
+
+
+    totalLayersCount = 0;
+    reboundLayersCount = 0;
+    skippedLayersCount = 0;
+
     let _nodes = [];
-    figma.skipInvisibleInstanceChildren = true;
+    figma.skipInvisibleInstanceChildren = false;
 
     if (figma.currentPage.selection.length == 0) {
         figma.notify("Select at least one layer and try again");
@@ -33,14 +43,21 @@ export async function swapVariables() {
 
     console.log(_nodes);
     const total = _nodes.length;
+    totalLayersCount = total;
 
     while(_nodes.length) {
         const node = _nodes.shift();
-        console.log(`Processing layer ${total - _nodes.length} out of ${total}`);
+        // (70 - 44) / 70
+        const percent = Math.round(((total - _nodes.length) / total) * 100);
+        const msg = `${percent}% done. Working on layer ${total - _nodes.length} out of ${total}`
+        console.log(msg);
+
         await processLayer(node).catch(err => {
             throw(err);
         });
     }
+
+    return total;
 }
 
 async function traverse(node) {
@@ -60,15 +77,14 @@ async function traverse(node) {
 
 function getVariableName(variable: Variable): string {
     const name = variable.name;
-
     return name.replaceAll('sx', 'spacing').replaceAll('sy', 'spacing/minor');
 }
 
-function findVariableMatch(varId: string) {
+export function findVariableMatch(varId: string) {
     const variable = figma.variables.getVariableById(varId);
 
     if (!variable) {
-        return;
+        return null;
     }
 
     let collectionId = null;
@@ -80,20 +96,17 @@ function findVariableMatch(varId: string) {
     const targetVariable = findFigmaVariableByName(name, collection.name);
 
     if(!targetVariable) {
-        throw(`Cannot find local variable ${name}`);
+        console.warn(`Cannot find ${collection.name} > ${variable.name}`);
+        return null;
     };
 
-    if (targetVariable.id == variable.id) {
-        console.warn(`${variable.name} is a local variable`);
-        return null;
-    }
+    // if (targetVariable.id == variable.id) {
+    //     console.warn(`${variable.name} is a local variable`);
+    //     skippedLayersCount++;
+    //     return null;
+    // }
 
-    if (targetVariable && targetVariable.id !== variable.id) {
-        return targetVariable;
-    }
-
-    console.warn(`Cannot find ${collection.name} > ${variable.name}`);
-    return null;
+    return targetVariable;
 }
 
 
@@ -106,13 +119,13 @@ async function processLayer(node:SceneNode) {
     await delayAsync(2);
 }
 
-function bindPropertyVariables(props, figmaFn) {
+export function bindPropertyVariables(props, figmaFn) {
     const propsCopy = _clone(props).map(prop => {
         Object.keys(prop.boundVariables).forEach((field: VariableBindablePaintField) => {
             const alias = prop.boundVariables[field];
             const variable = findVariableMatch(alias.id);
-            prop.boundVariables = {};
             if (variable) {
+                // prop.boundVariables = {};
                 prop = figmaFn(prop, field, null);
                 prop = figmaFn(prop, field, variable);
             }
@@ -126,6 +139,18 @@ function bindPropertyVariables(props, figmaFn) {
 
 function bindVariable(node: SceneNode, propName: any, variableBinding: any): SceneNode {
 
+    if(node.type == 'TEXT') {
+        const textStyle = figma.getStyleById(node.textStyleId as string);
+
+        if(textStyle) {
+            const localTextStyle = figma.getLocalTextStyles().find(style => style.name === textStyle.name);
+
+            if(localTextStyle) {
+                node.textStyleId = localTextStyle.id;
+            }
+        }
+    }
+
     if (propName == 'fills' && 'fills' in node) {
         node.fills = bindPropertyVariables(node.fills, figma.variables.setBoundVariableForPaint);
     }
@@ -133,21 +158,24 @@ function bindVariable(node: SceneNode, propName: any, variableBinding: any): Sce
         node.strokes = bindPropertyVariables(node.strokes, figma.variables.setBoundVariableForPaint);
     }    
     else if (propName == 'effects' && 'effects' in node) {
-        debugger;
-        
         if (node.effectStyleId !== '') {
             const style = figma.getStyleById(node.effectStyleId);
             const styleName = style.name;
             const localStyle = figma.getLocalEffectStyles().find(style => {
                 return style.name === styleName;
             });
+            node.effects = [];
+            node.effectStyleId = "";
             node.effectStyleId = localStyle ? localStyle.id : "";
             return node;
         }
 
         node.effects = bindPropertyVariables(node.effects, figma.variables.setBoundVariableForEffect);
     }
-    else if(propName == 'layoutGrids' || propName == 'componentProperties' || propName == 'textRangeFills') {
+    else if(propName == 'layoutGrids' && 'layoutGrids' in node) {
+        node.layoutGrids = bindPropertyVariables(node.layoutGrids, figma.variables.setBoundVariableForLayoutGrid);
+    }
+    else if(propName == 'componentProperties' || propName == 'textRangeFills') {
         console.warn(`Swap does not work for ${propName}, skipping node`);
     }
     else {

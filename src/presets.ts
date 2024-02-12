@@ -5,6 +5,7 @@ import indigo from './presets/indigo.json';
 import pink from './presets/pink.json';
 import green from './presets/green.json';
 import amber from './presets/amber.json';
+import deepPink from './presets/pink-deep.json';
 
 import { ImportFormData } from './import-ui';
 
@@ -18,6 +19,7 @@ export function getPresets(): ImportFormData[] {
         rolayBlue as ImportFormData, 
         indigo as ImportFormData,
         pink as ImportFormData,
+        deepPink as ImportFormData,
     ]
 }
 

@@ -28,6 +28,8 @@ import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
 import { swapVariables } from './utils/swap-variables';
+import { exportStyleTemplates } from './utils/export-style-templates';
+import { importStyleTemplates } from './utils/import-style-templates';
 
 console.clear();
 
@@ -89,14 +91,23 @@ const collectionNames = new Map<string, string>([
         figma.closePlugin();
     }
 
+    if (figma.command == "exportStyleTemplates") {
+        await exportStyleTemplates();
+        figma.closePlugin();
+    }
+    
+    if (figma.command == "importStyleTemplates") {
+        await importStyleTemplates();
+        figma.closePlugin();
+    }
+
     if (figma.command == "swapVariables") {
-        await swapVariables().catch(err => {
+        const layersCount = await swapVariables().catch(err => {
             console.error(err);
             figma.notify(err, {error: true});
             throw err;
         });
-        await delayAsync(1000);
-        figma.closePlugin();
+        figma.closePlugin(`${layersCount} layer(s) processed. `);
     }
 })()
 

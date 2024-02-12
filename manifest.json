@@ -12,6 +12,8 @@
     { "name": "Utils", "menu": [
         { "command": "fixLayers", "name": "Fix Layers" },
         { "command": "swapVariables", "name": "Swap Variables" },
+        { "command": "exportStyleTemplates", "name": "Export Style Template" },
+        { "command": "importStyleTemplates", "name": "Import Style Template" },
         { "command": "bindToStyles", "name": "Create Color Styles" },
         { "command": "updateElevationComponents", "name": "Update Elevation Components" },
         { "command": "setPlayground", "name": "Set Playground" }
