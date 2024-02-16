@@ -86,28 +86,28 @@
                 }
             },
             "300": {
-                "$value": "rgba({grey-14}, 0.12)",
-                "$type": "color",
-                "adjustments": {
-                    "s": "1"
-                }
-            },
-            "400": {
                 "$value": "rgba({grey-14}, 0.16)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
-            "500": {
+            "400": {
                 "$value": "rgba({grey-14}, 0.24)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
-            "600": {
+            "500": {
                 "$value": "rgba({grey-14}, 0.32)",
+                "$type": "color",
+                "adjustments": {
+                    "s": "1"
+                }
+            },
+            "600": {
+                "$value": "rgba({grey-14}, 0.44)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
@@ -170,28 +170,28 @@
                 }
             },
             "300": {
-                "$value": "rgba({grey-8}, 0.12)",
-                "$type": "color",
-                "adjustments": {
-                    "s": "1"
-                }
-            },
-            "400": {
                 "$value": "rgba({grey-8}, 0.16)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
-            "500": {
+            "400": {
                 "$value": "rgba({grey-8}, 0.24)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
-            "600": {
+            "500": {
                 "$value": "rgba({grey-8}, 0.32)",
+                "$type": "color",
+                "adjustments": {
+                    "s": "1"
+                }
+            },
+            "600": {
+                "$value": "rgba({grey-8}, 0.44)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"

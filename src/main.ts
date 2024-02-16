@@ -93,12 +93,12 @@ const collectionNames = new Map<string, string>([
 
     if (figma.command == "exportStyleTemplates") {
         await exportStyleTemplates();
-        figma.closePlugin();
+        figma.closePlugin('Style templates exported');
     }
     
     if (figma.command == "importStyleTemplates") {
         await importStyleTemplates();
-        figma.closePlugin();
+        figma.closePlugin('Style templates imported');
     }
 
     if (figma.command == "swapVariables") {

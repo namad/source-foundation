@@ -2,7 +2,7 @@
     "button": {
         "bg": {
             "rest": {
-                "$value": "{utility.tint.400}",
+                "$value": "{utility.tint.300}",
                 "$type": "color"
             },
             "hover": {

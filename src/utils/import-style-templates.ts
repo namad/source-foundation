@@ -15,6 +15,7 @@ function getComponentSets() {
     if(!componentSets) {
         console.log(`First time look up, running slow...`)
 
+        figma.skipInvisibleInstanceChildren = true;
         componentSets = figma.currentPage.findAllWithCriteria({
             types: ['COMPONENT', 'COMPONENT_SET']
         });
@@ -34,7 +35,7 @@ export async function importStyleTemplates() {
     skippedLayersCount = 0;
 
     let _nodes: SceneNode[] = [];
-    figma.skipInvisibleInstanceChildren = false;
+    
 
     if (figma.currentPage.selection.length == 0) {
         figma.notify("Select at least one layer and try again");
@@ -56,6 +57,10 @@ export async function importStyleTemplates() {
 
 
     _nodes.forEach(node => {
+        if(node.type != 'FRAME') {
+            return; // skip everyting that is not a regular frame
+        }
+
         const componentNode = findComponent(node.name);
         if(componentNode) {
             matches.push({
@@ -97,35 +102,75 @@ export async function importStyleTemplates() {
 
 async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent: ComponentNode) {
 
-    let frames: SceneNode[] = [];
+    let targetFrames: {
+        sourceNode: FrameNode | BooleanOperationNode | InstanceNode;
+        targetNode: FrameNode | BooleanOperationNode | InstanceNode;
+    }[] = [];
+
     copyStyles(sourceFrame, targetComponent);
     bindVairables(sourceFrame, targetComponent);
 
-    sourceFrame.children.forEach(node => {
-        const target = targetComponent.findOne(n => n.name === node.name);
+    figma.skipInvisibleInstanceChildren = true;
+    const instances = sourceFrame.findAllWithCriteria({types: ['INSTANCE']});
 
-        if(target) {
-             copyStyles(node, target);
-             bindVairables(node, target);
-        }
-        if(node.type == 'INSTANCE') {
-            copyOverrides(node, targetComponent);
-        }
-        else {
-            frames.push(node);
+    instances.forEach(instanceNode => {
+        let targetNode = targetComponent.findOne(n => n.name === instanceNode.name);
+
+        if(targetNode) {
+            copyOverrides(instanceNode, targetNode, targetComponent);
         }
     })
 
-    frames.forEach(node => {
-        figma.skipInvisibleInstanceChildren = false;
-        const match = targetComponent.findOne(n => n.name === node.name);
+    sourceFrame.children.forEach((sourceNode, index) => {
+        let targetNode = targetComponent.findOne(n => n.name === sourceNode.name);
 
-        if(match == null) return;
+        if(!targetNode) {
+            debugger
+            // copy a component and insert it into the same position as it is in sourceFrame
+            const clone = sourceNode.clone();
+            targetComponent.insertChild(index, clone);
+            return;
+        }
 
-        const copy = node.clone();
-        const index = match.parent.children.indexOf(match);
-        targetComponent.insertChild(index, copy);
-        match.remove();
+        resizeAndReposition(sourceNode, targetNode);
+
+        if (
+            sourceNode.type == 'FRAME' && targetNode.type == 'FRAME' ||
+            sourceNode.type == 'INSTANCE' && targetNode.type == 'INSTANCE' ||
+            sourceNode.type == 'BOOLEAN_OPERATION' && targetNode.type == 'BOOLEAN_OPERATION'
+        ){
+            targetFrames.push({sourceNode, targetNode});
+        }
+    })
+
+    targetFrames.forEach(data => {
+        data.targetNode.fills = _clone(data.sourceNode.fills);
+        data.targetNode.effects = _clone(data.sourceNode.effects);
+        data.targetNode.strokes = _clone(data.sourceNode.strokes);
+        data.targetNode.opacity = _clone(data.sourceNode.opacity);
+        data.targetNode.visible = _clone(data.sourceNode.visible);
+        data.targetNode.isMask = _clone(data.sourceNode.isMask);
+        data.targetNode.strokeAlign = _clone(data.sourceNode.strokeAlign);
+
+        data.targetNode.strokeAlign = _clone(data.sourceNode.strokeAlign);
+        data.targetNode.strokeCap = _clone(data.sourceNode.strokeCap);
+        data.targetNode.strokeJoin = _clone(data.sourceNode.strokeJoin);
+        data.targetNode.strokeMiterLimit = _clone(data.sourceNode.strokeMiterLimit);
+        data.targetNode.strokeStyleId = _clone(data.sourceNode.strokeStyleId);
+        data.targetNode.strokeWeight = _clone(data.sourceNode.strokeWeight);
+
+        if(data.sourceNode.type == 'FRAME' && data.targetNode.type == 'FRAME') {
+            data.targetNode.constraints = _clone(data.sourceNode.constraints);
+            data.targetNode.layoutGrids = _clone(data.sourceNode.layoutGrids);
+            data.targetNode.strokeBottomWeight = _clone(data.sourceNode.strokeBottomWeight);
+            data.targetNode.strokeLeftWeight = _clone(data.sourceNode.strokeLeftWeight);
+            data.targetNode.strokeRightWeight = _clone(data.sourceNode.strokeRightWeight);
+            data.targetNode.strokeTopWeight = _clone(data.sourceNode.strokeTopWeight);
+        }
+
+        copyStyles(data.sourceNode, data.targetNode);
+        bindVairables(data.sourceNode, data.targetNode);
+
     })
 
 
@@ -140,33 +185,106 @@ function bindVairables(sourceFrame: SceneNode, targetComponent: SceneNode) {
 
 }
 
-function copyOverrides(sourceFrame: InstanceNode, targetComponent: ComponentNode) {
-    sourceFrame.overrides.forEach(prop => {
-        const frame = figma.getNodeById(prop.id);
-        const fields = prop.overriddenFields;
+function resizeAndReposition(sourceNode: SceneNode, targetNode: SceneNode) {
+    if(targetNode == null) {
+        return;
+    }
 
-        const target = targetComponent.findOne(n => n.name === frame.name)
+    if(sourceNode.type == 'BOOLEAN_OPERATION') {
+        sourceNode.children.forEach(source => {
+            if('findOne' in targetNode) {
+                const target =  targetNode.findOne(n => n.name === source.name);
+                resizeAndReposition(source, target);
+            }
+        })
+
+    }
+    else {
+        targetNode.x = sourceNode.x;
+        targetNode.y = sourceNode.y;
+
+        if('resize' in targetNode) {
+            targetNode.resize(sourceNode.width, sourceNode.height);
+        }
+    }
+}
+
+function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetComponent: ComponentNode) {
+
+    if(targetNode.type == 'INSTANCE') {
+        // SWAP INSTANCES ---------------------
+        const doSwap = sourceNode.mainComponent.id !== targetNode.mainComponent.id;
+
+        if(doSwap) {
+            targetNode.swapComponent(sourceNode.mainComponent);
+        }
+
+        // COPY COMPONENT PROPS ----------------
+        const sourceComponentProps = sourceNode.componentProperties;
+        const propsCopy = {};
+
+        Object.keys(sourceComponentProps).forEach(key => {
+            propsCopy[key] = sourceComponentProps[key].value;
+
+        })
+        targetNode.setProperties(propsCopy);
+    }
+
+    sourceNode.overrides.forEach(prop => {
+        const type = targetNode.type;
+
+        if(
+            type != 'FRAME' && 
+            type != 'BOOLEAN_OPERATION' && 
+            type != 'COMPONENT_SET' && 
+            type != 'COMPONENT' && 
+            type != 'INSTANCE' && 
+            type != 'GROUP' && 
+            type != 'SECTION') {
+            return;
+        }
+
+        const source = figma.getNodeById(prop.id) as SceneNode;
+        const fields = prop.overriddenFields;
+        const target =  prop.id == targetNode.id ? targetNode : targetNode.findOne(n => n.name === source.name);
 
         if(target != null) {
             fields.forEach(field => {
-                if(
-                    field != 'componentPropertyDefinitions' && 
-                    field != 'height' &&
-                    field != 'overlayBackground' &&
-                    field != 'overlayBackgroundInteraction' &&
-                    field != 'overlayPositionType' &&
-                    field != 'parent' &&
-                    field != 'type' && 
-                    field != 'width'
-                ) {
-                    target[field] = _clone(sourceFrame[field]);
+                let propName = field as string;
+
+                if(field == 'stokeTopWeight') {
+                    propName = 'strokeTopWeight'
+                }
+                
+                if(field == 'componentProperties' && source.type == 'INSTANCE' && target.type == 'INSTANCE') {
+                    // COPY COMPONENT PROPS ----------------
+                    const sourceComponentProps = source.componentProperties;
+                    const propsCopy = {};
+
+                    Object.keys(sourceComponentProps).forEach(key => {
+                        propsCopy[key] = sourceComponentProps[key].value;
+
+                    })
+                    target.setProperties(propsCopy);        
+                }
+                else if(
+                    propName != 'componentPropertyDefinitions' && 
+                    propName != 'height' &&
+                    propName != 'overlayBackground' &&
+                    propName != 'overlayBackgroundInteraction' &&
+                    propName != 'overlayPositionType' &&
+                    propName != 'parent' &&
+                    propName != 'type' && 
+                    propName != 'width' &&
+                    propName != 'boundVariables') {
+
+                    console.log(`applying ${propName}:${source[propName]} to ${source.name}`);
+                    target[propName] = _clone(source[propName]);
                 }
                 
             });
-            const boundVairables = Object.entries(sourceFrame.boundVariables);
-            boundVairables.forEach(([propName, varBinding]) => {
-                bindVariable(sourceFrame, targetComponent, propName, varBinding);
-            });
+            
+            bindVairables(source, target);
         }
     })
 
@@ -188,25 +306,13 @@ function copyStyles(sourceFrame: SceneNode, targetComponent: SceneNode) {
 }
 
 function bindVariable(sourceFrame: SceneNode, targetComponent: SceneNode, propName: any, variableBinding: any): SceneNode {
-    if (propName == 'fills' && 'fills' in sourceFrame && 'fills' in targetComponent) {
+    if (propName == 'fills' && 'fills' in sourceFrame && 'fills' in targetComponent && !targetComponent['fillStyleId']) {
         targetComponent.fills = bindPropertyVariables(sourceFrame.fills, figma.variables.setBoundVariableForPaint);
     }
-    else if (propName == 'strokes' && 'strokes' in sourceFrame && 'strokes' in targetComponent) {
+    else if (propName == 'strokes' && 'strokes' in sourceFrame && 'strokes' in targetComponent && !targetComponent['strokeStyleId']) {
         targetComponent.strokes = bindPropertyVariables(sourceFrame.strokes, figma.variables.setBoundVariableForPaint);
     }    
-    else if (propName == 'effects' && 'effects' in sourceFrame && 'effects' in targetComponent) {
-        if (sourceFrame.effectStyleId !== '') {
-            const style = figma.getStyleById(sourceFrame.effectStyleId);
-            const styleName = style.name;
-            const localStyle = figma.getLocalEffectStyles().find(style => {
-                return style.name === styleName;
-            });
-            targetComponent.effects = [];
-            targetComponent.effectStyleId = "";
-            targetComponent.effectStyleId = localStyle ? localStyle.id : "";
-            return targetComponent;
-        }
-
+    else if (propName == 'effects' && 'effects' in sourceFrame && 'effects' in targetComponent && !targetComponent['effectStyleId']) {
         targetComponent.effects = bindPropertyVariables(sourceFrame.effects, figma.variables.setBoundVariableForEffect);
     }
     else if(propName == 'layoutGrids' && 'layoutGrids' in sourceFrame && 'layoutGrids' in targetComponent) {

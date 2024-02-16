@@ -124,10 +124,17 @@ export function bindPropertyVariables(props, figmaFn) {
         Object.keys(prop.boundVariables).forEach((field: VariableBindablePaintField) => {
             const alias = prop.boundVariables[field];
             const variable = findVariableMatch(alias.id);
+
+            const spread = prop['spread']; //workaround Figma bug. It resets spread after calling figma.variables.setBoundVariableForEffect
+
             if (variable) {
                 // prop.boundVariables = {};
                 prop = figmaFn(prop, field, null);
                 prop = figmaFn(prop, field, variable);
+            }
+
+            if(typeof spread != 'undefined') {
+                prop['spread'] = spread;
             }
         });
 
@@ -135,6 +142,9 @@ export function bindPropertyVariables(props, figmaFn) {
     });
 
     return propsCopy;
+}
+
+function bindEffectVariables(props, figmaFn) {
 }
 
 function bindVariable(node: SceneNode, propName: any, variableBinding: any): SceneNode {
