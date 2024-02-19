@@ -72,14 +72,14 @@
   "alt": {
     "base": {
       "100": {
-        "$value": "rgba({grey-78}, 0.04)",
+        "$value": "rgba({grey-78}, 0.08)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
         }
       },
       "200": {
-        "$value": "rgba({grey-78}, 0.08)",
+        "$value": "rgba({grey-78}, 0.12)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
@@ -116,14 +116,14 @@
     },
     "contrast": {
       "100": {
-        "$value": "rgba({grey-78}, 0.04)",
+        "$value": "rgba({grey-78}, 0.08)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
         }
       },
       "200": {
-        "$value": "rgba({grey-78}, 0.08)",
+        "$value": "rgba({grey-78}, 0.12)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
@@ -200,14 +200,14 @@
     },
     "tint": {
       "100": {
-        "$value": "rgba({grey-78}, 0.04)",
+        "$value": "rgba({grey-78}, 0.08)",
         "$type": "color",
         "adjustments": {
           "s": "*2"
         }
       },
       "200": {
-        "$value": "rgba({grey-78}, 0.08)",
+        "$value": "rgba({grey-78}, 0.12)",
         "$type": "color",
         "adjustments": {
           "s": "*2"

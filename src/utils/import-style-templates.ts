@@ -101,6 +101,8 @@ export async function importStyleTemplates() {
 
 
 async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent: ComponentNode) {
+   
+    debugger;
 
     let targetFrames: {
         sourceNode: FrameNode | BooleanOperationNode | InstanceNode;
@@ -109,19 +111,10 @@ async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent:
 
     copyStyles(sourceFrame, targetComponent);
     bindVairables(sourceFrame, targetComponent);
-
-    figma.skipInvisibleInstanceChildren = true;
-    const instances = sourceFrame.findAllWithCriteria({types: ['INSTANCE']});
-
-    instances.forEach(instanceNode => {
-        let targetNode = targetComponent.findOne(n => n.name === instanceNode.name);
-
-        if(targetNode) {
-            copyOverrides(instanceNode, targetNode, targetComponent);
-        }
-    })
+    debugger;
 
     sourceFrame.children.forEach((sourceNode, index) => {
+        figma.skipInvisibleInstanceChildren = false;
         let targetNode = targetComponent.findOne(n => n.name === sourceNode.name);
 
         if(!targetNode) {
@@ -134,6 +127,9 @@ async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent:
 
         resizeAndReposition(sourceNode, targetNode);
 
+        if(sourceNode.type == 'INSTANCE' && targetNode.type == 'INSTANCE') {
+            copyOverrides(sourceNode, targetNode, targetComponent);
+        }
         if (
             sourceNode.type == 'FRAME' && targetNode.type == 'FRAME' ||
             sourceNode.type == 'INSTANCE' && targetNode.type == 'INSTANCE' ||
@@ -142,6 +138,8 @@ async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent:
             targetFrames.push({sourceNode, targetNode});
         }
     })
+
+    debugger;
 
     targetFrames.forEach(data => {
         data.targetNode.fills = _clone(data.sourceNode.fills);
@@ -209,6 +207,18 @@ function resizeAndReposition(sourceNode: SceneNode, targetNode: SceneNode) {
     }
 }
 
+function copyComponentProps(source: InstanceNode, target: InstanceNode) {
+    // COPY COMPONENT PROPS ----------------
+    const sourceComponentProps = source.componentProperties;
+    const propsCopy = {};
+
+    Object.keys(sourceComponentProps).forEach(key => {
+        propsCopy[key] = sourceComponentProps[key].value;
+
+    })
+    target.setProperties(propsCopy);
+}
+
 function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetComponent: ComponentNode) {
 
     if(targetNode.type == 'INSTANCE') {
@@ -219,15 +229,7 @@ function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetCo
             targetNode.swapComponent(sourceNode.mainComponent);
         }
 
-        // COPY COMPONENT PROPS ----------------
-        const sourceComponentProps = sourceNode.componentProperties;
-        const propsCopy = {};
-
-        Object.keys(sourceComponentProps).forEach(key => {
-            propsCopy[key] = sourceComponentProps[key].value;
-
-        })
-        targetNode.setProperties(propsCopy);
+        copyComponentProps(sourceNode, targetNode);
     }
 
     sourceNode.overrides.forEach(prop => {
@@ -246,26 +248,18 @@ function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetCo
 
         const source = figma.getNodeById(prop.id) as SceneNode;
         const fields = prop.overriddenFields;
-        const target =  prop.id == targetNode.id ? targetNode : targetNode.findOne(n => n.name === source.name);
+        const target =  /*source.name == targetNode.name ? targetNode :*/ targetNode.findOne(n => n.name === source.name);
 
         if(target != null) {
             fields.forEach(field => {
                 let propName = field as string;
-
+ 
                 if(field == 'stokeTopWeight') {
                     propName = 'strokeTopWeight'
                 }
                 
                 if(field == 'componentProperties' && source.type == 'INSTANCE' && target.type == 'INSTANCE') {
-                    // COPY COMPONENT PROPS ----------------
-                    const sourceComponentProps = source.componentProperties;
-                    const propsCopy = {};
-
-                    Object.keys(sourceComponentProps).forEach(key => {
-                        propsCopy[key] = sourceComponentProps[key].value;
-
-                    })
-                    target.setProperties(propsCopy);        
+                    copyComponentProps(source, target);
                 }
                 else if(
                     propName != 'componentPropertyDefinitions' && 

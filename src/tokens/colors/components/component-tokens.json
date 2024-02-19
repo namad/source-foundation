@@ -96,7 +96,7 @@
                     "$type": "color"
             },
             "hover": {
-                    "$value": "{stroke.base.500}",
+                    "$value": "{primary.300}",
                     "$type": "color"
             },
             "readonly": {

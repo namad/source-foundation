@@ -1,17 +1,17 @@
 import { convertFigmaColorToRgb, parseColorToken } from './utils/figma-colors';
 import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
 import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
-import { sortColorTokens } from './utils/sort-palette';
 
 import chroma from 'chroma-js';
 
-import * as spacing from './spacing-tokens';
-import * as radii from './radii-tokens';
-import * as typescale from './typescale-tokens';
-import * as sizing from './sizing-tokens';
-import * as effects from './effect-tokens';
+import * as spacingTokens from './spacing-tokens';
+import * as radiiTokens from './radii-tokens';
+import * as typescaleTokens from './typescale-tokens';
+import * as sizingTokens from './sizing-tokens';
+import * as effectsTokens from './effect-tokens';
+import * as opacityTokens from './opacity-tokens';
 
-import { sortSizeTokens } from './utils/sort-sizes';
+import { getSizeTokensSortFn, getColorTokensSortFn, getOpacityTokensSortFn  } from './utils/sort-tokens';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
@@ -23,7 +23,6 @@ import { ImportFormData } from './import-ui';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
-import { delayAsync } from './utils/delay-async';
 import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
@@ -40,13 +39,14 @@ const collectionNames = new Map<string, string>([
     ["themeColors", "Color Theme"],
     ["componentColors", "Component Tokens"],
     ["spacing", "Spacing"],
+    ["opacity", "Opacity"],
     ["radii", "Radii"],
     ["iconScale", "Icon Scale"],
 ]);
 
 (async () => {
     await Promise.all(
-        typescale.getFontDetails().map(async item =>
+        typescaleTokens.getFontDetails().map(async item =>
             await figma.loadFontAsync(item as FontName)
         )
     );
@@ -73,7 +73,7 @@ const collectionNames = new Map<string, string>([
     }
 
     if (figma.command == "updateElevationComponents") {
-        updateElevationComponents(effects.getElevationTokens());
+        updateElevationComponents(effectsTokens.getElevationTokens());
         figma.closePlugin();
     }
 
@@ -171,42 +171,49 @@ function initiateImport(params: ImportFormData) {
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors(),
-        sortFn: sortColorTokens
+        sortFn: getColorTokensSortFn()
     });
 
     getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: getThemeColors('lightBase', params),
-        sortFn: sortColorTokens
+        sortFn: getColorTokensSortFn()
     });
 
     // getCollectionAndPrepareTokens({
     //     collectionName: collectionNames.get('brandColors'),
     //     modeName: toTitleCase(params.primary),
     //     data: getBrandColors(params.primary),
-    //     sortFn: sortColorTokens
+    //     sortFn: getColorTokensSortFn()
     // });
 
     getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('spacing'),
         modeName: toTitleCase(params.spacing),
-        data: spacing[params.spacing],
-        sortFn: sortSizeTokens,
+        data: spacingTokens[params.spacing],
+        sortFn: getSizeTokensSortFn(),
     });
 
     getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('radii'),
         modeName: toTitleCase(params.radii),
-        data: radii[params.radii],
-        sortFn: sortSizeTokens,
+        data: radiiTokens[params.radii],
+        sortFn: getSizeTokensSortFn(),
     });
 
     getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('iconScale'),
         modeName: toTitleCase("base"),
-        data: sizing["base"],
-        sortFn: sortSizeTokens,
+        data: sizingTokens.base,
+        sortFn: getSizeTokensSortFn(),
+    });
+
+    getCollectionAndPrepareTokens({
+        collectionName: collectionNames.get('opacity'),
+        modeName: toTitleCase("default"),
+        data: opacityTokens.opacity,
+        sortFn: getOpacityTokensSortFn(),
     });
 }
 
@@ -311,7 +318,7 @@ function importAllTokens(params: ImportFormData) {
         params: params,
         defaultMode: params.spacing,
         defaultOrder: spacingSizeName,
-        tokens: spacing
+        tokens: spacingTokens
     });
 
     importSizeTokens({
@@ -320,7 +327,7 @@ function importAllTokens(params: ImportFormData) {
         params: params,
         defaultMode: params.radii,
         defaultOrder: radiiSizeName,
-        tokens: radii
+        tokens: radiiTokens
     });
 
     importSizeTokens({
@@ -329,7 +336,7 @@ function importAllTokens(params: ImportFormData) {
         params: params,
         defaultMode: params.baseFontSize,
         defaultOrder: typographySizeName,
-        tokens: typescale,
+        tokens: typescaleTokens,
         isSingleMode: true
     });
 
@@ -340,14 +347,21 @@ function importAllTokens(params: ImportFormData) {
         params: params,
         defaultMode: 'base',
         defaultOrder: iconSizeName,
-        tokens: sizing
+        tokens: sizingTokens
     });
+
+    importVariables({
+        collectionName: collectionNames.get('opacity'),
+        modeName: "Default",
+        data: opacityTokens.opacity
+    });
+
 
     globalTokens = {
         ...globalTokens,
-        ...typescale.getTypograohyTokens(params.baseFontSize, params.typeScale)
+        ...typescaleTokens.getTypograohyTokens(params.baseFontSize, params.typeScale)
     };
-    importTextStyles(typescale.getTypograohyTokens(params.baseFontSize, params.typeScale));
+    importTextStyles(typescaleTokens.getTypograohyTokens(params.baseFontSize, params.typeScale));
 
     importEffects();
 
@@ -358,8 +372,8 @@ function importAllTokens(params: ImportFormData) {
 
 function importEffects() {
     // import effects for default theme which is light one
-    importEffectStyles(effects.elevation);
-    updateElevationComponents(effects.getElevationTokens());
+    importEffectStyles(effectsTokens.elevation);
+    updateElevationComponents(effectsTokens.getElevationTokens());
 }
 
 function importColorTheme(params: ImportFormData) {
@@ -377,7 +391,7 @@ function importColorTheme(params: ImportFormData) {
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: themeColors,
-        sortFn: sortColorTokens
+        sortFn: getColorTokensSortFn
     });
 
     themeColors = getThemeColors('darkBase', params);
