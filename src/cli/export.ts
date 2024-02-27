@@ -95,7 +95,11 @@ export function writeJSONChunk(stream, data) {
 }
 
 function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated', settings: ImportFormData) {
+
+
     let themeColors = getThemeColors(theme, settings);
+
+
     let globalNeutrals = getGlobalNeutrals();
     return Object.entries(themeColors as DesignTokensRaw).map(([name, token]) => {
         if (typeof token.$value !== 'string' || token.$type !== 'color') return;
@@ -113,7 +117,10 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
             value = parseColorValue(value, token.adjustments).hsl;
         }
         else {
+            // console.log(name);
+            // console.log(token.$value);
             value = parseColorToken(token, {}, 'hsl');
+            // console.log(value)
         }
 
         return { name, value };

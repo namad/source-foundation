@@ -131,6 +131,7 @@ export function generateSystemAccentPalette(theme, params: ImportFormData): Syst
 
     for (const [name, scale] of Object.entries(accents)) {
         const hue = params[name];
+
         const shades = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance);
         accents[name] = getThemeScale(scale, shades)
     }
