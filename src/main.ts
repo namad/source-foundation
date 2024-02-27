@@ -361,6 +361,7 @@ function importAllTokens(params: ImportFormData) {
         ...globalTokens,
         ...typescaleTokens.getTypograohyTokens(params.baseFontSize, params.typeScale)
     };
+    
     importTextStyles(typescaleTokens.getTypograohyTokens(params.baseFontSize, params.typeScale));
 
     importEffects();

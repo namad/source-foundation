@@ -100,11 +100,11 @@ export function findVariableMatch(varId: string) {
         return null;
     };
 
-    // if (targetVariable.id == variable.id) {
-    //     console.warn(`${variable.name} is a local variable`);
-    //     skippedLayersCount++;
-    //     return null;
-    // }
+    if (targetVariable.id == variable.id) {
+        console.warn(`${variable.name} is a local variable`);
+        skippedLayersCount++;
+        return null;
+    }
 
     return targetVariable;
 }

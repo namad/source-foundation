@@ -37,7 +37,7 @@ const configFilePath = path.resolve(`./${configName}`);
 const defaultOutputFolder = "./dist";
 const defaultOutputName = 'variables.css';
 
-let settings = {};
+let settings = Object.apply({}, defaultSettings);
 
 const { 
     hue,
@@ -190,32 +190,6 @@ function writeElevationVariables(stream) {
 }
 
 (async() => {
-    const data = { 
-        hue,
-        saturation,
-        distance,
-        primary,
-        info,
-        success,
-        warning,
-        danger,
-        red,
-        amber,
-        brown,
-        green,
-        teal,
-        blue,
-        indigo,
-        violet,
-        purple,
-        pink,
-        typeScale,
-        accentSaturation,
-        accentMaxLuminance,
-        accentMidLuminance,
-        accentMinLuminance,
-    };
-
     if (command === 'init') {
         const isConfigThere = fs.existsSync(configFilePath);
         if (isConfigThere != true) {
@@ -223,7 +197,7 @@ function writeElevationVariables(stream) {
             let stream = fs.createWriteStream(`./${configName}`);
 
             await writeTheFileIntoDirectory(stream, () => {
-                writeJSONChunk(stream, data);
+                writeJSONChunk(stream, settings);
                 stream.close()
             })
             process.exit();
@@ -243,11 +217,13 @@ function writeElevationVariables(stream) {
 
         makeFolder(output);
         const stream = fs.createWriteStream(output);
+        
+        console.log(settings);
 
         await writeTheFileIntoDirectory(stream, () => {
-            writeCSSChunk(stream, '[data-theme=light], .theme-light', collectColorVariables('lightBase', data as ImportFormData));
-            writeCSSChunk(stream, '[data-theme=dark-base], .theme-dark-base', collectColorVariables('darkBase', data as ImportFormData));
-            writeCSSChunk(stream, '[data-theme=dark-elevated], .theme-dark-elevated', collectColorVariables('darkElevated', data as ImportFormData));
+            writeCSSChunk(stream, '[data-theme=light], .theme-light', collectColorVariables('lightBase', settings as ImportFormData));
+            writeCSSChunk(stream, '[data-theme=dark-base], .theme-dark-base', collectColorVariables('darkBase', settings as ImportFormData));
+            writeCSSChunk(stream, '[data-theme=dark-elevated], .theme-dark-elevated', collectColorVariables('darkElevated', settings as ImportFormData));
 
             writeRadiiVariables(stream);
             writeSpacingVariables(stream);

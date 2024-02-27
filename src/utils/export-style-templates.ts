@@ -23,6 +23,12 @@ export async function exportStyleTemplates() {
     }
 
     figma.currentPage.selection.forEach((node: SceneNode) => {
+
+        if(node.type == "COMPONENT") {
+            _nodes.push(node);
+            return;
+        }
+
         if ('findAllWithCriteria' in node) {
             const componentNodes = node.findAllWithCriteria({types: ["COMPONENT"]});
             _nodes = _nodes.concat(componentNodes);

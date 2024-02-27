@@ -57,10 +57,9 @@ export async function importStyleTemplates() {
 
 
     _nodes.forEach(node => {
-        if(node.type != 'FRAME') {
+        if(node.type != 'FRAME' || node.visible != true) {
             return; // skip everyting that is not a regular frame
         }
-
         const componentNode = findComponent(node.name);
         if(componentNode) {
             matches.push({
@@ -101,9 +100,6 @@ export async function importStyleTemplates() {
 
 
 async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent: ComponentNode) {
-   
-    debugger;
-
     let targetFrames: {
         sourceNode: FrameNode | BooleanOperationNode | InstanceNode;
         targetNode: FrameNode | BooleanOperationNode | InstanceNode;
@@ -111,14 +107,12 @@ async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent:
 
     copyStyles(sourceFrame, targetComponent);
     bindVairables(sourceFrame, targetComponent);
-    debugger;
 
     sourceFrame.children.forEach((sourceNode, index) => {
         figma.skipInvisibleInstanceChildren = false;
         let targetNode = targetComponent.findOne(n => n.name === sourceNode.name);
 
         if(!targetNode) {
-            debugger
             // copy a component and insert it into the same position as it is in sourceFrame
             const clone = sourceNode.clone();
             targetComponent.insertChild(index, clone);
@@ -139,40 +133,40 @@ async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent:
         }
     })
 
-    debugger;
-
     targetFrames.forEach(data => {
-        data.targetNode.fills = _clone(data.sourceNode.fills);
-        data.targetNode.effects = _clone(data.sourceNode.effects);
-        data.targetNode.strokes = _clone(data.sourceNode.strokes);
-        data.targetNode.opacity = _clone(data.sourceNode.opacity);
-        data.targetNode.visible = _clone(data.sourceNode.visible);
-        data.targetNode.isMask = _clone(data.sourceNode.isMask);
-        data.targetNode.strokeAlign = _clone(data.sourceNode.strokeAlign);
-
-        data.targetNode.strokeAlign = _clone(data.sourceNode.strokeAlign);
-        data.targetNode.strokeCap = _clone(data.sourceNode.strokeCap);
-        data.targetNode.strokeJoin = _clone(data.sourceNode.strokeJoin);
-        data.targetNode.strokeMiterLimit = _clone(data.sourceNode.strokeMiterLimit);
-        data.targetNode.strokeStyleId = _clone(data.sourceNode.strokeStyleId);
-        data.targetNode.strokeWeight = _clone(data.sourceNode.strokeWeight);
-
-        if(data.sourceNode.type == 'FRAME' && data.targetNode.type == 'FRAME') {
-            data.targetNode.constraints = _clone(data.sourceNode.constraints);
-            data.targetNode.layoutGrids = _clone(data.sourceNode.layoutGrids);
-            data.targetNode.strokeBottomWeight = _clone(data.sourceNode.strokeBottomWeight);
-            data.targetNode.strokeLeftWeight = _clone(data.sourceNode.strokeLeftWeight);
-            data.targetNode.strokeRightWeight = _clone(data.sourceNode.strokeRightWeight);
-            data.targetNode.strokeTopWeight = _clone(data.sourceNode.strokeTopWeight);
-        }
-
-        copyStyles(data.sourceNode, data.targetNode);
-        bindVairables(data.sourceNode, data.targetNode);
-
+        copyNodeProps(data.sourceNode, data.targetNode);
     })
 
-
     await delayAsync(10);
+}
+
+function copyNodeProps(sourceNode: FrameNode | BooleanOperationNode | InstanceNode, targetNode: FrameNode | BooleanOperationNode | InstanceNode ) {
+    targetNode.fills = _clone(sourceNode.fills);
+    targetNode.effects = _clone(sourceNode.effects);
+    targetNode.strokes = _clone(sourceNode.strokes);
+    targetNode.opacity = _clone(sourceNode.opacity);
+    targetNode.visible = _clone(sourceNode.visible);
+    targetNode.isMask = _clone(sourceNode.isMask);
+    targetNode.strokeAlign = _clone(sourceNode.strokeAlign);
+
+    targetNode.strokeAlign = _clone(sourceNode.strokeAlign);
+    targetNode.strokeCap = _clone(sourceNode.strokeCap);
+    targetNode.strokeJoin = _clone(sourceNode.strokeJoin);
+    targetNode.strokeMiterLimit = _clone(sourceNode.strokeMiterLimit);
+    targetNode.strokeStyleId = _clone(sourceNode.strokeStyleId);
+    targetNode.strokeWeight = _clone(sourceNode.strokeWeight);
+
+    if (sourceNode.type == 'FRAME' && targetNode.type == 'FRAME') {
+        targetNode.constraints = _clone(sourceNode.constraints);
+        targetNode.layoutGrids = _clone(sourceNode.layoutGrids);
+        targetNode.strokeBottomWeight = _clone(sourceNode.strokeBottomWeight);
+        targetNode.strokeLeftWeight = _clone(sourceNode.strokeLeftWeight);
+        targetNode.strokeRightWeight = _clone(sourceNode.strokeRightWeight);
+        targetNode.strokeTopWeight = _clone(sourceNode.strokeTopWeight);
+    }
+
+    copyStyles(sourceNode, targetNode);
+    bindVairables(sourceNode, targetNode);
 }
 
 function bindVairables(sourceFrame: SceneNode, targetComponent: SceneNode) {
@@ -220,11 +214,9 @@ function copyComponentProps(source: InstanceNode, target: InstanceNode) {
 }
 
 function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetComponent: ComponentNode) {
-
     if(targetNode.type == 'INSTANCE') {
         // SWAP INSTANCES ---------------------
         const doSwap = sourceNode.mainComponent.id !== targetNode.mainComponent.id;
-
         if(doSwap) {
             targetNode.swapComponent(sourceNode.mainComponent);
         }

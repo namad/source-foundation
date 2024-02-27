@@ -1,6 +1,6 @@
 {
   "name": "source-foundation-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Build json tokens / css variables  / tailwind config that supports source design system features",
   "main": "index.js",
   "scripts": {

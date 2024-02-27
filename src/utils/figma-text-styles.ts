@@ -1,12 +1,24 @@
+import { _clone } from "./clone";
 import { parseReferenceGlobal } from "./token-references";
 
 
 export function importTextStyles(tokens: any[]) {
     Object.entries(tokens).forEach(([name, token]) => {
         if(token.$type == 'typography') {
-            let textStyle = getStyleByName(name) || figma.createTextStyle();
+            let textStyle = getStyleByName(name);
+            let newStyle = false;
+
+            if(!textStyle) {
+                textStyle = figma.createTextStyle();
+                newStyle = true;
+            }
+
             const resolved = parseValues(token.$value, tokens);
             const normalized = convertTextStyleToFigma(name, resolved);
+
+            if(!newStyle) {
+                normalized.fontName = _clone(textStyle.fontName);
+            }
 
             Object.keys(normalized).forEach(key => {
                 textStyle[key] = normalized[key];
