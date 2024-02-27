@@ -21,6 +21,7 @@ import { generateNeutrals } from './color-generators/neutrals-palette-generator'
 import { ImportFormData } from './import-ui';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';
 import chroma from "chroma-js";
+import { _clone } from './utils/clone';
 
 let GlobalNeutrals;
 
@@ -46,7 +47,7 @@ export function getBrandColors(name, accentShades, flat?: boolean) {
 export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated', formData: ImportFormData) {
 
     let params = {
-        ...formData
+        ...normalizeFormData(formData)
     }
 
     GlobalNeutrals = generateNeutrals({
@@ -150,4 +151,35 @@ function generateSemanticPalette(accents: SemanticAccentColors, palette) {
     });
 
     return result;
+}
+
+function normalizeFormData(formData: ImportFormData): ImportFormData {
+    let normalizedData: ImportFormData = _clone(formData);
+    const numberTypes = [
+        'hue',
+        'saturation',
+        'distance',
+        'red',
+        'amber',
+        'brown',
+        'green',
+        'teal',
+        'blue',
+        'indigo',
+        'violet',
+        'purple',
+        'pink',
+        'accentSaturation',
+        'accentMaxLuminance',
+        'accentMidLuminance',
+        'accentMinLuminance'
+    ]
+    
+    numberTypes.forEach(p => {
+        if(typeof formData[p] == 'string') {
+            normalizedData[p] = parseFloat(formData[p]);
+        }
+    });
+
+    return normalizedData;
 }
