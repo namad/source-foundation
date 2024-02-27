@@ -131,8 +131,6 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
 
 function generateSemanticShades(aliasName, accentShades): ColorShadesScale {
     let output: ColorShadesScale = {};
-    
-    console.log(accentShades);
 
     for (var a = 1, b = 7; a < b; a++) {
         output[`${a}00`] = {

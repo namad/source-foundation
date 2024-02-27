@@ -218,8 +218,6 @@ function writeElevationVariables(stream) {
         makeFolder(output);
         const stream = fs.createWriteStream(output);
         
-        console.log(settings);
-
         await writeTheFileIntoDirectory(stream, () => {
             writeCSSChunk(stream, '[data-theme=light], .theme-light', collectColorVariables('lightBase', settings as ImportFormData));
             writeCSSChunk(stream, '[data-theme=dark-base], .theme-dark-base', collectColorVariables('darkBase', settings as ImportFormData));
