@@ -52,11 +52,9 @@ export function getTypograohyTokens(size: string, scale = "minorThird") {
 
 export async function getFontDetails() {
     const styles = await figma.getLocalTextStylesAsync()
-    const fontFamilies: string[] = [];
-    const fontStyles: string[] = [];
 
     if(styles.length) {
-        return getFontDetailsLocal(styles, fontFamilies, fontStyles);
+        return getFontDetailsLocal(styles);
     }
     else {
         return getFontDetailsTokens();
@@ -76,7 +74,10 @@ function getFontDetailsTokens() {
 }
 
 
-function getFontDetailsLocal(styles: any, fontFamilies: string[], fontStyles: string[]) {
+function getFontDetailsLocal(styles: TextStyle[]) {
+    const fontFamilies: string[] = [];
+    const fontStyles: string[] = [];
+
     for (const style of styles) {
         const fontFamily = style.fontName.family;
         const fontStyle = style.fontName.style;
@@ -85,7 +86,7 @@ function getFontDetailsLocal(styles: any, fontFamilies: string[], fontStyles: st
             fontFamilies.push(fontFamily);
         }
         if (fontStyles.includes(fontStyle) == false) {
-            fontFamilies.push(fontStyle);
+            fontStyles.push(fontStyle);
         }
     }
 

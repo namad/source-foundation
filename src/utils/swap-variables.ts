@@ -10,11 +10,11 @@ let missingLayersCount = 0;
 
 let importadVariablesLibrary: Variable[];
 
-export async function swapVariables(data: FileVariablesRecord) {
+export async function swapVariables(data: LibraryVariable[]) {
 
     importadVariablesLibrary = [];
 
-    await Promise.all(data.variables.map(async (record) => {
+    await Promise.all(data.map(async (record) => {
         const variable = await figma.variables.importVariableByKeyAsync(record.key)
         importadVariablesLibrary.push(variable);
     }));
@@ -66,7 +66,6 @@ export async function swapVariables(data: FileVariablesRecord) {
 
         await processLayer(node, processed).catch(err => {
             console.error(err);
-            debugger;
         });
 
         reboundLayersCount++;

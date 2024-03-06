@@ -15,12 +15,12 @@ let reloadStoreButton = document.getElementById('reloadStore') as HTMLButtonElem
 
 let fileName;
 
-importButton.addEventListener('click', (e) => {
-    const fileNameInput = document.querySelector('#importModal input[name=fileName]') as HTMLInputElement;
-    parent.postMessage({
-        pluginMessage: { type: 'COLLECT_VARS', fileName: fileNameInput.value }
-    }, "*");
-});
+// importButton.addEventListener('click', (e) => {
+//     const fileNameInput = document.querySelector('#importModal input[name=fileName]') as HTMLInputElement;
+//     parent.postMessage({
+//         pluginMessage: { type: 'COLLECT_VARS', fileName: fileNameInput.value }
+//     }, "*");
+// });
 
 reloadStoreButton.addEventListener('click', (e) => {
     parent.postMessage({
@@ -51,12 +51,7 @@ swapVariablesButton.addEventListener('click', (e) => {
 window.onmessage = async ({ data: { pluginMessage } }) => {
 
     if (pluginMessage.event == 'SYNC_VARS') {
-        fileName = pluginMessage.fileName;
         renderList(pluginMessage.data);
-
-        document.querySelectorAll('input[name=fileName]').forEach((el: HTMLInputElement) => {
-            el.value = fileName;
-        });
 
         document.querySelectorAll('dialog').forEach((modal: HTMLDialogElement) => {
             modal.close();
@@ -77,7 +72,7 @@ window.onmessage = async ({ data: { pluginMessage } }) => {
 };
 
 interface StoredData {
-    [key: string]: FileVariablesRecord
+    [key: string]: LibraryVariable[]
 }
 
 function renderList(storedData: StoredData) {
@@ -90,25 +85,13 @@ function renderList(storedData: StoredData) {
                 <input type="radio" name="theme" value="${fileKey}" />
                 <div class="flex-1 flex flex-col px-base py-minor-base gap-minor-xs">
                     <span class="flex flex-row items-baseline justify-between">
-                        <span>${value.fileName}</span>
-                        <span class="text-sm color-text-base-500 hidden">${value.timestamp}</span>
+                        <span>${fileKey}</span>
                     </span>
-                </div>
-                <div class="cursor-pointer py-xs px-sm flex items-center justify-center opacity-70 hover:opacity-100 hover:color-primary-500" data-item="${fileKey}" data-action="remove" title="Remove collection">
-                    <span class="icon icon-trash-2"></span>
                 </div>
             </label>`);
     })
     const listboxElement = document.getElementById('presetsList')
     listboxElement.innerHTML = markup.join('');
-
-    listboxElement.querySelectorAll('[data-action="remove"]').forEach((el: HTMLDivElement) => {
-        el.addEventListener('click', (e) => {
-            parent.postMessage({
-                pluginMessage: { type: 'REMOVE_VARS_COLLECTION', fileName: el.dataset.item }
-            }, "*");            
-        })
-    })
 }
 
 parent.postMessage({

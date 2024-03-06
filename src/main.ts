@@ -30,7 +30,7 @@ import { swapVariables } from './utils/swap-variables';
 import { exportStyleTemplates } from './utils/export-style-templates';
 import { importStyleTemplates } from './utils/import-style-templates';
 import { collectVariables, getImportedVariables, removeVariableCollection, syncVariableCollections } from './utils/collect-variables';
-import * as store from './utils/storage';
+import * as store from './utils/storage2';
 
 console.clear();
 
@@ -59,7 +59,7 @@ const collectionNames = new Map<string, string>([
     if (figma.command === "variableUtils") {
         figma.showUI(__uiFiles__["variableUtils"], {
             width: 320,
-            height: 480,
+            height: 320,
             themeColors: true,
         });
     }
@@ -151,12 +151,13 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         await removeVariableCollection(eventData.fileName);
     }
     else if (eventData.type === "SWAP_VARIABLES") {
+        debugger;
         const key = eventData.fileName;
 
         if(!key) {
             return figma.notify("Select variables to swap");
         }
-        const data = await store.get(key);
+        const data = store.get(key);
 
         const layersCount = await swapVariables(data).catch(err => {
             console.error(err);

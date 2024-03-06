@@ -53,7 +53,6 @@ export function parseReferenceGlobal(value, dictionary) {
             result = result.replace(reference, globalToken.$value);
         }
         else {
-            debugger;
             console.warn(`parseReferenceGlobal() call failed -> cannot find reference for ${value}`);
         }
     });

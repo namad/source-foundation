@@ -25,15 +25,8 @@ export async function processComponents() {
     while (pageComponents.length) {
         const componentFrame = pageComponents.shift();
 
-        if(componentFrame.name == 'state=:focus, style=default, selected=false') {
-            debugger
-        }
-
         figma.skipInvisibleInstanceChildren = false;
         const children = componentFrame.findAll((n: FrameNode) => {
-            if(n.layoutPositioning == 'ABSOLUTE' && !n.constraints) debugger;
-
-            
             return n.layoutPositioning == 'ABSOLUTE' 
                     && n.width > 0 
                     && n.height > 0 
@@ -90,7 +83,6 @@ async function fixLayers(nodes: FrameNode[], component: ComponentNode) {
     }
     catch (e) {
         failed++;
-        debugger;
     }
 }
 

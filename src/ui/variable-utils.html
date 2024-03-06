@@ -2,8 +2,8 @@
     <div class="flex flex-col p-sm gap-sm overflow-auto flex-1">
         <div class="card">
             <div class="flex flex-row items-baseline justify-between">
-                <h4 class="text-lg font-bold">Variable Sets</h4>
-                <span class="flex">
+                <h4 class="text-lg font-bold">Libraries</h4>
+                <span class="hidden">
                     <button id="exportStore" title="Import sets">
                         <span class="icon icon-upload gap-xs2"></span>
                     </button>
@@ -17,21 +17,22 @@
             </div>
 
             <div class="flex flex-col gap-minor-base">
-                <p class="color-text-base-500">Select variable set below, select some frames on the canvas and press "Swap Variables" button</p>
+                <p class="color-text-base-500 text-sm">Select variable library below, select some frames on the canvas and press "Swap Variables" button</p>
+                
                 <div class="flex flex-col gap-0.5" id="presetsList">
                     <div class="flex flex-row gap-sm">
                         <span class="spinner"></span>
                         <div id="swapProgress">Loading collections...</div>
                     </div>
                 </div>
-                <div class="text-right">
-                    <button id="swapVariablesButton">
-                        <span class="flex flex-row gap-xs2">
-                            <span class="spinner"></span>
-                            <span class="text-label icon icon-repeat gap-xs2">Swap Variables</span>
-                        </span>
-                    </button>
-                </div>
+                <button id="swapVariablesButton" class="primary block">
+                    <span class="flex flex-row gap-xs2 items-center justify-center">
+                        <span class="spinner"></span>
+                        <span class="text-label icon icon-repeat gap-xs2">Swap Variables</span>
+                    </span>
+                </button>
+
+                <p class="color-text-base-500 text-sm">Please note, to see freshly added libraries you need to reload your file</p>
             </div>
 
             <div class="hidden flex-col gap-minor-base">
@@ -40,7 +41,7 @@
 
         </div>
 
-        <div class="card">
+        <!--div class="card">
             <div class="flex flex-row items-baseline justify-between">
                 <h3 class="text-lg font-bold">Import Variables</h3>
             </div>
@@ -53,7 +54,7 @@
                     <span class="icon icon-arrow-up-circle gap-xs2">Import Variables</span>
                 </button>
             </div>
-        </div>
+        </div-->
     </div>
     <!-- <div class="flex flex-row justify-between px-sm py-sm text-right">
         <div class="flex">

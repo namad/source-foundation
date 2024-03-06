@@ -1,4 +1,4 @@
-let store = {};
+export const store: Map<string, LibraryVariable[]> = new Map();
 
 export async function getStoreData() {
     const keys = await figma.clientStorage.keysAsync();
