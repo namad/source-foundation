@@ -59,7 +59,7 @@ a:hover {
 
 .card {
     background-color: var(--fill-base-100);
-    border-radius: var(--radii-md);
+    border-radius: var(--radii-lg);
     padding: var(--spacing-minor-md) var(--spacing-md);
     gap: var(--spacing-minor-base);
 

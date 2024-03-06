@@ -80,13 +80,12 @@ export async function importStyleTemplates() {
         console.log(msg);
 
         if(matchData.target.type == 'COMPONENT_SET') {
-            matchData.source.children.forEach(async (sourceFrame) => {
+            for(const sourceFrame of matchData.source.children) {
                 const target = matchData.target.findChild(n => n.name === sourceFrame.name);
                 if(target?.type == 'COMPONENT' && sourceFrame.type == 'FRAME') {
                     await processNode(sourceFrame, target);
                 }
-                
-            })
+            }
         }
         else {
             await processNode(matchData.source, matchData.target);
@@ -100,47 +99,39 @@ export async function importStyleTemplates() {
 
 
 async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent: ComponentNode) {
-    let targetFrames: {
-        sourceNode: FrameNode | BooleanOperationNode | InstanceNode;
-        targetNode: FrameNode | BooleanOperationNode | InstanceNode;
-    }[] = [];
+    await copyStyles(sourceFrame, targetComponent);
+    await bindVairables(sourceFrame, targetComponent);
 
-    copyStyles(sourceFrame, targetComponent);
-    bindVairables(sourceFrame, targetComponent);
-
-    sourceFrame.children.forEach((sourceNode, index) => {
+    let index = 0;
+    for(const sourceNode of sourceFrame.children) {
         figma.skipInvisibleInstanceChildren = false;
         let targetNode = targetComponent.findOne(n => n.name === sourceNode.name);
 
         if(!targetNode) {
             // copy a component and insert it into the same position as it is in sourceFrame
             const clone = sourceNode.clone();
-            targetComponent.insertChild(index, clone);
+            targetComponent.insertChild(index++, clone);
             return;
         }
 
         resizeAndReposition(sourceNode, targetNode);
 
         if(sourceNode.type == 'INSTANCE' && targetNode.type == 'INSTANCE') {
-            copyOverrides(sourceNode, targetNode, targetComponent);
+            await copyOverrides(sourceNode, targetNode, targetComponent);
         }
         if (
             sourceNode.type == 'FRAME' && targetNode.type == 'FRAME' ||
             sourceNode.type == 'INSTANCE' && targetNode.type == 'INSTANCE' ||
             sourceNode.type == 'BOOLEAN_OPERATION' && targetNode.type == 'BOOLEAN_OPERATION'
         ){
-            targetFrames.push({sourceNode, targetNode});
+            await copyNodeProps(sourceNode, targetNode);
         }
-    })
-
-    targetFrames.forEach(data => {
-        copyNodeProps(data.sourceNode, data.targetNode);
-    })
+    }
 
     await delayAsync(10);
 }
 
-function copyNodeProps(sourceNode: FrameNode | BooleanOperationNode | InstanceNode, targetNode: FrameNode | BooleanOperationNode | InstanceNode ) {
+async function copyNodeProps(sourceNode: FrameNode | BooleanOperationNode | InstanceNode, targetNode: FrameNode | BooleanOperationNode | InstanceNode ) {
     targetNode.fills = _clone(sourceNode.fills);
     targetNode.effects = _clone(sourceNode.effects);
     targetNode.strokes = _clone(sourceNode.strokes);
@@ -153,7 +144,6 @@ function copyNodeProps(sourceNode: FrameNode | BooleanOperationNode | InstanceNo
     targetNode.strokeCap = _clone(sourceNode.strokeCap);
     targetNode.strokeJoin = _clone(sourceNode.strokeJoin);
     targetNode.strokeMiterLimit = _clone(sourceNode.strokeMiterLimit);
-    targetNode.strokeStyleId = _clone(sourceNode.strokeStyleId);
     targetNode.strokeWeight = _clone(sourceNode.strokeWeight);
 
     if (sourceNode.type == 'FRAME' && targetNode.type == 'FRAME') {
@@ -165,16 +155,19 @@ function copyNodeProps(sourceNode: FrameNode | BooleanOperationNode | InstanceNo
         targetNode.strokeTopWeight = _clone(sourceNode.strokeTopWeight);
     }
 
-    copyStyles(sourceNode, targetNode);
-    bindVairables(sourceNode, targetNode);
+    await copyStyles(sourceNode, targetNode);
+    await bindVairables(sourceNode, targetNode);
 }
 
-function bindVairables(sourceFrame: SceneNode, targetComponent: SceneNode) {
+async function bindVairables(sourceFrame: SceneNode, targetComponent: SceneNode) {
     const boundVairables = Object.entries(sourceFrame.boundVariables);
-    boundVairables.forEach(([propName, varBinding]) => {
-        bindVariable(sourceFrame, targetComponent, propName, varBinding);
-    });
-
+    return await Promise.all(boundVairables.map(async ([propName, varBinding]) => {
+        return await bindVariable(sourceFrame, targetComponent, propName, varBinding).catch((err) => {
+            return err + `${propName}`;
+        });
+    })).catch(function(err) {
+        console.log(err.message); // some coding error in handling happened
+    });    
 }
 
 function resizeAndReposition(sourceNode: SceneNode, targetNode: SceneNode) {
@@ -213,18 +206,20 @@ function copyComponentProps(source: InstanceNode, target: InstanceNode) {
     target.setProperties(propsCopy);
 }
 
-function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetComponent: ComponentNode) {
+async function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetComponent: ComponentNode) {
     if(targetNode.type == 'INSTANCE') {
         // SWAP INSTANCES ---------------------
-        const doSwap = sourceNode.mainComponent.id !== targetNode.mainComponent.id;
-        if(doSwap) {
-            targetNode.swapComponent(sourceNode.mainComponent);
-        }
+        const sourceMainComp = await sourceNode.getMainComponentAsync();
+        const targetMainComp = await targetNode.getMainComponentAsync();
 
+        const doSwap = sourceMainComp.id !== targetMainComp.id;
+        if(doSwap) {
+            targetNode.swapComponent(sourceMainComp);
+        }
         copyComponentProps(sourceNode, targetNode);
     }
 
-    sourceNode.overrides.forEach(prop => {
+    for(const prop of sourceNode.overrides) {
         const type = targetNode.type;
 
         if(
@@ -238,7 +233,10 @@ function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetCo
             return;
         }
 
-        const source = figma.getNodeById(prop.id) as SceneNode;
+        const source = await figma.getNodeByIdAsync(prop.id) as SceneNode;
+
+        if(!source ) debugger
+
         const fields = prop.overriddenFields;
         const target =  /*source.name == targetNode.name ? targetNode :*/ targetNode.findOne(n => n.name === source.name);
 
@@ -264,54 +262,60 @@ function copyOverrides(sourceNode: InstanceNode, targetNode: SceneNode, targetCo
                     propName != 'width' &&
                     propName != 'boundVariables') {
 
-                    console.log(`applying ${propName}:${source[propName]} to ${source.name}`);
-                    target[propName] = _clone(source[propName]);
+                    
+                    if(target[propName] != source[propName]) {
+                        console.log(`applying ${propName}:${source[propName]} to ${source.name}`);
+                        target[propName] = _clone(source[propName]);
+                    }
                 }
                 
             });
             
-            bindVairables(source, target);
+            await bindVairables(source, target);
         }
-    })
+    }
 
 }
 
-function copyStyles(sourceFrame: SceneNode, targetComponent: SceneNode) {
+async function copyStyles(sourceFrame: SceneNode, targetComponent: SceneNode) {
     if('effectStyleId' in sourceFrame && 'effectStyleId' in targetComponent) {
-        targetComponent.effectStyleId = sourceFrame.effectStyleId;
+        await targetComponent.setEffectStyleIdAsync(sourceFrame.effectStyleId);
     }
     if('gridStyleId' in sourceFrame && 'gridStyleId' in targetComponent) {
-        targetComponent.gridStyleId = sourceFrame.gridStyleId;
+        await targetComponent.setGridStyleIdAsync(sourceFrame.gridStyleId);
     }
     if('fillStyleId' in sourceFrame && 'fillStyleId' in targetComponent) {
-        targetComponent.fillStyleId = sourceFrame.fillStyleId;
+        await targetComponent.setFillStyleIdAsync(sourceFrame.fillStyleId as string);
     }
     if('strokeStyleId' in sourceFrame && 'strokeStyleId' in targetComponent) {
-        targetComponent.strokeStyleId = sourceFrame.strokeStyleId;
+        await targetComponent.setStrokeStyleIdAsync(sourceFrame.strokeStyleId);
     }
 }
 
-function bindVariable(sourceFrame: SceneNode, targetComponent: SceneNode, propName: any, variableBinding: any): SceneNode {
+async function bindVariable(sourceFrame: SceneNode, targetComponent: SceneNode, propName: any, variableBinding: any): Promise<SceneNode> {
     if (propName == 'fills' && 'fills' in sourceFrame && 'fills' in targetComponent && !targetComponent['fillStyleId']) {
-        targetComponent.fills = bindPropertyVariables(sourceFrame.fills, figma.variables.setBoundVariableForPaint);
+        targetComponent.fills = await bindPropertyVariables(sourceFrame.fills, figma.variables.setBoundVariableForPaint);
     }
     else if (propName == 'strokes' && 'strokes' in sourceFrame && 'strokes' in targetComponent && !targetComponent['strokeStyleId']) {
-        targetComponent.strokes = bindPropertyVariables(sourceFrame.strokes, figma.variables.setBoundVariableForPaint);
+        targetComponent.strokes = await bindPropertyVariables(sourceFrame.strokes, figma.variables.setBoundVariableForPaint);
     }    
     else if (propName == 'effects' && 'effects' in sourceFrame && 'effects' in targetComponent && !targetComponent['effectStyleId']) {
-        targetComponent.effects = bindPropertyVariables(sourceFrame.effects, figma.variables.setBoundVariableForEffect);
+        targetComponent.effects = await bindPropertyVariables(sourceFrame.effects, figma.variables.setBoundVariableForEffect);
     }
     else if(propName == 'layoutGrids' && 'layoutGrids' in sourceFrame && 'layoutGrids' in targetComponent) {
-        targetComponent.layoutGrids = bindPropertyVariables(sourceFrame.layoutGrids, figma.variables.setBoundVariableForLayoutGrid);
+        targetComponent.layoutGrids = await bindPropertyVariables(sourceFrame.layoutGrids, figma.variables.setBoundVariableForLayoutGrid);
     }
     else if(propName == 'componentProperties' || propName == 'textRangeFills') {
         console.warn(`Swap does not work for ${propName}, skipping node`);
     }
     else {
-        const variable = findVariableMatch(variableBinding.id);
+        const variable = await findVariableMatch(variableBinding.id);
         if (variable) {
-            targetComponent.setBoundVariable(propName, null);
-            targetComponent.setBoundVariable(propName, variable.id);
+            var alias = targetComponent.boundVariables[propName] as VariableAlias;
+            if(variable.id != alias.id) {
+                targetComponent.setBoundVariable(propName, null);
+                targetComponent.setBoundVariable(propName, variable.id);
+            }
         }    
     }
 

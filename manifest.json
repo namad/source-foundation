@@ -4,21 +4,23 @@
   "api": "1.0.0",
   "main": "dist/plugin.js",
   "networkAccess": { "allowedDomains": ["none"] },
+  "documentAccess": "dynamic-page",
   "editorType": [
     "figma"
   ],
   "menu": [
     { "command": "import", "name": "Open" },
+    { "command": "export", "name": "Export Tokens" },
     { "name": "Utils", "menu": [
         { "command": "fixLayers", "name": "Fix Layers" },
-        { "command": "swapVariables", "name": "Swap Variables" },
         { "command": "exportStyleTemplates", "name": "Export Style Template" },
         { "command": "importStyleTemplates", "name": "Import Style Template" },
         { "command": "bindToStyles", "name": "Create Color Styles" },
         { "command": "updateElevationComponents", "name": "Update Elevation Components" },
-        { "command": "setPlayground", "name": "Set Playground" }
+        { "command": "setPlayground", "name": "Set Playground" },
+        { "command": "variableUtils", "name": "Variable Utilities" }
       ]
     }
   ],
-  "ui": { "import": "dist/import.html", "export": "dist/export.html" }   
+  "ui": { "import": "dist/import.html", "export": "dist/export.html", "variableUtils": "dist/variableUtils.html" }   
 }

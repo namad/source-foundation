@@ -4,8 +4,6 @@ export async function processComponents() {
     figma.skipInvisibleInstanceChildren = true;
     let pageComponents: ComponentNode[] = [];
 
-    debugger;
-
     if (figma.currentPage.selection.length) {
         figma.currentPage.selection.forEach((node: any) => {
             if (node.type == 'COMPONENT') {
@@ -85,7 +83,7 @@ async function fixLayers(nodes: FrameNode[], component: ComponentNode) {
             node.resize(width, height);
             updated++;
 
-            await delayAsync(50);
+            await delayAsync(10);
         }
 
         console.log(`Resized: ${updated}, Skipped: ${skipped}`);

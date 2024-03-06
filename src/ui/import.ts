@@ -19,6 +19,8 @@ import { getPresets } from "../presets";
 import chroma from 'chroma-js';
 import { delayAsync } from "../utils/delay-async";
 
+import "./helpers/modal";
+
 /*
     UI INITIALIZATION
 */
@@ -153,21 +155,6 @@ document.querySelectorAll('[data-radio-toggle]').forEach((el: HTMLFormElement) =
     });
 });
 
-
-document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
-    const modalID = el.dataset.modal;
-    const modal = document.getElementById(modalID) as HTMLDialogElement;
-
-    el.addEventListener('click', (e) => {
-        e.preventDefault();
-        modal.showModal();
-    });
-
-    modal.querySelector('button.close').addEventListener('click', (e) => {
-        e.preventDefault();
-        modal.close();
-    })
-});
 
 document.querySelectorAll('[data-expander][data-role="trigger"]').forEach((el: HTMLAnchorElement) => {
     const next = el.nextElementSibling as HTMLDivElement;

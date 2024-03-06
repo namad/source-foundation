@@ -1,0 +1,266 @@
+{
+    "size-0": {
+        "$value": "0",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-0:5": {
+        "$value": "2",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-1": {
+        "$value": "4",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-1:5": {
+        "$value": "6",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-2": {
+        "$value": "8",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-2:5": {
+        "$value": "10",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-3": {
+        "$value": "12",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-3:5": {
+        "$value": "14",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-4": {
+        "$value": "16",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-5": {
+        "$value": "20",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-6": {
+        "$value": "24",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-7": {
+        "$value": "28",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-8": {
+        "$value": "32",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-9": {
+        "$value": "36",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-10": {
+        "$value": "40",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-11": {
+        "$value": "44",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-12": {
+        "$value": "48",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-14": {
+        "$value": "56",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-16": {
+        "$value": "64",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-20": {
+        "$value": "80",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-24": {
+        "$value": "96",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-28": {
+        "$value": "112",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-32": {
+        "$value": "128",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-36": {
+        "$value": "144",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-40": {
+        "$value": "160",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-48": {
+        "$value": "192",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-56": {
+        "$value": "224",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-64": {
+        "$value": "256",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-72": {
+        "$value": "288",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-80": {
+        "$value": "320",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-88": {
+        "$value": "352",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-96": {
+        "$value": "384",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    },
+    "size-104": {
+        "$value": "416",
+        "$type": "number",
+        "scopes": [
+            "TEXT_CONTENT",
+            "WIDTH_HEIGHT"
+        ]
+    }
+}

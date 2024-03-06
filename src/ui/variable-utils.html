@@ -1,0 +1,128 @@
+<div class="container h-full relative flex flex-col flex-1 overflow-hidden">
+    <div class="flex flex-col p-sm gap-sm overflow-auto flex-1">
+        <div class="card">
+            <div class="flex flex-row items-baseline justify-between">
+                <h4 class="text-lg font-bold">Variable Sets</h4>
+                <span class="flex">
+                    <button id="exportStore" title="Import sets">
+                        <span class="icon icon-upload gap-xs2"></span>
+                    </button>
+                    <button id="exportStore" title="Export sets">
+                        <span class="icon icon-download gap-xs2"></span>
+                    </button>
+                    <button id="reloadStore" title="Refresh">
+                        <span class="icon icon-refresh-ccw gap-xs2"></span>
+                    </button>
+                </span>
+            </div>
+
+            <div class="flex flex-col gap-minor-base">
+                <p class="color-text-base-500">Select variable set below, select some frames on the canvas and press "Swap Variables" button</p>
+                <div class="flex flex-col gap-0.5" id="presetsList">
+                    <div class="flex flex-row gap-sm">
+                        <span class="spinner"></span>
+                        <div id="swapProgress">Loading collections...</div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button id="swapVariablesButton">
+                        <span class="flex flex-row gap-xs2">
+                            <span class="spinner"></span>
+                            <span class="text-label icon icon-repeat gap-xs2">Swap Variables</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hidden flex-col gap-minor-base">
+                <p class="color-text-base-500">No variable sets yet. Use section below to import some variables</p>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Import Variables</h3>
+            </div>
+            <p>
+                Press button below to import all local variables as a set. Please note, to use variable swap feature you need to publish variables.
+            </p>
+
+            <div class="text-right">
+                <button data-modal="importModal" title="Import settings">
+                    <span class="icon icon-arrow-up-circle gap-xs2">Import Variables</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="flex flex-row justify-between px-sm py-sm text-right">
+        <div class="flex">
+            <button id="reloadStore" title="Refresh">
+                <span class="icon icon-refresh-ccw gap-xs2"></span>
+            </button>
+            <button data-modal="importModal" title="Import settings">
+                <span class="icon icon-download gap-xs2">Import Variables</span>
+            </button>
+        </div>
+        <div class="flex gap-2">
+            <button id="swapVariablesButton" class="primary">
+                <span class="flex flex-row gap-xs2">
+                    <span class="spinner"></span>
+                    <span class="text-label">Swap Variables</span>
+                </span>
+            </button>
+        </div>
+    </div> -->
+</div>
+
+<dialog id="importModal" class="modal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Import Variables</h3>
+            <button class="close" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+        <div class="body max-h-">
+            <p class="color-text-base-500">Collection name</p>
+            <input type="text" onfocus="this.select();" autofocus name="fileName" id="exportCodeTextarea" />
+        </div>
+        <div class="footer">
+            <button class="primary" id="importVariablesButton">
+                Import Variables
+            </button>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="swapModal" class="modal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Please wait, swapping variables...</h3>
+        </div>
+        <div class="body max-h-">
+            <div class="flex flex-row gap-sm">
+                <span class="spinner"></span>
+                <div id="swapProgress" class="flex-1">Working...</div>
+            </div>
+
+            <p class="color-text-base-500">This could take a while, please be patient</p>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="confirmCollectionRemovalModal" class="modal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Delete collection?</h3>
+        </div>
+        <div class="body max-h-">
+            <div class="flex flex-row gap-sm">
+                <span class="spinner color-primary-300"></span>
+                <div id="swapProgress" class="flex-1">Working...</div>
+            </div>
+
+            <p class="color-text-base-500">This could take a while, please be patient</p>
+        </div>
+    </div>
+</dialog>

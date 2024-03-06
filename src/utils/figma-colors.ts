@@ -25,8 +25,6 @@ export function convertFigmaColorToRgb(input: FigmaRGB, format?) {
     }
     let color = chroma.gl(r, g, b, a);
 
-    debugger;
-
     switch (format) {
         case 'hex': {
             return color.hex();

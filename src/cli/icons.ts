@@ -2,7 +2,7 @@ import { glob, globSync, globStream, globStreamSync, Glob } from 'glob'
 import svgToMiniDataURI from 'mini-svg-data-uri';
 import fs from 'fs';
 import path from "path";
-import { makeFolder, writeCSSChunk, writeTheFileIntoDirectory } from './export';
+import { makeFolder, writeCSSChunk, writeTheFileIntoDirectory } from './export-css';
 
 const icons = globSync('./icons-parsed/*.svg')
 

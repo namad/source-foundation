@@ -1,36 +1,34 @@
-function findVariableInCollection(variableName: string, collectionName: string): Variable {
-    const figmaCollections = figma.variables.getLocalVariableCollections();
+async function findVariableInCollection(variableName: string, collectionName: string): Promise<Variable> {
+    const figmaCollections = await figma.variables.getLocalVariableCollectionsAsync();
     const collection = figmaCollections.find(collection => collection.name === collectionName);
 
     let figmaVirable: Variable;
 
     if (collection) {
-        collection.variableIds.forEach(id => {
-            const figmaVariableInColleciton = figma.variables.getVariableById(id)
-            const match = figmaVariableInColleciton.name === variableName;
-
+        for(const id of collection.variableIds) {
+            const figmaVariableInColleciton = await figma.variables.getVariableByIdAsync(id)
+            const match = figmaVariableInColleciton?.name === variableName ;
             if (match) {
                 figmaVirable = figmaVariableInColleciton;
-                return true;
+                break;
             }
-            return  false;
-        });
+        };
     }
 
     return figmaVirable;
 }
-export function findFigmaVariableByName(variableName: string, collectionName?: string): Variable {
+export async function findFigmaVariableByName(variableName: string, collectionName?: string): Promise<Variable> {
     if (collectionName) {
-        return findVariableInCollection(variableName, collectionName);
+        return await findVariableInCollection(variableName, collectionName);
     }
     else {
-        const figmaVariables = figma.variables.getLocalVariables();
+        const figmaVariables = await figma.variables.getLocalVariablesAsync();
         return figmaVariables.find(variable => variable.name === variableName);
     }
 }
 
-export function getFigmaCollection(name) {
-    const figmaCollections = figma.variables.getLocalVariableCollections();
+export async function getFigmaCollection(name) {
+    const figmaCollections = await figma.variables.getLocalVariableCollectionsAsync();
 
     let isNew = false;
     let collection = figmaCollections.find(collection => collection.name === name);
@@ -52,7 +50,7 @@ export function resolveVariableType(typeName): VariableResolvedDataType {
     }
 }
 
-export function setFigmaVariable(
+export async function setFigmaVariable(
         collection: VariableCollection,
         modeId: string,
         type: VariableResolvedDataType,
@@ -60,20 +58,20 @@ export function setFigmaVariable(
         value = null,
         scopes: VariableScope[] = ['ALL_SCOPES'],
         description: string = null
-    ): Variable {
+    ): Promise<Variable> {
 
-    let figmaVariable = findFigmaVariableByName(variableName, collection.name);
+    let figmaVariable = await findFigmaVariableByName(variableName, collection.name);
 
     if (!figmaVariable) {
         try {
-            figmaVariable = figma.variables.createVariable(variableName, collection.id, type);
+            figmaVariable = figma.variables.createVariable(variableName, collection, type);
         }
         catch (e) {
             debugger;
         }
     }
 
-    if (type != figmaVariable.resolvedType) {
+    if (type != figmaVariable?.resolvedType) {
         debugger;
     }
 

@@ -1,19 +1,19 @@
 import componentTokens from './tokens/colors/components/component-tokens.json';
-import paletteLightCommon from './tokens/colors/system/light-common.json';
+import paletteLightCommon from './tokens/colors/system/light-common.tokens.json';
 
-import paletteLight2 from './tokens/colors/system/light-2.json';
-import paletteLight3 from './tokens/colors/system/light-3.json';
-import paletteLight4 from './tokens/colors/system/light-4.json';
+import paletteLight2 from './tokens/colors/system/light-2.tokens.json';
+import paletteLight3 from './tokens/colors/system/light-3.tokens.json';
+import paletteLight4 from './tokens/colors/system/light-4.tokens.json';
 
-import paletteDarkCommon from './tokens/colors/system/dark-common.json';
+import paletteDarkCommon from './tokens/colors/system/dark-common.tokens.json';
 
-import paletteDarkElevated2 from './tokens/colors/system/dark-elevated-2.json';
-import paletteDarkElevated3 from './tokens/colors/system/dark-elevated-3.json';
-import paletteDarkElevated4 from './tokens/colors/system/dark-elevated-4.json';
+import paletteDarkElevated2 from './tokens/colors/system/dark-elevated-2.tokens.json';
+import paletteDarkElevated3 from './tokens/colors/system/dark-elevated-3.tokens.json';
+import paletteDarkElevated4 from './tokens/colors/system/dark-elevated-4.tokens.json';
 
-import paletteDarkBase2 from './tokens/colors/system/dark-base-2.json';
-import paletteDarkBase3 from './tokens/colors/system/dark-base-3.json';
-import paletteDarkBase4 from './tokens/colors/system/dark-base-4.json';
+import paletteDarkBase2 from './tokens/colors/system/dark-base-2.tokens.json';
+import paletteDarkBase3 from './tokens/colors/system/dark-base-3.tokens.json';
+import paletteDarkBase4 from './tokens/colors/system/dark-base-4.tokens.json';
 
 import { flattenObject } from './utils/flatten-object';
 import { ColorShadesScale, generateSystemAccentPalette, getGlobalAccent, getShadesTemplate } from './color-generators/accent-palette-generator';

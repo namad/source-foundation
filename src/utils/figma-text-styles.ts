@@ -2,10 +2,10 @@ import { _clone } from "./clone";
 import { parseReferenceGlobal } from "./token-references";
 
 
-export function importTextStyles(tokens: any[]) {
-    Object.entries(tokens).forEach(([name, token]) => {
+export async function importTextStyles(tokens: any[]) {
+    for(const [name, token] of Object.entries(tokens)) {
         if(token.$type == 'typography') {
-            let textStyle = getStyleByName(name);
+            let textStyle = await getStyleByName(name);
             let newStyle = false;
 
             if(!textStyle) {
@@ -23,8 +23,8 @@ export function importTextStyles(tokens: any[]) {
             Object.keys(normalized).forEach(key => {
                 textStyle[key] = normalized[key];
             })
-        }
-    })
+        }    
+    }
 }
 
 function parseValues(value, dictionary) {
@@ -37,12 +37,12 @@ function parseValues(value, dictionary) {
     return output;
 }
 
-function getLocalStyles() {
-  return figma.getLocalTextStyles();
+async function getLocalStyles() {
+  return await figma.getLocalTextStylesAsync();
 };
 
-function getStyleByName(name) {
-  const stylesByType = getLocalStyles();
+async function getStyleByName(name) {
+  const stylesByType = await getLocalStyles();
   const match = stylesByType.find((style) => style.name === name);
 
   if (match) {

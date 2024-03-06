@@ -1,11 +1,7 @@
 console.clear();
 
-const styles = figma.getLocalPaintStyles();
-const variables = figma.variables.getLocalVariables();
-
-let count = 0;
-
-function getStyleByName(name) {
+async function getStyleByName(name) {
+    const styles = await figma.getLocalPaintStylesAsync();
     return styles.find((style) => style.name === name);
 };
 
@@ -23,11 +19,12 @@ function getFigmaColor(): Paint {
     }
 };
 
-export function bindVariablesAndStyles() {
-    count = 0;
-    variables.forEach(variable => {
+export async function bindVariablesAndStyles() {
+    const variables = await figma.variables.getLocalVariablesAsync();
+    let count = 0;
+    variables.forEach(async variable => {
         const name = variable.name;
-        let style = getStyleByName(name);
+        let style = await getStyleByName(name);
 
         if (variable.resolvedType !== 'COLOR') {
             return; 

@@ -11,15 +11,16 @@ export function getReferenceName(reference: string) {
     return name;
 }
 
-export function findVariableByReferences(value: string): Variable {
+export async function findVariableByReferences(value: string): Promise<Variable> {
     let references = findTokenReferences(value);
     let results = [];
     
-    references?.forEach(reference => {
+
+    for(const reference of references || []) {
         let name = getReferenceName(reference);
         name = name.replace(/\./g, "/");
 
-        const figmaVariable = findFigmaVariableByName(name);
+        const figmaVariable = await findFigmaVariableByName(name);
 
         if (figmaVariable) {
             results.push(figmaVariable);
@@ -27,7 +28,7 @@ export function findVariableByReferences(value: string): Variable {
         else {
             console.warn(`findVariableByReferences() call failed -> cannot find value for ${reference}`);
         }
-    })
+    }
 
     return results[0];
 }

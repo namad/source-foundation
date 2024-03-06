@@ -1,4 +1,5 @@
-import elevationTokens from './tokens/effects/elevation.json';
+import { DesignTokensRaw } from './main';
+import elevationTokens from './tokens/effects/elevation.tokens.json';
 import { flattenObject } from "./utils/flatten-object";
 
 export interface EffectToken {

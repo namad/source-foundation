@@ -1,18 +1,19 @@
+import "./styles/source-vars.css";
+import "./styles/utils.css";
 import "./styles/styles.css";
+import "./styles/icons.css";
+import "./styles/dialog.css";
+import { CollectionExportRecord } from "../main";
+
 
 window.onmessage = ({ data: { pluginMessage } }) => {
-    if (pluginMessage.type === "EXPORT_RESULT") {
-      document.querySelector("textarea").innerHTML = pluginMessage.files
-        .map(
-          ({ fileName, body }) =>
-            `/* ${fileName} */\n\n${JSON.stringify(body, null, 2)}`
-        )
-        .join("\n\n\n");
-    }
-  };
-  document.getElementById("export").addEventListener("click", () => {
+  if (pluginMessage.type === "EXPORT_RESULT") {
+    const data = pluginMessage.files as CollectionExportRecord[];
+    document.querySelector("textarea").innerHTML = JSON.stringify(data, null, 2);
+  }
+};
+document.getElementById("export").addEventListener("click", () => {
 
-    const colorFormat = document.querySelector("input[name=colorFormat]:checked") as HTMLInputElement;
-  
-    parent.postMessage({ pluginMessage: { type: "EXPORT", format: colorFormat.value.trim() } }, "*");
-  });
+  const colorFormat = document.querySelector("input[name=colorFormat]:checked") as HTMLInputElement;
+  parent.postMessage({ pluginMessage: { type: "EXPORT", format: colorFormat.value.trim() } }, "*");
+});

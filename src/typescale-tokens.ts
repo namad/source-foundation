@@ -50,7 +50,20 @@ export function getTypograohyTokens(size: string, scale = "minorThird") {
     }
 }
 
-export function getFontDetails() {
+export async function getFontDetails() {
+    const styles = await figma.getLocalTextStylesAsync()
+    const fontFamilies: string[] = [];
+    const fontStyles: string[] = [];
+
+    if(styles.length) {
+        return getFontDetailsLocal(styles, fontFamilies, fontStyles);
+    }
+    else {
+        return getFontDetailsTokens();
+    }
+}
+
+function getFontDetailsTokens() {
     let names = [];
     const tokens = typeFaceTokens;
     const family = typeFaceTokens["font-family"].primary.$value;
@@ -61,3 +74,28 @@ export function getFontDetails() {
 
     return names;
 }
+
+
+function getFontDetailsLocal(styles: any, fontFamilies: string[], fontStyles: string[]) {
+    for (const style of styles) {
+        const fontFamily = style.fontName.family;
+        const fontStyle = style.fontName.style;
+
+        if (fontFamilies.includes(fontFamily) == false) {
+            fontFamilies.push(fontFamily);
+        }
+        if (fontStyles.includes(fontStyle) == false) {
+            fontFamilies.push(fontStyle);
+        }
+    }
+
+    let names = [];
+    fontFamilies.forEach(family => {
+        fontStyles.forEach(style => {
+            names.push({ family, style });
+        });
+    });
+
+    return names;
+}
+
