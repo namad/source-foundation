@@ -7,7 +7,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-0:5": {
+    "size-2": {
         "$value": "2",
         "$type": "number",
         "scopes": [
@@ -15,7 +15,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-1": {
+    "size-4": {
         "$value": "4",
         "$type": "number",
         "scopes": [
@@ -23,7 +23,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-1:5": {
+    "size-6": {
         "$value": "6",
         "$type": "number",
         "scopes": [
@@ -31,7 +31,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-2": {
+    "size-8": {
         "$value": "8",
         "$type": "number",
         "scopes": [
@@ -39,7 +39,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-2:5": {
+    "size-10": {
         "$value": "10",
         "$type": "number",
         "scopes": [
@@ -47,7 +47,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-3": {
+    "size-12": {
         "$value": "12",
         "$type": "number",
         "scopes": [
@@ -55,7 +55,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-3:5": {
+    "size-14": {
         "$value": "14",
         "$type": "number",
         "scopes": [
@@ -63,7 +63,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-4": {
+    "size-16": {
         "$value": "16",
         "$type": "number",
         "scopes": [
@@ -71,7 +71,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-5": {
+    "size-20": {
         "$value": "20",
         "$type": "number",
         "scopes": [
@@ -79,7 +79,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-6": {
+    "size-24": {
         "$value": "24",
         "$type": "number",
         "scopes": [
@@ -87,7 +87,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-7": {
+    "size-28": {
         "$value": "28",
         "$type": "number",
         "scopes": [
@@ -95,7 +95,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-8": {
+    "size-32": {
         "$value": "32",
         "$type": "number",
         "scopes": [
@@ -103,7 +103,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-9": {
+    "size-36": {
         "$value": "36",
         "$type": "number",
         "scopes": [
@@ -111,7 +111,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-10": {
+    "size-40": {
         "$value": "40",
         "$type": "number",
         "scopes": [
@@ -119,7 +119,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-11": {
+    "size-44": {
         "$value": "44",
         "$type": "number",
         "scopes": [
@@ -127,7 +127,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-12": {
+    "size-48": {
         "$value": "48",
         "$type": "number",
         "scopes": [
@@ -135,7 +135,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-14": {
+    "size-56": {
         "$value": "56",
         "$type": "number",
         "scopes": [
@@ -143,7 +143,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-16": {
+    "size-64": {
         "$value": "64",
         "$type": "number",
         "scopes": [
@@ -151,7 +151,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-20": {
+    "size-80": {
         "$value": "80",
         "$type": "number",
         "scopes": [
@@ -159,7 +159,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-24": {
+    "size-96": {
         "$value": "96",
         "$type": "number",
         "scopes": [
@@ -167,7 +167,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-28": {
+    "size-112": {
         "$value": "112",
         "$type": "number",
         "scopes": [
@@ -175,7 +175,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-32": {
+    "size-128": {
         "$value": "128",
         "$type": "number",
         "scopes": [
@@ -183,7 +183,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-36": {
+    "size-144": {
         "$value": "144",
         "$type": "number",
         "scopes": [
@@ -191,7 +191,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-40": {
+    "size-160": {
         "$value": "160",
         "$type": "number",
         "scopes": [
@@ -199,7 +199,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-48": {
+    "size-192": {
         "$value": "192",
         "$type": "number",
         "scopes": [
@@ -207,7 +207,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-56": {
+    "size-224": {
         "$value": "224",
         "$type": "number",
         "scopes": [
@@ -215,7 +215,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-64": {
+    "size-256": {
         "$value": "256",
         "$type": "number",
         "scopes": [
@@ -223,7 +223,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-72": {
+    "size-288": {
         "$value": "288",
         "$type": "number",
         "scopes": [
@@ -231,7 +231,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-80": {
+    "size-320": {
         "$value": "320",
         "$type": "number",
         "scopes": [
@@ -239,7 +239,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-88": {
+    "size-352": {
         "$value": "352",
         "$type": "number",
         "scopes": [
@@ -247,7 +247,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-96": {
+    "size-384": {
         "$value": "384",
         "$type": "number",
         "scopes": [
@@ -255,7 +255,7 @@
             "WIDTH_HEIGHT"
         ]
     },
-    "size-104": {
+    "size-416": {
         "$value": "416",
         "$type": "number",
         "scopes": [

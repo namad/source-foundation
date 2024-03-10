@@ -36,13 +36,14 @@ export async function exportStyleTemplates() {
         
     });
 
-    const containerFrame = createFrameNode();
+    const containerFrame = await createFrameNode();
+    const localVariables = await figma.variables.getLocalVariablesAsync();
 
     containerFrame.fills = [
         figma.variables.setBoundVariableForPaint(
             { type: "SOLID", color: {r: 1, g: 1, b: 1}},
             "color",
-            figma.variables.getLocalVariables().find(n => n.name == 'fill/base/300')
+            localVariables.find(n => n.name == 'fill/base/300')
         )
     ];
 
@@ -54,10 +55,10 @@ export async function exportStyleTemplates() {
     containerFrame.paddingRight = 96;
     containerFrame.paddingTop = 0;
 
-    containerFrame.setBoundVariable('topLeftRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl2').id);
-    containerFrame.setBoundVariable('topRightRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl2').id);
-    containerFrame.setBoundVariable('bottomLeftRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl2').id);
-    containerFrame.setBoundVariable('bottomRightRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl2').id);
+    containerFrame.setBoundVariable('topLeftRadius', localVariables.find(n => n.name == 'radii/xl2'));
+    containerFrame.setBoundVariable('topRightRadius', localVariables.find(n => n.name == 'radii/xl2'));
+    containerFrame.setBoundVariable('bottomLeftRadius', localVariables.find(n => n.name == 'radii/xl2'));
+    containerFrame.setBoundVariable('bottomRightRadius', localVariables.find(n => n.name == 'radii/xl2'));
 
     console.log(_nodes);
     const total = _nodes.length;
@@ -70,7 +71,7 @@ export async function exportStyleTemplates() {
         const msg = `${percent}% done. Working on layer ${total - _nodes.length} out of ${total}`
         console.log(msg);
 
-        containerFrame.appendChild(checkNode(componentNode));
+        containerFrame.appendChild(await checkNode(componentNode));
         await delayAsync(10);
     }
 
@@ -80,11 +81,11 @@ export async function exportStyleTemplates() {
 }
 
 
-function checkNode(node: ComponentNode) {
+async function checkNode(node: ComponentNode) {
     let parent: FrameNode;
 
     if(node.parent.type == 'COMPONENT_SET') {
-        parent = getFrame(node.parent);
+        parent = await getFrame(node.parent);
     }
 
     const frame = processComponentNode(node);
@@ -104,25 +105,19 @@ function processComponentNode(node: ComponentNode) {
     const instance = node.createInstance();
     const frame = instance.detachInstance();
     frame.name = node.name;
-
-    const instances = frame.findAllWithCriteria({types: ['INSTANCE']});
-
-    instances.forEach(i => {
-        i.mainComponent.name
-    })
     return frame;
 }
 
 const componentSetFramesCache = new Map<string, FrameNode>();
 
-function getFrame(cmpSet: ComponentSetNode) {
+async function getFrame(cmpSet: ComponentSetNode) {
     const chachedFrame = componentSetFramesCache.get(cmpSet.name);
 
     if(chachedFrame) {
         return chachedFrame;
     }
 
-    const frame = createFrameNode();
+    const frame = await createFrameNode();
     frame.name = cmpSet.name;
     frame.resize(cmpSet.width, cmpSet.height);
 
@@ -134,14 +129,15 @@ function getFrame(cmpSet: ComponentSetNode) {
     
 }
 
-function createFrameNode() {
+async function createFrameNode() {
     const frame = figma.createFrame();
+    const localVariables = await figma.variables.getLocalVariablesAsync();
 
     frame.fills = [
         figma.variables.setBoundVariableForPaint(
             { type: "SOLID", color: {r: 1, g: 1, b: 1}},
             "color",
-            figma.variables.getLocalVariables().find(n => n.name == 'card/bg/primary')
+            localVariables.find(n => n.name == 'card/bg/primary')
         )
     ];
 
@@ -149,14 +145,14 @@ function createFrameNode() {
         figma.variables.setBoundVariableForPaint(
             { type: "SOLID", color: {r: 1, g: 1, b: 1}},
             "color",
-            figma.variables.getLocalVariables().find(n => n.name == 'card/border/outer')
+            localVariables.find(n => n.name == 'card/border/outer')
         )
     ];
 
-    frame.setBoundVariable('topLeftRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl').id);
-    frame.setBoundVariable('topRightRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl').id);
-    frame.setBoundVariable('bottomLeftRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl').id);
-    frame.setBoundVariable('bottomRightRadius', figma.variables.getLocalVariables().find(n => n.name == 'radii/xl').id);
+    frame.setBoundVariable('topLeftRadius', localVariables.find(n => n.name == 'radii/xl'));
+    frame.setBoundVariable('topRightRadius', localVariables.find(n => n.name == 'radii/xl'));
+    frame.setBoundVariable('bottomLeftRadius', localVariables.find(n => n.name == 'radii/xl'));
+    frame.setBoundVariable('bottomRightRadius', localVariables.find(n => n.name == 'radii/xl'));
 
     frame.x = -10000;
     frame.y = -10000;

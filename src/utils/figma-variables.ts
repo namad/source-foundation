@@ -71,10 +71,6 @@ export async function setFigmaVariable(
         }
     }
 
-    if (type != figmaVariable?.resolvedType) {
-        debugger;
-    }
-
     if (value) {
         figmaVariable.setValueForMode(modeId, value);
     }

@@ -17,7 +17,6 @@ module.exports = ((env, argv) => {
             entry: {
                 import: './src/ui/import.ts', // The entry point for your UI code
                 export: './src/ui/export.ts', // The entry point for your UI code
-                variableUtils: './src/ui/variable-utils.ts', // The entry point for your UI code
                 plugin: './src/main.ts', // The entry point for your plugin code
             },
 
@@ -66,13 +65,6 @@ module.exports = ((env, argv) => {
                     inject: "body",
                     inlineSource: '.(js|css)$',
                     chunks: ['import'],
-                }),
-                new HtmlWebpackPlugin({
-                    template: './src/ui/variable-utils.html',
-                    filename: 'variableUtils.html',
-                    inject: "body",
-                    inlineSource: '.(js|css)$',
-                    chunks: ['variableUtils'],
                 }),
                 new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin)
             ],

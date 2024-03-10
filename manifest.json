@@ -50,17 +50,12 @@
                 {
                     "command": "setPlayground",
                     "name": "Set Playground"
-                },
-                {
-                    "command": "variableUtils",
-                    "name": "Variable Utilities"
                 }
             ]
         }
     ],
     "ui": {
         "import": "dist/import.html",
-        "export": "dist/export.html",
-        "variableUtils": "dist/variableUtils.html"
+        "export": "dist/export.html"
     }
 }

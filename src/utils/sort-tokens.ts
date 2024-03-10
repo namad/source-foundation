@@ -131,8 +131,9 @@ export function getSizeTokensSortFn() {
     return getSortFn(sizeValuesOrder);
 }
 
-export function getOpacityTokensSortFn() {
-    return getSortFn(opacityValuesOrder);
+export function getAlphaNumTokensSortFn() {
+    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    return collator.compare;
 }
 
 function getSortFn(dataSet: string[]) {

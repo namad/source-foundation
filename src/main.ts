@@ -11,7 +11,7 @@ import * as sizingTokens from './sizing-tokens';
 import * as effectsTokens from './effect-tokens';
 import * as opacityTokens from './opacity-tokens';
 
-import { getSizeTokensSortFn, getColorTokensSortFn, getOpacityTokensSortFn  } from './utils/sort-tokens';
+import { getSizeTokensSortFn, getColorTokensSortFn, getAlphaNumTokensSortFn  } from './utils/sort-tokens';
 import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
@@ -26,11 +26,8 @@ import { importEffectStyles } from './utils/figma-effect-styles';
 import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
-import { swapVariables } from './utils/swap-variables';
 import { exportStyleTemplates } from './utils/export-style-templates';
 import { importStyleTemplates } from './utils/import-style-templates';
-import { collectVariables, getImportedVariables, removeVariableCollection, syncVariableCollections } from './utils/collect-variables';
-import * as store from './utils/storage2';
 
 console.clear();
 
@@ -54,16 +51,6 @@ const collectionNames = new Map<string, string>([
             await figma.loadFontAsync(item as FontName)
         )
     );
-
-
-    if (figma.command === "variableUtils") {
-        figma.showUI(__uiFiles__["variableUtils"], {
-            width: 320,
-            height: 320,
-            themeColors: true,
-        });
-    }
-
 
     if (figma.command === "import") {
         figma.showUI(__uiFiles__["import"], {
@@ -114,15 +101,6 @@ const collectionNames = new Map<string, string>([
         await importStyleTemplates();
         figma.closePlugin('Style templates imported');
     }
-
-    // if (figma.command == "swapVariables") {
-    //     const layersCount = await swapVariables().catch(err => {
-    //         console.error(err);
-    //         figma.notify(err, {error: true});
-    //         throw err;
-    //     });
-    //     figma.closePlugin(`${layersCount} layer(s) processed. `);
-    // }
 })()
 
 
@@ -138,38 +116,11 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     const params = eventData.params;
 
     if (eventData.type === "IMPORT") {
-        initiateImport(params);
-        importAllTokens(params);
-    }
-    else if (eventData.type === "COLLECT_VARS") {
-        await collectVariables(eventData.fileName);
-    }
-    else if (eventData.type === "VARS_UI_LOADED") {
-        await syncVariableCollections();
-    }
-    else if (eventData.type === "REMOVE_VARS_COLLECTION") {
-        await removeVariableCollection(eventData.fileName);
-    }
-    else if (eventData.type === "SWAP_VARIABLES") {
-        debugger;
-        const key = eventData.fileName;
-
-        if(!key) {
-            return figma.notify("Select variables to swap");
-        }
-        const data = store.get(key);
-
-        const layersCount = await swapVariables(data).catch(err => {
-            console.error(err);
-            figma.notify(err, {error: true});
-            throw err;
-        });
-
-        figma.ui.postMessage({ event: "SWAP_VARIABLES_DONE" })
-        figma.notify(`Processed ${layersCount} layers`);
+        await initiateImport(params);
+        await importAllTokens(params);
     }
     else if (eventData.type === "EXPORT") {
-        exportToJSON(eventData.format);
+        await exportToJSON(eventData.format);
     }
     else if (eventData.type === "ALERT") {
         figma.notify(`${eventData.params}`);
@@ -209,61 +160,54 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     }
 };
 
-function initiateImport(params: ImportFormData) {
-    getCollectionAndPrepareTokens({
+async function initiateImport(params: ImportFormData) {
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors(),
         sortFn: getColorTokensSortFn()
     });
 
-    getCollectionAndPrepareTokens({
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: getThemeColors('lightBase', params),
         sortFn: getColorTokensSortFn()
     });
 
-    // getCollectionAndPrepareTokens({
-    //     collectionName: collectionNames.get('brandColors'),
-    //     modeName: toTitleCase(params.primary),
-    //     data: getBrandColors(params.primary),
-    //     sortFn: getColorTokensSortFn()
-    // });
-
-    getCollectionAndPrepareTokens({
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('spacing'),
         modeName: toTitleCase(params.spacing),
         data: spacingTokens[params.spacing],
         sortFn: getSizeTokensSortFn(),
     });
 
-    getCollectionAndPrepareTokens({
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('radii'),
         modeName: toTitleCase(params.radii),
         data: radiiTokens[params.radii],
         sortFn: getSizeTokensSortFn(),
     });
 
-    getCollectionAndPrepareTokens({
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('iconScale'),
         modeName: toTitleCase("base"),
         data: sizingTokens.base,
         sortFn: getSizeTokensSortFn(),
     });
 
-    getCollectionAndPrepareTokens({
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('opacity'),
         modeName: toTitleCase("default"),
         data: opacityTokens.opacity,
-        sortFn: getOpacityTokensSortFn(),
+        sortFn: getAlphaNumTokensSortFn(),
     });
 
-    getCollectionAndPrepareTokens({
+    await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('globalSizing'),
         modeName: toTitleCase("default"),
         data: sizingTokens.global,
-        sortFn: getOpacityTokensSortFn(),
+        sortFn: getAlphaNumTokensSortFn(),
     });
 }
 
@@ -350,12 +294,6 @@ async function importAllTokens(params: ImportFormData) {
 
     await importColorTheme(params);
 
-    // importVariables({
-    //     collectionName: collectionNames.get('brandColors'),
-    //     modeName: toTitleCase(params.primary),
-    //     data: getBrandColors(params.primary)
-    // });
-
     await importVariables({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
@@ -379,7 +317,6 @@ async function importAllTokens(params: ImportFormData) {
         defaultOrder: radiiSizeName,
         tokens: radiiTokens
     });
-
     await importSizeTokens({
         type: 'typeScale',
         collectionName: 'Type Scale',
@@ -410,12 +347,6 @@ async function importAllTokens(params: ImportFormData) {
         collectionName: collectionNames.get('globalSizing'),
         modeName: "Default",
         data: sizingTokens.global
-    });
-
-    await importVariables({
-        collectionName: collectionNames.get('opacity'),
-        modeName: "Default",
-        data: opacityTokens.opacity
     });
 
 
@@ -553,10 +484,10 @@ async function getCollectionAndPrepareTokens({ collectionName, modeName, modeInd
     if (isNew) {
         // create variables straight away so there is a way to make 
         // references / aliases without additional pass
-        sortedTokens.forEach(async token => {
+        for(const token of sortedTokens) {
             const type = resolveVariableType(token.$type);
-            const variable = await setFigmaVariable(collection, modeId, type, token.name)
-        });
+            await setFigmaVariable(collection, modeId, type, token.name)
+        }
     }
 
     return {
@@ -575,16 +506,18 @@ async function importVariables({ collectionName, modeName, modeIndex = -1, data,
         type
     } = await getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
-    await Promise.all(tokens.map(async (token: DesignToken) => {
-        return await processToken({
+    // await Promise.all(tokens.map(async (token: DesignToken) => {
+    // }));
+
+    for(const token of tokens) {
+        await processToken({
             collection,
             modeId,
             type: token.$type,
             variableName: token.name,
             token: token
         });
-    }));
-
+    }
 
 }
 
@@ -644,7 +577,7 @@ async function processToken({
                 modeId,
                 "FLOAT",
                 variableName,
-                parseInt(token.$value),
+                parseFloat(token.$value),
                 token.scopes,
                 token.description || null
             );
@@ -670,12 +603,13 @@ async function processToken({
     }
 }
 
-function exportToJSON(colorFormat?) {
-    const collections = figma.variables.getLocalVariableCollections();
+async function exportToJSON(colorFormat?) {
+    const collections = await figma.variables.getLocalVariableCollectionsAsync();
     const files = [];
-    collections.forEach((collection) =>
-        files.push(...exportCollection(collection, colorFormat))
-    );
+    for(const collection of collections) {
+        const exportedData = await exportCollection(collection, colorFormat);
+        files.push(...exportedData)
+    }
     figma.ui.postMessage({ type: "EXPORT_RESULT", files });
 }
 
@@ -688,12 +622,15 @@ export interface CollectionExportRecord {
     }
 }
 
-function exportCollection({ name, modes, variableIds }, colorFormat?) {
+async function exportCollection({ name, modes, variableIds }, colorFormat?) {
     const collections = [];
-    modes.forEach((mode) => {
+    const variableReferences = variableIds.sort();
+
+    for(const mode of modes){
         const collection = { collection: name,  mode: mode.name, tokens: {} } as CollectionExportRecord;
-        variableIds.sort().forEach((variableId) => {
-            const { name, resolvedType, valuesByMode } = figma.variables.getVariableById(variableId);
+        
+        for(const variableId of variableReferences) {
+            const { name, resolvedType, valuesByMode } = await figma.variables.getVariableByIdAsync(variableId);
 
             console.log(name);
 
@@ -706,16 +643,15 @@ function exportCollection({ name, modes, variableIds }, colorFormat?) {
                 });
                 obj.$type = resolvedType === "COLOR" ? "color" : "number";
                 if (value.type === "VARIABLE_ALIAS") {
-                    obj.$value = `{${figma.variables
-                        .getVariableById(value.id)
-                        .name.replace(/\//g, ".")}}`;
+                    const variable = await figma.variables.getVariableByIdAsync(value.id);
+                    obj.$value = `{${variable.name.replace(/\//g, ".")}}`;
                 } else {
                     obj.$value = resolvedType === "COLOR" ? convertFigmaColorToRgb(value, colorFormat) : value;
                 }
             }
-        });
+        };
         collections.push(collection);
-    });
+    };
     return collections;
 }
 

@@ -97,7 +97,6 @@ export async function importStyleTemplates() {
 
 }
 
-
 async function processNode(sourceFrame: FrameNode|InstanceNode, targetComponent: ComponentNode) {
     await copyStyles(sourceFrame, targetComponent);
     await bindVairables(sourceFrame, targetComponent);

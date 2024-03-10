@@ -86,10 +86,10 @@ async function fixLayers(nodes: FrameNode[], component: ComponentNode) {
     }
 }
 
-function checkInstance(targetFrame, componentFrame) {
+function checkInstance(targetFrame, parentFrame) {
     let node = targetFrame.parent;
 
-    while(node != componentFrame) {
+    while(node != parentFrame) {
         if(node.type == 'INSTANCE') {
             return true;
         }

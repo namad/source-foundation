@@ -1,7 +1,6 @@
 import { delayAsync } from "./delay-async";
 import { _clone } from "./clone";
 import { findFigmaVariableByName } from "./figma-variables";
-import { FileVariablesRecord } from "./collect-variables";
 
 let totalLayersCount = 0;
 let reboundLayersCount = 0;
@@ -9,75 +8,6 @@ let skippedLayersCount = 0;
 let missingLayersCount = 0;
 
 let importadVariablesLibrary: Variable[];
-
-export async function swapVariables(data: LibraryVariable[]) {
-
-    importadVariablesLibrary = [];
-
-    await Promise.all(data.map(async (record) => {
-        const variable = await figma.variables.importVariableByKeyAsync(record.key)
-        importadVariablesLibrary.push(variable);
-    }));
-
-    totalLayersCount = 0;
-    reboundLayersCount = 0;
-    skippedLayersCount = 0;
-
-    let _nodes = [];
-    figma.skipInvisibleInstanceChildren = false;
-
-    if (figma.currentPage.selection.length == 0) {
-        figma.notify("Select at least one layer and try again");
-        return 0;    
-    }
-
-    figma.currentPage.selection.forEach((node: SceneNode) => {
-
-        if('boundVariables' in node && Object.keys(node.boundVariables).length > 0) {
-            _nodes.push(node);
-        }
-
-        if ('findAll' in node) {
-            const nodes = node.findAll((n: SceneNode) => {
-                if('boundVariables' in n) {
-                    return Object.keys(n.boundVariables).length > 0
-                }
-                else {
-                    return false;
-                }
-            });
-            _nodes = _nodes.concat(nodes);
-        }
-    });
-
-    console.log(_nodes);
-    const total = _nodes.length;
-    totalLayersCount = total;
-
-    let threshhold = total > 700 ? 5 : 10;
-
-    while(_nodes.length) {
-        const node = _nodes.shift();
-        const processed = total - _nodes.length;
-        // (70 - 44) / 70
-        const percent = Math.round(((total - _nodes.length) / total) * 100);
-        const msg = `${percent}% done. Working on layer ${processed} out of ${total}`
-        console.log(msg);
-
-        await processLayer(node, processed).catch(err => {
-            console.error(err);
-        });
-
-        reboundLayersCount++;
-
-        
-        if(percent % threshhold === 0) {
-            figma.ui.postMessage({ event: "SWAP_VAR_PROGRESS", message:  msg})
-        }
-    }
-
-    return total;
-}
 
 function getVariableName(variable: Variable): string {
     const name = variable.name;
