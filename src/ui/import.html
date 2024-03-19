@@ -13,18 +13,14 @@
                     note, the plugin will create set of styles based on base selected
                     typography scale.
                 </p>
-                <div data-type="typography"
-                    data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
+                <div data-type="typography" data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
                 </div>
                 <div class="mt-2 flex flex-row">
                     <div class="w-1/5">Scale</div>
                     <div class="flex flex-1 flex-col gap-3" style="margin: 0 var(--slider-margin) 0">
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorThird"
-                                checked /><span>Major Third (1.250)</span></label>
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird"
-                                checked /><span>Minor Third (1.200)</span></label>
-                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale"
-                                value="majorSecond" /><span>Major Second (1.125)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorThird" checked /><span>Major Third (1.250)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird" checked /><span>Minor Third (1.200)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorSecond" /><span>Major Second (1.125)</span></label>
                     </div>
                 </div>
             </div>
@@ -41,8 +37,7 @@
             </div>
             <div class="body">
                 <p class="color-text-base-500">Select base spacing</p>
-                <div data-type="spacing"
-                    data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
+                <div data-type="spacing" data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
                 </div>
             </div>
         </div>
@@ -58,8 +53,7 @@
             </div>
             <div class="body">
                 <p class="color-text-base-500">Select base border radius</p>
-                <div data-type="radii"
-                    data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
+                <div data-type="radii" data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
                 </div>
             </div>
         </div>
@@ -99,8 +93,7 @@
                         </p>
                     </div>
                 </div>
-                <div data-type="semantics" id="brandAccent"
-                    data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
+                <div data-type="semantics" id="brandAccent" data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
             </div>
         </div>
 
@@ -121,14 +114,12 @@
             </div>
 
             <p class="color-text-base-500">
-                Set the tone with hue slider and  intensity with the saturation slider
+                Set the tone with hue slider and intensity with the saturation slider
             </p>
 
-            <div data-neutrals
-                data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "syncValue": true}'>
+            <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "syncValue": true}'>
             </div>
-            <div data-neutrals
-                data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "syncValue": true}'>
+            <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "syncValue": true}'>
             </div>
 
             <h4 class="mt-3 text-md font-bold">Color Pattern</h4>
@@ -136,8 +127,7 @@
                 Difference in lightness percent between two adjacent colours. Wider
                 steps outcome greater contrast overall
             </p>
-            <div
-                data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
+            <div data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
             </div>
         </div>
 
@@ -159,8 +149,7 @@
 
             <div class="flex flex-col gap-y-sm" id="accentColorsSliders"></div>
             <hr />
-            <div
-                data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "syncValue": true}'>
+            <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "syncValue": true}'>
             </div>
             <p class="color-text-base-500">
                 Global saturation level for all accent colours. Please note, saturation
@@ -317,16 +306,12 @@
             </div>
 
             <div data-expander data-role="container" class="flex flex-col gap-y-sm">
-                <div data-type="semantics"
-                    data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
-                <div data-type="semantics"
-                    data-slider='{"label": "Success", "name": "success", "min": 0, "max": 10, "step": 1, "value": 3}'>
+                <div data-type="semantics" data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
+                <div data-type="semantics" data-slider='{"label": "Success", "name": "success", "min": 0, "max": 10, "step": 1, "value": 3}'>
                 </div>
-                <div data-type="semantics"
-                    data-slider='{"label": "Warning", "name": "warning", "min": 0, "max": 10, "step": 1, "value": 1}'>
+                <div data-type="semantics" data-slider='{"label": "Warning", "name": "warning", "min": 0, "max": 10, "step": 1, "value": 1}'>
                 </div>
-                <div data-type="semantics"
-                    data-slider='{"label": "Danger", "name": "danger", "min": 0, "max": 10, "step": 1, "value": 0}'>
+                <div data-type="semantics" data-slider='{"label": "Danger", "name": "danger", "min": 0, "max": 10, "step": 1, "value": 0}'>
                 </div>
             </div>
         </div>
@@ -343,7 +328,7 @@
                         <span class="flex flex-row gap-2">
                             <span data-value="spacing" data-type="spacing"></span>
                             <span class="icon icon-chevron-right"></span>
-                        </span>                        
+                        </span>
                     </a>
                 </li>
                 <li>
@@ -352,7 +337,7 @@
                         <span class="flex flex-row gap-2">
                             <span data-value="radii" data-type="radii"></span>
                             <span class="icon icon-chevron-right"></span>
-                        </span>                        
+                        </span>
                     </a>
                 </li>
                 <li>
@@ -390,17 +375,17 @@
                         <a href="https://namad.github.io/source-foundation-docs/" target="_blank">
                             Tailwind CSS Integration
                         </a>
-                        <p class="text-sm color-text-base-500" >
+                        <p class="text-sm color-text-base-500">
                             Integrate Source Foundation with Tailwind CSS
                         </p>
-                    </div> 
+                    </div>
                 </li>
                 <li class="icon icon-terminal-window gap-xs2 items-start color-text-base-action">
                     <div>
                         <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">
                             Node CLI Generator
                         </a>
-                        <p class="text-sm color-text-base-500" >
+                        <p class="text-sm color-text-base-500">
                             Export settings to build CSS variables file with command line tool
                         </p>
                     </div>
@@ -412,17 +397,17 @@
                         <a href="#" data-modal="exportModal">
                             Export Theme
                         </a>
-                        <p class="text-sm color-text-base-500" >
+                        <p class="text-sm color-text-base-500">
                             Get the code snippet that you can use with CLI generator
                         </p>
-                    </div> 
+                    </div>
                 </li>
                 <li class="icon icon-download gap-xs2 items-start color-text-base-action">
                     <div>
                         <a href="#" data-modal="importModal">
-                           Import Theme
+                            Import Theme
                         </a>
-                        <p class="text-sm color-text-base-500" >
+                        <p class="text-sm color-text-base-500">
                             Paste the code snippet to import previously saved theme
                         </p>
                     </div>
@@ -486,8 +471,7 @@
                 </div>
                 <label class="flex flex-row items-center gap-3">
                     <span class="w-1/5">Value</span>
-                    <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7"
-                        name="customPrimaryColor" />
+                    <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7" name="customPrimaryColor" />
                     <button id="setCustomBrandColor" class="primary flex-1">
                         Set Brand Colour
                     </button>
@@ -498,100 +482,42 @@
 </dialog>
 
 <dialog id="importModal">
-    <div class="modal-container">
+    <div class="modal-container h-full">
         <div class="header">
             <h3 class="text-md font-bold">Import Theme</h3>
             <button class="close" value="cancel">
                 <span class="icon icon-x"></span>
             </button>
         </div>
-        <div class="body">
-            <p class="color-text-base-500">Paste preset code to the textarea below</p>
-            <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" name="importCodeTextarea"
-                id="importCodeTextarea" class="h-80 resize-none"></textarea>
-            <p class="color-text-base-500">Or select one of the presets</p>
-        </div>
-        <div class="presets-list mb-minor-base" id="presetsList">
-            <label class="theme-item">
-                <input type="radio" name="theme" value="2" />
-                <span class="hidden text-base">Theme 1</span>
-                <span class="swatches neutral-swatches">
-                    <span class="swatch swatch-1"></span>
-                    <span class="swatch swatch-2"></span>
-                    <span class="swatch swatch-3"></span>
-                    <span class="swatch swatch-4"></span>
-                    <span class="swatch swatch-5"></span>
-                </span>
-                <span class="swatches semantic-swatches">
-                    <span class="swatch swatch-1"></span>
-                    <span class="swatch swatch-2"></span>
-                    <span class="swatch swatch-3"></span>
-                    <span class="swatch swatch-4"></span>
-                    <span class="swatch swatch-5"></span>
-                </span>
-                <span class="info">
-                    <span class="icon icon-info"></span>
-                    <span>
-                        <span class="color-text-base-500">Spacing</span>
-                        <span class="color-text-base-600" data-value="spacing"></span>
-                    </span>
-                    <span>
-                        <span class="color-text-base-500">Radii</span>
-                        <span class="color-text-base-600" data-value="radii"></span>
-                    </span>
-                    <span>
-                        <span class="color-text-base-500">Typography</span>
-                        <span class="color-text-base-600" data-value="typeScale"></span> /
-                        <span class="color-text-base-600" data-value="baseFontSize"></span>
-                    </span>
+        <div class="radio-segment mx-lg mt-minor-lg mb-1" data-tabs id="importOptionsSegment">
+            <label class="flex-1">
+                <input type="radio" name="importAs" value="preset" data-tab="importPresetTab" checked />
+                <span class="container">
+                    <span>Import Preset</span>
                 </span>
             </label>
-
-            <label class="theme-item">
-                <input type="radio" name="theme" value="2" />
-                <span class="col-info">
-                    <span class="info-item">
-                        <span class="icon icon-16 icon-colors" title="Color pattern"></span>
-                        <span>
-                            <span class="color-text-base-600" data-value="distance">2</span><span
-                                class="color-text-base-400">%</span>
-                        </span>
-                    </span>
-                    <span class="info-item">
-                        <span class="icon icon-16 icon-typography" title="Typography"></span>
-                        <span>
-                            <span class="color-text-base-600" data-value="typeScale">Minor Third</span>
-                            /
-                            <span class="color-text-base-600" data-value="baseFontSize">Base</span>
-                        </span>
-                    </span>
-                    <span class="flex flex-row gap-base">
-                        <span class="info-item">
-                            <span class="icon icon-16 icon-spacing" title="Spacing"></span>
-                            <span class="color-text-base-600" data-value="spacing">Base</span>
-                        </span>
-                        <span class="info-item">
-                            <span class="icon icon-16 icon-radii" title="Radii"></span>
-                            <span class="color-text-base-600" data-value="radii">Base</span>
-                        </span>
-                    </span>
-                </span>
-                <span class="col-swatches">
-                    <span class="swatches">
-                        <span class="swatch bg-fill-base-200"></span>
-                        <span class="swatch bg-fill-base-300"></span>
-                        <span class="swatch bg-fill-base-400"></span>
-                        <span class="swatch bg-fill-base-500"></span>
-                    </span>
-                    <span class="swatches">
-                        <span class="swatch bg-primary-500"></span>
-                        <span class="swatch bg-primary-400"></span>
-                        <span class="swatch bg-primary-300"></span>
-                        <span class="swatch bg-primary-200"></span>
-                    </span>
+            <label class="flex-1"> 
+                <input type="radio" name="importAs" value="tokens" data-tab="importTokensTab" />
+                <span class="container">
+                    <span>Import Tokens</span>
                 </span>
             </label>
         </div>
+        <div class="flex flex-col flex-1 overflow-auto " id="importPresetTab">
+            <div class="body" >
+                <p class="color-text-base-500">Paste preset code to the textarea below</p>
+                <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none"></textarea>
+                <p class="color-text-base-500">Or select one of the presets</p>
+            </div>
+            <div class="flex flex-col flex-1 gap-minor-xs4 px-lg" id="presetsList">
+            </div>
+        </div>
+        <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
+            <div class="body" >
+                <p class="color-text-base-500">Paste json tokens here</p>
+                <textarea cols="10" name="importToeknsTextarea" autofocus onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none"></textarea>
+            </div>
+        </div>        
         <div class="footer">
             <button class="primary" id="importThemeButton">Import Theme</button>
         </div>
@@ -599,7 +525,7 @@
 </dialog>
 
 <dialog id="exportModal" class="modal">
-    <div class="modal-container">
+    <div class="modal-container h-full">
         <div class="header">
             <h3 class="text-md font-bold">Export Theme</h3>
             <button class="close" value="cancel">
@@ -607,9 +533,37 @@
             </button>
         </div>
         <div class="body max-h-">
-            <p class="color-text-base-500">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
-            <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea"
-                readonly class="h-80 resize-none"></textarea>
+            <div class="radio-segment" data-tabs id="exportOptionsSegment">
+                <label class="flex-1">
+                    <input type="radio" name="exportAs" value="preset" data-tab="exportPresetTab" checked />
+                    <span class="container">
+                        <span>Export Preset</span>
+                    </span>
+                </label>
+                <label class="flex-1"> 
+                    <input type="radio" name="exportAs" value="tokens" data-tab="exportTokensTab" />
+                    <span class="container">
+                        <span>Export Tokens</span>
+                    </span>
+                </label>
+            </div>
+            <div id="exportPresetTab" class="flex flex-col flex-1 gap-xs">
+                <p class="color-text-base-500">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
+                <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none"></textarea>
+            </div>
+            <div id="exportTokensTab" class="flex flex-col flex-1 gap-xs items-center">
+                <div class="flex flex-row gap-sm items-center w-full">
+                    <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="hex" checked /><span>HEX</span></label>
+                    <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="rgba" checked /><span>RGBA</span></label>
+                    <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="hsl" checked /><span>HSL</span></label>
+                    <div class="flex flex-1 justify-end">
+                        <button class="bg-primary-100 hover:bg-primary-200" id="exportThemeButton">
+                            <span class="icon icon-download gap-xs3">Export</span>
+                        </button>
+                    </div>
+                </div>            
+                <textarea cols="10" onfocus="this.select();" autofocus name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none" placeholder="Press Export button to get code"></textarea>            
+            </div>
         </div>
         <div class="footer">
             <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">

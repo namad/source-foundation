@@ -22,7 +22,7 @@ function getFigmaColor(): Paint {
 export async function bindVariablesAndStyles() {
     const variables = await figma.variables.getLocalVariablesAsync();
     let count = 0;
-    variables.forEach(async variable => {
+    for(const variable of variables) {
         const name = variable.name;
         let style = await getStyleByName(name);
 
@@ -44,7 +44,7 @@ export async function bindVariablesAndStyles() {
         });
         
         style.paints = newPaints;
-    });
+    }
     
     figma.notify(`✅ Variables and styles are now connected. ${count} styles created`);
 }

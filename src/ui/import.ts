@@ -20,6 +20,8 @@ import chroma from 'chroma-js';
 import { delayAsync } from "../utils/delay-async";
 
 import "./helpers/modal";
+import "./helpers/tabs";
+import { CollectionExportRecord } from "../main";
 
 /*
     UI INITIALIZATION
@@ -28,6 +30,7 @@ import "./helpers/modal";
 const form = document.querySelector('form') as HTMLFormElement;
 const accentSlidersContainer = document.getElementById('accentColorsSliders') as HTMLDivElement;
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
+let exportThemeButton = document.getElementById('exportThemeButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
 
 let sliders = {};
@@ -89,7 +92,10 @@ document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
         const modal = document.getElementById('exportModal') as HTMLDialogElement;
-        const textarea = document.getElementById('exportCodeTextarea') as HTMLTextAreaElement;
+        const radioValue = modal.querySelector('[data-tab]:checked') as HTMLInputElement;
+        const tabID = radioValue.dataset.tab;
+
+        const textarea = document.querySelector(`#${tabID} textarea`) as HTMLTextAreaElement;
         textarea.select();
         document.execCommand("copy");
 
@@ -97,7 +103,7 @@ document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
             pluginMessage: { type: 'ALERT', params: "Copied to clipboard" }
         }, "*");
 
-        modal.close();
+        // modal.close();
     })
 })
 document.querySelectorAll('#importThemeButton').forEach(btn => {
@@ -125,6 +131,13 @@ document.querySelectorAll('#importThemeButton').forEach(btn => {
         loadSettings(form, data);
         modal.close();
 
+    })
+})
+document.querySelectorAll('#exportThemeButton').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const colorFormat = document.querySelector("input[name=colorFormat]:checked") as HTMLInputElement;
+        parent.postMessage({ pluginMessage: { type: "EXPORT", format: colorFormat.value.trim() } }, "*");     
     })
 })
 
@@ -303,14 +316,19 @@ parent.postMessage({
 loadSettings(form, defaultSettings);
 
 
-onmessage = (event) => {
-    console.log("got this from the plugin code", event.data.pluginMessage)
+window.onmessage = ({ data: { pluginMessage } }) => {
+    console.log("got this from the plugin code", pluginMessage);
+    debugger
 
-    if(event.data.pluginMessage == 'importCompleted') {
+    if(pluginMessage == 'importCompleted') {
         importButton.classList.remove('loading');
     }
+    else if (pluginMessage.type === "EXPORT_RESULT") {
+        const data = pluginMessage.files as CollectionExportRecord[];
+        document.getElementById("exportTokensTextarea").innerHTML = JSON.stringify(data, null, 2);
+    }    
     else {
-        const data = event.data.pluginMessage as ImportFormData;
+        const data = pluginMessage as ImportFormData;
 
         // convert string values into numbers for sliders
 

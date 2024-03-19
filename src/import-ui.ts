@@ -191,7 +191,7 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
     const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
-    exportCodeTextarea.value = JSON.stringify(data);
+    exportCodeTextarea.value = JSON.stringify(data, null, 2);
 
     const primaryColorHUE = data.primary
     const shades = getGlobalAccent(

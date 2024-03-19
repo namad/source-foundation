@@ -52,55 +52,12 @@ const collectionNames = new Map<string, string>([
         )
     );
 
-    if (figma.command === "import") {
-        figma.showUI(__uiFiles__["import"], {
-            width: 560,
-            height: 720,
-            themeColors: true,
-        });
-    }
+    figma.showUI(__html__, {
+        width: 560,
+        height: 720,
+        themeColors: true,
+    });
 
-    if (figma.command === "export") {
-        figma.showUI(__uiFiles__["export"], {
-            width: 500,
-            height: 500,
-            themeColors: true,
-        });
-    }
-
-    if (figma.command == "bindToStyles") {
-        bindVariablesAndStyles();
-        figma.closePlugin();
-    }
-
-    if (figma.command == "updateElevationComponents") {
-        updateElevationComponents(effectsTokens.getElevationTokens());
-        figma.closePlugin();
-    }
-
-    if (figma.command == "setPlayground") {
-        const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
-        figma.root.setPluginData('SDSPlayground', isPlayground ? '' : 'true');
-
-        figma.notify(`${isPlayground ? '❎' : '✅'} Playground is ${isPlayground ? 'disabled' : 'enabled'}`);
-
-        figma.closePlugin();
-    }
-
-    if (figma.command == "fixLayers") {
-        await processComponents();
-        figma.closePlugin();
-    }
-
-    if (figma.command == "exportStyleTemplates") {
-        await exportStyleTemplates();
-        figma.closePlugin('Style templates exported');
-    }
-    
-    if (figma.command == "importStyleTemplates") {
-        await importStyleTemplates();
-        figma.closePlugin('Style templates imported');
-    }
 })()
 
 

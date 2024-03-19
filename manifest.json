@@ -15,47 +15,5 @@
     "editorType": [
         "figma"
     ],
-    "menu": [
-        {
-            "command": "import",
-            "name": "Open"
-        },
-        {
-            "command": "export",
-            "name": "Export Tokens"
-        },
-        {
-            "name": "Utils",
-            "menu": [
-                {
-                    "command": "fixLayers",
-                    "name": "Fix Layers"
-                },
-                {
-                    "command": "exportStyleTemplates",
-                    "name": "Export Style Template"
-                },
-                {
-                    "command": "importStyleTemplates",
-                    "name": "Import Style Template"
-                },
-                {
-                    "command": "bindToStyles",
-                    "name": "Create Color Styles"
-                },
-                {
-                    "command": "updateElevationComponents",
-                    "name": "Update Elevation Components"
-                },
-                {
-                    "command": "setPlayground",
-                    "name": "Set Playground"
-                }
-            ]
-        }
-    ],
-    "ui": {
-        "import": "dist/import.html",
-        "export": "dist/export.html"
-    }
+    "ui":  "dist/import.html"
 }

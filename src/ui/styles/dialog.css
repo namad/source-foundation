@@ -72,11 +72,6 @@ button.close:hover {
     opacity: 1;
 }
 
-.presets-list {
-    @apply flex flex-col flex-1 gap-minor-xs4 px-lg mb-minor-lg overflow-auto overflow-y-visible;
-    padding-right: calc(var(--spacing-lg) - var(--scrollbar-width));
-}
-
 .theme-item {
     @apply rounded-md bg-alt-base-100 flex flex-row relative;
 }
