@@ -16,7 +16,6 @@ import { debounce } from "../utils/debounce";
 import { ImportFormData, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import-ui";
 import { getPresets } from "../presets";
 
-import chroma from 'chroma-js';
 import { delayAsync } from "../utils/delay-async";
 
 import "./helpers/modal";
@@ -109,35 +108,62 @@ document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
 document.querySelectorAll('#importThemeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
+
+        debugger
+
         const modal = document.getElementById('importModal') as HTMLDialogElement;
-        const textarea = document.getElementById('importCodeTextarea') as HTMLTextAreaElement;
+        const radioValue = modal.querySelector('[data-tab]:checked') as HTMLInputElement;
+        const tabID = radioValue.dataset.tab;
+        const tab = document.getElementById(tabID) as HTMLDivElement;
+
+        const textarea = document.querySelector(`#${tabID} textarea`) as HTMLTextAreaElement;
         const code = textarea.value;
-        const settings = collectValues(modal);
+        const settings = collectValues(tab);
         let data;
 
-        if (code.length > 0) {
-            try {
-                data = JSON.parse(code);
-            }
-            catch (e) {
-                throw (e);
-            }
+        try {
+            data = JSON.parse(code);
         }
-        else {
-            const themeNumber = settings.theme;
-            data = getPresets()[themeNumber];
+        catch (e) {
+            throw (e);
         }
 
-        loadSettings(form, data);
+        if(tabID == 'importPresetTab') {
+            if (code.length == 0) {
+                const themeNumber = settings.theme;
+                data = getPresets()[themeNumber];
+            }
+
+            loadSettings(form, data);
+        }
+
+        if(tabID == 'importTokensTab') {
+            parent.postMessage({ pluginMessage: { type: "IMPORT_JSON", data: data } }, "*");     
+        }
+        
+
         modal.close();
 
     })
 })
+
 document.querySelectorAll('#exportThemeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
         const colorFormat = document.querySelector("input[name=colorFormat]:checked") as HTMLInputElement;
         parent.postMessage({ pluginMessage: { type: "EXPORT", format: colorFormat.value.trim() } }, "*");     
+    })
+})
+document.querySelectorAll('#exportModalButton').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const colorFormat = document.querySelector("#exportTokensTab input[name=colorFormat]:checked") as HTMLInputElement;
+        parent.postMessage({ pluginMessage: { type: "EXPORT", format: colorFormat.value.trim() } }, "*");     
+    })
+})
+
+document.querySelectorAll('#exportTokensTab input[name=colorFormat]').forEach((radio: HTMLInputElement) => {
+    radio.addEventListener('click', (e) => {
+        parent.postMessage({ pluginMessage: { type: "EXPORT", format: radio.value.trim() } }, "*");     
     })
 })
 

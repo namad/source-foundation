@@ -419,10 +419,10 @@
 
     <div class="flex flex-row justify-between px-sm py-sm text-right">
         <div class="flex gap-2">
-            <button id="exportButton" data-modal="exportModal" title="Export settings">
+            <button id="exportModalButton" data-modal="exportModal" title="Export settings">
                 <span class="icon icon-upload"></span>
             </button>
-            <button id="importButton" data-modal="importModal" title="Import settings">
+            <button id="importModalButton" data-modal="importModal" title="Import settings">
                 <span class="icon icon-download"></span>
             </button>
         </div>
@@ -506,7 +506,7 @@
         <div class="flex flex-col flex-1 overflow-auto " id="importPresetTab">
             <div class="body" >
                 <p class="color-text-base-500">Paste preset code to the textarea below</p>
-                <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none"></textarea>
+                <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono"></textarea>
                 <p class="color-text-base-500">Or select one of the presets</p>
             </div>
             <div class="flex flex-col flex-1 gap-minor-xs4 px-lg" id="presetsList">
@@ -515,7 +515,7 @@
         <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
             <div class="body" >
                 <p class="color-text-base-500">Paste json tokens here</p>
-                <textarea cols="10" name="importToeknsTextarea" autofocus onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none"></textarea>
+                <textarea cols="10" name="importToeknsTextarea" autofocus onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono"></textarea>
             </div>
         </div>        
         <div class="footer">
@@ -549,20 +549,21 @@
             </div>
             <div id="exportPresetTab" class="flex flex-col flex-1 gap-xs">
                 <p class="color-text-base-500">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
-                <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none"></textarea>
+                <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono"></textarea>
             </div>
             <div id="exportTokensTab" class="flex flex-col flex-1 gap-xs items-center">
                 <div class="flex flex-row gap-sm items-center w-full">
+                    <span class="color-text-base-500 flex-1">Select color format:</span>
                     <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="hex" checked /><span>HEX</span></label>
                     <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="rgba" checked /><span>RGBA</span></label>
                     <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="hsl" checked /><span>HSL</span></label>
-                    <div class="flex flex-1 justify-end">
+                    <!-- <div class="flex flex-1 justify-end">
                         <button class="bg-primary-100 hover:bg-primary-200" id="exportThemeButton">
                             <span class="icon icon-download gap-xs3">Export</span>
                         </button>
-                    </div>
+                    </div> -->
                 </div>            
-                <textarea cols="10" onfocus="this.select();" autofocus name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none" placeholder="Press Export button to get code"></textarea>            
+                <textarea cols="10" onfocus="this.select();" autofocus name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono" placeholder="Press Export button to get code"></textarea>            
             </div>
         </div>
         <div class="footer">

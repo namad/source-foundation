@@ -16,18 +16,14 @@ import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
-import { bindVariablesAndStyles } from './utils/variables-to-styles';
 import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
 import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
-import { processComponents } from './fix-layers';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
-import { exportStyleTemplates } from './utils/export-style-templates';
-import { importStyleTemplates } from './utils/import-style-templates';
 
 console.clear();
 
@@ -64,6 +60,7 @@ const collectionNames = new Map<string, string>([
 interface MessagePayload {
     type: string;
     params: ImportFormData;
+    data?: CollectionExportRecord[];
     format?: string;
     fileName?: string;
 }
@@ -78,6 +75,9 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     }
     else if (eventData.type === "EXPORT") {
         await exportToJSON(eventData.format);
+    }
+    else if (eventData.type === "IMPORT_JSON") {
+        await importFromJSON(eventData.data);
     }
     else if (eventData.type === "ALERT") {
         figma.notify(`${eventData.params}`);
@@ -508,7 +508,7 @@ async function processToken({
 
     if (token.$value !== undefined) {
         if (type === "color") {
-            let colorValue = parseColorToken(token, globalTokens);
+            let colorValue;
             let referenceVar = await findVariableByReferences(token.$value.trim());
 
             if (referenceVar) {
@@ -516,6 +516,9 @@ async function processToken({
                     type: "VARIABLE_ALIAS",
                     id: referenceVar.id,
                 }
+            }
+            else {
+                colorValue = parseColorToken(token, globalTokens);
             }
 
             return await setFigmaVariable(
@@ -559,6 +562,41 @@ async function processToken({
         console.warn('recursion in ', token);
     }
 }
+async function importFromJSON(data:CollectionExportRecord[]) {
+
+    const collections = [];
+
+    const filteredData = data.filter(record => {
+        const collectionName = record.collection;
+
+        if(collections.indexOf(collectionName) < 0) {
+            collections.push(collectionName);
+            return record;
+        }
+
+        return false;
+    })
+
+    debugger
+
+    await Promise.all(filteredData.map(async (collectionRecord) => {
+        await getCollectionAndPrepareTokens({
+            collectionName: collectionRecord.collection,
+            modeName: collectionRecord.mode,
+            data: flattenObject(collectionRecord.tokens)
+        });    
+    }));
+
+    debugger
+
+    for(const collectionRecord of data) {
+        await importVariables({
+            collectionName: collectionRecord.collection,
+            modeName: collectionRecord.mode,
+            data: flattenObject(collectionRecord.tokens)        
+        }) 
+    }
+}
 
 async function exportToJSON(colorFormat?) {
     const collections = await figma.variables.getLocalVariableCollectionsAsync();
@@ -580,7 +618,7 @@ export interface CollectionExportRecord {
 }
 
 async function exportCollection({ name, modes, variableIds }, colorFormat?) {
-    const collections = [];
+    const collections: CollectionExportRecord[] = [];
     const variableReferences = variableIds.sort();
 
     for(const mode of modes){
