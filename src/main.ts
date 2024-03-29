@@ -577,8 +577,6 @@ async function importFromJSON(data:CollectionExportRecord[]) {
         return false;
     })
 
-    debugger
-
     await Promise.all(filteredData.map(async (collectionRecord) => {
         await getCollectionAndPrepareTokens({
             collectionName: collectionRecord.collection,
@@ -586,8 +584,6 @@ async function importFromJSON(data:CollectionExportRecord[]) {
             data: flattenObject(collectionRecord.tokens)
         });    
     }));
-
-    debugger
 
     for(const collectionRecord of data) {
         await importVariables({
