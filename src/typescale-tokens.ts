@@ -19,6 +19,8 @@ export const base = flattenObject(baseMinorThird);
 export const compact = flattenObject(compactMinorThird);
 export const large = flattenObject(largeMinorThird);
 
+export const typeFace = flattenObject(typeFaceTokens);
+
 const styles = flattenObject(textStyleTokens);
 
 const tokens = {

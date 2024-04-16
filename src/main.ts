@@ -274,14 +274,21 @@ async function importAllTokens(params: ImportFormData) {
         defaultOrder: radiiSizeName,
         tokens: radiiTokens
     });
-    await importSizeTokens({
-        type: 'typeScale',
+
+    await importVariables({
         collectionName: 'Type Scale',
+        modeName: "Default",
+        data: typescaleTokens.typeFace
+    });
+
+    await importSizeTokens({
+        type: 'typeFace',
+        collectionName: 'Type Face',
         params: params,
         defaultMode: params.baseFontSize,
         defaultOrder: typographySizeName,
         tokens: typescaleTokens,
-        isSingleMode: true
+        isSingleMode: false
     });
 
     // ICONS SCALE
@@ -369,7 +376,7 @@ function importColorTheme(params: ImportFormData) {
 }
 
 async function importSizeTokens(data: {
-    type: "spacing" | "radii" | "typeScale" | "iconScale";
+    type: "spacing" | "radii" | "typeScale" | "iconScale" | "typeFace";
     defaultMode: string;
     params: ImportFormData,
     collectionName: string,

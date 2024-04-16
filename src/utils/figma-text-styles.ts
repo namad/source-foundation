@@ -1,5 +1,5 @@
 import { _clone } from "./clone";
-import { parseReferenceGlobal } from "./token-references";
+import { findVariableByReferences, parseReferenceGlobal } from "./token-references";
 
 
 export async function importTextStyles(tokens: any[]) {
@@ -23,16 +23,23 @@ export async function importTextStyles(tokens: any[]) {
             Object.keys(normalized).forEach(key => {
                 textStyle[key] = normalized[key];
             })
+
+            textStyle.setBoundVariable('lineHeight', await findVariableByReferences(token.$value['lineHeight']));
+            textStyle.setBoundVariable('fontSize', await findVariableByReferences(token.$value['fontSize']));
+            textStyle.setBoundVariable('paragraphSpacing', await findVariableByReferences(token.$value['paragraphSpacing']));
+            textStyle.setBoundVariable('fontFamily', await findVariableByReferences(token.$value['fontFamily']));
+            textStyle.setBoundVariable('fontStyle', await findVariableByReferences(token.$value['fontWeight']));
         }    
     }
 }
 
 function parseValues(value, dictionary) {
     let output = {};
-    Object.entries(value).forEach(([key, value]) => {
-        const resolvedValue = parseReferenceGlobal(value, dictionary);
+    for(const [key, tokenReference] of Object.entries(value)) {
+        const resolvedValue = parseReferenceGlobal(tokenReference, dictionary);
         output[key] = resolvedValue;
-    });
+    }
+
 
     return output;
 }
@@ -106,7 +113,7 @@ export function convertTextStyleToFigma(name, values): TextStyle {
         leadingTrim: "NONE",
         paragraphIndent: 0,
         'paragraphSpacing': parseInt(values.paragraphSpacing),
-        listSpacing: 0,
+        listSpacing: parseFloat(values.lineHeight),
         hangingPunctuation: false,
         hangingList: false,
         'textCase': convertTextCaseToFigma(values.textCase)
