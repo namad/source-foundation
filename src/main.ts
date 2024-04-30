@@ -1,12 +1,12 @@
 import { convertFigmaColorToRgb, parseColorToken } from './utils/figma-colors';
 import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
-import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
+import { findFigmaVariableCollectionByName, getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 
 import chroma from 'chroma-js';
 
 import * as spacingTokens from './spacing-tokens';
 import * as radiiTokens from './radii-tokens';
-import * as typescaleTokens from './typescale-tokens';
+import * as typographyTokens from './typography-tokens';
 import * as sizingTokens from './sizing-tokens';
 import * as effectsTokens from './effect-tokens';
 import * as opacityTokens from './opacity-tokens';
@@ -19,7 +19,7 @@ import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-pa
 import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
-import { iconSizeName, radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
+import { defaultSettings, iconSizeName, radiiSizeName, spacingSizeName, typographySizeName, typographySizeValues } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
@@ -41,12 +41,26 @@ const collectionNames = new Map<string, string>([
 ]);
 
 (async () => {
-    const fontDetails = await typescaleTokens.getFontDetails();
+    const fontDetails = await typographyTokens.getFontDetails();
+    debugger;
     await Promise.all(
         fontDetails.map(async item =>
             await figma.loadFontAsync(item as FontName)
         )
     );
+
+
+    // const tokens = getThemeColors('lightBase', defaultSettings);
+    // const sortFn = getColorTokensSortFn();
+    // let transformedTokens = Object.entries(tokens as DesignTokensRaw).map(([key, object]) => {
+    //     return {
+    //         name: key,
+    //         ...object
+    //     }
+    // });
+
+    // console.log(transformedTokens.sort(sortFn));
+
 
     figma.showUI(__html__, {
         width: 560,
@@ -77,7 +91,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         await exportToJSON(eventData.format);
     }
     else if (eventData.type === "IMPORT_JSON") {
-        await importFromJSON(eventData.data);
+        await importFromJSON(eventData.data, eventData.params);
     }
     else if (eventData.type === "ALERT") {
         figma.notify(`${eventData.params}`);
@@ -118,6 +132,8 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
 };
 
 async function initiateImport(params: ImportFormData) {
+    await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+
     await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
@@ -147,9 +163,9 @@ async function initiateImport(params: ImportFormData) {
     });
 
     await getCollectionAndPrepareTokens({
-        collectionName: collectionNames.get('iconScale'),
-        modeName: toTitleCase("base"),
-        data: sizingTokens.base,
+        collectionName: "Type Scale",
+        modeName: toTitleCase(params.baseFontSize),
+        data: typographyTokens[params.baseFontSize],
         sortFn: getSizeTokensSortFn(),
     });
 
@@ -251,6 +267,11 @@ async function importAllTokens(params: ImportFormData) {
 
     await importColorTheme(params);
 
+    globalTokens = {
+        ...globalTokens,
+        ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
+    };
+
     await importVariables({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
@@ -275,30 +296,15 @@ async function importAllTokens(params: ImportFormData) {
         tokens: radiiTokens
     });
 
-    await importVariables({
-        collectionName: 'Type Scale',
-        modeName: "Default",
-        data: typescaleTokens.typeFace
-    });
+    await importTypeFaceTokens();
 
     await importSizeTokens({
-        type: 'typeFace',
-        collectionName: 'Type Face',
+        type: 'typeScale',
+        collectionName: "Type Scale",
         params: params,
         defaultMode: params.baseFontSize,
         defaultOrder: typographySizeName,
-        tokens: typescaleTokens,
-        isSingleMode: false
-    });
-
-    // ICONS SCALE
-    await importSizeTokens({
-        type: 'iconScale',
-        collectionName: collectionNames.get('iconScale'),
-        params: params,
-        defaultMode: 'base',
-        defaultOrder: iconSizeName,
-        tokens: sizingTokens
+        tokens: typographyTokens
     });
 
     await importVariables({
@@ -313,13 +319,7 @@ async function importAllTokens(params: ImportFormData) {
         data: sizingTokens.global
     });
 
-
-    globalTokens = {
-        ...globalTokens,
-        ...typescaleTokens.getTypograohyTokens(params.baseFontSize, params.typeScale)
-    };
-
-    await importTextStyles(typescaleTokens.getTypograohyTokens(params.baseFontSize, params.typeScale));
+    await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
 
     await importEffects();
 
@@ -348,8 +348,7 @@ function importColorTheme(params: ImportFormData) {
     importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
-        data: themeColors,
-        sortFn: getColorTokensSortFn
+        data: themeColors
     });
 
     themeColors = getThemeColors('darkBase', params);
@@ -439,30 +438,28 @@ async function getCollectionAndPrepareTokens({ collectionName, modeName, modeInd
         }
     })
 
-    let sortedTokens = transformedTokens;
-
     if (sortFn != null) {
-        sortedTokens = transformedTokens.sort(sortFn);
+        transformedTokens.sort(sortFn);
     }
 
     if (isNew) {
         // create variables straight away so there is a way to make 
         // references / aliases without additional pass
-        for(const token of sortedTokens) {
+        for(const token of transformedTokens) {
             const type = resolveVariableType(token.$type);
             await setFigmaVariable(collection, modeId, type, token.name)
         }
     }
 
     return {
-        tokens: sortedTokens,
+        tokens: transformedTokens,
         collection,
         modeId,
         type: data.$type
     }
 }
 
-async function importVariables({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
+async function importVariables({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false, overrideValues = true }) {
     const {
         tokens,
         collection,
@@ -479,10 +476,25 @@ async function importVariables({ collectionName, modeName, modeIndex = -1, data,
             modeId,
             type: token.$type,
             variableName: token.name,
-            token: token
+            token: token,
+            overrideValues: overrideValues
         });
     }
 
+}
+
+
+async function importTypeFaceTokens() {
+    const collectionName = 'Type Face';
+    const collection = await findFigmaVariableCollectionByName(collectionName);
+
+    if(collection == null) {
+        await importVariables({
+            collectionName: collectionName,
+            modeName: "Default",
+            data: typographyTokens.typeFace
+        });
+    }
 }
 
 export interface DesignTokensRaw {
@@ -505,13 +517,16 @@ async function processToken({
     modeId,
     type,
     variableName,
-    token
+    token,
+    overrideValues = true
 }) {
     type = type || token.$type;
     // if key is a meta field, move on
     if (variableName.charAt(0) === "$") {
         return;
     }
+
+    let value;
 
     if (token.$value !== undefined) {
         if (type === "color") {
@@ -538,6 +553,7 @@ async function processToken({
                 token.description || null
             );
         }
+
         if (type === "number") {
             return await setFigmaVariable(
                 collection,
@@ -550,30 +566,34 @@ async function processToken({
             );
         }
 
-        try {
+        if (type === "string") {
+            value = parseReferenceGlobal(token.$value, globalTokens);
             return await setFigmaVariable(
                 collection,
                 modeId,
                 "STRING",
                 variableName,
-                parseReferenceGlobal(token.$value, globalTokens),
+                value,
                 token.scopes,
                 token.description || null
-            );
+            ).catch(function(err) {
+                console.log(err.message); // some coding error in handling happened
+            }); 
         }
-        catch (e) {
-            console.error("unsupported type", type, token);
-        }
+
+        console.error("unsupported type", type, token);
 
     } else {
         console.warn('recursion in ', token);
     }
 }
-async function importFromJSON(data:CollectionExportRecord[]) {
+async function importFromJSON(data:CollectionExportRecord[], params: ImportFormData) {
+
+    debugger;
 
     const collections = [];
 
-    const filteredData = data.filter(record => {
+    const variableCollections = data.filter(record => {
         const collectionName = record.collection;
 
         if(collections.indexOf(collectionName) < 0) {
@@ -584,7 +604,7 @@ async function importFromJSON(data:CollectionExportRecord[]) {
         return false;
     })
 
-    await Promise.all(filteredData.map(async (collectionRecord) => {
+    await Promise.all(variableCollections.map(async (collectionRecord) => {
         await getCollectionAndPrepareTokens({
             collectionName: collectionRecord.collection,
             modeName: collectionRecord.mode,
@@ -599,6 +619,9 @@ async function importFromJSON(data:CollectionExportRecord[]) {
             data: flattenObject(collectionRecord.tokens)        
         }) 
     }
+
+    await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
+    await importEffects();
 }
 
 async function exportToJSON(colorFormat?) {
@@ -624,6 +647,12 @@ async function exportCollection({ name, modes, variableIds }, colorFormat?) {
     const collections: CollectionExportRecord[] = [];
     const variableReferences = variableIds.sort();
 
+    const typeNames = new Map<string, string>([
+        ["COLOR", "color"],
+        ["FLOAT", "number"],
+        ["STRING", "string"]
+    ]);
+
     for(const mode of modes){
         const collection = { collection: name,  mode: mode.name, tokens: {} } as CollectionExportRecord;
         
@@ -633,13 +662,13 @@ async function exportCollection({ name, modes, variableIds }, colorFormat?) {
             console.log(name);
 
             const value = valuesByMode[mode.modeId] as any;
-            if (value !== undefined && ["COLOR", "FLOAT"].includes(resolvedType)) {
+            if (value !== undefined && ["COLOR", "FLOAT", "STRING"].includes(resolvedType)) {
                 let obj = collection.tokens;
                 name.split("/").forEach((groupName) => {
                     obj[groupName] = obj[groupName] || {};
                     obj = obj[groupName];
                 });
-                obj.$type = resolvedType === "COLOR" ? "color" : "number";
+                obj.$type = typeNames.get(resolvedType);
                 if (value.type === "VARIABLE_ALIAS") {
                     const variable = await figma.variables.getVariableByIdAsync(value.id);
                     obj.$value = `{${variable.name.replace(/\//g, ".")}}`;

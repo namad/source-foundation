@@ -214,10 +214,7 @@
     "letter-spacing": {
         "0": {
             "$value": "0%",
-            "$type": "letterSpacing",
-            "scopes": [
-                "TEXT_CONTENT"
-            ]
+            "$type": "string"
         }
     },
     "paragraph-spacing": {

@@ -14,6 +14,7 @@ import compactMajorSecond from "./tokens/typography/major-second/typescale-compa
 import largeMajorSecond from "./tokens/typography/major-second/typescale-large.json";
 
 import { flattenObject } from "./utils/flatten-object";
+import { findFigmaVariableCollectionByName } from "./utils/figma-variables";
 
 export const base = flattenObject(baseMinorThird);
 export const compact = flattenObject(compactMinorThird);
@@ -41,35 +42,64 @@ const tokens = {
     },
 }
 
-export function getTypograohyTokens(size: string, scale = "minorThird") {
+export function getTypographyTokens(size: string, scale = "minorThird") {
 
     let scaleTokens = tokens[scale][size];
 
     return {
-        ...flattenObject(typeFaceTokens),
+        ...typeFace,
+        ...scaleTokens,
+        ...styles,
+    }
+}
+
+export function getTypScaleTokens(size: string, scale = "minorThird") {
+
+    let scaleTokens = tokens[scale][size];
+
+    return {
+        ...typeFace,
         ...scaleTokens,
         ...styles,
     }
 }
 
 export async function getFontDetails() {
-    const styles = await figma.getLocalTextStylesAsync()
-
-    if(styles.length) {
-        return getFontDetailsLocal(styles);
-    }
-    else {
-        return getFontDetailsTokens();
-    }
+    return await getFontDetailsTokens();
 }
 
-function getFontDetailsTokens() {
+async function getFontDetailsTokens() {
+    const collectionName = 'Type Face';
+    const collection = await findFigmaVariableCollectionByName(collectionName);
     let names = [];
-    const tokens = typeFaceTokens;
-    const family = typeFaceTokens["font-family"].primary.$value;
 
-    for (let [name, fontWeight] of Object.entries(typeFaceTokens["font-weight"])) {
-        names.push({ family, style: fontWeight.$value });
+    if(collection == null) {
+        const tokens = typeFaceTokens;
+        const family = typeFaceTokens["font-family"].$value;
+
+        for (let [name, textStyle] of Object.entries(typeFaceTokens["text-style"])) {
+            names.push({ family, style: textStyle.$value });
+        }
+    }
+    else {
+        let family, styles = [];
+
+        for(const variableId of collection.variableIds) {
+            const figmaVar = await figma.variables.getVariableByIdAsync(variableId);
+            const name = figmaVar.name;
+            const figmaVarValue = Object.values(figmaVar.valuesByMode)[0];
+
+            if(name.startsWith('font-family')) {
+                family = figmaVarValue;
+            }
+            else if (name.startsWith('text-style')) {
+                styles.push(figmaVarValue)
+            }
+        }
+
+        for(const style of styles) {
+            names.push({ family, style });
+        }
     }
 
     return names;

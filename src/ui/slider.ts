@@ -17,6 +17,7 @@ interface SliderOptions {
     step: number;
     value: number;
     syncValue: boolean;
+    tooltips?: boolean;
     valueMap?: string[];
 }
 
@@ -51,6 +52,7 @@ function processComponent(el, options: SliderOptions) {
         animate: false,
         start: [options.value],
         step: options.step,
+        tooltips: options.tooltips || false,
         range: {
             'min': [options.min],
             'max': [options.max]

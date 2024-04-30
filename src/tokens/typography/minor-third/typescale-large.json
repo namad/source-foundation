@@ -212,13 +212,10 @@
         }
     },
     "letter-spacing": {
-        "0": {
-            "$value": "0%",
-            "$type": "letterSpacing",
-            "scopes": [
-                "TEXT_CONTENT"
-            ]
-        }
+      "0": {
+        "$value": "0%",
+        "$type": "string"
+      }
     },
     "paragraph-spacing": {
         "label": {

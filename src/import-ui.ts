@@ -1,6 +1,6 @@
 import { defaultSettings, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
 import * as radii from "./radii-tokens";
-import * as typescale from "./typescale-tokens";
+import * as typescale from "./typography-tokens";
 import * as spacing from "./spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
@@ -212,7 +212,7 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     generateAccentsPreview(themeColors, data);
 
     generateCSSVars(radii[data.radii]);
-    generateCSSVars(typescale.getTypograohyTokens(data.baseFontSize, data.typeScale));
+    generateCSSVars(typescale.getTypographyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacing[data.spacing]);
 
     updateValuesDisplay(data, form);

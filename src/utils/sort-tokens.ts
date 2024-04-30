@@ -139,10 +139,10 @@ export function getAlphaNumTokensSortFn() {
 function getSortFn(dataSet: string[]) {
     return function(firstEl, secondEl) {
         var resultFirst = dataSet.findIndex(item => {
-            return firstEl.name.endsWith(item);
+            return firstEl.name.startsWith(item);
         })
         var resultSecond = dataSet.findIndex(item => {
-            return secondEl.name.endsWith(item);
+            return secondEl.name.startsWith(item);
         })
 
         if (resultFirst < resultSecond) {

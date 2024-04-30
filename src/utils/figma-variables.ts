@@ -27,11 +27,16 @@ export async function findFigmaVariableByName(variableName: string, collectionNa
     }
 }
 
-export async function getFigmaCollection(name) {
+export async function findFigmaVariableCollectionByName(name:string): Promise<VariableCollection|null> {
     const figmaCollections = await figma.variables.getLocalVariableCollectionsAsync();
+    const collection = figmaCollections.find(collection => collection.name === name);
 
+    return collection || null;
+}
+
+export async function getFigmaCollection(name) {
     let isNew = false;
-    let collection = figmaCollections.find(collection => collection.name === name);
+    let collection = await findFigmaVariableCollectionByName(name);
 
     if (!collection) {
         isNew = true;

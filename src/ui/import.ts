@@ -138,7 +138,8 @@ document.querySelectorAll('#importThemeButton').forEach(btn => {
         }
 
         if(tabID == 'importTokensTab') {
-            parent.postMessage({ pluginMessage: { type: "IMPORT_JSON", data: data } }, "*");     
+            const params = getFormData(form);
+            parent.postMessage({ pluginMessage: { type: "IMPORT_JSON", params, data } }, "*");     
         }
         
 
@@ -343,9 +344,6 @@ loadSettings(form, defaultSettings);
 
 
 window.onmessage = ({ data: { pluginMessage } }) => {
-    console.log("got this from the plugin code", pluginMessage);
-    debugger
-
     if(pluginMessage == 'importCompleted') {
         importButton.classList.remove('loading');
     }

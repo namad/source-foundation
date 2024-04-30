@@ -10,7 +10,7 @@ import defaultSettings from "../presets/default.json";
 import * as defaults from '../defaults';
 import * as spacing from '../spacing-tokens';
 import * as radii from '../radii-tokens';
-import * as typescale from '../typescale-tokens';
+import * as typescale from '../typography-tokens';
 import * as sizing from '../sizing-tokens';
 import * as effects from '../effect-tokens';
 import { opacity } from '../opacity-tokens';
