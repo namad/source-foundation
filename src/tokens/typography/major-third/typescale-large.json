@@ -211,12 +211,6 @@
             ]
         }
     },
-    "letter-spacing": {
-        "0": {
-            "$value": "0%",
-            "$type": "string"
-        }
-    },
     "paragraph-spacing": {
         "label": {
             "$value": "12",

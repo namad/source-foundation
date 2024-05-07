@@ -3,28 +3,6 @@
         "$value": "Inter",
         "$type": "string"
     },
-    "font-weight": {
-        "light": {
-            "$value": 300,
-            "$type": "number",
-            "scopes": ["TEXT_CONTENT"]
-        },
-        "regular": {
-            "$value": 400,
-            "$type": "number",
-            "scopes": ["TEXT_CONTENT"]
-        },
-        "semibold": {
-            "$value": 600,
-            "$type": "number",
-            "scopes": ["TEXT_CONTENT"]
-        },
-        "bold": {
-            "$value": 700,
-            "$type": "number",
-            "scopes": ["TEXT_CONTENT"]
-        }
-    },
     "text-style": {
         "light": {
             "$value": "Light",
