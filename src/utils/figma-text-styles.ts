@@ -4,7 +4,7 @@ import { findVariableByReferences, parseReferenceGlobal } from "./token-referenc
 
 export async function importTextStyles(tokens: any[]) {
     await figma.loadFontAsync({family: 'Inter', style: 'Regular'});
-    
+
     for (const [name, token] of Object.entries(tokens)) {
 
         if (token.$type != 'typography') {
@@ -44,7 +44,7 @@ export async function importTextStyles(tokens: any[]) {
         const fontSizeVariable = await findVariableByReferences(token.$value['fontSize']);
         const paragraphSpacingVariable = await findVariableByReferences(token.$value['paragraphSpacing']);
         const fontFamilyVariable = await findVariableByReferences(token.$value['fontFamily']);
-        const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
+        // const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
         const fontStyleVariable = await findVariableByReferences(token.$value['textStyle']);
 
         try {

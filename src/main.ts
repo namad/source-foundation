@@ -21,7 +21,6 @@ import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
 import { defaultSettings, iconSizeName, radiiSizeName, spacingSizeName, typographySizeName, typographySizeValues } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
-import { updateElevationComponents } from './utils/update-elevation-components';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
 
@@ -321,17 +320,11 @@ async function importAllTokens(params: ImportFormData) {
 
     await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
 
-    await importEffects();
+    await importEffectStyles(effectsTokens.elevation);
 
     figma.notify("Figma variables has been imported");
 
     figma.ui.postMessage("importCompleted");
-}
-
-async function importEffects() {
-    // import effects for default theme which is light one
-    await importEffectStyles(effectsTokens.elevation);
-    updateElevationComponents(effectsTokens.getElevationTokens());
 }
 
 function importColorTheme(params: ImportFormData) {
@@ -621,7 +614,7 @@ async function importFromJSON(data:CollectionExportRecord[], params: ImportFormD
     }
 
     await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
-    await importEffects();
+    await importEffectStyles(effectsTokens.elevation);
 }
 
 async function exportToJSON(colorFormat?) {

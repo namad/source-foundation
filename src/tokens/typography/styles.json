@@ -4,7 +4,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -18,7 +18,7 @@
             "semi-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -32,7 +32,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -46,7 +46,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -60,7 +60,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -74,7 +74,7 @@
             "uppercase": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -88,7 +88,7 @@
             "uppercase-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -104,7 +104,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -118,7 +118,7 @@
             "semi-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -132,7 +132,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -146,7 +146,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -160,7 +160,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -174,7 +174,7 @@
             "uppercase": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -188,7 +188,7 @@
             "uppercase-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -204,7 +204,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -218,7 +218,7 @@
             "semi-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -232,7 +232,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -246,7 +246,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -260,7 +260,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -274,7 +274,7 @@
             "uppercase": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -288,7 +288,7 @@
             "uppercase-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -304,7 +304,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -318,7 +318,7 @@
             "semi-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -332,7 +332,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -346,7 +346,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -360,7 +360,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -374,7 +374,7 @@
             "uppercase": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -388,7 +388,7 @@
             "uppercase-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -404,7 +404,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -418,7 +418,7 @@
             "semi-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -432,7 +432,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -446,7 +446,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -460,7 +460,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -474,7 +474,7 @@
             "uppercase": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -488,7 +488,7 @@
             "uppercase-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xs2}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -504,7 +504,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -518,7 +518,7 @@
             "semi-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -532,7 +532,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -546,7 +546,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -560,7 +560,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -574,7 +574,7 @@
             "uppercase": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -588,7 +588,7 @@
             "uppercase-bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -606,7 +606,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -620,7 +620,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -634,7 +634,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -648,7 +648,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -664,7 +664,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -678,7 +678,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -692,7 +692,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -706,7 +706,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -722,7 +722,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -736,7 +736,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -750,7 +750,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -764,7 +764,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.sm}",
                     "letterSpacing": "0",
@@ -780,7 +780,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -794,7 +794,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -808,7 +808,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -822,7 +822,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.sm}",
                     "fontSize": "{font-size.xs}",
                     "letterSpacing": "0",
@@ -838,7 +838,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -852,7 +852,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -866,7 +866,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -880,7 +880,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xs}",
                     "fontSize": "{font-size.xs2}",
                     "letterSpacing": "0",
@@ -896,7 +896,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -910,7 +910,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xl}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -924,7 +924,7 @@
             "italic": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -938,7 +938,7 @@
             "underline": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -956,7 +956,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xl3}",
                     "fontSize": "{font-size.xl3}",
                     "letterSpacing": "0",
@@ -970,7 +970,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl3}",
                     "fontSize": "{font-size.xl3}",
                     "letterSpacing": "0",
@@ -986,7 +986,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xl2}",
                     "fontSize": "{font-size.xl2}",
                     "letterSpacing": "0",
@@ -1000,7 +1000,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl2}",
                     "fontSize": "{font-size.xl2}",
                     "letterSpacing": "0",
@@ -1016,7 +1016,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.xl}",
                     "fontSize": "{font-size.xl}",
                     "letterSpacing": "0",
@@ -1030,7 +1030,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl}",
                     "fontSize": "{font-size.xl}",
                     "letterSpacing": "0",
@@ -1046,7 +1046,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -1060,7 +1060,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.lg}",
                     "fontSize": "{font-size.lg}",
                     "letterSpacing": "0",
@@ -1076,7 +1076,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -1090,7 +1090,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.md}",
                     "fontSize": "{font-size.md}",
                     "letterSpacing": "0",
@@ -1106,7 +1106,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.bold}",
+                    "fontWeight": 700,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -1120,7 +1120,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.base}",
                     "fontSize": "{font-size.base}",
                     "letterSpacing": "0",
@@ -1138,7 +1138,7 @@
             "light": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.light}",
+                    "fontWeight": 300,
                     "lineHeight": "{line-height.xl4}",
                     "fontSize": "{font-size.xl4}",
                     "letterSpacing": "0",
@@ -1152,7 +1152,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl4}",
                     "fontSize": "{font-size.xl4}",
                     "letterSpacing": "0",
@@ -1166,7 +1166,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.xl4}",
                     "fontSize": "{font-size.xl4}",
                     "letterSpacing": "0",
@@ -1182,7 +1182,7 @@
             "light": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.light}",
+                    "fontWeight": 300,
                     "lineHeight": "{line-height.xl5}",
                     "fontSize": "{font-size.xl5}",
                     "letterSpacing": "0",
@@ -1196,7 +1196,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl5}",
                     "fontSize": "{font-size.xl5}",
                     "letterSpacing": "0",
@@ -1210,7 +1210,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.xl5}",
                     "fontSize": "{font-size.xl5}",
                     "letterSpacing": "0",
@@ -1226,7 +1226,7 @@
             "light": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.light}",
+                    "fontWeight": 300,
                     "lineHeight": "{line-height.xl6}",
                     "fontSize": "{font-size.xl6}",
                     "letterSpacing": "0",
@@ -1240,7 +1240,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl6}",
                     "fontSize": "{font-size.xl6}",
                     "letterSpacing": "0",
@@ -1254,7 +1254,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.xl6}",
                     "fontSize": "{font-size.xl6}",
                     "letterSpacing": "0",
@@ -1270,7 +1270,7 @@
             "light": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.light}",
+                    "fontWeight": 300,
                     "lineHeight": "{line-height.xl7}",
                     "fontSize": "{font-size.xl7}",
                     "letterSpacing": "0",
@@ -1284,7 +1284,7 @@
             "normal": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.regular}",
+                    "fontWeight": 400,
                     "lineHeight": "{line-height.xl7}",
                     "fontSize": "{font-size.xl7}",
                     "letterSpacing": "0",
@@ -1298,7 +1298,7 @@
             "bold": {
                 "$value": {
                     "fontFamily": "{font-family}",
-                    "fontWeight": "{font-weight.semibold}",
+                    "fontWeight": 500,
                     "lineHeight": "{line-height.xl7}",
                     "fontSize": "{font-size.xl7}",
                     "letterSpacing": "0",

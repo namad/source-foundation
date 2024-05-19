@@ -132,8 +132,11 @@ export function getSizeTokensSortFn() {
 }
 
 export function getAlphaNumTokensSortFn() {
-    var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
-    return collator.compare;
+    return function(a, b) {
+        a.name.localeCompare(b.name, 'en', { numeric: true })
+    } 
+    // var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+    // return collator.compare;
 }
 
 function getSortFn(dataSet: string[]) {
