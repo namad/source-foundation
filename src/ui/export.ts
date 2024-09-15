@@ -3,7 +3,7 @@ import "./styles/utils.css";
 import "./styles/styles.css";
 import "./styles/icons.css";
 import "./styles/dialog.css";
-import { CollectionExportRecord } from "../main";
+import { CollectionExportRecord } from "../import-export-json";
 
 
 window.onmessage = ({ data: { pluginMessage } }) => {

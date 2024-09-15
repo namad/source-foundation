@@ -1,28 +1,52 @@
 {
     "font-family": {
         "$value": "Inter",
-        "$type": "string"
+        "$type": "string",
+        "scopes": [
+            "TEXT_CONTENT",
+            "FONT_FAMILY"
+        ]
     },
     "text-style": {
         "light": {
             "$value": "Light",
-            "$type": "string"
+            "$type": "string",
+            "scopes": [
+                "TEXT_CONTENT",
+                "FONT_STYLE"
+            ]
         },
         "regular": {
             "$value": "Regular",
-            "$type": "string"
+            "$type": "string",
+            "scopes": [
+                "TEXT_CONTENT",
+                "FONT_STYLE"
+            ]
         },
         "semibold": {
             "$value": "Semi Bold",
-            "$type": "string"
+            "$type": "string",
+            "scopes": [
+                "TEXT_CONTENT",
+                "FONT_STYLE"
+            ]
         },
         "bold": {
             "$value": "Bold",
-            "$type": "string"
+            "$type": "string",
+            "scopes": [
+                "TEXT_CONTENT",
+                "FONT_STYLE"
+            ]
         },
         "italic": {
             "$value": "Italic",
-            "$type": "string"
+            "$type": "string",
+            "scopes": [
+                "TEXT_CONTENT",
+                "FONT_STYLE"
+            ]
         }
     }
 }

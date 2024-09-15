@@ -17,7 +17,7 @@ import { opacity } from '../opacity-tokens';
 
 import fs from 'fs';
 import path from "path";
-import { EffectToken } from "../effect-tokens";
+import { EffectTokenValue } from "../effect-tokens";
 
 function isAlias(value) {
     return value.toString().trim().charAt(0) === "{";
@@ -128,10 +128,10 @@ function writeElevationVariables(stream) {
     const data = Object.keys(tokens).map((name, index) => {
         const variants = tokens[name];
         const [ shade, token ] = Object.entries(variants)[0];
-        const settings = token['$value'] as EffectToken[];
+        const settings = token['$value'] as EffectTokenValue[];
 
         const cssString = settings.map((shadowSettings) => {
-            return `${shadowSettings.x}px ${shadowSettings.y}px ${shadowSettings.blur}px ${shadowSettings.spread}px var(--box-shadow-color)`
+            return `${shadowSettings.offsetX}px ${shadowSettings.offsetY}px ${shadowSettings.radius}px ${shadowSettings.spread}px var(--box-shadow-color)`
         }).join(', ');
 
         return { name: `shadow-${index}`, value: cssString}

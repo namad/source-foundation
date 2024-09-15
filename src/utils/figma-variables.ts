@@ -88,3 +88,18 @@ export async function setFigmaVariable(
 
     return figmaVariable;
 }
+
+export async function getAliasName(id): Promise<string> {
+    const variable = await figma.variables.getVariableByIdAsync(id);
+    return `{${variable.name.replace(/\//g, ".")}}`;
+}
+
+export function variableNameToObject(name, target): any {
+    let obj = target;
+    name.split("/").forEach((groupName) => {
+        obj[groupName] = obj[groupName] || {};
+        obj = obj[groupName];
+    });
+
+    return obj;
+}

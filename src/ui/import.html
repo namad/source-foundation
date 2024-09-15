@@ -39,6 +39,13 @@
                 <p class="color-text-base-500">Select base spacing</p>
                 <div data-type="spacing" data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
                 </div>
+                <div class="mt-2 flex flex-row">
+                    <div class="w-1/5">Vertical / Minor</div>
+                    <div class="flex flex-1 flex-col gap-3" style="margin: 0 var(--slider-margin) 0">
+                        <label class="flex flex-row gap-2"><input type="radio" name="verticalSpacing" value="even" checked /><span>Even</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="verticalSpacing" value="uneven" checked /><span>Uneven</span></label>
+                    </div>
+                </div>                
             </div>
         </div>
     </dialog>
@@ -484,7 +491,7 @@
 <dialog id="importModal">
     <div class="modal-container h-full">
         <div class="header">
-            <h3 class="text-md font-bold">Import Theme</h3>
+            <h3 class="text-md font-bold">Import Tokens</h3>
             <button class="close" value="cancel">
                 <span class="icon icon-x"></span>
             </button>
@@ -519,7 +526,7 @@
             </div>
         </div>        
         <div class="footer">
-            <button class="primary" id="importThemeButton">Import Theme</button>
+            <button class="primary" id="importThemeButton">Import Tokens</button>
         </div>
     </div>
 </dialog>

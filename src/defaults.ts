@@ -104,6 +104,7 @@ export const defaultSettings: ImportFormData = {
     accentMinLuminance: 0.10,
     radii: 'base',
     spacing: 'base',
+    verticalSpacing: 'uneven',
     singleCollection: false
 }
 

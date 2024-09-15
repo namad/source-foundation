@@ -1,52 +1,121 @@
-import { EffectToken } from "../effect-tokens";
-import { DesignToken } from "../main";
-import { parseColorValue } from "./figma-colors";
+import { EffectTokenValue } from "../effect-tokens";
+import { DesignToken, globalTokens } from "../main";
+import { _clone } from "./clone";
+import { ColorFormat, FigmaRGB, convertFigmaColorToRgb, parseColorValue } from "./figma-colors";
+import { getAliasName } from "./figma-variables";
 import { parseReferenceGlobal, findVariableByReferences } from "./token-references";
+
+const variableBindableShadowEffectFields = [
+    'radius',
+    'color',
+    'spread',
+    'offsetX',
+    'offsetY'
+]
 
 
 /*
     This method reads shadow color values directly from Figma Variables
 */
 export async function importEffectStyles(tokens) {
+
     for(const [name, tokenData] of Object.entries(tokens)) {
         let token = tokenData as DesignToken;
 
-        if (token.$type == 'boxShadow') {
+        if (token.$type == 'effect') {
             let figmaStyle = await getStyleByName(name);
             
             if(!figmaStyle) {
                 figmaStyle = figma.createEffectStyle();
             }
-            const values = token.$value as EffectToken[];
+            const values = token.$value as EffectTokenValue[];
             const effects = [];
 
-            for(const value of values) {
-                const figmaVariable = await findVariableByReferences(value.color);
-
-                if(!figmaVariable) {
-                    debugger
-                }
-                const collectionID = figmaVariable.variableCollectionId;
-                const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
-                const defaultMode = collection.modes[0].modeId;
-
-                const figmaEffect = Object.assign({}, value, {
-                    color: figmaVariable.valuesByMode[defaultMode] as RGBA
-                });
-                
-                const effect = convertEffectStyleToFigma(figmaEffect) as DropShadowEffect;
-                const effectVar = figma.variables.setBoundVariableForEffect(effect, 'color', figmaVariable) as any;
-                effectVar.spread = effect.spread;
-
-                effects.push(effectVar);
+            for(const effectValue of values) {
+                // globalTokens
+                const effect = await convertEffectStyleToFigma(effectValue) as Effect;
+                effects.push(effect);
             }
 
             figmaStyle.name = name;
             figmaStyle.effects = effects;
             figmaStyle.description = token.description || figmaStyle.description;
-            // figmaStyle.documentationLinks = token.documentationLink ? [token.documentationLink] : figmaStyle.documentationLinks;
         }
     }
+}
+
+interface BoundProp {
+    propName: VariableBindableEffectField,
+    variable: Variable
+}
+
+async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effect> {
+    const {
+        effectTokenValue,
+        boundProps 
+    } = await resolveBoundValues(value)
+
+    let effect = {
+        type: effectTokenValue.type,
+        radius: parseFloat(effectTokenValue.radius),
+        visible: true
+    }
+
+    if(effectTokenValue.type == 'INNER_SHADOW' || effectTokenValue.type == 'DROP_SHADOW') {
+        effect = Object.assign(effect, {
+            color: figma.util.rgba(effectTokenValue.color),
+            offset: {
+                x: parseFloat(effectTokenValue.offsetX),
+                y: parseFloat(effectTokenValue.offsetY)
+            },
+            spread: parseFloat(effectTokenValue.spread),
+            blendMode: "NORMAL"
+        })
+    }
+
+    if(effectTokenValue.type == 'DROP_SHADOW') {
+        effect = Object.assign(effect, {
+            showShadowBehindNode: parseBoolean(effectTokenValue.showShadowBehindNode)
+        })
+    }
+
+
+    boundProps.forEach(boundData => {
+        debugger;
+        const effectCopy = figma.variables.setBoundVariableForEffect(effect as Effect,  boundData.propName, boundData.variable) as any;
+
+        if(effect.type == "DROP_SHADOW" || effect.type == 'INNER_SHADOW') {
+            effectCopy.spread = parseFloat(effectTokenValue.spread);
+        }
+
+        effect = effectCopy;
+    });
+
+    return effect as Effect;
+}
+
+async function resolveBoundValues(effectValue: EffectTokenValue): Promise<{effectTokenValue: EffectTokenValue, boundProps: BoundProp[]}> {
+
+    let copy = _clone(effectValue) as EffectTokenValue;
+    let boundProps: BoundProp[] = [];
+
+    for(const prop in copy) {
+        const figmaVariable = await findVariableByReferences(copy[prop]);
+
+        if(figmaVariable) {
+            boundProps.push({
+                propName: prop as VariableBindableEffectField,
+                variable: figmaVariable
+            });
+            const collectionID = figmaVariable.variableCollectionId;
+            const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
+            const defaultMode = collection.modes[0].modeId;
+            const defaultValue = figmaVariable.valuesByMode[defaultMode];
+            copy[prop] = defaultValue;
+        }
+    }
+
+    return {effectTokenValue: copy, boundProps};
 }
 
 async function getLocalStyles() {
@@ -68,27 +137,47 @@ function parseBoolean(val: string) {
     return val !== "false";
 }
 
-function convertEffectStyleToFigma(value: {
-    "color": RGBA;
-    "type": string;
-    "x": string;
-    "y": string;
-    "blur": string;
-    "spread": string;
-    "showShadowBehindNode"?: string;
-}): Effect {
-    return {
-        type: "DROP_SHADOW",
-        color: value.color,
-        offset: {
-            x: parseFloat(value.x),
-            y: parseFloat(value.y)
-        },
-        radius: parseFloat(value.blur),
-        spread: parseFloat(value.spread),
-        visible: true,
-        blendMode: "NORMAL",
-        showShadowBehindNode: parseBoolean(value.showShadowBehindNode)
+
+
+export async function convertFigmaEffectStyleToToken(style: EffectStyle, colorFormat?: ColorFormat): Promise<EffectTokenValue[]> {
+
+    const effects = style.effects;
+    const values = [];
+
+    for(var effect of effects) {
+        values.push(await convertFigmaShadowEffectToToken(effect, colorFormat));
+    }
+
+    return values;
+}
+
+async function convertFigmaShadowEffectToToken(effect: Effect, colorFormat?: ColorFormat): Promise<EffectTokenValue> {
+    let effectTokenValue: EffectTokenValue = {
+        "type": `${effect.type}`,
+        "radius": `${effect.radius}`,
     };
 
+    if(effect.type == "DROP_SHADOW" || effect.type == "INNER_SHADOW") {
+        effectTokenValue = Object.assign(effectTokenValue, {
+            "color": convertFigmaColorToRgb(effect.color, colorFormat),
+            "blendMode": `${effect.blendMode}`,
+            "offsetX": `${effect.offset.x}`,
+            "offsetY": `${effect.offset.y}`,
+            "spread": `${effect.spread}`,
+        });
+    }
+
+    if(effect.type == "DROP_SHADOW") {
+        effectTokenValue = Object.assign(effectTokenValue, {
+            "showShadowBehindNode": `${effect.showShadowBehindNode || false}`
+        });
+    }
+
+
+    for(const prop in effect.boundVariables) {
+        const boundVariable = effect.boundVariables[prop];
+        effectTokenValue[prop] = await getAliasName(boundVariable.id);
+    }
+
+    return effectTokenValue;
 }

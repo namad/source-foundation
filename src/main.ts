@@ -23,10 +23,12 @@ import { defaultSettings, iconSizeName, radiiSizeName, spacingSizeName, typograp
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
+import { TypographyTokenValue } from './typography-tokens';
+import { CollectionExportRecord, exportToJSON, importFromJSON } from './import-export-json';
 
 console.clear();
 
-let globalTokens;
+export let globalTokens;
 
 const collectionNames = new Map<string, string>([
     ["brandColors", "Color Theme"/*"Brand Color"*/],
@@ -41,25 +43,11 @@ const collectionNames = new Map<string, string>([
 
 (async () => {
     const fontDetails = await typographyTokens.getFontDetails();
-    debugger;
     await Promise.all(
         fontDetails.map(async item =>
             await figma.loadFontAsync(item as FontName)
         )
     );
-
-
-    // const tokens = getThemeColors('lightBase', defaultSettings);
-    // const sortFn = getColorTokensSortFn();
-    // let transformedTokens = Object.entries(tokens as DesignTokensRaw).map(([key, object]) => {
-    //     return {
-    //         name: key,
-    //         ...object
-    //     }
-    // });
-
-    // console.log(transformedTokens.sort(sortFn));
-
 
     figma.showUI(__html__, {
         width: 560,
@@ -74,7 +62,7 @@ interface MessagePayload {
     type: string;
     params: ImportFormData;
     data?: CollectionExportRecord[];
-    format?: string;
+    format?:  'hex'|'hsl'|'rgba';
     fileName?: string;
 }
 
@@ -283,7 +271,7 @@ async function importAllTokens(params: ImportFormData) {
         params: params,
         defaultMode: params.spacing,
         defaultOrder: spacingSizeName,
-        tokens: spacingTokens
+        tokens: spacingTokens.getSpacingTokens(params.verticalSpacing)
     });
 
     await importSizeTokens({
@@ -398,7 +386,7 @@ async function importSizeTokens(data: {
     }
 }
 
-async function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
+export async function getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false }) {
     let modeId;
     const { collection, isNew } = await getFigmaCollection(collectionName);
 
@@ -452,7 +440,7 @@ async function getCollectionAndPrepareTokens({ collectionName, modeName, modeInd
     }
 }
 
-async function importVariables({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false, overrideValues = true }) {
+export async function importVariables({ collectionName, modeName, modeIndex = -1, data, sortFn = null, isSingleMode = false, overrideValues = true }) {
     const {
         tokens,
         collection,
@@ -580,98 +568,3 @@ async function processToken({
         console.warn('recursion in ', token);
     }
 }
-async function importFromJSON(data:CollectionExportRecord[], params: ImportFormData) {
-
-    debugger;
-
-    const collections = [];
-
-    const variableCollections = data.filter(record => {
-        const collectionName = record.collection;
-
-        if(collections.indexOf(collectionName) < 0) {
-            collections.push(collectionName);
-            return record;
-        }
-
-        return false;
-    })
-
-    await Promise.all(variableCollections.map(async (collectionRecord) => {
-        await getCollectionAndPrepareTokens({
-            collectionName: collectionRecord.collection,
-            modeName: collectionRecord.mode,
-            data: flattenObject(collectionRecord.tokens)
-        });    
-    }));
-
-    for(const collectionRecord of data) {
-        await importVariables({
-            collectionName: collectionRecord.collection,
-            modeName: collectionRecord.mode,
-            data: flattenObject(collectionRecord.tokens)        
-        }) 
-    }
-
-    await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
-    await importEffectStyles(effectsTokens.elevation);
-}
-
-async function exportToJSON(colorFormat?) {
-    const collections = await figma.variables.getLocalVariableCollectionsAsync();
-    const files = [];
-    for(const collection of collections) {
-        const exportedData = await exportCollection(collection, colorFormat);
-        files.push(...exportedData)
-    }
-    figma.ui.postMessage({ type: "EXPORT_RESULT", files });
-}
-
-export interface CollectionExportRecord {
-    collection: string,
-    mode: string,
-    tokens: {
-        $type: string,
-        $value: string
-    }
-}
-
-async function exportCollection({ name, modes, variableIds }, colorFormat?) {
-    const collections: CollectionExportRecord[] = [];
-    const variableReferences = variableIds.sort();
-
-    const typeNames = new Map<string, string>([
-        ["COLOR", "color"],
-        ["FLOAT", "number"],
-        ["STRING", "string"]
-    ]);
-
-    for(const mode of modes){
-        const collection = { collection: name,  mode: mode.name, tokens: {} } as CollectionExportRecord;
-        
-        for(const variableId of variableReferences) {
-            const { name, resolvedType, valuesByMode } = await figma.variables.getVariableByIdAsync(variableId);
-
-            console.log(name);
-
-            const value = valuesByMode[mode.modeId] as any;
-            if (value !== undefined && ["COLOR", "FLOAT", "STRING"].includes(resolvedType)) {
-                let obj = collection.tokens;
-                name.split("/").forEach((groupName) => {
-                    obj[groupName] = obj[groupName] || {};
-                    obj = obj[groupName];
-                });
-                obj.$type = typeNames.get(resolvedType);
-                if (value.type === "VARIABLE_ALIAS") {
-                    const variable = await figma.variables.getVariableByIdAsync(value.id);
-                    obj.$value = `{${variable.name.replace(/\//g, ".")}}`;
-                } else {
-                    obj.$value = resolvedType === "COLOR" ? convertFigmaColorToRgb(value, colorFormat) : value;
-                }
-            }
-        };
-        collections.push(collection);
-    };
-    return collections;
-}
-

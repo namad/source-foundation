@@ -1,4 +1,6 @@
+import { TypographyTokenValue } from "../typography-tokens";
 import { _clone } from "./clone";
+import { getAliasName } from "./figma-variables";
 import { findVariableByReferences, parseReferenceGlobal } from "./token-references";
 
 
@@ -11,8 +13,6 @@ export async function importTextStyles(tokens: any[]) {
             continue;
         }
 
-        debugger;
-
         let textStyle = await getStyleByName(name);
         let newStyle = false;
 
@@ -21,7 +21,7 @@ export async function importTextStyles(tokens: any[]) {
             newStyle = true;
         }
 
-        const resolved = parseValues(token.$value, tokens);
+        const resolved = parseValues(token.$value as TypographyTokenValue, tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
 
         // reset
@@ -45,7 +45,7 @@ export async function importTextStyles(tokens: any[]) {
         const paragraphSpacingVariable = await findVariableByReferences(token.$value['paragraphSpacing']);
         const fontFamilyVariable = await findVariableByReferences(token.$value['fontFamily']);
         // const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
-        const fontStyleVariable = await findVariableByReferences(token.$value['textStyle']);
+        const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
 
         try {
             textStyle.setBoundVariable('lineHeight', lineHeightVariable);
@@ -67,7 +67,7 @@ function parseValues(value, dictionary) {
         const resolvedValue = parseReferenceGlobal(tokenReference, dictionary);
         output[key] = resolvedValue;
     }
-    return output;
+    return output as TypographyTokenValue;
 }
 
 async function getLocalStyles() {
@@ -119,31 +119,56 @@ function convertTextDecorationToFigma(value: string) {
     }
 }
 
-export function convertTextStyleToFigma(name, values): TextStyle {
+function getValueUnit(value: string|number): "PERCENT" | "PIXELS" {
+    return (`${value}`).includes('%') ? "PERCENT" : "PIXELS"
+}
+
+export function convertTextStyleToFigma(name, values: TypographyTokenValue): TextStyle {
+    const letterSpacingUnit = typeof values.letterSpacing == 'string'
     let textStyle = {
         'name': name,
-        'fontSize': parseFloat(values.fontSize),
+        'fontSize': parseFloat(`${values.fontSize}`),
         'textDecoration': convertTextDecorationToFigma(values.textDecoration),
         'fontName': {
             family: values.fontFamily,
-            style: values.textStyle
+            style: values.fontStyle
         },
         'letterSpacing': {
-            unit: values.letterSpacing.includes('%') ? "PERCENT" : "PIXELS",
-            value: parseInt(values.letterSpacing)
+            unit: getValueUnit(values.letterSpacing),
+            value: parseInt(`${values.letterSpacing}`)
         },
         'lineHeight': {
-            unit: values.lineHeight.includes('%') ? "PERCENT" : "PIXELS",
-            value: parseFloat(values.lineHeight)
+            unit: getValueUnit(values.lineHeight),
+            value: parseFloat(`${values.lineHeight}`)
         },
         leadingTrim: "NONE",
         paragraphIndent: 0,
-        'paragraphSpacing': parseInt(values.paragraphSpacing),
-        listSpacing: parseFloat(values.lineHeight),
+        'paragraphSpacing': parseInt(`${values.paragraphSpacing}`),
+        listSpacing: parseFloat(`${values.lineHeight}`),
         hangingPunctuation: false,
         hangingList: false,
         'textCase': convertTextCaseToFigma(values.textCase)
     }
 
     return textStyle as TextStyle;
+}
+
+export async function convertFigmaTextStyleToToken(style: TextStyle): Promise<TypographyTokenValue> {
+    let typographyTokenValue: TypographyTokenValue = {
+        "fontFamily": style.fontName.family,
+        "lineHeight": style.lineHeight.unit == "AUTO" ? "AUTO" : style.lineHeight.value,
+        "fontSize": style.fontSize,
+        "letterSpacing": style.letterSpacing.value,
+        "paragraphSpacing": style.paragraphSpacing,
+        "fontStyle": style.fontName.style,
+        "textCase": style.textCase,
+        "textDecoration": style.textDecoration,   
+    }
+
+    for(const prop in style.boundVariables) {
+        const boundVariable = style.boundVariables[prop];
+        typographyTokenValue[prop] = await getAliasName(boundVariable.id);
+    }
+
+    return typographyTokenValue;
 }

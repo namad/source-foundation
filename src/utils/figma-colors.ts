@@ -1,7 +1,9 @@
 import chroma from 'chroma-js';
 
-import { findTokenReferences, findVariableByReferences, parseReferenceGlobal } from './token-references';
+import { parseReferenceGlobal } from './token-references';
 import { DesignToken } from '../main';
+
+export type ColorFormat = 'hex'|'hsl'|'rgba';
 
 export interface FigmaRGB {
     r: number;
@@ -11,7 +13,7 @@ export interface FigmaRGB {
 }
 const hexColorRegex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i;
 
-export function convertFigmaColorToRgb(input: FigmaRGB, format?) {
+export function convertFigmaColorToRgb(input: RGBA, format?: ColorFormat): string {
     const {
         r, g, b, a
     } = input;

@@ -17,7 +17,7 @@ import { opacity } from '../opacity-tokens';
 
 import fs from 'fs';
 import path from "path";
-import { EffectToken } from "../effect-tokens";
+import { EffectTokenValue } from "../effect-tokens";
 import { makeFolder, writeTheFileIntoDirectory } from "./export-css";
 
 function isAlias(value) {

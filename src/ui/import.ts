@@ -20,7 +20,7 @@ import { delayAsync } from "../utils/delay-async";
 
 import "./helpers/modal";
 import "./helpers/tabs";
-import { CollectionExportRecord } from "../main";
+import { CollectionExportRecord } from "../import-export-json";
 
 /*
     UI INITIALIZATION

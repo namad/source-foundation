@@ -4,15 +4,15 @@
             "$value": [
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "0.75",
-                    "blur": "0.5",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "0.75",
+                    "radius": "0.5",
                     "spread": "0"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-1 shadow-utility-shade-100"
         },
@@ -20,15 +20,15 @@
             "$value": [
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "0.75",
-                    "blur": "0.5",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "0.75",
+                    "radius": "0.5",
                     "spread": "0"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-1 shadow-utility-shade-200"
         },
@@ -36,15 +36,15 @@
             "$value": [
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "0.75",
-                    "blur": "0.5",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "0.75",
+                    "radius": "0.5",
                     "spread": "0"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-1 shadow-utility-shade-300"
         },
@@ -52,15 +52,15 @@
             "$value": [
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "0.75",
-                    "blur": "0.5",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "0.75",
+                    "radius": "0.5",
                     "spread": "0"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow- shadow-utility-shade-400"
         },
@@ -68,15 +68,15 @@
             "$value": [
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "0.75",
-                    "blur": "0.5",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "0.75",
+                    "radius": "0.5",
                     "spread": "0"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-1 shadow-utility-shade-500"
         }
@@ -86,24 +86,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "2",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "2",
                     "spread": "-1"
                 },
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "2",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "2",
+                    "radius": "4",
                     "spread": "-1"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-2 shadow-utility-shade-100"
         },
@@ -111,24 +111,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "2",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "2",
                     "spread": "-1"
                 },
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "4",
                     "spread": "-1"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-2 shadow-utility-shade-200"
         },
@@ -136,24 +136,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "2",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "2",
                     "spread": "-1"
                 },
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "4",
                     "spread": "-1"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-2 shadow-utility-shade-300"
         },
@@ -161,24 +161,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "2",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "2",
                     "spread": "-1"
                 },
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "4",
                     "spread": "-1"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-2 shadow-utility-shade-400"
         },
@@ -186,24 +186,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "2",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "2",
                     "spread": "-1"
                 },
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "1",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "1",
+                    "radius": "4",
                     "spread": "-1"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-2 shadow-utility-shade-500"
         }
@@ -213,24 +213,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "2",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "2",
+                    "radius": "4",
                     "spread": "-2"
                 },
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-2"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-3 shadow-utility-shade-100"
         },
@@ -238,24 +238,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "2",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "2",
+                    "radius": "4",
                     "spread": "-2"
                 },
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-2"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-3 shadow-utility-shade-200"
         },
@@ -263,24 +263,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "2",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "2",
+                    "radius": "4",
                     "spread": "-2"
                 },
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-2"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-3 shadow-utility-shade-300"
         },
@@ -288,24 +288,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "2",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "2",
+                    "radius": "4",
                     "spread": "-2"
                 },
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-2"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-3 shadow-utility-shade-400"
         },
@@ -313,24 +313,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "2",
-                    "blur": "4",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "2",
+                    "radius": "4",
                     "spread": "-2"
                 },
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-2"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-3 shadow-utility-shade-500"
         }
@@ -340,24 +340,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-4"
                 },
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "10",
-                    "blur": "15",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "10",
+                    "radius": "15",
                     "spread": "-3"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-4 shadow-utility-shade-100"
         },
@@ -365,24 +365,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-4"
                 },
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "10",
-                    "blur": "15",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "10",
+                    "radius": "15",
                     "spread": "-3"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-4 shadow-utility-shade-200"
         },
@@ -390,24 +390,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-4"
                 },
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "10",
-                    "blur": "15",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "10",
+                    "radius": "15",
                     "spread": "-3"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-4 shadow-utility-shade-300"
         },
@@ -415,24 +415,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-4"
                 },
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "10",
-                    "blur": "15",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "10",
+                    "radius": "15",
                     "spread": "-3"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-4 shadow-utility-shade-400"
         },
@@ -440,24 +440,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "4",
-                    "blur": "6",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "4",
+                    "radius": "6",
                     "spread": "-4"
                 },
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "10",
-                    "blur": "15",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "10",
+                    "radius": "15",
                     "spread": "-3"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-4 shadow-utility-shade-500"
         }
@@ -467,24 +467,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "12",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "12",
+                    "radius": "10",
                     "spread": "-6"
                 },
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "20",
-                    "blur": "25",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "20",
+                    "radius": "25",
                     "spread": "-5"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-100"
         },
@@ -492,24 +492,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "12",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "12",
+                    "radius": "10",
                     "spread": "-6"
                 },
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "20",
-                    "blur": "25",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "20",
+                    "radius": "25",
                     "spread": "-5"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-200"
         },
@@ -517,24 +517,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "12",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "12",
+                    "radius": "10",
                     "spread": "-6"
                 },
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "20",
-                    "blur": "25",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "20",
+                    "radius": "25",
                     "spread": "-5"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-300"
         },
@@ -542,24 +542,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "12",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "12",
+                    "radius": "10",
                     "spread": "-6"
                 },
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "20",
-                    "blur": "25",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "20",
+                    "radius": "25",
                     "spread": "-5"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-400"
         },
@@ -567,24 +567,24 @@
             "$value": [
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "12",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "12",
+                    "radius": "10",
                     "spread": "-6"
                 },
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "20",
-                    "blur": "25",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "20",
+                    "radius": "25",
                     "spread": "-5"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-500"
         }
@@ -594,33 +594,33 @@
             "$value": [
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "23",
-                    "blur": "28",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "23",
+                    "radius": "28",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "16",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "16",
+                    "radius": "10",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.100}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "24",
-                    "blur": "48",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "24",
+                    "radius": "48",
                     "spread": "-10"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-100"
         },
@@ -628,33 +628,33 @@
             "$value": [
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "23",
-                    "blur": "28",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "23",
+                    "radius": "28",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "16",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "16",
+                    "radius": "10",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.200}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "24",
-                    "blur": "48",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "24",
+                    "radius": "48",
                     "spread": "-10"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-200"
         },
@@ -662,33 +662,33 @@
             "$value": [
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "23",
-                    "blur": "28",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "23",
+                    "radius": "28",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "16",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "16",
+                    "radius": "10",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.300}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "24",
-                    "blur": "48",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "24",
+                    "radius": "48",
                     "spread": "-10"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-300"
         },
@@ -696,33 +696,33 @@
             "$value": [
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "23",
-                    "blur": "28",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "23",
+                    "radius": "28",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "16",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "16",
+                    "radius": "10",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.400}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "24",
-                    "blur": "48",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "24",
+                    "radius": "48",
                     "spread": "-10"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-400"
         },
@@ -730,33 +730,33 @@
             "$value": [
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "23",
-                    "blur": "28",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "23",
+                    "radius": "28",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "16",
-                    "blur": "10",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "16",
+                    "radius": "10",
                     "spread": "-7"
                 },
                 {
                     "color": "{utility.shade.500}",
-                    "showShadowBehindNode": "true",
-                    "type": "dropShadow",
-                    "x": "0",
-                    "y": "24",
-                    "blur": "48",
+                    "showShadowBehindNode": "false",
+                    "type": "DROP_SHADOW",
+                    "offsetX": "0",
+                    "offsetY": "24",
+                    "radius": "48",
                     "spread": "-10"
                 }
             ],
-            "$type": "boxShadow",
+            "$type": "effect",
             "documentationLink": "https://namad.github.io/source-foundation-docs/#drop-shadows",
             "description": "shadow-5 shadow-utility-shade-500"
         }

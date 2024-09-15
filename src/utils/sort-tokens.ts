@@ -128,7 +128,7 @@ export function getColorTokensSortFn() {
 }
 
 export function getSizeTokensSortFn() {
-    return getSortFn(sizeValuesOrder);
+    return getSortFn(sizeValuesOrder, 'endsWith');
 }
 
 export function getAlphaNumTokensSortFn() {
@@ -139,13 +139,13 @@ export function getAlphaNumTokensSortFn() {
     // return collator.compare;
 }
 
-function getSortFn(dataSet: string[]) {
+function getSortFn(dataSet: string[], fn = 'startsWith') {
     return function(firstEl, secondEl) {
         var resultFirst = dataSet.findIndex(item => {
-            return firstEl.name.startsWith(item);
+            return firstEl.name[fn](item);
         })
         var resultSecond = dataSet.findIndex(item => {
-            return secondEl.name.startsWith(item);
+            return secondEl.name[fn](item);
         })
 
         if (resultFirst < resultSecond) {

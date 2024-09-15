@@ -1,7 +1,7 @@
 import { defaultSettings, radiiSizeName, spacingSizeName, systemAccentList, typographySizeName } from "./defaults";
-import * as radii from "./radii-tokens";
-import * as typescale from "./typography-tokens";
-import * as spacing from "./spacing-tokens";
+import * as radiiTokens from "./radii-tokens";
+import * as typescaleTokens from "./typography-tokens";
+import * as spacingTokens from "./spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
@@ -43,6 +43,7 @@ export interface ImportFormData {
     accentMaxLuminance: number;
     radii: "compact" | "base" | "large";
     spacing: "compact" | "base" | "large" | "touch";
+    verticalSpacing: "even" | "uneven";
     singleCollection: boolean;
 }
 
@@ -211,9 +212,9 @@ export function generatePreview(form: HTMLFormElement, sliders) {
 
     generateAccentsPreview(themeColors, data);
 
-    generateCSSVars(radii[data.radii]);
-    generateCSSVars(typescale.getTypographyTokens(data.baseFontSize, data.typeScale));
-    generateCSSVars(spacing[data.spacing]);
+    generateCSSVars(radiiTokens[data.radii]);
+    generateCSSVars(typescaleTokens.getTypographyTokens(data.baseFontSize, data.typeScale));
+    generateCSSVars(spacingTokens.getSpacingTokens(data.verticalSpacing, data.spacing));
 
     updateValuesDisplay(data, form);
 
