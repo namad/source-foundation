@@ -162,7 +162,7 @@ export async function importFromJSON(data:CollectionExportRecord[], params: Impo
 
     debugger;
 
-    const collections = [];
+    const collections = []; // unique set of collections to import
     let hasTextStyles = false;
     let hasEffectStyles = false;
 

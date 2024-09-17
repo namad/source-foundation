@@ -5,13 +5,17 @@ import { findVariableByReferences, parseReferenceGlobal } from "./token-referenc
 
 
 export async function importTextStyles(tokens: any[]) {
-    await figma.loadFontAsync({family: 'Inter', style: 'Regular'});
-
     for (const [name, token] of Object.entries(tokens)) {
 
         if (token.$type != 'typography') {
             continue;
         }
+
+        const resolved = parseValues(token.$value as TypographyTokenValue, tokens);
+        const normalized = convertTextStyleToFigma(name, resolved);
+        let fontName: FontName = normalized.fontName;
+
+        await figma.loadFontAsync(fontName);
 
         let textStyle = await getStyleByName(name);
         let newStyle = false;
@@ -20,9 +24,6 @@ export async function importTextStyles(tokens: any[]) {
             textStyle = figma.createTextStyle();
             newStyle = true;
         }
-
-        const resolved = parseValues(token.$value as TypographyTokenValue, tokens);
-        const normalized = convertTextStyleToFigma(name, resolved);
 
         // reset
         textStyle.setBoundVariable('fontStyle', null);
@@ -33,8 +34,11 @@ export async function importTextStyles(tokens: any[]) {
         textStyle.setBoundVariable('fontStyle', null);
 
         if (!newStyle) {
-            normalized.fontName = _clone(textStyle.fontName);
+            fontName = _clone(textStyle.fontName);
+            await figma.loadFontAsync(fontName);
+            normalized.fontName = fontName;
         }
+        try {
 
         Object.keys(normalized).forEach(key => {
             textStyle[key] = normalized[key];
@@ -47,7 +51,7 @@ export async function importTextStyles(tokens: any[]) {
         // const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
         const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
 
-        try {
+
             textStyle.setBoundVariable('lineHeight', lineHeightVariable);
             textStyle.setBoundVariable('fontSize', fontSizeVariable);
             textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
