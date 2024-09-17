@@ -1,21 +1,25 @@
+import { DesignToken, DesignTokensRaw } from "../main";
 import { TypographyTokenValue } from "../typography-tokens";
 import { _clone } from "./clone";
 import { getAliasName } from "./figma-variables";
 import { findVariableByReferences, parseReferenceGlobal } from "./token-references";
 
 
-export async function importTextStyles(tokens: any[]) {
+export async function importTextStyles(tokens: DesignTokensRaw) {
     for (const [name, token] of Object.entries(tokens)) {
 
         if (token.$type != 'typography') {
             continue;
         }
 
-        const resolved = parseValues(token.$value as TypographyTokenValue, tokens);
+
+        const resolved = parseValues(token.$value, tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;
 
-        await figma.loadFontAsync(fontName);
+        await figma.loadFontAsync(fontName).catch((reason) => {
+            debugger;
+        });
 
         let textStyle = await getStyleByName(name);
         let newStyle = false;
@@ -35,7 +39,13 @@ export async function importTextStyles(tokens: any[]) {
 
         if (!newStyle) {
             fontName = _clone(textStyle.fontName);
-            await figma.loadFontAsync(fontName);
+
+            if(fontName.family == "Lato") {
+                debugger;
+            }
+            await figma.loadFontAsync(fontName).catch((reason) => {
+                debugger;
+            });
             normalized.fontName = fontName;
         }
         try {
@@ -52,11 +62,11 @@ export async function importTextStyles(tokens: any[]) {
         const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
 
 
-            textStyle.setBoundVariable('lineHeight', lineHeightVariable);
-            textStyle.setBoundVariable('fontSize', fontSizeVariable);
-            textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
-            textStyle.setBoundVariable('fontFamily', fontFamilyVariable);
-            textStyle.setBoundVariable('fontStyle', fontStyleVariable);
+        lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
+        fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);
+        paragraphSpacingVariable && textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
+        fontFamilyVariable && textStyle.setBoundVariable('fontFamily', fontFamilyVariable);
+        fontStyleVariable && textStyle.setBoundVariable('fontStyle', fontStyleVariable);
             // textStyle.setBoundVariable('fontWeight', fontWeightVariable);
         }
         catch (e) {
@@ -123,8 +133,32 @@ function convertTextDecorationToFigma(value: string) {
     }
 }
 
-function getValueUnit(value: string|number): "PERCENT" | "PIXELS" {
-    return (`${value}`).includes('%') ? "PERCENT" : "PIXELS"
+interface UnitValue {
+    unit: "PERCENT" | "PIXELS" | "AUTO";
+    value?: string|number;
+}
+
+function getValueUnit(value: string|number): UnitValue {
+    const stringValue = `${value}`;
+
+    if(value === 'AUTO') {
+        return {
+            unit: "AUTO"
+        };
+    }
+
+    if(stringValue.includes('%')) {
+        return {
+            unit: "PERCENT",
+            value: parseFloat(stringValue)
+        }
+    }
+    else {
+        return {
+            unit: "PIXELS",
+            value: parseFloat(stringValue)
+        }
+    }
 }
 
 export function convertTextStyleToFigma(name, values: TypographyTokenValue): TextStyle {
@@ -137,32 +171,39 @@ export function convertTextStyleToFigma(name, values: TypographyTokenValue): Tex
             family: values.fontFamily,
             style: values.fontStyle
         },
-        'letterSpacing': {
-            unit: getValueUnit(values.letterSpacing),
-            value: parseInt(`${values.letterSpacing}`)
-        },
-        'lineHeight': {
-            unit: getValueUnit(values.lineHeight),
-            value: parseFloat(`${values.lineHeight}`)
-        },
-        leadingTrim: "NONE",
-        paragraphIndent: 0,
-        'paragraphSpacing': parseInt(`${values.paragraphSpacing}`),
-        listSpacing: parseFloat(`${values.lineHeight}`),
-        hangingPunctuation: false,
-        hangingList: false,
+        'letterSpacing': getValueUnit(values.letterSpacing),
+        'lineHeight': getValueUnit(values.lineHeight),
+        'leadingTrim': "NONE",
+        'paragraphIndent': 0,
+        'paragraphSpacing': parseInt(`${values.paragraphSpacing}`) || 0,
+        'listSpacing': parseFloat(`${values.lineHeight}`) || 0,
+        'hangingPunctuation': false,
+        'hangingList': false,
         'textCase': convertTextCaseToFigma(values.textCase)
     }
 
     return textStyle as TextStyle;
 }
 
+function getUnitValue(unitValue: UnitValue) {
+    if(unitValue.unit == "AUTO") {
+        return "AUTO"
+    }
+
+    if(unitValue.unit == "PERCENT") {
+        return `${unitValue.value}%`
+    }
+
+    return unitValue.value
+}
+
 export async function convertFigmaTextStyleToToken(style: TextStyle): Promise<TypographyTokenValue> {
     let typographyTokenValue: TypographyTokenValue = {
         "fontFamily": style.fontName.family,
-        "lineHeight": style.lineHeight.unit == "AUTO" ? "AUTO" : style.lineHeight.value,
+        "lineHeight": getUnitValue(style.lineHeight),
         "fontSize": style.fontSize,
-        "letterSpacing": style.letterSpacing.value,
+        "letterSpacing": getUnitValue(style.letterSpacing),
+        "listSpacing": style.listSpacing,
         "paragraphSpacing": style.paragraphSpacing,
         "fontStyle": style.fontName.style,
         "textCase": style.textCase,

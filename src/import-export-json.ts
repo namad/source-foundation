@@ -1,5 +1,5 @@
 import { ImportFormData } from "./import-ui";
-import { getCollectionAndPrepareTokens, importVariables } from "./main";
+import { DesignTokensRaw, getCollectionAndPrepareTokens, importVariables } from "./main";
 import { TypographyTokenValue } from "./typography-tokens";
 import { ColorFormat, convertFigmaColorToRgb } from "./utils/figma-colors";
 import { convertFigmaEffectStyleToToken, importEffectStyles } from "./utils/figma-effect-styles";
@@ -9,6 +9,8 @@ import { flattenObject } from "./utils/flatten-object";
 import * as typographyTokens from './typography-tokens';
 import * as effectsTokens from './effect-tokens';
 import { getAliasName, variableNameToObject } from "./utils/figma-variables";
+import { getComponentColors, getGlobalNeutrals, getThemeColors } from "./color-tokens";
+import { delayAsync } from "./utils/delay-async";
 
 
 interface TextStyleToken {
@@ -45,8 +47,6 @@ export async function exportToJSON(colorFormat?: 'hex'|'hsl'|'rgba') {
         files.push(...exportedData)
     }
 
-    debugger;
-
     exportedTextStyles && files.push(exportedTextStyles);
     exportedEffectStyles && files.push(exportedEffectStyles);
 
@@ -57,11 +57,7 @@ export interface CollectionExportRecord {
     type: "variables"|"textStyles"|"effectStyles",
     collection: string,
     mode: string,
-    tokens: {
-        $type: string,
-        $value: string|object,
-        scopes: string[]
-    }[]
+    tokens: DesignTokensRaw[]
 }
 
 async function exportFigmaVariableCollection({ name, modes, variableIds }, colorFormat?: ColorFormat) {
@@ -159,20 +155,13 @@ async function exportEffectStyles(styles: EffectStyle[], colorFormat?: ColorForm
 }
 
 export async function importFromJSON(data:CollectionExportRecord[], params: ImportFormData) {
-
-    debugger;
-
     const collections = []; // unique set of collections to import
-    let hasTextStyles = false;
-    let hasEffectStyles = false;
+
+    const doImportEffects = params['importEffects'] === true;
+    const doImportTextStyles = params['importTextStyles'] == true;
 
     const variableCollections = data.filter(record => {
         const collectionName = record.collection;
-
-        // exclude styles
-        if(record.type != "variables") {
-            return false;
-        }
 
         // get unique collection list
         if(collections.indexOf(collectionName) < 0) {
@@ -183,39 +172,78 @@ export async function importFromJSON(data:CollectionExportRecord[], params: Impo
         return false;
     })
 
-    await Promise.all(variableCollections.map(async (collectionRecord) => {
-        await getCollectionAndPrepareTokens({
-            collectionName: collectionRecord.collection,
-            modeName: collectionRecord.mode,
-            data: flattenObject(collectionRecord.tokens)
-        });    
-    }));
+    let tokensDictionary = {};
 
-    for(const collectionRecord of data) {
+    // iterate each collection, ignore additional modes and make a dictionary
+    variableCollections.forEach(collectionRecord => {
+        const flatTokens = flattenObject(collectionRecord.tokens);
+        tokensDictionary = {
+            ...tokensDictionary,
+            ...flatTokens
+        }
+    })
+
+    debugger;
+
+    while(variableCollections.length) {
+        const collectionRecord = variableCollections.shift();
+
+        if(collectionRecord.type == "variables") {
+            await getCollectionAndPrepareTokens({
+                collectionName: collectionRecord.collection,
+                modeName: collectionRecord.mode,
+                data: flattenObject(collectionRecord.tokens)
+            }); 
+
+            await delayAsync(5);
+        }
+    }
+
+    // calculate tokens count
+    let tokensCountTotal = 0; 
+    let tokensImportedCount = 0;
+
+    data.forEach(collectionRecord => {
+        const flatTokens = flattenObject(collectionRecord.tokens);
+        tokensCountTotal += Object.keys(flatTokens).length;
+    })
+
+
+    while(data.length) {
+        const collectionRecord = data.shift();
+        const flatTokens = flattenObject(collectionRecord.tokens);
+
         if(collectionRecord.type == "variables") {
             await importVariables({
                 collectionName: collectionRecord.collection,
                 modeName: collectionRecord.mode,
-                data: flattenObject(collectionRecord.tokens)        
+                data: flatTokens        
             }) 
+            await delayAsync(5);
+
+            tokensImportedCount += Object.keys(flatTokens).length;
+
+            console.log(`Imported ${tokensImportedCount} out of ${tokensCountTotal}`);
         }
 
         if(collectionRecord.type == "textStyles") {
-            hasTextStyles = true;
-            await importTextStyles(collectionRecord.tokens);
+            await importTextStyles(tokensDictionary);
+            await delayAsync(5);
         }
 
         if(collectionRecord.type == "effectStyles") {
-            hasEffectStyles = true;
-            await importEffectStyles(collectionRecord.tokens);
+            await importEffectStyles(flatTokens, tokensDictionary);
+            await delayAsync(5);
         }
     }
 
-    if(!hasTextStyles) {
+    if(doImportTextStyles) {
         await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
+        await delayAsync(5);
     }
 
-    if(!hasEffectStyles) {
+    if(doImportEffects) {
         await importEffectStyles(effectsTokens.elevation);
+        await delayAsync(5);
     }
 }

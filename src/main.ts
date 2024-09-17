@@ -63,6 +63,7 @@ interface MessagePayload {
     params: ImportFormData;
     data?: CollectionExportRecord[];
     format?:  'hex'|'hsl'|'rgba';
+    alertParams?: any,
     fileName?: string;
 }
 
@@ -78,10 +79,22 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         await exportToJSON(eventData.format);
     }
     else if (eventData.type === "IMPORT_JSON") {
-        await importFromJSON(eventData.data, eventData.params);
+        globalTokens = {
+            ...getThemeColors('lightBase', params),
+            ...getGlobalNeutrals(),
+            ...getComponentColors(),
+            ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
+        };
+        await importFromJSON(eventData.data, eventData.params).catch(error => {
+            console.error(error);
+            figma.ui.postMessage("importCompleted");
+            figma.notify(error, {error: true});
+        });
+
+        figma.ui.postMessage("importCompleted");
     }
     else if (eventData.type === "ALERT") {
-        figma.notify(`${eventData.params}`);
+        figma.notify(`${eventData.data}`, eventData.alertParams || {});
     }
     else if (eventData.type === "RENDER_ACCENTS") {
         const lightAccentTokens = generateGlobalAccentPalette('light', params);
@@ -507,21 +520,22 @@ async function processToken({
         return;
     }
 
-    let value;
+    let value = null;
+    let valueString = `${token.$value}`
+
+    let referenceVar = await findVariableByReferences(valueString.trim());
+
+    if (referenceVar) {
+        value = {
+            type: "VARIABLE_ALIAS",
+            id: referenceVar.id,
+        }
+    }
 
     if (token.$value !== undefined) {
         if (type === "color") {
-            let colorValue;
-            let referenceVar = await findVariableByReferences(token.$value.trim());
-
-            if (referenceVar) {
-                colorValue = {
-                    type: "VARIABLE_ALIAS",
-                    id: referenceVar.id,
-                }
-            }
-            else {
-                colorValue = parseColorToken(token, globalTokens);
+            if (value == null) {
+                value = parseColorToken(token, globalTokens);
             }
 
             return await setFigmaVariable(
@@ -529,26 +543,32 @@ async function processToken({
                 modeId,
                 "COLOR",
                 variableName,
-                colorValue,
+                value,
                 token.scopes || ['ALL_SCOPES'],
                 token.description || null
             );
         }
 
         if (type === "number") {
+            if (value == null) {
+                value = parseReferenceGlobal(valueString, globalTokens);
+                value = parseFloat(value);
+            }
             return await setFigmaVariable(
                 collection,
                 modeId,
                 "FLOAT",
                 variableName,
-                parseFloat(token.$value),
+                value,
                 token.scopes,
                 token.description || null
             );
         }
 
         if (type === "string") {
-            value = parseReferenceGlobal(token.$value, globalTokens);
+            if (value == null) {
+                value = parseReferenceGlobal(valueString, globalTokens);
+            }
             return await setFigmaVariable(
                 collection,
                 modeId,

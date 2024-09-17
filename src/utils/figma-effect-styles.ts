@@ -1,3 +1,4 @@
+import { getThemeColors } from "../color-tokens";
 import { EffectTokenValue } from "../effect-tokens";
 import { DesignToken, globalTokens } from "../main";
 import { _clone } from "./clone";
@@ -5,19 +6,16 @@ import { ColorFormat, FigmaRGB, convertFigmaColorToRgb, parseColorValue } from "
 import { getAliasName } from "./figma-variables";
 import { parseReferenceGlobal, findVariableByReferences } from "./token-references";
 
-const variableBindableShadowEffectFields = [
-    'radius',
-    'color',
-    'spread',
-    'offsetX',
-    'offsetY'
-]
 
-
+let globalDictionary;
 /*
     This method reads shadow color values directly from Figma Variables
 */
-export async function importEffectStyles(tokens) {
+export async function importEffectStyles(tokens, dictionary?) {
+
+    if(dictionary) {
+        globalDictionary = dictionary;
+    }
 
     for(const [name, tokenData] of Object.entries(tokens)) {
         let token = tokenData as DesignToken;
@@ -32,10 +30,11 @@ export async function importEffectStyles(tokens) {
             const effects = [];
 
             for(const effectValue of values) {
-                // globalTokens
                 const effect = await convertEffectStyleToFigma(effectValue) as Effect;
                 effects.push(effect);
             }
+
+            debugger;
 
             figmaStyle.name = name;
             figmaStyle.effects = effects;
@@ -55,6 +54,8 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
         boundProps 
     } = await resolveBoundValues(value)
 
+    debugger;
+    
     let effect = {
         type: effectTokenValue.type,
         radius: parseFloat(effectTokenValue.radius),
@@ -81,7 +82,6 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
 
 
     boundProps.forEach(boundData => {
-        debugger;
         const effectCopy = figma.variables.setBoundVariableForEffect(effect as Effect,  boundData.propName, boundData.variable) as any;
 
         if(effect.type == "DROP_SHADOW" || effect.type == 'INNER_SHADOW') {
@@ -94,10 +94,26 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
     return effect as Effect;
 }
 
+async function getVariableValue(figmaVariable: Variable) {
+    const collectionID = figmaVariable.variableCollectionId;
+    const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
+    const defaultMode = collection.modes[0].modeId;
+    const defaultValue: VariableValue = figmaVariable.valuesByMode[defaultMode];
+
+    if(defaultValue['type'] == "VARIABLE_ALIAS") {
+        const variable = await figma.variables.getVariableByIdAsync(defaultValue['id']);
+        return await getVariableValue(variable);
+    }
+    else {
+        return defaultValue;
+    }
+}
+
 async function resolveBoundValues(effectValue: EffectTokenValue): Promise<{effectTokenValue: EffectTokenValue, boundProps: BoundProp[]}> {
 
     let copy = _clone(effectValue) as EffectTokenValue;
     let boundProps: BoundProp[] = [];
+
 
     for(const prop in copy) {
         const figmaVariable = await findVariableByReferences(copy[prop]);
@@ -107,11 +123,19 @@ async function resolveBoundValues(effectValue: EffectTokenValue): Promise<{effec
                 propName: prop as VariableBindableEffectField,
                 variable: figmaVariable
             });
-            const collectionID = figmaVariable.variableCollectionId;
-            const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
-            const defaultMode = collection.modes[0].modeId;
-            const defaultValue = figmaVariable.valuesByMode[defaultMode];
+            const defaultValue = await getVariableValue(figmaVariable)
             copy[prop] = defaultValue;
+        }
+        else {
+            debugger;
+            let val = parseReferenceGlobal(copy[prop], globalDictionary || globalTokens);
+
+            if(prop == 'color') {
+                const fallBackColor = figma.util.rgb('#FF0000');
+                val = parseColorValue(val).rgb;
+            }
+
+            copy[prop] = val;
         }
     }
 

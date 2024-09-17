@@ -99,7 +99,7 @@ document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
         document.execCommand("copy");
 
         parent.postMessage({
-            pluginMessage: { type: 'ALERT', params: "Copied to clipboard" }
+            pluginMessage: { type: 'ALERT', data: "Copied to clipboard" }
         }, "*");
 
         // modal.close();
@@ -108,8 +108,6 @@ document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
 document.querySelectorAll('#importThemeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
-
-        debugger
 
         const modal = document.getElementById('importModal') as HTMLDialogElement;
         const radioValue = modal.querySelector('[data-tab]:checked') as HTMLInputElement;
@@ -125,6 +123,7 @@ document.querySelectorAll('#importThemeButton').forEach(btn => {
             data = JSON.parse(code);
         }
         catch (e) {
+            parent.postMessage({ pluginMessage: { type: "ALERT", data: e.message, alertParams: {error: true} } }, "*");  
             throw (e);
         }
 
@@ -139,11 +138,19 @@ document.querySelectorAll('#importThemeButton').forEach(btn => {
 
         if(tabID == 'importTokensTab') {
             const params = getFormData(form);
-            parent.postMessage({ pluginMessage: { type: "IMPORT_JSON", params, data } }, "*");     
+            parent.postMessage({ 
+                pluginMessage: { 
+                    type: "IMPORT_JSON", 
+                    params: {
+                        ...params,
+                        ...settings
+                    },
+                    data 
+                }
+            }, "*");     
         }
-        
-
         modal.close();
+        importButton.classList.add('loading');
 
     })
 })

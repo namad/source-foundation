@@ -22,6 +22,7 @@ export interface TypographyTokenValue {
     "fontSize": number,
     "letterSpacing": string|number,
     "paragraphSpacing": number,
+    "listSpacing"?: number,
     "fontStyle": string,
     "textCase": string,
     "textDecoration": string,

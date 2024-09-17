@@ -512,7 +512,7 @@
         </div>
         <div class="flex flex-col flex-1 overflow-auto " id="importPresetTab">
             <div class="body" >
-                <p class="color-text-base-500">Paste preset code to the textarea below</p>
+                           <p class="color-text-base-500">Paste preset code to the textarea below</p>
                 <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono"></textarea>
                 <p class="color-text-base-500">Or select one of the presets</p>
             </div>
@@ -521,8 +521,14 @@
         </div>
         <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
             <div class="body" >
-                <p class="color-text-base-500">Paste json tokens here</p>
-                <textarea cols="10" name="importToeknsTextarea" autofocus onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono"></textarea>
+                <textarea cols="10" name="importToeknsTextarea" placeholde="Paste json tokens here" autofocus onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono"></textarea>
+                <div class="flex flex-col gap-xs w-full">
+                    <span class="color-text-base-500 flex-1">Add styles and effect from Foundation:</span>
+                    <div class="flex flex-row gap-sm items-center w-full">
+                        <label class="checkbox flex flex-row gap-2"><input type="checkbox" name="importTextStyles" value="true" checked /><span>Text Styles</span></label>
+                        <label class="checkbox flex flex-row gap-2"><input type="checkbox" name="importEffects" value="true" checked /><span>Effects</span></label>
+                    </div>
+                </div> 
             </div>
         </div>        
         <div class="footer">

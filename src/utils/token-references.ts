@@ -36,7 +36,13 @@ export async function findVariableByReferences(value: string): Promise<Variable>
 function findGlobalTokenByName(name, dictionary) {
     name = name.replace(/\./g, "/")
     const token = dictionary[name];
-    if(!token) debugger;
+
+    if(!token) {
+        const msg = `Cannot find token ${name}`;
+        figma.notify(msg, {error: true});
+        throw new Error(msg);
+    };
+
     return token;
 }
 
