@@ -183,8 +183,6 @@ export async function importFromJSON(data:CollectionExportRecord[], params: Impo
         }
     })
 
-    debugger;
-
     while(variableCollections.length) {
         const collectionRecord = variableCollections.shift();
 
@@ -222,7 +220,6 @@ export async function importFromJSON(data:CollectionExportRecord[], params: Impo
             await delayAsync(5);
 
             tokensImportedCount += Object.keys(flatTokens).length;
-
             console.log(`Imported ${tokensImportedCount} out of ${tokensCountTotal}`);
         }
 
