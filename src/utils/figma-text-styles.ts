@@ -2,10 +2,10 @@ import { DesignToken, DesignTokensRaw } from "../main";
 import { TypographyTokenValue } from "../typography-tokens";
 import { _clone } from "./clone";
 import { getAliasName } from "./figma-variables";
-import { findVariableByReferences, parseReferenceGlobal } from "./token-references";
+import { findVariableByReferences, resolveGlobalAliasValue } from "./token-references";
 
 
-export async function importTextStyles(tokens: DesignTokensRaw) {
+export async function importTextStyles(tokens: DesignTokensRaw, dictionary?: DesignTokensRaw) {
     for (const [name, token] of Object.entries(tokens)) {
 
         if (token.$type != 'typography') {
@@ -13,12 +13,12 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
         }
 
 
-        const resolved = parseValues(token.$value, tokens);
+        const resolved = resolveValues(token.$value as TypographyTokenValue, dictionary || tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;
 
         await figma.loadFontAsync(fontName).catch((reason) => {
-            debugger;
+            console.error(reason);
         });
 
         let textStyle = await getStyleByName(name);
@@ -40,11 +40,8 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
         if (!newStyle) {
             fontName = _clone(textStyle.fontName);
 
-            if(fontName.family == "Lato") {
-                debugger;
-            }
             await figma.loadFontAsync(fontName).catch((reason) => {
-                debugger;
+                console.error(reason);
             });
             normalized.fontName = fontName;
         }
@@ -75,10 +72,10 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
     }
 }
 
-function parseValues(value, dictionary) {
+function resolveValues(value: TypographyTokenValue, dictionary) {
     let output = {};
     for (const [key, tokenReference] of Object.entries(value)) {
-        const resolvedValue = parseReferenceGlobal(tokenReference, dictionary);
+        const resolvedValue = resolveGlobalAliasValue(tokenReference, dictionary);
         output[key] = resolvedValue;
     }
     return output as TypographyTokenValue;

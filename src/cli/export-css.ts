@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { getReferenceName } from "../utils/token-references";
-import { parseColorValue, parseColorToken } from "../utils/figma-colors";
+import { parseColorValue, resolveColorTokenValue } from "../utils/figma-colors";
 import { getGlobalNeutrals, getThemeColors } from "../color-tokens";
 import { ImportFormData } from "../import-ui";
 import { DesignTokensRaw } from "../main";
@@ -18,6 +18,7 @@ import { opacity } from '../opacity-tokens';
 import fs from 'fs';
 import path from "path";
 import { EffectTokenValue } from "../effect-tokens";
+import chroma from "chroma-js";
 
 function isAlias(value) {
     return value.toString().trim().charAt(0) === "{";
@@ -65,7 +66,10 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
         let value = token.$value;
 
         if (token.$value.indexOf('grey') != -1) {
-            value = parseColorToken(token, globalNeutrals, 'hsl');
+            const colorHSL = resolveColorTokenValue(token, globalNeutrals, 'hsl');
+            if(typeof colorHSL == 'string') {
+                value = colorHSL;
+            }
         }
         else if (isAlias(value)) {
             const aliasName = getReferenceName(value);
@@ -75,10 +79,10 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
             value = parseColorValue(value, token.adjustments).hsl;
         }
         else {
-            // console.log(name);
-            // console.log(token.$value);
-            value = parseColorToken(token, {}, 'hsl');
-            // console.log(value)
+            const colorHSL = resolveColorTokenValue(token, {}, 'hsl');
+            if(typeof colorHSL == 'string') {
+                value = colorHSL;
+            }
         }
 
         return { name, value };

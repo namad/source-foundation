@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { getReferenceName } from "../utils/token-references";
-import { parseColorValue, parseColorToken } from "../utils/figma-colors";
+import { parseColorValue, resolveColorTokenValue } from "../utils/figma-colors";
 import { getGlobalNeutrals, getThemeColors } from "../color-tokens";
 import { ImportFormData } from "../import-ui";
 import { DesignToken, DesignTokensRaw } from "../main";
@@ -49,16 +49,19 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
         tokenData.$type = token.$type;
 
         if (token.$value.indexOf('grey') != -1) {
-            tokenData.$value = parseColorToken(token, globalNeutrals, 'hsl');
+            const colorHSL = resolveColorTokenValue(token, globalNeutrals, 'hsl');
+            if (typeof colorHSL == 'string') {
+                tokenData.$value = colorHSL;
+            }
         }
         else if (token.$value.startsWith('rgba(#')) {
             tokenData.$value = parseColorValue(token.$value, token.adjustments).hsl;
         }
         else {
-            // console.log(name);
-            // console.log(token.$value);
-            tokenData.$value = parseColorToken(token, themeColors, 'hsl');
-            // console.log(value)
+            const colorHSL = resolveColorTokenValue(token, themeColors, 'hsl');
+            if (typeof colorHSL == 'string') {
+                tokenData.$value = colorHSL;
+            }
         }
     })
 

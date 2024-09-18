@@ -103,3 +103,18 @@ export function variableNameToObject(name, target): any {
 
     return obj;
 }
+
+export async function getDefaultVariableValue(figmaVariable: Variable) {
+    const collectionID = figmaVariable.variableCollectionId;
+    const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
+    const defaultMode = collection.modes[0].modeId;
+    const defaultValue: VariableValue = figmaVariable.valuesByMode[defaultMode];
+
+    if(defaultValue['type'] == "VARIABLE_ALIAS") {
+        const variable = await figma.variables.getVariableByIdAsync(defaultValue['id']);
+        return await getDefaultVariableValue(variable);
+    }
+    else {
+        return defaultValue;
+    }
+}

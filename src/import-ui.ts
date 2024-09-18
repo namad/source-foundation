@@ -7,7 +7,7 @@ import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
 import { roundTwoDigits } from "./utils/round-two-digits";
 import { getGlobalNeutrals, getThemeColors } from "./color-tokens";
-import { parseColorValue, parseColorToken } from "./utils/figma-colors";
+import { parseColorValue, resolveColorTokenValue } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
 import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
@@ -37,6 +37,14 @@ export interface ImportFormData {
     baseFontSize: "compact" | "base" | "large";
     typeScale: "majorThird" | "minorThird" | "majorSecond";
     createStyles: boolean;
+
+    createGlobalSizeTokens: boolean;
+    createOpacityTokens: boolean;
+    createColorTokens: boolean;
+    createTypographyTokens: boolean;
+    createSpacingTokens: boolean;
+    createElevationTokens: boolean;
+    createRadiiTokens: boolean;
     accentSaturation: number;
     accentMinLuminance: number;
     accentMidLuminance: number;
@@ -207,6 +215,7 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     })
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
+    const globalNeutrals = getGlobalNeutrals(data);
 
     generateCSSVars({ ...themeColors, ...globalAccent });
 
@@ -246,8 +255,8 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                 chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl');
             }
 
-            const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1]), chromaColor));
-            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
+            const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 1), chromaColor));
+            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 0.22), chromaColor));
             const hsl = outputHSL(chromaColor).join(", ");
             let contrastWarn = 'none';
 
@@ -305,7 +314,7 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
         }
 
         if (type == 'color') {
-            const rgb = parseColorToken(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
+            const rgb = resolveColorTokenValue(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
             context.style.setProperty(varName, `${rgb}`);
         }
     })
@@ -313,7 +322,6 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
 
 
 export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
-
     data = Object.assign({}, defaultSettings, data);
 
     const formElements = form.querySelectorAll(`input[name]`);
@@ -326,6 +334,9 @@ export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent
             if (formEl.value === value) {
                 formEl.checked = true;
             }
+        }
+        else if (formEl.type == 'checkbox') {
+            formEl.checked = value;
         }
         else {
             formEl.value = val;

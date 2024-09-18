@@ -1,30 +1,7 @@
 import chroma from "chroma-js";
 import { roundTwoDigits } from "../utils/round-two-digits";
-import { parseColorToken } from "../utils/figma-colors";
+import { resolveColorTokenValue } from "../utils/figma-colors";
 
-function getBoundVariables(node: SceneNode) {
-    const boundVariables = Object.entries(node.boundVariables);
-
-    for (const [propName, propValue] of boundVariables) {
-        const isArray = Array.isArray(propValue);
-
-        if (isArray) {
-            propValue.forEach((alias, i) => {
-                processBoundVariable(figma.variables.getVariableById(alias.id));
-            })
-        }
-        else {
-            let varId = propValue.id;
-            if (typeof varId != 'string') { // it is 
-                varId = varId.id;
-            }
-            processBoundVariable(figma.variables.getVariableById(varId))
-        }
-    }
-}
-
-function processBoundVariable(variable: Variable) {
-}
 
 export function renderShades(parentNode, name, shades, colors) {
     let frame: FrameNode = figma.createFrame();
@@ -35,7 +12,6 @@ export function renderShades(parentNode, name, shades, colors) {
     frame.name = name;
     frame.fills = [];
 
-    getBoundVariables(frame);
 
     for (const [shadeName, color] of Object.entries(shades)) {
         renderColor(frame, `accent/${name}/${shadeName}`, color, colors);
@@ -47,6 +23,7 @@ export function renderShades(parentNode, name, shades, colors) {
 
 export function renderColor(parentNode, name, color, colors) {
 
+    debugger;
 
     let frame = figma.createFrame();
     frame.layoutMode = "VERTICAL";
@@ -58,21 +35,17 @@ export function renderColor(parentNode, name, color, colors) {
     frame.verticalPadding = 16;
     frame.horizontalPadding = 20;
 
-    const {
-        r, g, b, a
-    } = parseColorToken(color, colors);
-    const chromaColor = chroma.gl(r, g, b, a);
+    const chromaColor = chroma(color);
+    const a = chromaColor.alpha();
 
+    frame.fills = [figma.util.solidPaint(chromaColor.css())]
 
-    frame.fills = [{ type: 'SOLID', color: { r, g, b }, opacity: a }]
-
-    const opaqueColor = chroma.gl(r, g, b, 1);
-    const mixedColor = chroma.mix(opaqueColor, "white", 1 - a);
-    console.log(name, mixedColor.rgba());
+    const opaqueColor = chromaColor.alpha(1);
+    const mixedColor = chroma.mix(opaqueColor, "white", 1 - a); 
 
     let contrast = [
         chroma.contrast("white", mixedColor),
-        chroma.contrast(chroma.hsl([0, 0, 0.22]), mixedColor)
+        chroma.contrast(chroma.hsl(0, 0, 0.22), mixedColor)
     ];
 
     let nameRow = getRow(frame, contrast[0] > 2.5);

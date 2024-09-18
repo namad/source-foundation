@@ -22,6 +22,9 @@ import { ImportFormData } from './import-ui';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';
 import chroma from "chroma-js";
 import { _clone } from './utils/clone';
+import { DesignToken, globalTokenDictionary } from './main';
+import { resolveColorTokenValue } from './utils/figma-colors';
+import { findVariableAlias } from './utils/token-references';
 
 let GlobalNeutrals;
 
@@ -29,19 +32,35 @@ export function getSemanticAccentSettings(): SemanticAccentColors {
     return defaultSemanticAccents;
 }
 
-export function getGlobalNeutrals() {
+export function getGlobalNeutrals(params?: ImportFormData) {
+    if(params) {
+        params = normalizeFormData(params);
+
+        GlobalNeutrals = generateNeutrals({
+            hue: params.hue,
+            saturation: params.saturation,
+            distance: params.distance
+        });
+    }
+
     return GlobalNeutrals;
+}
+
+export async function getColorTokenValue(token: DesignToken): Promise<VariableAlias | RGBA | string> {
+    let valueString = (`${token.$value}`).trim()
+    const rawValue = resolveColorTokenValue(token, globalTokenDictionary);
+    const variableAlias = await findVariableAlias(valueString);
+
+    if(variableAlias && typeof variableAlias == 'object') {
+        return variableAlias;
+    }
+    else {
+        return rawValue;
+    }
 }
 
 export function getComponentColors() {
     return flattenObject(componentTokens);
-}
-
-export function getBrandColors(name, accentShades, flat?: boolean) {
-    const palette = {
-        primary: generateSemanticShades(name, accentShades)
-    };
-    return flat? flattenObject(palette) : palette;
 }
 
 export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated', formData: ImportFormData) {
@@ -49,12 +68,6 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     let params = {
         ...normalizeFormData(formData)
     }
-
-    GlobalNeutrals = generateNeutrals({
-        hue: params.hue,
-        saturation: params.saturation,
-        distance: params.distance
-    });
 
     const semanticAccents: SemanticAccentColors = {
         primary: params.primary,

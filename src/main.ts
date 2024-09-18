@@ -1,5 +1,4 @@
-import { convertFigmaColorToRgb, parseColorToken } from './utils/figma-colors';
-import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
+import { getColorTokenValue, getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
 import { findFigmaVariableCollectionByName, getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 
 import chroma from 'chroma-js';
@@ -16,19 +15,21 @@ import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
-import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
+import { resolveAliasOrValue } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
-import { defaultSettings, iconSizeName, radiiSizeName, spacingSizeName, typographySizeName, typographySizeValues } from './defaults';
+import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
 import { TypographyTokenValue } from './typography-tokens';
 import { CollectionExportRecord, exportToJSON, importFromJSON } from './import-export-json';
+import { EffectTokenValue } from './effect-tokens';
+import { delayAsync } from './utils/delay-async';
 
 console.clear();
 
-export let globalTokens;
+export let globalTokenDictionary;
 
 const collectionNames = new Map<string, string>([
     ["brandColors", "Color Theme"/*"Brand Color"*/],
@@ -41,22 +42,24 @@ const collectionNames = new Map<string, string>([
     ["globalSizing", "Global Sizing"],
 ]);
 
-(async () => {
-    const fontDetails = await typographyTokens.getFontDetails();
-    await Promise.all(
-        fontDetails.map(async item =>
-            await figma.loadFontAsync(item as FontName)
-        )
-    );
+// (async () => {
+//     const fontDetails = await typographyTokens.getFontDetails();
+//     await Promise.all(
+//         fontDetails.map(async item =>
+//             await figma.loadFontAsync(item as FontName)
+//         )
+//     );
 
-    figma.showUI(__html__, {
-        width: 560,
-        height: 720,
-        themeColors: true,
-    });
 
-})()
+// })()
 
+debugger
+
+figma.showUI(__html__, {
+    width: 560,
+    height: 720,
+    themeColors: true,
+});
 
 interface MessagePayload {
     type: string;
@@ -67,11 +70,27 @@ interface MessagePayload {
     fileName?: string;
 }
 
+function initiateGlobalDictionary(params: ImportFormData) {
+    globalTokenDictionary = {
+        ...getGlobalNeutrals(params),
+        ...getThemeColors('lightBase', params),
+        ...getComponentColors(),
+        ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale),
+        ...radiiTokens[params.radii],
+        ...spacingTokens[params.spacing],
+        ...opacityTokens.opacity,
+        ...effectsTokens.elevation,
+        ...sizingTokens.global,
+    };
+}
+
 figma.ui.onmessage = async (eventData: MessagePayload) => {
     console.log("code received message", eventData);
+
     const params = eventData.params;
 
     if (eventData.type === "IMPORT") {
+        initiateGlobalDictionary(params);
         await initiateImport(params);
         await importAllTokens(params);
     }
@@ -79,12 +98,6 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         await exportToJSON(eventData.format);
     }
     else if (eventData.type === "IMPORT_JSON") {
-        globalTokens = {
-            ...getThemeColors('lightBase', params),
-            ...getGlobalNeutrals(),
-            ...getComponentColors(),
-            ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
-        };
         await importFromJSON(eventData.data, eventData.params).catch(error => {
             console.error(error);
             figma.ui.postMessage("importCompleted");
@@ -132,51 +145,49 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
 };
 
 async function initiateImport(params: ImportFormData) {
-    await figma.loadFontAsync({ family: "Inter", style: "Regular" });
-
-    await getCollectionAndPrepareTokens({
+    params.createColorTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors(),
         sortFn: getColorTokensSortFn()
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createColorTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: getThemeColors('lightBase', params),
         sortFn: getColorTokensSortFn()
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createSpacingTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('spacing'),
         modeName: toTitleCase(params.spacing),
         data: spacingTokens[params.spacing],
         sortFn: getSizeTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createRadiiTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('radii'),
         modeName: toTitleCase(params.radii),
         data: radiiTokens[params.radii],
         sortFn: getSizeTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createTypographyTokens && await getCollectionAndPrepareTokens({
         collectionName: "Type Scale",
         modeName: toTitleCase(params.baseFontSize),
         data: typographyTokens[params.baseFontSize],
         sortFn: getSizeTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createOpacityTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('opacity'),
         modeName: toTitleCase("default"),
         data: opacityTokens.opacity,
         sortFn: getAlphaNumTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createGlobalSizeTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('globalSizing'),
         modeName: toTitleCase("default"),
         data: sizingTokens.global,
@@ -203,9 +214,9 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
     Object.entries(shades).forEach(([name, token]) => {
         token.scopes = [];
 
-        let chromaColor = chroma(token.$value);
-        const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1]), chromaColor));
-        const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
+        let chromaColor = chroma(`${token.$value}`);
+        const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 1), chromaColor));
+        const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 0.22), chromaColor));
 
         contrastRatios[`_accent_${name}_vs_light`] = {
             "$value": contrast1.toString(),
@@ -260,111 +271,109 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
 }
 
 async function importAllTokens(params: ImportFormData) {
+
+    debugger
+
     figma.root.setPluginData('SDS', JSON.stringify(params));
 
     const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
     generateVariablesForPlayground(params, isPlayground);
 
-    await importColorTheme(params);
+    if(params.createColorTokens) {
+        await importColorTheme(params);
+        await importVariables({
+            collectionName: collectionNames.get('componentColors'),
+            modeName: "Default",
+            data: getComponentColors()
+        });
 
-    globalTokens = {
-        ...globalTokens,
-        ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
-    };
+        await delayAsync(5);
+    }
 
-    await importVariables({
-        collectionName: collectionNames.get('componentColors'),
-        modeName: "Default",
-        data: getComponentColors()
-    });
+    if(params.createSpacingTokens) {
+        await importSizeTokens({
+            type: 'spacing',
+            collectionName: collectionNames.get('spacing'),
+            params: params,
+            defaultMode: params.spacing,
+            defaultOrder: spacingSizeName,
+            tokens: spacingTokens.getSpacingTokens(params.verticalSpacing)
+        });
+        await delayAsync(5);
+    }
 
-    await importSizeTokens({
-        type: 'spacing',
-        collectionName: collectionNames.get('spacing'),
-        params: params,
-        defaultMode: params.spacing,
-        defaultOrder: spacingSizeName,
-        tokens: spacingTokens.getSpacingTokens(params.verticalSpacing)
-    });
+    if(params.createRadiiTokens) {
+        await importSizeTokens({
+            type: 'radii',
+            collectionName: collectionNames.get('radii'),
+            params: params,
+            defaultMode: params.radii,
+            defaultOrder: radiiSizeName,
+            tokens: radiiTokens
+        });
+        await delayAsync(5);
+    }
 
-    await importSizeTokens({
-        type: 'radii',
-        collectionName: collectionNames.get('radii'),
-        params: params,
-        defaultMode: params.radii,
-        defaultOrder: radiiSizeName,
-        tokens: radiiTokens
-    });
+    if(params.createOpacityTokens) {
+        await importVariables({
+            collectionName: collectionNames.get('opacity'),
+            modeName: "Default",
+            data: opacityTokens.opacity
+        });
+        await delayAsync(5);
+    }
 
-    await importTypeFaceTokens();
+    if(params.createGlobalSizeTokens) {
+        await importVariables({
+            collectionName: collectionNames.get('globalSizing'),
+            modeName: "Default",
+            data: sizingTokens.global
+        });
+        await delayAsync(5);
+    }
 
-    await importSizeTokens({
-        type: 'typeScale',
-        collectionName: "Type Scale",
-        params: params,
-        defaultMode: params.baseFontSize,
-        defaultOrder: typographySizeName,
-        tokens: typographyTokens
-    });
+    if(params.createElevationTokens) {
+        await importEffectStyles(effectsTokens.elevation);
+    }
 
-    await importVariables({
-        collectionName: collectionNames.get('opacity'),
-        modeName: "Default",
-        data: opacityTokens.opacity
-    });
+    if(params.createTypographyTokens) {
+        await importTypeFaceTokens();
 
-    await importVariables({
-        collectionName: collectionNames.get('globalSizing'),
-        modeName: "Default",
-        data: sizingTokens.global
-    });
+        await importSizeTokens({
+            type: 'typeScale',
+            collectionName: "Type Scale",
+            params: params,
+            defaultMode: params.baseFontSize,
+            defaultOrder: typographySizeName,
+            tokens: typographyTokens
+        });
 
-    await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
+        await delayAsync(5);
 
-    await importEffectStyles(effectsTokens.elevation);
+        await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
+    }
 
     figma.notify("Figma variables has been imported");
-
     figma.ui.postMessage("importCompleted");
 }
 
-function importColorTheme(params: ImportFormData) {
-    let themeColors = getThemeColors('lightBase', params);
-
-    globalTokens = {
-        ...getGlobalNeutrals(),
-        ...getComponentColors(),
-        ...themeColors
-    };
-
-    console.log('Importing Light Base', themeColors);
-
-    importVariables({
+async function importColorTheme(params: ImportFormData) {
+    await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
-        data: themeColors
+        data: getThemeColors('lightBase', params)
     });
 
-    themeColors = getThemeColors('darkBase', params);
-    globalTokens = Object.assign(globalTokens, themeColors);
-
-    console.log('Importing Dark Base', themeColors);
-
-    importVariables({
+    await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Dark Base",
-        data: themeColors
+        data: getThemeColors('darkBase', params)
     });
 
-    themeColors = getThemeColors('darkElevated', params);
-    globalTokens = Object.assign(globalTokens, themeColors);
-
-    console.log('Importing Dark Elevated', themeColors);
-
-    importVariables({
+    await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Dark Elevated",
-        data: themeColors
+        data: getThemeColors('darkElevated', params)
     });
 }
 
@@ -477,7 +486,6 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
 
 }
 
-
 async function importTypeFaceTokens() {
     const collectionName = 'Type Face';
     const collection = await findFigmaVariableCollectionByName(collectionName);
@@ -496,8 +504,8 @@ export interface DesignTokensRaw {
 }
 
 export interface DesignToken {
-    $value: string | object[];
-    $type: string;
+    $value: string | TypographyTokenValue | EffectTokenValue[];
+    $type: "number" | "string" | "effect" | "typography" | "color";
     name?: string;
     private?: boolean;
     scopes?: string[];
@@ -505,6 +513,8 @@ export interface DesignToken {
     documentationLink?: DocumentationLink;
     adjustments?: any;
 }
+
+
 
 async function processToken({
     collection,
@@ -520,64 +530,50 @@ async function processToken({
         return;
     }
 
-    let value = null;
-    let valueString = `${token.$value}`
-
-    let referenceVar = await findVariableByReferences(valueString.trim());
-
-    if (referenceVar) {
-        value = {
-            type: "VARIABLE_ALIAS",
-            id: referenceVar.id,
-        }
-    }
+    let valueString = (`${token.$value}`).trim()
 
     if (token.$value !== undefined) {
         if (type === "color") {
-            if (value == null) {
-                value = parseColorToken(token, globalTokens);
-            }
-
             return await setFigmaVariable(
                 collection,
                 modeId,
                 "COLOR",
                 variableName,
-                value,
+                await getColorTokenValue(token),
                 token.scopes || ['ALL_SCOPES'],
                 token.description || null
-            );
+            ).catch(function(err) {
+                console.error(`Failed to process ${variableName}`)
+                console.log(err.message); // some coding error in handling happened
+            });
         }
 
         if (type === "number") {
-            if (value == null) {
-                value = parseReferenceGlobal(valueString, globalTokens);
-                value = parseFloat(value);
-            }
             return await setFigmaVariable(
                 collection,
                 modeId,
                 "FLOAT",
                 variableName,
-                value,
+                await resolveAliasOrValue(valueString, globalTokenDictionary),
                 token.scopes,
                 token.description || null
-            );
+            ).catch(function(err) {
+                console.error(`Failed to process ${variableName}`)
+                console.log(err.message); // some coding error in handling happened
+            });
         }
 
         if (type === "string") {
-            if (value == null) {
-                value = parseReferenceGlobal(valueString, globalTokens);
-            }
             return await setFigmaVariable(
                 collection,
                 modeId,
                 "STRING",
                 variableName,
-                value,
+                await resolveAliasOrValue(valueString, globalTokenDictionary),
                 token.scopes,
                 token.description || null
             ).catch(function(err) {
+                console.error(`Failed to process ${variableName}`)
                 console.log(err.message); // some coding error in handling happened
             }); 
         }

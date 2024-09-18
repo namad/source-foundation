@@ -1,4 +1,5 @@
-import { findFigmaVariableByName } from "./figma-variables";
+import { DesignToken, DesignTokensRaw } from "../main";
+import { findFigmaVariableByName, getDefaultVariableValue } from "./figma-variables";
 
 const aliasRegex = /\{(.+?)(.+?)\}/g;
 
@@ -38,7 +39,7 @@ function findGlobalTokenByName(name, dictionary) {
     const token = dictionary[name];
 
     if(!token) {
-        const msg = `Cannot find token ${name}`;
+        const msg = `Failed to find global token ${name}`;
         figma.notify(msg, {error: true});
         throw new Error(msg);
     };
@@ -46,7 +47,7 @@ function findGlobalTokenByName(name, dictionary) {
     return token;
 }
 
-export function parseReferenceGlobal(value, dictionary) {
+export function resolveGlobalAliasValue(value: string, dictionary): string {
     let references = findTokenReferences(value);
     let result = value;
     
@@ -54,22 +55,40 @@ export function parseReferenceGlobal(value, dictionary) {
         let name = getReferenceName(reference);
 
         const globalToken = findGlobalTokenByName(name, dictionary);
-
-        if (globalToken) {
-            result = result.replace(reference, globalToken.$value);
-        }
-        else {
-            console.warn(`parseReferenceGlobal() call failed -> cannot find reference for ${value}`);
-        }
+        result = result.replace(reference, globalToken.$value);
     });
 
     const check = findTokenReferences(result);
     
     if (check != null) {
-        return parseReferenceGlobal(result, dictionary);
+        return resolveGlobalAliasValue(result, dictionary);
     }
     else {
         return result;
     }
+}
 
+export async function findVariableAlias(value: string): Promise<VariableAlias|null>{
+    let referenceVar = await findVariableByReferences(value.trim());
+    if (referenceVar) {
+        return {
+            type: "VARIABLE_ALIAS",
+            id: referenceVar.id,
+        }
+    }
+    else {
+        return null;
+    } 
+}
+
+export async function resolveAliasOrValue(value: string, dictionary): Promise<VariableAlias|string> {
+    let variableAlias = await findVariableAlias(value.trim());
+    if (variableAlias) {
+        const variable = await figma.variables.getVariableByIdAsync(variableAlias.id);
+        const defaultValue = await getDefaultVariableValue(variable);
+
+        return variableAlias
+    }
+
+    return resolveGlobalAliasValue(value, dictionary);
 }
