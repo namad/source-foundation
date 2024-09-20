@@ -1,10 +1,9 @@
-import { getThemeColors } from "../color-tokens";
 import { EffectTokenValue } from "../effect-tokens";
-import { DesignToken, globalTokens } from "../main";
+import { DesignToken } from "../import-tokens";
 import { _clone } from "./clone";
 import { ColorFormat, FigmaRGB, convertFigmaColorToRgb, parseColorValue } from "./figma-colors";
 import { getAliasName, getDefaultVariableValue } from "./figma-variables";
-import { resolveGlobalTokenValue, findVariableByReferences } from "./token-references";
+import { resolveGlobalTokenValue, findVariableByReferences, getGlobalTokensDictionary } from "./token-references";
 
 
 let globalDictionary;
@@ -114,7 +113,7 @@ async function resolveBoundValues(effectValue: EffectTokenValue): Promise<{effec
             copy[prop] = defaultValue;
         }
         else {
-            let val = resolveGlobalTokenValue(copy[prop], globalDictionary || globalTokens);
+            let val = resolveGlobalTokenValue(copy[prop], globalDictionary || getGlobalTokensDictionary());
 
             if(prop == 'color') {
                 val = parseColorValue(val).rgb;

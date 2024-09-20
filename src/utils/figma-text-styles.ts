@@ -1,8 +1,8 @@
-import { DesignToken, DesignTokensRaw, globalTokens } from "../main";
+import { DesignTokensRaw } from "../import-tokens";
 import { TypographyTokenValue } from "../typography-tokens";
 import { _clone } from "./clone";
 import { getAliasName, getDefaultVariableValue } from "./figma-variables";
-import { findVariableByReferences, resolveGlobalTokenValue } from "./token-references";
+import { findVariableByReferences, getGlobalTokensDictionary, resolveGlobalTokenValue } from "./token-references";
 
 
 export async function importTextStyles(tokens: DesignTokensRaw) {
@@ -79,7 +79,7 @@ async function parseValues(value, dictionary?) {
     let output = {};
     for (const [key, tokenReference] of Object.entries(value)) {
         const resolvedVariable = await findVariableByReferences(tokenReference as string)
-        const resolvedValue = resolveGlobalTokenValue(tokenReference, dictionary || globalTokens);
+        const resolvedValue = resolveGlobalTokenValue(tokenReference, dictionary || getGlobalTokensDictionary());
 
         if(resolvedVariable) {
             output[key] = await getDefaultVariableValue(resolvedVariable);

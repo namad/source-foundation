@@ -6,12 +6,12 @@ import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
 import { roundTwoDigits } from "./utils/round-two-digits";
-import { getGlobalNeutrals, getThemeColors } from "./color-tokens";
-import { parseColorValue, parseColorToken } from "./utils/figma-colors";
+import { getGlobalNeutrals, getThemeColors, resolveColorTokenValue } from "./color-tokens";
+import { parseColorValue } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
-import { DesignToken } from "./main";
 import { flattenObject } from "./utils/flatten-object";
 import { getPresetContentTemplate, getPresets } from "./presets";
+import { DesignToken } from "./import-tokens";
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -313,7 +313,7 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
         }
 
         if (type == 'color') {
-            const rgb = parseColorToken(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
+            const rgb = resolveColorTokenValue(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
             context.style.setProperty(varName, `${rgb}`);
         }
     })

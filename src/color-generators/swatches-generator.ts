@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import { roundTwoDigits } from "../utils/round-two-digits";
-import { parseColorToken } from "../utils/figma-colors";
+import { resolveColorTokenValue } from "../color-tokens";
 
 function getBoundVariables(node: SceneNode) {
     const boundVariables = Object.entries(node.boundVariables);
@@ -60,7 +60,7 @@ export function renderColor(parentNode, name, color, colors) {
 
     const {
         r, g, b, a
-    } = parseColorToken(color, colors);
+    } = resolveColorTokenValue(color, colors);
     const chromaColor = chroma.gl(r, g, b, a);
 
 

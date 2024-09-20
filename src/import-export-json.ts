@@ -1,5 +1,5 @@
 import { ImportFormData } from "./import-ui";
-import { DesignTokensRaw, getCollectionAndPrepareTokens, importVariables } from "./main";
+import { DesignTokensRaw, getCollectionAndPrepareTokens, importVariables } from "./import-tokens";
 import { TypographyTokenValue } from "./typography-tokens";
 import { ColorFormat, convertFigmaColorToRgb } from "./utils/figma-colors";
 import { convertFigmaEffectStyleToToken, importEffectStyles } from "./utils/figma-effect-styles";

@@ -77,7 +77,12 @@ export async function setFigmaVariable(
     }
 
     if (value) {
-        figmaVariable.setValueForMode(modeId, value);
+        try {
+            figmaVariable.setValueForMode(modeId, value);
+        }
+        catch(e) {
+            debugger
+        }
     }
 
     figmaVariable.scopes = scopes;
@@ -118,3 +123,4 @@ export async function getDefaultVariableValue(figmaVariable: Variable) {
         return defaultValue;
     }
 }
+

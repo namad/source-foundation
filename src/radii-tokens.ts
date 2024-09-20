@@ -1,4 +1,5 @@
-import { DesignTokensRaw } from "./main";
+
+import { DesignTokensRaw } from "./import-tokens";
 import baseRadiiTokens from "./tokens/radii/base.tokens.json";
 import compactRadiiTokens from "./tokens/radii/compact.tokens.json";
 import largeRadiiTokens from "./tokens/radii/large.tokens.json";

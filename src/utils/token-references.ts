@@ -1,5 +1,18 @@
-import { DesignTokensRaw } from "../main";
-import { findFigmaVariableByName } from "./figma-variables";
+import { DesignTokensRaw } from "../import-tokens";
+import { findFigmaVariableByName, getDefaultVariableValue } from "./figma-variables";
+
+let globalTokens = {};
+
+export function getGlobalTokensDictionary() {
+    return globalTokens;
+}
+
+export function addToGlobalTokensDictionary(data) {
+    globalTokens = {
+        ...globalTokens,
+        ...data
+    }
+}
 
 const aliasRegex = /\{(.+?)(.+?)\}/g;
 
@@ -74,4 +87,26 @@ export function resolveGlobalTokenValue(alias, dictionary: DesignTokensRaw) {
         return result;
     }
 
+}
+
+export async function findVariableAlias(value: string): Promise<VariableAlias|null>{
+    let referenceVar = await findVariableByReferences(value.trim());
+    if (referenceVar) {
+        return {
+            type: "VARIABLE_ALIAS",
+            id: referenceVar.id,
+        }
+    }
+    else {
+        return null;
+    } 
+}
+
+export async function resolveAliasOrValue(value: string, dictionary): Promise<VariableAlias|string> {
+    let variableAlias = await findVariableAlias(value.trim());
+    if (variableAlias) {
+        return variableAlias
+    }
+
+    return resolveGlobalTokenValue(value, dictionary);
 }

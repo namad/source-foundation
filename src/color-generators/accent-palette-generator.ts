@@ -2,7 +2,7 @@ import chroma from "chroma-js";
 import { resolveGlobalTokenValue } from "../utils/token-references";
 import { ImportFormData } from "../import-ui";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
-import { DesignToken } from "../main";
+import { DesignToken } from "../import-tokens";
 
 interface SystemAccentList {
     red: ColorShadesScale;

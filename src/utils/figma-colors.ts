@@ -1,8 +1,5 @@
 import chroma from 'chroma-js';
 
-import { resolveGlobalTokenValue } from './token-references';
-import { DesignToken } from '../main';
-
 export type ColorFormat = 'hex'|'hsl'|'rgba';
 
 export interface FigmaRGB {
@@ -94,20 +91,5 @@ export function parseColorValue(input, adjustments?: HSLAdjustments): { gl: RGBA
         hsl: color.css('hsl'),
         hex: color.hex()
     };
-}
-
-export function parseColorToken(token: DesignToken, dictionary, output = 'gl') {
-    let color = token.$value as string;
-
-    color = resolveGlobalTokenValue(color.trim(), dictionary);
-    const result = parseColorValue(color, token.adjustments);
-
-    if (result) {
-        return result[output];
-    }
-    else {
-        debugger;
-        throw new Error("Invalid color format");
-    }
 }
 

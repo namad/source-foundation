@@ -22,6 +22,9 @@ import { ImportFormData } from './import-ui';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';
 import chroma from "chroma-js";
 import { _clone } from './utils/clone';
+import { findVariableAlias, getGlobalTokensDictionary, resolveGlobalTokenValue } from './utils/token-references';
+import { parseColorValue } from './utils/figma-colors';
+import { DesignToken } from './import-tokens';
 
 let GlobalNeutrals;
 
@@ -182,4 +185,31 @@ function normalizeFormData(formData: ImportFormData): ImportFormData {
     });
 
     return normalizedData;
+}
+
+export function resolveColorTokenValue(token: DesignToken, dictionary, output = 'gl') {
+    let color = token.$value as string;
+
+    color = resolveGlobalTokenValue(color.trim(), dictionary);
+    const result = parseColorValue(color, token.adjustments);
+
+    if (result) {
+        return result[output];
+    }
+    else {
+        debugger;
+        //throw new Error("Invalid color format");
+    }
+}
+export async function getColorTokenValue(token: DesignToken): Promise<VariableAlias | RGBA | string> {
+    let valueString = (`${token.$value}`).trim()
+    const rawValue = resolveColorTokenValue(token, getGlobalTokensDictionary());
+    const variableAlias = await findVariableAlias(valueString);
+
+    if(variableAlias && typeof variableAlias == 'object') {
+        return variableAlias;
+    }
+    else {
+        return rawValue;
+    }
 }
