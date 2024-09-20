@@ -105,7 +105,15 @@ export const defaultSettings: ImportFormData = {
     radii: 'base',
     spacing: 'base',
     verticalSpacing: 'uneven',
-    singleCollection: false
+    singleCollection: false,
+
+    createColorTokens: true,
+    createTypographyTokens: true,
+    createSpacingTokens: true,
+    createElevationTokens: true,
+    createRadiiTokens: true,
+    createGlobalSizeTokens: true,
+    createOpacityTokens: true,    
 }
 
 export interface SemanticAccentColors {

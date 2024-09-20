@@ -1,8 +1,8 @@
-import { DesignToken, DesignTokensRaw } from "../main";
+import { DesignToken, DesignTokensRaw, globalTokens } from "../main";
 import { TypographyTokenValue } from "../typography-tokens";
 import { _clone } from "./clone";
-import { getAliasName } from "./figma-variables";
-import { findVariableByReferences, parseReferenceGlobal } from "./token-references";
+import { getAliasName, getDefaultVariableValue } from "./figma-variables";
+import { findVariableByReferences, resolveGlobalTokenValue } from "./token-references";
 
 
 export async function importTextStyles(tokens: DesignTokensRaw) {
@@ -12,8 +12,7 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             continue;
         }
 
-
-        const resolved = parseValues(token.$value, tokens);
+        const resolved = await parseValues(token.$value, tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;
 
@@ -50,23 +49,24 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
         }
         try {
 
-        Object.keys(normalized).forEach(key => {
-            textStyle[key] = normalized[key];
-        })
+            Object.keys(normalized).forEach(key => {
+                textStyle[key] = normalized[key];
+            })
 
-        const lineHeightVariable = await findVariableByReferences(token.$value['lineHeight']);
-        const fontSizeVariable = await findVariableByReferences(token.$value['fontSize']);
-        const paragraphSpacingVariable = await findVariableByReferences(token.$value['paragraphSpacing']);
-        const fontFamilyVariable = await findVariableByReferences(token.$value['fontFamily']);
-        // const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
-        const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
+            const lineHeightVariable = await findVariableByReferences(token.$value['lineHeight']);
+            
+            const fontSizeVariable = await findVariableByReferences(token.$value['fontSize']);
+            const paragraphSpacingVariable = await findVariableByReferences(token.$value['paragraphSpacing']);
+            const fontFamilyVariable = await findVariableByReferences(token.$value['fontFamily']);
+            // const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
+            const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
 
 
-        lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
-        fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);
-        paragraphSpacingVariable && textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
-        fontFamilyVariable && textStyle.setBoundVariable('fontFamily', fontFamilyVariable);
-        fontStyleVariable && textStyle.setBoundVariable('fontStyle', fontStyleVariable);
+            lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
+            fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);
+            paragraphSpacingVariable && textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
+            fontFamilyVariable && textStyle.setBoundVariable('fontFamily', fontFamilyVariable);
+            fontStyleVariable && textStyle.setBoundVariable('fontStyle', fontStyleVariable);
             // textStyle.setBoundVariable('fontWeight', fontWeightVariable);
         }
         catch (e) {
@@ -75,11 +75,18 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
     }
 }
 
-function parseValues(value, dictionary) {
+async function parseValues(value, dictionary?) {
     let output = {};
     for (const [key, tokenReference] of Object.entries(value)) {
-        const resolvedValue = parseReferenceGlobal(tokenReference, dictionary);
-        output[key] = resolvedValue;
+        const resolvedVariable = await findVariableByReferences(tokenReference as string)
+        const resolvedValue = resolveGlobalTokenValue(tokenReference, dictionary || globalTokens);
+
+        if(resolvedVariable) {
+            output[key] = await getDefaultVariableValue(resolvedVariable);
+        }
+        else {
+            output[key] = resolvedValue;
+        }
     }
     return output as TypographyTokenValue;
 }

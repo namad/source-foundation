@@ -45,6 +45,14 @@ export interface ImportFormData {
     spacing: "compact" | "base" | "large" | "touch";
     verticalSpacing: "even" | "uneven";
     singleCollection: boolean;
+
+    createColorTokens: boolean;
+    createTypographyTokens: boolean;
+    createSpacingTokens: boolean;
+    createElevationTokens: boolean;
+    createRadiiTokens: boolean;
+    createGlobalSizeTokens: boolean;
+    createOpacityTokens    : boolean;
 }
 
 export function transformValue(name: string, value: any, direction?): string | number {
@@ -326,6 +334,9 @@ export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent
             if (formEl.value === value) {
                 formEl.checked = true;
             }
+        }
+        else if (formEl.type == 'checkbox') {
+            formEl.checked == value;
         }
         else {
             formEl.value = val;

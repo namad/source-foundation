@@ -1,6 +1,6 @@
 import chroma from 'chroma-js';
 
-import { parseReferenceGlobal } from './token-references';
+import { resolveGlobalTokenValue } from './token-references';
 import { DesignToken } from '../main';
 
 export type ColorFormat = 'hex'|'hsl'|'rgba';
@@ -99,7 +99,7 @@ export function parseColorValue(input, adjustments?: HSLAdjustments): { gl: RGBA
 export function parseColorToken(token: DesignToken, dictionary, output = 'gl') {
     let color = token.$value as string;
 
-    color = parseReferenceGlobal(color.trim(), dictionary);
+    color = resolveGlobalTokenValue(color.trim(), dictionary);
     const result = parseColorValue(color, token.adjustments);
 
     if (result) {

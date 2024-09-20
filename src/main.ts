@@ -16,7 +16,7 @@ import { importTextStyles } from './utils/figma-text-styles';
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
-import { parseReferenceGlobal, findVariableByReferences } from './utils/token-references';
+import { resolveGlobalTokenValue, findVariableByReferences } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
 import { defaultSettings, iconSizeName, radiiSizeName, spacingSizeName, typographySizeName, typographySizeValues } from './defaults';
@@ -134,49 +134,49 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
 async function initiateImport(params: ImportFormData) {
     await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
-    await getCollectionAndPrepareTokens({
+    params.createColorTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors(),
         sortFn: getColorTokensSortFn()
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createColorTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: getThemeColors('lightBase', params),
         sortFn: getColorTokensSortFn()
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createSpacingTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('spacing'),
         modeName: toTitleCase(params.spacing),
         data: spacingTokens[params.spacing],
         sortFn: getSizeTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createRadiiTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('radii'),
         modeName: toTitleCase(params.radii),
         data: radiiTokens[params.radii],
         sortFn: getSizeTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createTypographyTokens && await getCollectionAndPrepareTokens({
         collectionName: "Type Scale",
         modeName: toTitleCase(params.baseFontSize),
         data: typographyTokens[params.baseFontSize],
         sortFn: getSizeTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createOpacityTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('opacity'),
         modeName: toTitleCase("default"),
         data: opacityTokens.opacity,
         sortFn: getAlphaNumTokensSortFn(),
     });
 
-    await getCollectionAndPrepareTokens({
+    params.createGlobalSizeTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('globalSizing'),
         modeName: toTitleCase("default"),
         data: sizingTokens.global,
@@ -265,20 +265,20 @@ async function importAllTokens(params: ImportFormData) {
     const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
     generateVariablesForPlayground(params, isPlayground);
 
-    await importColorTheme(params);
+    params.createColorTokens && await importColorTheme(params);
 
     globalTokens = {
         ...globalTokens,
         ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
     };
 
-    await importVariables({
+    params.createColorTokens && await importVariables({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors()
     });
 
-    await importSizeTokens({
+    params.createSpacingTokens && await importSizeTokens({
         type: 'spacing',
         collectionName: collectionNames.get('spacing'),
         params: params,
@@ -287,7 +287,7 @@ async function importAllTokens(params: ImportFormData) {
         tokens: spacingTokens.getSpacingTokens(params.verticalSpacing)
     });
 
-    await importSizeTokens({
+    params.createRadiiTokens && await importSizeTokens({
         type: 'radii',
         collectionName: collectionNames.get('radii'),
         params: params,
@@ -296,9 +296,9 @@ async function importAllTokens(params: ImportFormData) {
         tokens: radiiTokens
     });
 
-    await importTypeFaceTokens();
+    params.createTypographyTokens && await importTypeFaceTokens();
 
-    await importSizeTokens({
+    params.createTypographyTokens && await importSizeTokens({
         type: 'typeScale',
         collectionName: "Type Scale",
         params: params,
@@ -307,21 +307,21 @@ async function importAllTokens(params: ImportFormData) {
         tokens: typographyTokens
     });
 
-    await importVariables({
+    params.createOpacityTokens && await importVariables({
         collectionName: collectionNames.get('opacity'),
         modeName: "Default",
         data: opacityTokens.opacity
     });
 
-    await importVariables({
+    params.createGlobalSizeTokens && await importVariables({
         collectionName: collectionNames.get('globalSizing'),
         modeName: "Default",
         data: sizingTokens.global
     });
 
-    await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
+    params.createTypographyTokens && await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
 
-    await importEffectStyles(effectsTokens.elevation);
+    params.createElevationTokens && await importEffectStyles(effectsTokens.elevation);
 
     figma.notify("Figma variables has been imported");
 
@@ -551,7 +551,7 @@ async function processToken({
 
         if (type === "number") {
             if (value == null) {
-                value = parseReferenceGlobal(valueString, globalTokens);
+                value = resolveGlobalTokenValue(valueString, globalTokens);
                 value = parseFloat(value);
             }
             return await setFigmaVariable(
@@ -567,7 +567,7 @@ async function processToken({
 
         if (type === "string") {
             if (value == null) {
-                value = parseReferenceGlobal(valueString, globalTokens);
+                value = resolveGlobalTokenValue(valueString, globalTokens);
             }
             return await setFigmaVariable(
                 collection,

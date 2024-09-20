@@ -1,9 +1,10 @@
+import { DesignTokensRaw } from "../main";
 import { findFigmaVariableByName } from "./figma-variables";
 
 const aliasRegex = /\{(.+?)(.+?)\}/g;
 
-export function findTokenReferences(tokenValue: string) {
-    return tokenValue?.toString().match(aliasRegex)
+export function findTokenReferences(tokenAlias: string) {
+    return tokenAlias?.toString().match(aliasRegex)
 };
 export function getReferenceName(reference: string) {
     let name = reference.replace(/{/g, "");
@@ -11,8 +12,8 @@ export function getReferenceName(reference: string) {
     return name;
 }
 
-export async function findVariableByReferences(value: string): Promise<Variable> {
-    let references = findTokenReferences(value);
+export async function findVariableByReferences(alias: string): Promise<Variable> {
+    let references = findTokenReferences(alias);
     let results = [];
     
 
@@ -40,33 +41,34 @@ function findGlobalTokenByName(name, dictionary) {
     if(!token) {
         const msg = `Cannot find token ${name}`;
         figma.notify(msg, {error: true});
-        throw new Error(msg);
+
+        return null;
     };
 
     return token;
 }
 
-export function parseReferenceGlobal(value, dictionary) {
-    let references = findTokenReferences(value);
-    let result = value;
+export function resolveGlobalTokenValue(alias, dictionary: DesignTokensRaw) {
+    let references = findTokenReferences(alias);
+    let result = alias;
     
     references?.forEach(reference => {
         let name = getReferenceName(reference);
 
         const globalToken = findGlobalTokenByName(name, dictionary);
 
-        if (globalToken) {
+        if(globalToken) {
             result = result.replace(reference, globalToken.$value);
         }
         else {
-            console.warn(`parseReferenceGlobal() call failed -> cannot find reference for ${value}`);
+            result = null;
         }
     });
 
     const check = findTokenReferences(result);
     
     if (check != null) {
-        return parseReferenceGlobal(result, dictionary);
+        return resolveGlobalTokenValue(result, dictionary);
     }
     else {
         return result;

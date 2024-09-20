@@ -138,6 +138,7 @@ document.querySelectorAll('#importThemeButton').forEach(btn => {
 
         if(tabID == 'importTokensTab') {
             const params = getFormData(form);
+            importButton.classList.add('loading');
             parent.postMessage({ 
                 pluginMessage: { 
                     type: "IMPORT_JSON", 
@@ -150,7 +151,6 @@ document.querySelectorAll('#importThemeButton').forEach(btn => {
             }, "*");     
         }
         modal.close();
-        importButton.classList.add('loading');
 
     })
 })

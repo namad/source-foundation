@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { parseReferenceGlobal } from "../utils/token-references";
+import { resolveGlobalTokenValue } from "../utils/token-references";
 import { ImportFormData } from "../import-ui";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
 import { DesignToken } from "../main";
@@ -164,7 +164,7 @@ export function getGlobalAccent(hue: number, saturation: number, minLuminance: n
 function getThemeScale(input: ColorShadesScale, dictionary: ColorShadesScale) {
     let output: ColorShadesScale = {};
     Object.entries(input).forEach(([shadeNumber, token]) => {
-        token.$value = parseReferenceGlobal(token.$value, dictionary);
+        token.$value = resolveGlobalTokenValue(token.$value, dictionary);
         output[shadeNumber] = token;
     })
 

@@ -3,8 +3,8 @@ import { EffectTokenValue } from "../effect-tokens";
 import { DesignToken, globalTokens } from "../main";
 import { _clone } from "./clone";
 import { ColorFormat, FigmaRGB, convertFigmaColorToRgb, parseColorValue } from "./figma-colors";
-import { getAliasName } from "./figma-variables";
-import { parseReferenceGlobal, findVariableByReferences } from "./token-references";
+import { getAliasName, getDefaultVariableValue } from "./figma-variables";
+import { resolveGlobalTokenValue, findVariableByReferences } from "./token-references";
 
 
 let globalDictionary;
@@ -94,20 +94,7 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
     return effect as Effect;
 }
 
-async function getVariableValue(figmaVariable: Variable) {
-    const collectionID = figmaVariable.variableCollectionId;
-    const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
-    const defaultMode = collection.modes[0].modeId;
-    const defaultValue: VariableValue = figmaVariable.valuesByMode[defaultMode];
 
-    if(defaultValue['type'] == "VARIABLE_ALIAS") {
-        const variable = await figma.variables.getVariableByIdAsync(defaultValue['id']);
-        return await getVariableValue(variable);
-    }
-    else {
-        return defaultValue;
-    }
-}
 
 async function resolveBoundValues(effectValue: EffectTokenValue): Promise<{effectTokenValue: EffectTokenValue, boundProps: BoundProp[]}> {
 
@@ -123,15 +110,13 @@ async function resolveBoundValues(effectValue: EffectTokenValue): Promise<{effec
                 propName: prop as VariableBindableEffectField,
                 variable: figmaVariable
             });
-            const defaultValue = await getVariableValue(figmaVariable)
+            const defaultValue = await getDefaultVariableValue(figmaVariable)
             copy[prop] = defaultValue;
         }
         else {
-            debugger;
-            let val = parseReferenceGlobal(copy[prop], globalDictionary || globalTokens);
+            let val = resolveGlobalTokenValue(copy[prop], globalDictionary || globalTokens);
 
             if(prop == 'color') {
-                const fallBackColor = figma.util.rgb('#FF0000');
                 val = parseColorValue(val).rgb;
             }
 
