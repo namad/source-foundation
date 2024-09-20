@@ -11,17 +11,6 @@ import { importAllTokens, initiateImport } from './import-tokens';
 
 console.clear();
 
-const collectionNames = new Map<string, string>([
-    ["brandColors", "Color Theme"/*"Brand Color"*/],
-    ["themeColors", "Color Theme"],
-    ["componentColors", "Component Tokens"],
-    ["spacing", "Spacing"],
-    ["opacity", "Opacity"],
-    ["radii", "Radii"],
-    ["iconScale", "Icon Scale"],
-    ["globalSizing", "Global Sizing"],
-]);
-
 (async () => {
     const fontDetails = await typographyTokens.getFontDetails();
     await Promise.all(

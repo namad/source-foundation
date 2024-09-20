@@ -12,17 +12,14 @@ import * as opacityTokens from './opacity-tokens';
 
 import { getSizeTokensSortFn, getColorTokensSortFn, getAlphaNumTokensSortFn  } from './utils/sort-tokens';
 import { importTextStyles } from './utils/figma-text-styles';
-import { renderAccents } from "./color-generators/render-accents";
-import { generateGlobalAccentPalette, getGlobalAccent } from './color-generators/accent-palette-generator';
-import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
+import { getGlobalAccent } from './color-generators/accent-palette-generator';
 import { resolveAliasOrValue, addToGlobalTokensDictionary, getGlobalTokensDictionary } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
-import { radiiSizeName, spacingSizeName, typographySizeName, typographySizeValues } from './defaults';
+import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
-import { CollectionExportRecord, exportToJSON, importFromJSON } from './import-export-json';
 
 console.clear();
 
