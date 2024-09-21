@@ -233,7 +233,7 @@ function importColorTheme(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
 
     addToGlobalTokensDictionary({
-        ...getGlobalNeutrals(),
+        ...getGlobalNeutrals(params),
         ...getComponentColors(),
         ...themeColors
     });

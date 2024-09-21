@@ -32,7 +32,14 @@ export function getSemanticAccentSettings(): SemanticAccentColors {
     return defaultSemanticAccents;
 }
 
-export function getGlobalNeutrals() {
+export function getGlobalNeutrals(params?: ImportFormData) {
+    if(params) {
+        GlobalNeutrals = generateNeutrals({
+            hue: params.hue,
+            saturation: params.saturation,
+            distance: params.distance
+        })
+    }
     return GlobalNeutrals;
 }
 
@@ -52,12 +59,6 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     let params = {
         ...normalizeFormData(formData)
     }
-
-    GlobalNeutrals = generateNeutrals({
-        hue: params.hue,
-        saturation: params.saturation,
-        distance: params.distance
-    });
 
     const semanticAccents: SemanticAccentColors = {
         primary: params.primary,

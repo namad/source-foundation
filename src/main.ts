@@ -50,9 +50,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     }
     else if (eventData.type === "IMPORT_JSON") {
         addToGlobalTokensDictionary({
-            ...getThemeColors('lightBase', params),
-            ...getGlobalNeutrals(),
-            ...getComponentColors(),
+            ...getGlobalNeutrals(params),
             ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
         });
         
