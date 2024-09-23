@@ -11,22 +11,12 @@ import { importAllTokens, initiateImport } from './import-tokens';
 
 console.clear();
 
-(async () => {
-    const fontDetails = await typographyTokens.getFontDetails();
-    await Promise.all(
-        fontDetails.map(async item =>
-            await figma.loadFontAsync(item as FontName)
-        )
-    );
 
-    figma.showUI(__html__, {
-        width: 560,
-        height: 720,
-        themeColors: true,
-    });
-
-})()
-
+figma.showUI(__html__, {
+    width: 560,
+    height: 720,
+    themeColors: true,
+});
 
 interface MessagePayload {
     type: string;

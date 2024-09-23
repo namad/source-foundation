@@ -190,14 +190,14 @@ function getScale(colors, count = 9): ColorShadesScale {
 
 function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }) {
 
-    let color1 = chroma.hsl([hue * 0.96, saturation * 0.95, 0.5])
+    let color1 = chroma.hsl(hue * 0.96, saturation * 0.95, 0.5)
         .luminance(maxLuminance)
 
     // this one always 4.5 : 1 contrast ratio
-    let color2 = chroma.hsl([hue, saturation * 1, 0.5])
+    let color2 = chroma.hsl(hue, saturation * 1, 0.5)
         .luminance(midLiminance)
 
-    let color3 = chroma.hsl([hue * 1.04, saturation * 0.95, 0.5])
+    let color3 = chroma.hsl(hue * 1.04, saturation * 0.95, 0.5)
         .luminance(minLuminance)
 
     return [color1, color2, color3];

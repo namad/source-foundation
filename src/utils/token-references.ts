@@ -18,7 +18,8 @@ const aliasRegex = /\{(.+?)(.+?)\}/g;
 
 export function findTokenReferences(tokenAlias: string) {
     return tokenAlias?.toString().match(aliasRegex)
-};
+}
+
 export function getReferenceName(reference: string) {
     let name = reference.replace(/{/g, "");
     name = name.replace(/}/g, "");
@@ -54,7 +55,6 @@ function findGlobalTokenByName(name, dictionary) {
     if(!token) {
         const msg = `Cannot find token ${name}`;
         figma.notify(msg, {error: true});
-
         return null;
     };
 
@@ -89,8 +89,8 @@ export function resolveGlobalTokenValue(alias, dictionary: DesignTokensRaw) {
 
 }
 
-export async function findVariableAlias(value: string): Promise<VariableAlias|null>{
-    let referenceVar = await findVariableByReferences(value.trim());
+export async function findVariableAlias(name: string): Promise<VariableAlias|null>{
+    let referenceVar = await findVariableByReferences(name.trim());
     if (referenceVar) {
         return {
             type: "VARIABLE_ALIAS",

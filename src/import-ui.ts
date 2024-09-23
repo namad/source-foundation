@@ -254,8 +254,8 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                 chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl');
             }
 
-            const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 1]), chromaColor));
-            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl([0, 0, 0.22]), chromaColor));
+            const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 1), chromaColor));
+            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 0.22), chromaColor));
             const hsl = outputHSL(chromaColor).join(", ");
             let contrastWarn = 'none';
 
@@ -336,7 +336,7 @@ export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent
             }
         }
         else if (formEl.type == 'checkbox') {
-            formEl.checked == value;
+            formEl.checked = value;
         }
         else {
             formEl.value = val;

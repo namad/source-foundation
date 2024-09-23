@@ -33,8 +33,6 @@ export async function importEffectStyles(tokens, dictionary?) {
                 effects.push(effect);
             }
 
-            debugger;
-
             figmaStyle.name = name;
             figmaStyle.effects = effects;
             figmaStyle.description = token.description || figmaStyle.description;

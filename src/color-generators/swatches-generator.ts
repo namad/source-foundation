@@ -72,7 +72,7 @@ export function renderColor(parentNode, name, color, colors) {
 
     let contrast = [
         chroma.contrast("white", mixedColor),
-        chroma.contrast(chroma.hsl([0, 0, 0.22]), mixedColor)
+        chroma.contrast(chroma.hsl(0, 0, 0.22), mixedColor)
     ];
 
     let nameRow = getRow(frame, contrast[0] > 2.5);

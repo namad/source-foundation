@@ -65,15 +65,9 @@ export function getTypographyTokens(size: string, scale = "minorThird") {
     }
 }
 
-export function getTypScaleTokens(size: string, scale = "minorThird") {
-
-    let scaleTokens = tokens[scale][size];
-
-    return {
-        ...typeFace,
-        ...scaleTokens,
-        ...styles,
-    }
+export function getTypScaleTokens(scale = "minorThird") {
+    let scaleTokens = tokens[scale];
+    return scaleTokens
 }
 
 export async function getFontDetails() {

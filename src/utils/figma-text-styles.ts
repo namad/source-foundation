@@ -4,8 +4,26 @@ import { _clone } from "./clone";
 import { getAliasName, getDefaultVariableValue } from "./figma-variables";
 import { findVariableByReferences, getGlobalTokensDictionary, resolveGlobalTokenValue } from "./token-references";
 
+let fontLoadStatus = [];
+async function preLoadFont(fontName: FontName) {
+    const fontNameAndStyle = `${fontName.family} ${fontName.style}`;
+
+    if(fontLoadStatus.indexOf(fontNameAndStyle) == -1) {
+        console.log(`loading ${fontNameAndStyle}`);
+        await figma.loadFontAsync(fontName).catch((reason) => {
+            debugger;
+        });
+        fontLoadStatus.push(fontNameAndStyle);
+        return true;
+    }
+
+    console.log(`already done with ${fontNameAndStyle}`);
+    return false;
+}
 
 export async function importTextStyles(tokens: DesignTokensRaw) {
+    fontLoadStatus = [];
+
     for (const [name, token] of Object.entries(tokens)) {
 
         if (token.$type != 'typography') {
@@ -16,9 +34,7 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;
 
-        await figma.loadFontAsync(fontName).catch((reason) => {
-            debugger;
-        });
+        await preLoadFont(fontName);
 
         let textStyle = await getStyleByName(name);
         let newStyle = false;
@@ -38,13 +54,7 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
 
         if (!newStyle) {
             fontName = _clone(textStyle.fontName);
-
-            if(fontName.family == "Lato") {
-                debugger;
-            }
-            await figma.loadFontAsync(fontName).catch((reason) => {
-                debugger;
-            });
+            await preLoadFont(fontName);
             normalized.fontName = fontName;
         }
         try {

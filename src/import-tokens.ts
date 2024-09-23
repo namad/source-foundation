@@ -107,7 +107,7 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
     Object.entries(shades).forEach(([name, token]) => {
         token.scopes = [];
 
-        let chromaColor = chroma(token.$value);
+        let chromaColor = chroma(token.$value as string);
         const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 1), chromaColor));
         const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 0.22), chromaColor));
 
@@ -171,8 +171,6 @@ export async function importAllTokens(params: ImportFormData) {
 
     params.createColorTokens && await importColorTheme(params);
 
-    addToGlobalTokensDictionary(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale))
-
     params.createColorTokens && await importVariables({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
@@ -197,16 +195,10 @@ export async function importAllTokens(params: ImportFormData) {
         tokens: radiiTokens
     });
 
-    params.createTypographyTokens && await importTypeFaceTokens();
+    if(params.createTypographyTokens) {
+        await importTypographyTokens(params);
+    } 
 
-    params.createTypographyTokens && await importSizeTokens({
-        type: 'typeScale',
-        collectionName: "Type Scale",
-        params: params,
-        defaultMode: params.baseFontSize,
-        defaultOrder: typographySizeName,
-        tokens: typographyTokens
-    });
 
     params.createOpacityTokens && await importVariables({
         collectionName: collectionNames.get('opacity'),
@@ -220,7 +212,6 @@ export async function importAllTokens(params: ImportFormData) {
         data: sizingTokens.global
     });
 
-    params.createTypographyTokens && await importTextStyles(typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale));
 
     params.createElevationTokens && await importEffectStyles(effectsTokens.elevation);
 
@@ -229,18 +220,17 @@ export async function importAllTokens(params: ImportFormData) {
     figma.ui.postMessage("importCompleted");
 }
 
-function importColorTheme(params: ImportFormData) {
+async function importColorTheme(params: ImportFormData) {
     let themeColors = getThemeColors('lightBase', params);
+    const globalNeutrals = getGlobalNeutrals(params);
 
     addToGlobalTokensDictionary({
-        ...getGlobalNeutrals(params),
+        ...globalNeutrals,
         ...getComponentColors(),
         ...themeColors
     });
 
-    console.log('Importing Light Base', themeColors);
-
-    importVariables({
+    await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
         data: themeColors
@@ -248,9 +238,8 @@ function importColorTheme(params: ImportFormData) {
 
     themeColors = getThemeColors('darkBase', params);
     addToGlobalTokensDictionary(themeColors);
-    console.log('Importing Dark Base', themeColors);
 
-    importVariables({
+    await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Dark Base",
         data: themeColors
@@ -258,9 +247,8 @@ function importColorTheme(params: ImportFormData) {
 
     themeColors = getThemeColors('darkElevated', params);
     addToGlobalTokensDictionary(themeColors);
-    console.log('Importing Dark Elevated', themeColors);
 
-    importVariables({
+    await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Dark Elevated",
         data: themeColors
@@ -377,9 +365,13 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
 }
 
 
-async function importTypeFaceTokens() {
+async function importTypographyTokens(params: ImportFormData) {
+    const tokens = typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale);
+    const typeScaleTokens = typographyTokens.getTypScaleTokens(params.typeScale);
     const collectionName = 'Type Face';
     const collection = await findFigmaVariableCollectionByName(collectionName);
+
+    addToGlobalTokensDictionary(tokens);
 
     if(collection == null) {
         await importVariables({
@@ -388,6 +380,15 @@ async function importTypeFaceTokens() {
             data: typographyTokens.typeFace
         });
     }
+    await importSizeTokens({
+        type: 'typeScale',
+        collectionName: "Type Scale",
+        params: params,
+        defaultMode: params.baseFontSize,
+        defaultOrder: typographySizeName,
+        tokens: typeScaleTokens
+    });
+    await importTextStyles(tokens);
 }
 
 export interface DesignTokensRaw {

@@ -27,7 +27,6 @@ export function generateNeutrals(params) {
     let value = min as number;
 
     while (value <= max) {
-        const sMod = 1 / Math.pow(1.3, (max - value) / 100);
         const color = chroma.hsl(hue, saturation * getSaturationModifier(value), value / 100);
 
         tokens[`grey-${value}`] = {

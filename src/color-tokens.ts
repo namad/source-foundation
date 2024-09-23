@@ -60,6 +60,8 @@ export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated',
         ...normalizeFormData(formData)
     }
 
+    getGlobalNeutrals(formData);
+    
     const semanticAccents: SemanticAccentColors = {
         primary: params.primary,
         info: params.info,
