@@ -11,6 +11,7 @@ import * as effectsTokens from './effect-tokens';
 import { getAliasName, variableNameToObject } from "./utils/figma-variables";
 import { getComponentColors, getGlobalNeutrals, getThemeColors } from "./color-tokens";
 import { delayAsync } from "./utils/delay-async";
+import { addToGlobalTokensDictionary } from "./utils/token-references";
 
 
 interface TextStyleToken {
@@ -183,10 +184,13 @@ export async function importFromJSON(data:CollectionExportRecord[], params: Impo
         }
     })
 
+    addToGlobalTokensDictionary(tokensDictionary);
+    
     while(variableCollections.length) {
         const collectionRecord = variableCollections.shift();
 
         if(collectionRecord.type == "variables") {
+            debugger
             await getCollectionAndPrepareTokens({
                 collectionName: collectionRecord.collection,
                 modeName: collectionRecord.mode,

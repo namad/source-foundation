@@ -50,6 +50,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             figma.notify(error, {error: true});
         });
 
+        figma.notify(`Figma variables has been imported`);
         figma.ui.postMessage("importCompleted");
     }
     else if (eventData.type === "ALERT") {

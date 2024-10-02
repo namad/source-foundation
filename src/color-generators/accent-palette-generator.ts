@@ -174,7 +174,7 @@ function getThemeScale(input: ColorShadesScale, dictionary: ColorShadesScale) {
 /*
     colors: getRangeOfThree()
 */
-function getScale(colors, count = 9): ColorShadesScale {
+function getScale(colors: chroma.Color[], count = 9): ColorShadesScale {
     let tokens: ColorShadesScale = {};
     // chroma scale returns array of hex values
     const scale = chroma.scale(colors).colors(count, 'hex');
@@ -188,7 +188,7 @@ function getScale(colors, count = 9): ColorShadesScale {
     return tokens;
 }
 
-function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }) {
+function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }): chroma.Color[] {
 
     let color1 = chroma.hsl(hue * 0.96, saturation * 0.95, 0.5)
         .luminance(maxLuminance)

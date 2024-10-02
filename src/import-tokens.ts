@@ -230,6 +230,7 @@ async function importColorTheme(params: ImportFormData) {
         ...themeColors
     });
 
+
     await importVariables({
         collectionName: collectionNames.get('themeColors'),
         modeName: "Light Base",
@@ -373,13 +374,15 @@ async function importTypographyTokens(params: ImportFormData) {
 
     addToGlobalTokensDictionary(tokens);
 
-    if(collection == null) {
-        await importVariables({
-            collectionName: collectionName,
-            modeName: "Default",
-            data: typographyTokens.typeFace
-        });
-    }
+    
+    debugger
+
+    await importVariables({
+        collectionName: collectionName,
+        modeName: typographyTokens.typeFace["font-family"].$value || "Default",
+        data: typographyTokens.typeFace
+    });
+
     await importSizeTokens({
         type: 'typeScale',
         collectionName: "Type Scale",

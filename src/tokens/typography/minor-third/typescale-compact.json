@@ -1,237 +1,250 @@
 {
+    "paragraph-spacing": {
+        "display": {
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT"
+            ],
+            "$value": 16
+        },
+        "label": {
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT"
+            ],
+            "$value": 8
+        },
+        "paragraph": {
+            "$type": "number",
+            "scopes": [
+                "TEXT_CONTENT"
+            ],
+            "$value": 12
+        }
+    },
     "font-size": {
         "xs2": {
-            "$value": "10",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 10
         },
         "xs": {
-            "$value": "11",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 11
         },
         "sm": {
-            "$value": "12",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 12
         },
         "base": {
-            "$value": "13",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 13
         },
         "md": {
-            "$value": "16",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 16
         },
         "lg": {
-            "$value": "19",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 19
         },
         "xl": {
-            "$value": "22",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 22
         },
         "xl2": {
-            "$value": "27",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 27
         },
         "xl3": {
-            "$value": "32",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 32
         },
         "xl4": {
-            "$value": "39",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 39
         },
         "xl5": {
-            "$value": "47",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 47
         },
         "xl6": {
-            "$value": "56",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 56
         },
         "xl7": {
-            "$value": "67",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "FONT_SIZE"
+            ],
+            "$value": 67
         }
     },
     "line-height": {
         "xs2": {
-            "$value": "10",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 10
         },
         "xs": {
-            "$value": "12",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 12
         },
         "sm": {
-            "$value": "14",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 14
         },
         "base": {
-            "$value": "16",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 16
         },
         "md": {
-            "$value": "20",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 20
         },
         "lg": {
-            "$value": "24",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 24
         },
         "xl": {
-            "$value": "28",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 28
         },
         "xl2": {
-            "$value": "32",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 32
         },
         "xl3": {
-            "$value": "40",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 40
         },
         "xl4": {
-            "$value": "44",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 44
         },
         "xl5": {
-            "$value": "52",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 52
         },
         "xl6": {
-            "$value": "60",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 60
         },
         "xl7": {
-            "$value": "78",
             "$type": "number",
             "scopes": [
                 "TEXT_CONTENT",
-                "WIDTH_HEIGHT"
-            ]
-        }
-    },
-    "paragraph-spacing": {
-        "label": {
-            "$value": "8",
-            "$type": "number",
-            "scopes": [
-                "TEXT_CONTENT"
-            ]
-        },
-        "paragraph": {
-            "$value": "12",
-            "$type": "number",
-            "scopes": [
-                "TEXT_CONTENT"
-            ]
-        },
-        "display": {
-            "$value": "16",
-            "$type": "number",
-            "scopes": [
-                "TEXT_CONTENT"
-            ]
+                "WIDTH_HEIGHT",
+                "LINE_HEIGHT"
+            ],
+            "$value": 78
         }
     }
 }

@@ -9,9 +9,7 @@
             </div>
             <div class="body">
                 <p class="color-text-base-500">
-                    Select base font size / line height to generate text styles. Please
-                    note, the plugin will create set of styles based on base selected
-                    typography scale.
+                    Select default font size / line height and desired type scale.
                 </p>
                 <div data-type="typography" data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
                 </div>
@@ -129,7 +127,7 @@
             <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "syncValue": true}'>
             </div>
 
-            <h4 class="mt-3 text-md font-bold">Color Pattern</h4>
+            <h4 class="mt-3 text-md font-bold">Colour Pattern</h4>
             <p class="color-text-base-500">
                 Difference in lightness percent between two adjacent colours. Wider
                 steps outcome greater contrast overall
@@ -359,16 +357,19 @@
                     </a>
                 </li>
             </ul>
-            <hr class="mb-y-base" />
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="singleCollection" value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Import Spacing, Radii and Type Scale tokens as sinlge
-                        collection</span>
-                    <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise
-                        different token types to get their own collections.</span>
-                </span>
-            </label>
+
+            <span class="hidden">
+                <hr class="mb-y-base" />
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="singleCollection" value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Import Spacing, Radii and Type Scale tokens as sinlge
+                            collection</span>
+                        <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise
+                            different token types to get their own collections.</span>
+                    </span>
+                </label>
+            </span>
         </div>
 
         <div class="card" id="importOptions">
@@ -376,48 +377,54 @@
             <p class="color-text-base-500">
                 Select default tokens you would like to import. Sometimes it makes more sense to update only certain sets keeping others intact.
             </p>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createColorTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Color Tokens</span>
-                </span>
-            </label>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createTypographyTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Typography Tokens</span>
-                </span>
-            </label>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createSpacingTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Spacing Tokens</span>
-                </span>
-            </label>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createElevationTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Elevation Tokens</span>
-                </span>
-            </label>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createRadiiTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Radii Tokens</span>
-                </span>
-            </label>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createGlobalSizeTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Global Sizing Tokens</span>
-                </span>
-            </label>
-            <label class="checkbox flex flex-row items-start gap-xs2 align-top">
-                <input type="checkbox" name="createOpacityTokens" checked value="true" />
-                <span class="flex flex-col gap-minor-xs">
-                    <span>Opacity Tokens</span>
-                </span>
-            </label>
+            <p class="flex gap-base">
+                <a href="#" data-import-options="all">Select All</a>
+                <a href="#" data-import-options="none">Select None</a>
+            </p>
+            <div id="importOptionsCheckboxes" class="flex flex-col gap-minor-xs">
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createColorTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Color Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createTypographyTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Typography Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createSpacingTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Spacing Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createElevationTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Elevation Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createRadiiTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Radii Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createGlobalSizeTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Global Sizing Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createOpacityTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Opacity Tokens</span>
+                    </span>
+                </label>
+            </div>
         </div>
         
         <div class="card">
@@ -549,7 +556,7 @@
             <label class="flex-1">
                 <input type="radio" name="importAs" value="preset" data-tab="importPresetTab" checked />
                 <span class="container">
-                    <span>Import Preset</span>
+                    <span>Apply Preset</span>
                 </span>
             </label>
             <label class="flex-1"> 
@@ -559,30 +566,34 @@
                 </span>
             </label>
         </div>
-        <div class="flex flex-col flex-1 overflow-auto " id="importPresetTab">
-            <div class="body" >
-                           <p class="color-text-base-500">Paste preset code to the textarea below</p>
-                <textarea cols="10" name="importCodeTextarea" autofocus onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono"></textarea>
-                <p class="color-text-base-500">Or select one of the presets</p>
+        <div class="flex flex-col flex-1 gap-minor-sm overflow-hidden" id="importPresetTab">
+            <div class="flex flex-col flex-1 overflow-auto">
+                <div class="body" >
+                            <p class="color-text-base-500">Paste preset code to the textarea below</p>
+                    <textarea cols="10" name="importCodeTextarea" onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono"></textarea>
+                    <p class="color-text-base-500">Or select one of the presets</p>
+                </div>
+                <div class="flex flex-col flex-1 gap-minor-xs4 px-lg" id="presetsList">
+                </div>
             </div>
-            <div class="flex flex-col flex-1 gap-minor-xs4 px-lg" id="presetsList">
-            </div>
+            <div class="footer">
+                <button class="primary import-theme-button" id="applyPresetButton">Apply Preset</button>
+            </div>            
         </div>
+
         <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
             <div class="body" >
-                <textarea cols="10" name="importToeknsTextarea" placeholde="Paste json tokens here" autofocus onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono"></textarea>
-                <div class="flex flex-col gap-xs w-full">
-                    <span class="color-text-base-500 flex-1">Add styles and effect from Foundation:</span>
-                    <div class="flex flex-row gap-sm items-center w-full">
-                        <label class="checkbox flex flex-row gap-2"><input type="checkbox" name="importTextStyles" value="true" checked /><span>Text Styles</span></label>
-                        <label class="checkbox flex flex-row gap-2"><input type="checkbox" name="importEffects" value="true" checked /><span>Effects</span></label>
-                    </div>
-                </div> 
+                <textarea cols="10" name="importToeknsTextarea" placeholde="Paste json tokens here" onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono"></textarea>
+                <div class="flex flex-row gap-sm items-center flex-nowrap">
+                    <label class="checkbox flex flex-row gap-2" title="Add Source Foundation text styles to your file. This will also add all typography variables"><input type="checkbox" name="importTextStyles" value="true" checked /><span>Add Source Text Styles</span></label>
+                    <label class="checkbox flex flex-row gap-2" title="Add Source Foundation effect styles to your file"><input type="checkbox" name="importEffects" value="true" checked /><span>Add Source Effects</span></label>
+                </div>
             </div>
+            <div class="footer">
+                <button class="primary import-theme-button" id="importCustomThemeButton">Import Custom Tokens</button>
+            </div>            
         </div>        
-        <div class="footer">
-            <button class="primary" id="importThemeButton">Import Tokens</button>
-        </div>
+
     </div>
 </dialog>
 
@@ -611,7 +622,7 @@
             </div>
             <div id="exportPresetTab" class="flex flex-col flex-1 gap-xs">
                 <p class="color-text-base-500">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
-                <textarea cols="10" onfocus="this.select();" autofocus name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono"></textarea>
+                <textarea cols="10" onfocus="this.select();" name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono"></textarea>
             </div>
             <div id="exportTokensTab" class="flex flex-col flex-1 gap-xs items-center">
                 <div class="flex flex-row gap-sm items-center w-full">
@@ -625,7 +636,7 @@
                         </button>
                     </div> -->
                 </div>            
-                <textarea cols="10" onfocus="this.select();" autofocus name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono" placeholder="Press Export button to get code"></textarea>            
+                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono" placeholder="Press Export button to get code"></textarea>            
             </div>
         </div>
         <div class="footer">

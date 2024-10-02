@@ -105,54 +105,108 @@ document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
         // modal.close();
     })
 })
-document.querySelectorAll('#importThemeButton').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+
+const selectAllNoneLinks = document.querySelectorAll('a[data-import-options]') as NodeListOf<HTMLAnchorElement>;
+
+selectAllNoneLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
         e.preventDefault();
-
-        const modal = document.getElementById('importModal') as HTMLDialogElement;
-        const radioValue = modal.querySelector('[data-tab]:checked') as HTMLInputElement;
-        const tabID = radioValue.dataset.tab;
-        const tab = document.getElementById(tabID) as HTMLDivElement;
-
-        const textarea = document.querySelector(`#${tabID} textarea`) as HTMLTextAreaElement;
-        const code = textarea.value;
-        const settings = collectValues(tab);
-        let data;
-
-        try {
-            data = JSON.parse(code);
-        }
-        catch (e) {
-            parent.postMessage({ pluginMessage: { type: "ALERT", data: e.message, alertParams: {error: true} } }, "*");  
-            throw (e);
-        }
-
-        if(tabID == 'importPresetTab') {
-            if (code.length == 0) {
-                const themeNumber = settings.theme;
-                data = getPresets()[themeNumber];
-            }
-
-            loadSettings(form, data);
-        }
-
-        if(tabID == 'importTokensTab') {
-            const params = getFormData(form);
-            importButton.classList.add('loading');
-            parent.postMessage({ 
-                pluginMessage: { 
-                    type: "IMPORT_JSON", 
-                    params: {
-                        ...params,
-                        ...settings
-                    },
-                    data 
-                }
-            }, "*");     
-        }
-        modal.close();
-
+        const checkboxes = document.querySelectorAll('#importOptionsCheckboxes input[type=checkbox') as NodeListOf<HTMLInputElement>;
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = link.dataset.importOptions == 'all';
+        })
     })
+});
+
+document.getElementById('applyPresetButton').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const modal = document.getElementById('importModal') as HTMLDialogElement;
+    const tabID = "#importPresetTab";
+    const tab = modal.querySelector(tabID) as HTMLDivElement;
+    const textarea = modal.querySelector(`${tabID} textarea`) as HTMLTextAreaElement;
+    const code = textarea.value;
+    const settings = collectValues(tab);
+
+    let data;
+    let isValid = false;
+
+    try {
+        data = JSON.parse(code);
+        isValid = true;
+    }
+    catch (e) {
+        // parent.postMessage({ pluginMessage: { type: "ALERT", data: e.message, alertParams: {error: true} } }, "*");  
+        // throw (e);
+    }
+
+    if(settings.theme == null && code.length == 0) {
+        parent.postMessage({ pluginMessage: { type: "ALERT", data: "Paste a preset code or select a preset to import", alertParams: {error: true} } }, "*");  
+        return false;
+    }
+
+    if(settings.theme == null && !isValid) {
+        parent.postMessage({ pluginMessage: { type: "ALERT", data: "Cannot import, seems like your code is not a valid JSON", alertParams: {error: true} } }, "*");  
+        return false;
+    }
+
+
+    if (code.length == 0) {
+        const themeNumber = settings.theme;
+        data = getPresets()[themeNumber];
+    }
+
+    loadSettings(form, data);
+
+    modal.close();
+})
+
+document.getElementById('importCustomThemeButton').addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const modal = document.getElementById('importModal') as HTMLDialogElement;
+    const tabID = "#importTokensTab";
+    const tab = modal.querySelector(tabID) as HTMLDivElement;
+    const textarea = modal.querySelector(`${tabID} textarea`) as HTMLTextAreaElement;
+    const code = textarea.value;
+    const settings = collectValues(tab);
+
+    let data;
+    let isValid = false;
+
+    try {
+        data = JSON.parse(code);
+        isValid = true;
+    }
+    catch (e) {
+        // parent.postMessage({ pluginMessage: { type: "ALERT", data: e.message, alertParams: {error: true} } }, "*");  
+        // throw (e);
+    }
+
+    if(!isValid) {
+        parent.postMessage({ pluginMessage: { type: "ALERT", data: "Cannot import, seems like your code is not a valid JSON", alertParams: {error: true} } }, "*");  
+        return false;
+    }
+
+    if(code.length == 0) {
+        parent.postMessage({ pluginMessage: { type: "ALERT", data: "Paste a code to import", alertParams: {error: true} } }, "*");  
+        return false;
+    }
+
+    const params = getFormData(form);
+    importButton.classList.add('loading');
+    parent.postMessage({ 
+        pluginMessage: { 
+            type: "IMPORT_JSON", 
+            params: {
+                ...params,
+                ...settings
+            },
+            data 
+        }
+    }, "*");   
+
+    modal.close();
 })
 
 document.querySelectorAll('#exportThemeButton').forEach(btn => {
