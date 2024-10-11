@@ -1,5 +1,11 @@
+import { DesignToken } from './import-tokens';
 import elevationTokens from './tokens/effects/elevation.tokens.json';
 import { flattenObject } from "./utils/flatten-object";
+
+export interface EffectStyleToken extends DesignToken {
+    "$value": EffectTokenValue[];
+    "$type": "boxShadow",
+}
 
 export interface EffectTokenValue {
     "color"?: string,

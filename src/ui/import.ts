@@ -218,16 +218,24 @@ document.querySelectorAll('#exportThemeButton').forEach(btn => {
 })
 document.querySelectorAll('#exportModalButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
-        const colorFormat = document.querySelector("#exportTokensTab input[name=colorFormat]:checked") as HTMLInputElement;
-        parent.postMessage({ pluginMessage: { type: "EXPORT", format: colorFormat.value.trim() } }, "*");     
+        updateTokenExports();    
     })
 })
 
-document.querySelectorAll('#exportTokensTab input[name=colorFormat]').forEach((radio: HTMLInputElement) => {
+document.querySelectorAll('#exportTokensTab input[type=radio]').forEach((radio: HTMLInputElement) => {
     radio.addEventListener('click', (e) => {
-        parent.postMessage({ pluginMessage: { type: "EXPORT", format: radio.value.trim() } }, "*");     
+        updateTokenExports();     
     })
 })
+
+function updateTokenExports() {
+    const params = getFormData(form);
+    const colorFormat = document.querySelector("#exportTokensTab input[name=colorFormat]:checked") as HTMLInputElement;
+    const brandVariant = document.querySelector("#exportTokensTab input[name=brandVariant]:checked") as HTMLInputElement;
+    debugger;
+    parent.postMessage({ pluginMessage: { type: "EXPORT", brandVariant: brandVariant.value == "true", colorName: params.primary, colorFormat: colorFormat.value.trim() } }, "*");
+}
+
 
 document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
@@ -420,3 +428,4 @@ window.onmessage = ({ data: { pluginMessage } }) => {
         loadSettings(form, data);
     }
 }
+

@@ -13,17 +13,19 @@ import { flattenObject } from "./utils/flatten-object";
 import { getPresetContentTemplate, getPresets } from "./presets";
 import { DesignToken } from "./import-tokens";
 
+export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
     theme: 'light' | 'dark';
     hue: number;
     saturation: number;
     distance: number;
-    primary: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
-    info: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
-    success: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
-    warning: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
-    danger: "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+    primary: ConfigColors;
+    info: ConfigColors;
+    success: ConfigColors;
+    warning: ConfigColors;
+    danger: ConfigColors;
     red: number;
     amber: number;
     brown: number;
@@ -46,6 +48,7 @@ export interface ImportFormData {
     verticalSpacing: "even" | "uneven";
     singleCollection: boolean;
 
+    createComponentTokens: boolean;
     createColorTokens: boolean;
     createTypographyTokens: boolean;
     createSpacingTokens: boolean;

@@ -1,9 +1,15 @@
 import { ImportFormData } from "./import-ui"
 
-export const themes = [
+export const colorThemes = [
     'lightBase',
     'darkBase',
     'darkElevated'
+]
+
+export const colorThemeNames = [
+    'Light Base',
+    'Dark Base',
+    'Dark Elevated'
 ]
 
 export const radiiSizeName = [
@@ -108,6 +114,7 @@ export const defaultSettings: ImportFormData = {
     singleCollection: false,
 
     createColorTokens: true,
+    createComponentTokens: true,
     createTypographyTokens: true,
     createSpacingTokens: true,
     createElevationTokens: true,
@@ -132,3 +139,13 @@ export const defaultSemanticAccents: SemanticAccentColors = {
     danger: 'red'
 };
 
+export const collectionNames = new Map<string, string>([
+    ["brandColors", "Color Theme"/*"Brand Color"*/],
+    ["themeColors", "Color Theme"],
+    ["componentColors", "Component Tokens"],
+    ["spacing", "Spacing"],
+    ["opacity", "Opacity"],
+    ["radii", "Radii"],
+    ["iconScale", "Icon Scale"],
+    ["globalSizing", "Global Sizing"],
+]);

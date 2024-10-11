@@ -1,3 +1,14 @@
+import { DesignToken } from "../import-tokens";
+
+export function figmaAliasToDesignTokens(alias: string) {
+    return alias.replace(/\//g, ".");
+}
+
+export function DesignTokenAlistToFigma(alias: string) {
+    return alias.replace(/\./g, "/");
+}
+
+
 async function findVariableInCollection(variableName: string, collectionName: string): Promise<Variable> {
     const figmaCollections = await figma.variables.getLocalVariableCollectionsAsync();
     const collection = figmaCollections.find(collection => collection.name === collectionName);
@@ -96,11 +107,11 @@ export async function setFigmaVariable(
 
 export async function getAliasName(id): Promise<string> {
     const variable = await figma.variables.getVariableByIdAsync(id);
-    return `{${variable.name.replace(/\//g, ".")}}`;
+    return `{${figmaAliasToDesignTokens(variable.name)}}`;
 }
 
-export function variableNameToObject(name, target): any {
-    let obj = target;
+export function variableNameToObject({name, targetObject}): DesignToken {
+    let obj = targetObject;
     name.split("/").forEach((groupName) => {
         obj[groupName] = obj[groupName] || {};
         obj = obj[groupName];

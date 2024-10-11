@@ -1,4 +1,4 @@
-import { getColorTokenValue, getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
+import { SourceColorTheme, getColorTokenValue, getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
 import { findFigmaVariableCollectionByName, getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 
 import chroma from 'chroma-js';
@@ -10,6 +10,8 @@ import * as sizingTokens from './sizing-tokens';
 import * as effectsTokens from './effect-tokens';
 import * as opacityTokens from './opacity-tokens';
 
+import {colorThemes, colorThemeNames, collectionNames} from './defaults';
+
 import { getSizeTokensSortFn, getColorTokensSortFn, getAlphaNumTokensSortFn  } from './utils/sort-tokens';
 import { importTextStyles } from './utils/figma-text-styles';
 import { getGlobalAccent } from './color-generators/accent-palette-generator';
@@ -20,19 +22,9 @@ import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
+import { _clone } from './utils/clone';
 
 console.clear();
-
-const collectionNames = new Map<string, string>([
-    ["brandColors", "Color Theme"/*"Brand Color"*/],
-    ["themeColors", "Color Theme"],
-    ["componentColors", "Component Tokens"],
-    ["spacing", "Spacing"],
-    ["opacity", "Opacity"],
-    ["radii", "Radii"],
-    ["iconScale", "Icon Scale"],
-    ["globalSizing", "Global Sizing"],
-]);
 
 
 export async function initiateImport(params: ImportFormData) {
@@ -221,39 +213,33 @@ export async function importAllTokens(params: ImportFormData) {
 }
 
 async function importColorTheme(params: ImportFormData) {
-    let themeColors = getThemeColors('lightBase', params);
+    const defaultThemes = _clone(colorThemes) as string[];
     const globalNeutrals = getGlobalNeutrals(params);
 
     addToGlobalTokensDictionary({
         ...globalNeutrals,
         ...getComponentColors(),
-        ...themeColors
     });
 
+    let index = 0;
 
-    await importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: "Light Base",
-        data: themeColors
-    });
+    while(defaultThemes.length) {
+        const theme = defaultThemes.shift() as SourceColorTheme;;
 
-    themeColors = getThemeColors('darkBase', params);
-    addToGlobalTokensDictionary(themeColors);
+        let themeColors = getThemeColors(theme, params);
 
-    await importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: "Dark Base",
-        data: themeColors
-    });
+        addToGlobalTokensDictionary({
+            ...themeColors
+        });
 
-    themeColors = getThemeColors('darkElevated', params);
-    addToGlobalTokensDictionary(themeColors);
+        await importVariables({
+            collectionName: collectionNames.get('themeColors'),
+            modeName: colorThemeNames[index],
+            data: themeColors
+        });
 
-    await importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: "Dark Elevated",
-        data: themeColors
-    });
+        index++;
+    }
 }
 
 async function importSizeTokens(data: {
@@ -313,22 +299,23 @@ export async function getCollectionAndPrepareTokens({ collectionName, modeName, 
         }
     }
 
-    let transformedTokens = Object.entries(data as DesignTokensRaw).map(([key, object]) => {
+    let transformedTokens: DesignToken[] = Object.entries(data as DesignTokensRaw).map(([key, object]) => {
         return {
             name: key,
-            ...object
+            ...object as DesignToken
         }
     })
 
     if (sortFn != null) {
         transformedTokens.sort(sortFn);
+        console.log(transformedTokens.map(token => token.name))
     }
 
     if (isNew) {
         // create variables straight away so there is a way to make 
         // references / aliases without additional pass
         for(const token of transformedTokens) {
-            const type = resolveVariableType(token.$type);
+            const type = resolveVariableType(token["$type"]);
             await setFigmaVariable(collection, modeId, type, token.name)
         }
     }
@@ -353,10 +340,12 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
     // }));
 
     for(const token of tokens) {
+        let type = '$type' in token ? token.$type : 'string';
+
         await processToken({
             collection,
             modeId,
-            type: token.$type,
+            type: type,
             variableName: token.name,
             token: token,
             overrideValues: overrideValues
@@ -395,11 +384,11 @@ async function importTypographyTokens(params: ImportFormData) {
 }
 
 export interface DesignTokensRaw {
-    [key: string]: DesignToken
+    [key: string]: DesignTokensRaw | DesignToken
 }
 
 export interface DesignToken {
-    $value: string | object[];
+    $value: string | object[] | typographyTokens.TypographyTokenValue | effectsTokens.EffectTokenValue[];
     $type: string;
     name?: string;
     private?: boolean;

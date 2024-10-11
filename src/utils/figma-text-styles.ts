@@ -193,7 +193,7 @@ export function convertTextStyleToFigma(name, values: TypographyTokenValue): Tex
         'leadingTrim': "NONE",
         'paragraphIndent': 0,
         'paragraphSpacing': parseInt(`${values.paragraphSpacing}`) || 0,
-        'listSpacing': parseFloat(`${values.lineHeight}`) || 0,
+        'listSpacing': parseFloat(`${values.listSpacing}`) || 0,
         'hangingPunctuation': false,
         'hangingList': false,
         'textCase': convertTextCaseToFigma(values.textCase)

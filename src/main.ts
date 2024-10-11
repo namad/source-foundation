@@ -5,7 +5,7 @@ import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette } from './color-generators/accent-palette-generator';
 import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
 import { addToGlobalTokensDictionary } from './utils/token-references';
-import { ImportFormData } from './import-ui';
+import { ConfigColors, ImportFormData } from './import-ui';
 import { CollectionExportRecord, exportToJSON, importFromJSON } from './import-export-json';
 import { importAllTokens, initiateImport } from './import-tokens';
 
@@ -22,9 +22,11 @@ interface MessagePayload {
     type: string;
     params: ImportFormData;
     data?: CollectionExportRecord[];
-    format?:  'hex'|'hsl'|'rgba';
+    colorFormat?:  'hex'|'hsl'|'rgba';
+    colorName?: ConfigColors;
     alertParams?: any,
     fileName?: string;
+    brandVariant?: boolean;
 }
 
 figma.ui.onmessage = async (eventData: MessagePayload) => {
@@ -36,7 +38,8 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         await importAllTokens(params);
     }
     else if (eventData.type === "EXPORT") {
-        await exportToJSON(eventData.format);
+        debugger
+        await exportToJSON(eventData.colorFormat, eventData.colorName, eventData.brandVariant);
     }
     else if (eventData.type === "IMPORT_JSON") {
         addToGlobalTokensDictionary({
@@ -57,6 +60,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         figma.notify(`${eventData.data}`, eventData.alertParams || {});
     }
     else if (eventData.type === "RENDER_ACCENTS") {
+        await figma.loadFontAsync({ family: "Inter", style: "Regular" });
         const lightAccentTokens = generateGlobalAccentPalette('light', params);
         const darkAccentTokens = generateGlobalAccentPalette('dark', params);
         const frameLightPalette = renderAccents(lightAccentTokens, 'Light Mode Accents');
@@ -64,6 +68,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         frameDarkPalette.y = frameLightPalette.height + 64;
     }
     else if (eventData.type === "RENDER_NEUTRALS") {
+        await figma.loadFontAsync({ family: "Inter", style: "Regular" });
         const neutralTokens = generateNeutrals(params);
         renderNeutrals(neutralTokens, `Global Neutrals`);
     }

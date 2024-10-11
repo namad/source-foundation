@@ -1,5 +1,5 @@
 import { DesignTokensRaw } from "../import-tokens";
-import { findFigmaVariableByName, getDefaultVariableValue } from "./figma-variables";
+import { DesignTokenAlistToFigma, findFigmaVariableByName, getDefaultVariableValue } from "./figma-variables";
 
 let globalTokens = {};
 
@@ -33,7 +33,7 @@ export async function findVariableByReferences(alias: string): Promise<Variable>
 
     for(const reference of references || []) {
         let name = getReferenceName(reference);
-        name = name.replace(/\./g, "/");
+        name = DesignTokenAlistToFigma(name);
 
         const figmaVariable = await findFigmaVariableByName(name);
 
@@ -49,7 +49,8 @@ export async function findVariableByReferences(alias: string): Promise<Variable>
 }
 
 function findGlobalTokenByName(name, dictionary) {
-    name = name.replace(/\./g, "/")
+            
+    name = DesignTokenAlistToFigma(name);
     const token = dictionary[name];
 
     if(!token) {

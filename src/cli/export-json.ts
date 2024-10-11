@@ -19,6 +19,7 @@ import fs from 'fs';
 import path from "path";
 import { EffectTokenValue } from "../effect-tokens";
 import { makeFolder, writeTheFileIntoDirectory } from "./export-css";
+import { variableNameToObject } from "../utils/figma-variables";
 
 function isAlias(value) {
     return value.toString().trim().charAt(0) === "{";
@@ -34,22 +35,22 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     let themeColors = getThemeColors(theme, settings);
     let globalNeutrals = getGlobalNeutrals();
 
-    const collection = { collection: 'System Colors', mode: theme, tokens: {} } as CollectionExportRecord;
 
+    const collection = { collection: defaults.collectionNames.get("themeColors"), mode: theme, tokens: {} } as CollectionExportRecord;
 
     Object.entries(themeColors as DesignTokensRaw).forEach(([name, token]) => {
+        if(!token['$value']) {
+            return;
+        }
+
         if (typeof token.$value !== 'string' || token.$type !== 'color') return;
 
-        let tokenData = collection.tokens;
-        name.split("/").forEach((groupName) => {
-            tokenData[groupName] = tokenData[groupName] || {};
-            tokenData = tokenData[groupName];
-        });
+        let tokenData = variableNameToObject({name, targetObject: collection.tokens});
 
         tokenData.$type = token.$type;
 
         if (token.$value.indexOf('grey') != -1) {
-            tokenData.$value = resolveColorTokenValue(token, globalNeutrals, 'hsl');
+            tokenData.$value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
         }
         else if (token.$value.startsWith('rgba(#')) {
             tokenData.$value = parseColorValue(token.$value, token.adjustments).hsl;
@@ -57,7 +58,7 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
         else {
             // console.log(name);
             // console.log(token.$value);
-            tokenData.$value = resolveColorTokenValue(token, themeColors, 'hsl');
+            tokenData.$value = resolveColorTokenValue(token as DesignToken, themeColors, 'hsl');
             // console.log(value)
         }
     })
@@ -103,9 +104,6 @@ function collectElevationVariables(name, tokens): CollectionExportRecord {
         tokenData.$type = token.$type;
         tokenData.$value = token.$value;
     })
-
-
-
 
     return collection;
 }

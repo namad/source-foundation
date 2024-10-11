@@ -12,6 +12,7 @@ window.onmessage = ({ data: { pluginMessage } }) => {
     document.querySelector("textarea").innerHTML = JSON.stringify(data, null, 2);
   }
 };
+
 document.getElementById("export").addEventListener("click", () => {
 
   const colorFormat = document.querySelector("input[name=colorFormat]:checked") as HTMLInputElement;

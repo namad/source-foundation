@@ -24,7 +24,7 @@ import chroma from "chroma-js";
 import { _clone } from './utils/clone';
 import { findVariableAlias, getGlobalTokensDictionary, resolveGlobalTokenValue } from './utils/token-references';
 import { parseColorValue } from './utils/figma-colors';
-import { DesignToken } from './import-tokens';
+import { DesignToken, DesignTokensRaw } from './import-tokens';
 
 let GlobalNeutrals;
 
@@ -54,7 +54,9 @@ export function getBrandColors(name, accentShades, flat?: boolean) {
     return flat? flattenObject(palette) : palette;
 }
 
-export function getThemeColors(theme: 'lightBase' | 'darkBase' | 'darkElevated', formData: ImportFormData) {
+export type SourceColorTheme = 'lightBase' | 'darkBase' | 'darkElevated';
+
+export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData): DesignTokensRaw {
 
     let params = {
         ...normalizeFormData(formData)

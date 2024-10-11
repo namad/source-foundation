@@ -65,7 +65,7 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
         let value = token.$value;
 
         if (token.$value.indexOf('grey') != -1) {
-            value = resolveColorTokenValue(token, globalNeutrals, 'hsl');
+            value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
         }
         else if (isAlias(value)) {
             const aliasName = getReferenceName(value);
@@ -75,7 +75,7 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
             value = parseColorValue(value, token.adjustments).hsl;
         }
         else {
-            value = resolveColorTokenValue(token, {}, 'hsl');
+            value = resolveColorTokenValue(token as DesignToken, {}, 'hsl');
         }
 
         return { name, value };

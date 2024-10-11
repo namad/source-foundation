@@ -16,6 +16,11 @@ import largeMajorSecond from "./tokens/typography/major-second/typescale-large.j
 import { flattenObject } from "./utils/flatten-object";
 import { findFigmaVariableCollectionByName } from "./utils/figma-variables";
 
+export interface TextStyleToken {
+    "$value": TypographyTokenValue,
+    "$type": "typography"
+}
+
 export interface TypographyTokenValue {
     "fontFamily": string,
     "lineHeight": string|number,

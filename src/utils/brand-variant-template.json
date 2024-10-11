@@ -1,0 +1,18 @@
+{
+    "type": "variables",
+    "collection": "Accent Color",
+    "mode": "Color",
+    "tokens": {
+        "theme": {
+            "light": {},
+            "color": {
+                "$type": "string",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "$value": "color"
+            },
+            "dark": {}
+        }
+    }
+}
