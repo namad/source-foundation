@@ -8,7 +8,6 @@ export function DesignTokenAlistToFigma(alias: string) {
     return alias.replace(/\./g, "/");
 }
 
-
 async function findVariableInCollection(variableName: string, collectionName: string): Promise<Variable> {
     const figmaCollections = await figma.variables.getLocalVariableCollectionsAsync();
     const collection = figmaCollections.find(collection => collection.name === collectionName);

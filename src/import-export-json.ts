@@ -282,9 +282,6 @@ async function exportEffectStyles(styles: EffectStyle[], colorFormat?: ColorForm
 export async function importFromJSON(data: CollectionExportRecord[], params: ImportFormData) {
     const collections = []; // unique set of collections to import
 
-    const doImportEffects = params['importEffects'] === true;
-    const doImportTextStyles = params['importTextStyles'] == true;
-
     const uniqueCollections = data.filter(record => {
         const collectionName = record.collection;
 
@@ -314,27 +311,12 @@ export async function importFromJSON(data: CollectionExportRecord[], params: Imp
         const collectionRecord = uniqueCollections.shift();
 
         if (collectionRecord.type == "variables") {
-            
-            if(collectionRecord.collection == "Color Theme") {
-                debugger;
-                const data = flattenObject(collectionRecord.tokens);
-                let transformedTokens: DesignToken[] = Object.entries(data as DesignTokensRaw).map(([key, object]) => {
-                    return {
-                        name: key,
-                        ...object as DesignToken
-                    }
-                })
-                debugger
-                const sortFunction = getSortFnByCollectionName(collectionRecord.collection);
-                transformedTokens.sort(sortFunction)
-            }
             await getCollectionAndPrepareTokens({
                 collectionName: collectionRecord.collection,
                 modeName: collectionRecord.mode,
                 data: flattenObject(collectionRecord.tokens),
                 sortFn: getSortFnByCollectionName(collectionRecord.collection)
             });
-
             await delayAsync(5);
         }
     }
