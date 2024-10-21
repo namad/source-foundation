@@ -237,7 +237,7 @@ export function generatePreview(form: HTMLFormElement, sliders) {
 }
 
 function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
-    const systemAccentShades = getShadesTemplate(data.theme, data.primary);
+    const systemAccentShades = getShadesTemplate(data.theme);
 
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {

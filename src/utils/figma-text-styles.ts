@@ -30,7 +30,9 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             continue;
         }
 
-        const resolved = await parseValues(token.$value, tokens);
+        debugger
+        
+        const resolved = await parseValues(token.$value as TypographyTokenValue, tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;
 
@@ -68,16 +70,13 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             const fontSizeVariable = await findVariableByReferences(token.$value['fontSize']);
             const paragraphSpacingVariable = await findVariableByReferences(token.$value['paragraphSpacing']);
             const fontFamilyVariable = await findVariableByReferences(token.$value['fontFamily']);
-            // const fontWeightVariable = await findVariableByReferences(token.$value['fontWeight']);
             const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
-
 
             lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
             fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);
             paragraphSpacingVariable && textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
             fontFamilyVariable && textStyle.setBoundVariable('fontFamily', fontFamilyVariable);
             fontStyleVariable && textStyle.setBoundVariable('fontStyle', fontStyleVariable);
-            // textStyle.setBoundVariable('fontWeight', fontWeightVariable);
         }
         catch (e) {
             debugger;
@@ -85,16 +84,16 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
     }
 }
 
-async function parseValues(value, dictionary?) {
+async function parseValues(value: TypographyTokenValue, dictionary?): Promise<TypographyTokenValue> {
     let output = {};
     for (const [key, tokenReference] of Object.entries(value)) {
         const resolvedVariable = await findVariableByReferences(tokenReference as string)
-        const resolvedValue = resolveGlobalTokenValue(tokenReference, dictionary || getGlobalTokensDictionary());
 
         if(resolvedVariable) {
             output[key] = await getDefaultVariableValue(resolvedVariable);
         }
         else {
+            const resolvedValue = resolveGlobalTokenValue(tokenReference, dictionary || getGlobalTokensDictionary());
             output[key] = resolvedValue;
         }
     }
@@ -155,7 +154,11 @@ interface UnitValue {
     value?: string|number;
 }
 
-function getValueUnit(value: string|number): UnitValue {
+function getLetterSpacing(value: string|number): LetterSpacing {
+    return getValueUnit(value) as LetterSpacing;
+}
+
+function getValueUnit(value: string|number): LetterSpacing | LineHeight {
     const stringValue = `${value}`;
 
     if(value === 'AUTO') {
@@ -179,7 +182,6 @@ function getValueUnit(value: string|number): UnitValue {
 }
 
 export function convertTextStyleToFigma(name, values: TypographyTokenValue): TextStyle {
-    const letterSpacingUnit = typeof values.letterSpacing == 'string'
     let textStyle = {
         'name': name,
         'fontSize': parseFloat(`${values.fontSize}`),
@@ -188,7 +190,7 @@ export function convertTextStyleToFigma(name, values: TypographyTokenValue): Tex
             family: values.fontFamily,
             style: values.fontStyle
         },
-        'letterSpacing': getValueUnit(values.letterSpacing),
+        'letterSpacing': getLetterSpacing(values.letterSpacing),
         'lineHeight': getValueUnit(values.lineHeight),
         'leadingTrim': "NONE",
         'paragraphIndent': 0,

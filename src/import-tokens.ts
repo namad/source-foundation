@@ -336,9 +336,6 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
         type
     } = await getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
-    // await Promise.all(tokens.map(async (token: DesignToken) => {
-    // }));
-
     for(const token of tokens) {
         let type = '$type' in token ? token.$type : 'string';
 
@@ -363,9 +360,6 @@ async function importTypographyTokens(params: ImportFormData) {
 
     addToGlobalTokensDictionary(tokens);
 
-    
-    debugger
-
     await importVariables({
         collectionName: collectionName,
         modeName: typographyTokens.typeFace["font-family"].$value || "Default",
@@ -384,7 +378,7 @@ async function importTypographyTokens(params: ImportFormData) {
 }
 
 export interface DesignTokensRaw {
-    [key: string]: DesignTokensRaw | DesignToken
+    [key: string]: DesignTokensRaw | DesignToken | typographyTokens.TextStyleToken | effectsTokens.EffectStyleToken
 }
 
 export interface DesignToken {
