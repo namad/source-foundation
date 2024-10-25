@@ -145,7 +145,7 @@ const configFilePath = path.resolve(`./${configName}`);
 const defaultOutputFolder = "./dist";
 const defaultOutputName = 'variables.css';
 
-let settings = Object.apply({}, defaultSettings);
+let settings = { ...defaultSettings};
 
 const { 
     hue,
@@ -184,10 +184,13 @@ catch (e) {
 }
 
 (async() => {
+
+
     if (command === 'init') {
         const isConfigThere = fs.existsSync(configFilePath);
+        console.log(command, isConfigThere);
         if (isConfigThere != true) {
-            console.log('No config yet, working...');
+            console.log('No config yet, working with these settings', settings);
             let stream = fs.createWriteStream(`./${configName}`);
 
             await writeTheFileIntoDirectory(stream, () => {
