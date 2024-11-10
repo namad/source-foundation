@@ -36,9 +36,6 @@ function makeBrandVariantRecord(name: string): CollectionExportRecord {
     return brandVariantRecord;
 }
 
-function exportBrandComponentColors(brandVariantRecord: CollectionExportRecord, exportedData: CollectionExportRecord[]) {
-}
-
 function exportBrandThemeTokens(key: 'theme'|'brand'|'component', brandVariantRecord: CollectionExportRecord, exportedData: CollectionExportRecord[]) {
     let brandTokens = brandVariantRecord.tokens[key];
 
