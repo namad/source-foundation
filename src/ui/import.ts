@@ -17,16 +17,17 @@ import { ImportFormData, collectValues, generateMiniPreview, generatePreview, ge
 import { getPresets } from "../presets";
 
 import { delayAsync } from "../utils/delay-async";
+import { CollectionExportRecord } from "../import-export-json";
 
 import "./helpers/modal";
 import "./helpers/tabs";
-import { CollectionExportRecord } from "../import-export-json";
+import "./helpers/paste-button";
 
 /*
     UI INITIALIZATION
 */
 
-const form = document.querySelector('form') as HTMLFormElement;
+const mainForm = document.querySelector('form') as HTMLFormElement;
 const accentSlidersContainer = document.getElementById('accentColorsSliders') as HTMLDivElement;
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let exportThemeButton = document.getElementById('exportThemeButton') as HTMLButtonElement;
@@ -156,7 +157,7 @@ document.getElementById('applyPresetButton').addEventListener('click', (e) => {
         data = getPresets()[themeNumber];
     }
 
-    loadSettings(form, data);
+    loadSettings(mainForm, data);
 
     modal.close();
 })
@@ -193,7 +194,7 @@ document.getElementById('importCustomThemeButton').addEventListener('click', (e)
         return false;
     }
 
-    const params = getFormData(form);
+    const params = getFormData(mainForm);
     importButton.classList.add('loading');
     parent.postMessage({ 
         pluginMessage: { 
@@ -218,28 +219,36 @@ document.querySelectorAll('#exportThemeButton').forEach(btn => {
 })
 document.querySelectorAll('#exportModalButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
-        updateTokenExports();    
+        fireTokenExportEvent();    
     })
 })
 
-document.querySelectorAll('#exportTokensTab input[type=radio]').forEach((radio: HTMLInputElement) => {
+document.querySelectorAll('#exportTokensTab input, #exportBrandVariantTab input').forEach((radio: HTMLInputElement) => {
     radio.addEventListener('click', (e) => {
-        updateTokenExports();     
+        fireTokenExportEvent();     
     })
 })
 
-function updateTokenExports() {
-    const params = getFormData(form);
-    const colorFormat = document.querySelector("#exportTokensTab input[name=colorFormat]:checked") as HTMLInputElement;
-    const brandVariant = document.querySelector("#exportTokensTab input[name=brandVariant]:checked") as HTMLInputElement;
-    debugger;
-    parent.postMessage({ pluginMessage: { type: "EXPORT", brandVariant: brandVariant.value == "true", colorName: params.primary, colorFormat: colorFormat.value.trim() } }, "*");
+function fireTokenExportEvent() {
+    const params = getFormData(mainForm);
+    const exportJSONParamsForm = document.querySelector("#exportTokensTab");
+    const exportJSONParams = collectValues(exportJSONParamsForm)
+    const brandParamsForm = document.querySelector("#exportBrandVariantTab")
+    const exportBrandParams = collectValues(brandParamsForm);
+    parent.postMessage({ 
+        pluginMessage: { 
+            type: "EXPORT",
+            params,
+            exportJSONParams,
+            exportBrandParams
+        } 
+    }, "*");
 }
 
 
 document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
     el.addEventListener('click', (e) => {
-        const params = getFormData(form);
+        const params = getFormData(mainForm);
         const command = el.dataset.command;
 
         parent.postMessage({
@@ -312,7 +321,7 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
     let initialValue;
 
     sliderCompoent.slider.on('start', () => {
-        const data = getFormData(form);
+        const data = getFormData(mainForm);
         brandCard.classList.add('disabled');
         label.innerHTML = `${toTitleCase(name)}`;
         displayValueBox.value = `${data[name]}`;
@@ -357,7 +366,7 @@ noUiSlider.create(luminanceSlider, {
     }
 }).on('update', debounce((values, handle) => {
     luminanceSliderVals[handle].value = values[handle] as string;
-    form.dispatchEvent(new Event('input', { 'bubbles': true }));
+    mainForm.dispatchEvent(new Event('input', { 'bubbles': true }));
 }, 1))
 
 luminanceSlider['noUiSlider'].on('start', (values, handle) => {
@@ -377,16 +386,16 @@ luminanceSliderVals.forEach((element, index) => {
     });
 });
 
-form.addEventListener("input", debounce((e) => {
+mainForm.addEventListener("input", debounce((e) => {
     console.log(e.target.name);
-    generatePreview(form, sliders);
+    generatePreview(mainForm, sliders);
 }, 1));
 
 
 resetDefaultsButton.addEventListener('click', (e) => {
     e.preventDefault();
 
-    loadSettings(form, defaultSettings);
+    loadSettings(mainForm, defaultSettings);
 });
 
 importButton.addEventListener('click', async (e) => {
@@ -398,7 +407,7 @@ importButton.addEventListener('click', async (e) => {
 
     let message = {
         type: "IMPORT",
-        params: getFormData(form)
+        params: getFormData(mainForm)
     };
 
     parent.postMessage({ pluginMessage: message }, "*");
@@ -409,23 +418,27 @@ parent.postMessage({
 }, "*");
 
 
-loadSettings(form, defaultSettings);
+loadSettings(mainForm, defaultSettings);
 
 
 window.onmessage = ({ data: { pluginMessage } }) => {
     if(pluginMessage == 'importCompleted') {
         importButton.classList.remove('loading');
     }
-    else if (pluginMessage.type === "EXPORT_RESULT") {
+    else if (pluginMessage.type === "EXPORT_RESULT_JSON") {
         const data = pluginMessage.files as CollectionExportRecord[];
-        document.getElementById("exportTokensTextarea").innerHTML = JSON.stringify(data, null, 2);
+        document.querySelector('#exportTokensTab [name=exportTokensTextarea]').innerHTML = JSON.stringify(data, null, 2);
+    }    
+    else if (pluginMessage.type === "EXPORT_RESULT_BRAND") {
+        const data = pluginMessage.files as CollectionExportRecord[];
+        document.querySelector('#exportBrandVariantTab [name=exportTokensTextarea]').innerHTML = JSON.stringify(data, null, 2);
     }    
     else {
         const data = pluginMessage as ImportFormData;
 
         // convert string values into numbers for sliders
 
-        loadSettings(form, data);
+        loadSettings(mainForm, data);
     }
 }
 

@@ -145,7 +145,7 @@ const configFilePath = path.resolve(`./${configName}`);
 const defaultOutputFolder = "./dist";
 const defaultOutputName = 'variables.css';
 
-let settings = { ...defaultSettings};
+let settings = {};
 
 const { 
     hue,
@@ -183,26 +183,26 @@ catch (e) {
     console.warn('No config available, using default settings', defaultSettings);
 }
 
+ settings = { 
+    ...settings, 
+    ...defaultSettings
+};
+
+console.log('settings', settings);
+
 (async() => {
 
 
     if (command === 'init') {
-        const isConfigThere = fs.existsSync(configFilePath);
-        console.log(command, isConfigThere);
-        if (isConfigThere != true) {
-            console.log('No config yet, working with these settings', settings);
-            let stream = fs.createWriteStream(`./${configName}`);
+        console.log('No config yet, working with these settings', settings);
+        let stream = fs.createWriteStream(`./${configName}`);
 
-            await writeTheFileIntoDirectory(stream, () => {
-                writeJSONChunk(stream, settings);
-                stream.close()
-            })
-            process.exit();
-        }
-        else {
-            console.log('Config file already exist, cya!');
-            process.exit();
-        }
+        await writeTheFileIntoDirectory(stream, () => {
+            writeJSONChunk(stream, settings);
+            stream.close()
+        })
+        process.exit();
+
     }
     else {
         let output = command;
@@ -215,6 +215,7 @@ catch (e) {
         makeFolder(output);
         const stream = fs.createWriteStream(output);
         
+        console.log('writing css file with these settings', settings)
         await writeTheFileIntoDirectory(stream, () => {
             writeCSSChunk(stream, '[data-theme=light], .theme-light', collectColorVariables('lightBase', settings as ImportFormData));
             writeCSSChunk(stream, '[data-theme=dark-base], .theme-dark-base', collectColorVariables('darkBase', settings as ImportFormData));

@@ -6,7 +6,7 @@ import { generateGlobalAccentPalette } from './color-generators/accent-palette-g
 import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-palette-generator';
 import { addToGlobalTokensDictionary } from './utils/token-references';
 import { ConfigColors, ImportFormData } from './import-ui';
-import { CollectionExportRecord, exportToJSON, importFromJSON } from './import-export-json';
+import { CollectionExportRecord, exportBrandVariantToJSON, exportToJSON, importFromJSON } from './import-export-json';
 import { importAllTokens, initiateImport } from './import-tokens';
 
 console.clear();
@@ -20,13 +20,24 @@ figma.showUI(__html__, {
 
 interface MessagePayload {
     type: string;
-    params: ImportFormData;
+    params?: ImportFormData;
+    exportJSONParams?: ExportEventParameters;
+    exportBrandParams?: ExportEventParameters;
     data?: CollectionExportRecord[];
     colorFormat?:  'hex'|'hsl'|'rgba';
     colorName?: ConfigColors;
     alertParams?: any,
     fileName?: string;
-    brandVariant?: boolean;
+}
+
+export interface ExportEventParameters  {
+    jsonColorFormat?: 'hex'|'hsl'|'rgba';
+    brandColorFormat?: 'hex'|'hsl'|'rgba';
+    createColorTokens?: boolean;
+    createComponentTokens?: boolean;
+    createTypographyTokens?: boolean;
+    createSpacingTokens?: boolean;
+    createRadiiTokens?: boolean;    
 }
 
 figma.ui.onmessage = async (eventData: MessagePayload) => {
@@ -34,12 +45,12 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     const params = eventData.params;
 
     if (eventData.type === "IMPORT") {
-        await initiateImport(params);
-        await importAllTokens(params);
+        await initiateImport(params as ImportFormData);
+        await importAllTokens(params as ImportFormData);
     }
     else if (eventData.type === "EXPORT") {
-        debugger
-        await exportToJSON(eventData.colorFormat, eventData.colorName, eventData.brandVariant);
+        await exportToJSON(eventData.exportJSONParams, eventData.params);
+        await exportBrandVariantToJSON(eventData.exportBrandParams, eventData.params);
     }
     else if (eventData.type === "IMPORT_JSON") {
         addToGlobalTokensDictionary({

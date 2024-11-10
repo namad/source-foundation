@@ -43,7 +43,7 @@
                         <label class="flex flex-row gap-2"><input type="radio" name="verticalSpacing" value="even" checked /><span>Even</span></label>
                         <label class="flex flex-row gap-2"><input type="radio" name="verticalSpacing" value="uneven" checked /><span>Uneven</span></label>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </dialog>
@@ -432,7 +432,7 @@
                 </label>
             </div>
         </div>
-        
+
         <div class="card">
             <h3 class="text-lg font-bold">More Tools</h3>
             <p class="color-text-base-500">
@@ -565,7 +565,7 @@
                     <span>Apply Preset</span>
                 </span>
             </label>
-            <label class="flex-1"> 
+            <label class="flex-1">
                 <input type="radio" name="importAs" value="tokens" data-tab="importTokensTab" />
                 <span class="container">
                     <span>Import Tokens</span>
@@ -574,31 +574,41 @@
         </div>
         <div class="flex flex-col flex-1 gap-minor-sm overflow-hidden" id="importPresetTab">
             <div class="flex flex-col flex-1 overflow-auto">
-                <div class="body" >
-                            <p class="color-text-base-500">Paste preset code to the textarea below</p>
-                    <textarea cols="10" name="importCodeTextarea" onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono"></textarea>
+                <div class="body">
+                    <p class="color-text-base-500">Paste preset code to the textarea below</p>
+                    <textarea cols="10" name="importCodeTextarea" onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono text-sm whitespace-pre"></textarea>
                     <p class="color-text-base-500">Or select one of the presets</p>
                 </div>
                 <div class="flex flex-col flex-1 gap-minor-xs4 px-lg" id="presetsList">
                 </div>
             </div>
             <div class="footer">
+                <div class="flex-1">
+                    <button class="" data-action="clipboardPaste" data-target="#importModal textarea[name=importCodeTextarea]">
+                        <span class="icon icon-clipboard gap-xs2">Paste Tokens</span>
+                    </button>
+                </div>
                 <button class="primary import-theme-button" id="applyPresetButton">Apply Preset</button>
-            </div>            
+            </div>
         </div>
 
         <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
-            <div class="body" >
-                <textarea cols="10" name="importToeknsTextarea" placeholde="Paste json tokens here" onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono"></textarea>
+            <div class="body">
+                <textarea cols="10" name="importToeknsTextarea" placeholde="Paste json tokens here" onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono text-sm whitespace-pre"></textarea>
                 <!-- <div class="flex flex-row gap-sm items-center flex-nowrap">
                     <label class="checkbox flex flex-row gap-2" title="Add Source Foundation text styles to your file. This will also add all typography variables"><input type="checkbox" name="importTextStyles" value="true" checked /><span>Add Source Text Styles</span></label>
                     <label class="checkbox flex flex-row gap-2" title="Add Source Foundation effect styles to your file"><input type="checkbox" name="importEffects" value="true" checked /><span>Add Source Effects</span></label>
                 </div> -->
             </div>
             <div class="footer">
+                <div class="flex-1">
+                    <button class="" data-action="clipboardPaste" data-target="#importModal textarea[name=importToeknsTextarea]">
+                        <span class="icon icon-clipboard gap-xs2">Paste Tokens</span>
+                    </button>
+                </div>
                 <button class="primary import-theme-button" id="importCustomThemeButton">Import Custom Tokens</button>
-            </div>            
-        </div>        
+            </div>
+        </div>
 
     </div>
 </dialog>
@@ -619,30 +629,76 @@
                         <span>Export Preset</span>
                     </span>
                 </label>
-                <label class="flex-1"> 
+                <label class="flex-1">
                     <input type="radio" name="exportAs" value="tokens" data-tab="exportTokensTab" />
                     <span class="container">
                         <span>Export Tokens</span>
                     </span>
                 </label>
+                <label class="flex-1">
+                    <input type="radio" name="exportAs" value="brandVariant" data-tab="exportBrandVariantTab" />
+                    <span class="container">
+                        <span>Brand Setup</span>
+                    </span>
+                </label>
             </div>
             <div id="exportPresetTab" class="flex flex-col flex-1 gap-xs">
                 <p class="color-text-base-500">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
-                <textarea cols="10" onfocus="this.select();" name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono"></textarea>
+                <textarea cols="10" onfocus="this.select();" name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono text-sm whitespace-pre"></textarea>
             </div>
             <div id="exportTokensTab" class="flex flex-col flex-1 gap-xs items-center">
                 <div class="flex flex-row gap-sm items-center w-full">
-                    <span class="color-text-base-500 flex-1">Exports contentt:</span>
-                    <label class="flex flex-row gap-2"><input type="radio" name="brandVariant" value="false" checked /><span>All tokens</span></label>
-                    <label class="flex flex-row gap-2"><input type="radio" name="brandVariant" value="true" /><span>Brand colours only</span></label>
-                </div>            
-                <div class="flex flex-row gap-sm items-center w-full">
                     <span class="color-text-base-500 flex-1">Select color format:</span>
-                    <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="hex"  /><span>HEX</span></label>
-                    <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="rgba"  /><span>RGBA</span></label>
-                    <label class="flex flex-row gap-2"><input type="radio" name="colorFormat" value="hsl" checked /><span>HSL</span></label>
-                </div>            
-                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono" placeholder="Press Export button to get code"></textarea>            
+                    <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="hex" /><span>HEX</span></label>
+                    <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="rgba" /><span>RGBA</span></label>
+                    <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="hsl" checked /><span>HSL</span></label>
+                </div>
+                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
+            </div>
+            <div id="exportBrandVariantTab" class="flex flex-col flex-1 gap-xs items-center">
+
+                <div class="flex flex-row gap-base w-full">
+                    <div class="flex flex-col gap-minor-xs w-full" id="brandTokensOptionsCheckboxes">
+                        <span class="color-text-base-500">Brand Specific Tokens:</span>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createColorTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Color Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createComponentTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Component Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createTypographyTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Typography Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createSpacingTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Spacing Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createRadiiTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Radii Tokens</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="flex flex-col gap-minor-xs w-full">
+                        <span class="color-text-base-500">Select color format:</span>
+                        <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="hex" /><span>HEX</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="rgba" /><span>RGBA</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="hsl" checked /><span>HSL</span></label>
+                    </div>
+                </div>
+                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
             </div>
         </div>
         <div class="footer">

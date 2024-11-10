@@ -356,7 +356,7 @@ async function importTypographyTokens(params: ImportFormData) {
     const tokens = typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale);
     const typeScaleTokens = typographyTokens.getTypScaleTokens(params.typeScale);
     const collectionName = 'Type Face';
-    const collection = await findFigmaVariableCollectionByName(collectionName);
+    // const collection = await findFigmaVariableCollectionByName(collectionName);
 
     addToGlobalTokensDictionary(tokens);
 
