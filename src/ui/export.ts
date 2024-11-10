@@ -7,7 +7,7 @@ import { CollectionExportRecord } from "../import-export-json";
 
 
 window.onmessage = ({ data: { pluginMessage } }) => {
-  if (pluginMessage.type === "EXPORT_RESULT") {
+  if (pluginMessage.type === "EXPORT_RESULT_JSON") {
     const data = pluginMessage.files as CollectionExportRecord[];
     document.querySelector("textarea").innerHTML = JSON.stringify(data, null, 2);
   }

@@ -141,6 +141,8 @@ export const defaultSemanticAccents: SemanticAccentColors = {
 
 export const collectionNames = new Map<string, string>([
     ["brandColors", "Color Theme"],
+    ["typeScale", "Type Scale"],
+    ["typeFace", "Type Face"],
     ["themeColors", "Color Theme"],
     ["componentColors", "Component Tokens"],
     ["spacing", "Spacing"],
