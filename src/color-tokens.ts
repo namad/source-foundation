@@ -20,7 +20,6 @@ import { ColorShadesScale, generateSystemAccentPalette, getGlobalAccent, getShad
 import { generateNeutrals } from './color-generators/neutrals-palette-generator';
 import { ImportFormData } from './import-ui';
 import { SemanticAccentColors, defaultSemanticAccents } from './defaults';
-import chroma from "chroma-js";
 import { _clone } from './utils/clone';
 import { findVariableAlias, getGlobalTokensDictionary, resolveGlobalTokenValue } from './utils/token-references';
 import { parseColorValue } from './utils/figma-colors';

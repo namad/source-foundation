@@ -145,29 +145,6 @@ function inputCustomPrimary(element) {
 export function getFormData(form): ImportFormData {
     let data = collectValues(form);
 
-    // if (data.preferedPrimaryColor === 'custom') {
-    //     const customPrimaryValue = data.customPrimaryColor.replace('#', '');
-
-    //     if (customPrimaryValue.length) {
-    //         const customPrimaryColor = chroma(`#${customPrimaryValue}`);
-    //         const customAccentLuminanceMid = customPrimaryColor.luminance();
-    //         const customAccentHUE = customPrimaryColor.get('hsl.h');
-
-    //         data.primary = data.preferedPrimaryColor; // set to custom
-
-    //         data.custom = customAccentHUE;
-    //         data.accentMinLuminance = customAccentLuminanceMid * 0.55;
-    //         data.accentMidLuminance = customAccentLuminanceMid;
-    //         data.accentMaxLuminance = customAccentLuminanceMid * 3.33;
-
-    //         loadSettings(form, data);
-
-    //         return null;
-
-    //     }
-
-    // }
-
     return {
         type: 'IMPORT',
         ...data

@@ -2,21 +2,17 @@ import brandVariantTemplate from "./utils/brand-variant-template.json";
 
 import { ImportFormData } from "./import-ui";
 import { DesignToken, DesignTokensRaw, getCollectionAndPrepareTokens, importVariables } from "./import-tokens";
-import { TypographyTokenValue } from "./typography-tokens";
 import { ColorFormat, convertFigmaColorToRgb } from "./utils/figma-colors";
 import { convertFigmaEffectStyleToToken, importEffectStyles } from "./utils/figma-effect-styles";
 import { convertFigmaTextStyleToToken, importTextStyles } from "./utils/figma-text-styles";
 import { flattenObject } from "./utils/flatten-object";
 
-import * as typographyTokens from './typography-tokens';
-import * as effectsTokens from './effect-tokens';
-
 import { figmaAliasToDesignTokens, getAliasName, variableNameToObject } from "./utils/figma-variables";
 import { delayAsync } from "./utils/delay-async";
 import { addToGlobalTokensDictionary, findTokenReferences, getReferenceName } from "./utils/token-references";
 import { _clone } from "./utils/clone";
-import { collectionNames, colorThemeNames, colorThemes } from "./defaults";
-import { toCamelCase, toTitleCase } from "./utils/text-to-title-case";
+import { collectionNames } from "./defaults";
+import { toCamelCase } from "./utils/text-to-title-case";
 import { getAlphaNumTokensSortFn, getColorTokensSortFn, getSizeTokensSortFn } from "./utils/sort-tokens";
 import { ExportEventParameters } from "./main";
 
@@ -163,8 +159,6 @@ export async function exportBrandVariantToJSON(params: ExportEventParameters, fo
         }
 
     }
-
-    
 
     figma.ui.postMessage({ type: "EXPORT_RESULT_BRAND", files });
 }
