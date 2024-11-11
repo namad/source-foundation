@@ -143,18 +143,14 @@ export async function exportBrandVariantToJSON(params: ExportEventParameters, fo
             importBrandSpecificTokens(collection, 'component', exportedCollectionData, files, brandVariantCollection);
         }
 
-        if (params.createRadiiTokens && collection.name == collectionNames.get("radii")) {
-            importBrandSpecificTokens(collection, 'brand', exportedCollectionData, files, brandVariantCollection);
-        }
-        if (params.createSpacingTokens && collection.name == collectionNames.get("spacing")) {
-            importBrandSpecificTokens(collection, 'brand', exportedCollectionData, files, brandVariantCollection);
-        }
-
-        const isTypographyCollection = (collection) => {
-            return collection.name == collectionNames.get("typeFace") || collection.name == collectionNames.get("typeScale")
+        const isBrandSpecificCollection = (collection) => {
+            return collection.name == collectionNames.get("typeFace") || 
+                   collection.name == collectionNames.get("typeScale") ||
+                   collection.name == collectionNames.get("radii") || 
+                   collection.name == collectionNames.get("spacing");
         }
 
-        if (params.createTypographyTokens && isTypographyCollection(collection)) {
+        if (params.createTypographyTokens && isBrandSpecificCollection(collection)) {
             importBrandSpecificTokens(collection, 'brand', exportedCollectionData, files, brandVariantCollection);
         }
 

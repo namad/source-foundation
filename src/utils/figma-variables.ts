@@ -4,7 +4,7 @@ export function figmaAliasToDesignTokens(alias: string) {
     return alias.replace(/\//g, ".");
 }
 
-export function DesignTokenAlistToFigma(alias: string) {
+export function designTokenAliasToFigma(alias: string) {
     return alias.replace(/\./g, "/");
 }
 
