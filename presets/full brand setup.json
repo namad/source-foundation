@@ -9311,40 +9311,6 @@
                     ],
                     "description": ""
                 },
-                "font-weight": {
-                    "light": {
-                        "$type": "number",
-                        "$value": "300",
-                        "scopes": [
-                            "TEXT_CONTENT"
-                        ],
-                        "description": ""
-                    },
-                    "regular": {
-                        "$type": "number",
-                        "$value": "400",
-                        "scopes": [
-                            "TEXT_CONTENT"
-                        ],
-                        "description": ""
-                    },
-                    "semibold": {
-                        "$type": "number",
-                        "$value": "600",
-                        "scopes": [
-                            "TEXT_CONTENT"
-                        ],
-                        "description": ""
-                    },
-                    "bold": {
-                        "$type": "number",
-                        "$value": "700",
-                        "scopes": [
-                            "TEXT_CONTENT"
-                        ],
-                        "description": ""
-                    }
-                },
                 "text-style": {
                     "light": {
                         "$type": "string",

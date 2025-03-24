@@ -36,7 +36,7 @@ dialog .modal-container {
 }
 
 dialog .header {
-    padding: var(--spacing-minor-md) var(--spacing-md) 0;
+    padding: var(--spacing-minor-lg) var(--spacing-lg) 0;
     display: flex;
     justify-content: space-between;
     align-items: center;

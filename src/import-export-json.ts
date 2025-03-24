@@ -15,6 +15,7 @@ import { collectionNames } from "./defaults";
 import { toCamelCase } from "./utils/text-to-title-case";
 import { getAlphaNumTokensSortFn, getColorTokensSortFn, getSizeTokensSortFn } from "./utils/sort-tokens";
 import { ExportEventParameters } from "./main";
+import { BrandCollection } from "./brand-tokens";
 
 
 
@@ -68,12 +69,14 @@ function remapPrimaryVariables(exportedData: CollectionExportRecord[], getPath: 
         const tokens = record.tokens as DesignTokensRaw
         const data: DesignTokensRaw = {};
         Object.entries(tokens).forEach(([tokenName, tokenData]) => {
+            
             let token = variableNameToObject({ name: tokenName, targetObject: data });
             const name = figmaAliasToDesignTokens(getReferenceName(tokenName));
             const path = getPath(modeName);
-            Object.assign(token, tokenData, {
+            token = Object.assign(token, tokenData, {
                 $value: `{${path}.${name}}`
             });
+
         })
         record.tokens = data;
 
@@ -81,7 +84,6 @@ function remapPrimaryVariables(exportedData: CollectionExportRecord[], getPath: 
     })
 
     return exportData;
-
 }
 
 export async function exportToJSON(exportParams: ExportEventParameters, formData: ImportFormData) {
@@ -159,24 +161,15 @@ export async function exportBrandVariantToJSON(params: ExportEventParameters, fo
     figma.ui.postMessage({ type: "EXPORT_RESULT_BRAND", files });
 }
 
-export interface SourceThemeDictionary {
-    color: DesignToken;
-    lightBase?: DesignTokensRaw[];
-    darkBase?: DesignTokensRaw[];
-    darkElevated?: DesignTokensRaw[];
-}
 
-export interface BrandThemeExtension {
-    theme?: SourceThemeDictionary;
-    brand?: DesignTokensRaw; 
-    component?: DesignTokensRaw; 
-}
+
+
 
 export interface CollectionExportRecord {
     type: "variables" | "textStyles" | "effectStyles",
     collection: string,
     mode: string,
-    tokens: BrandThemeExtension | DesignTokensRaw
+    tokens: BrandCollection | DesignTokensRaw
 }
 
 function expandTokenNameToObject(tokens) {

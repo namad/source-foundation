@@ -1,4 +1,9 @@
 <form id="importForm">
+    <input type="hidden" name="darkHue" value="" />
+    <input type="hidden" name="darkSaturation" value="" />
+    <input type="hidden" name="darkDistance" value="" />
+    <input type="hidden" name="darkAccentSaturation" value="" />
+    
     <dialog class="simple" id="typographyScaleModal">
         <div class="modal-container">
             <div class="header">
@@ -698,7 +703,7 @@
                         <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="hsl" checked /><span>HSL</span></label>
                     </div>
                 </div>
-                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
+                <textarea cols="10" onfocus="this.select();" name="exportBrandTokensTextarea" id="exportBrandTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
             </div>
         </div>
         <div class="footer">

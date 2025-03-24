@@ -81,6 +81,11 @@ export const defaultAccentHUEs = {
 }
 
 export const defaultSettings: ImportFormData = {
+    darkHue: null,
+    darkSaturation: null,
+    darkDistance: null,
+    darkAccentSaturation: null,
+
     type: 'IMPORT',
     theme: 'light',
     hue: 190,

@@ -48,6 +48,11 @@ export interface ImportFormData {
     verticalSpacing: "even" | "uneven";
     singleCollection: boolean;
 
+    darkHue: null | number,
+    darkSaturation: null | number,
+    darkDistance: null | number,
+    darkAccentSaturation: null | number,
+
     createComponentTokens: boolean;
     createColorTokens: boolean;
     createTypographyTokens: boolean;
@@ -58,54 +63,74 @@ export interface ImportFormData {
     createOpacityTokens    : boolean;
 }
 
-export function transformValue(name: string, value: any, direction?): string | number {
-    let val = parseInt(value);
-    let valueMap;
+function isFloatField(name: string): boolean {
+    if (
+        name === "saturation" ||
+        name === "distance" ||
+        name === "accentSaturation" ||
+        name === "accentMaxLuminance" ||
+        name === "accentMidLuminance" ||
+        name === "accentMinLuminance"
+    ) {
+        return true;
+    }
 
+    return false;
+
+}
+
+function isNull(value: any): boolean {
+    return value === null;
+}
+
+function getValueMap(name: string): string[] {
     switch (name) {
-        case 'customPrimaryColor': {
-            val = value;
-            break;
-        }
         case 'baseFontSize': {
-            valueMap = typographySizeName;
-            break;
+            return typographySizeName;
         }
         case 'spacing': {
-            valueMap = spacingSizeName;
-            break;
+            return spacingSizeName;
         }
         case 'radii': {
-            valueMap = radiiSizeName;
-            break;
+            return radiiSizeName;
         }
         case 'primary':
         case 'info':
         case 'success':
         case 'danger':
         case 'warning': {
-            valueMap = systemAccentList;
-            break;
+            return systemAccentList;
         }
-        case 'saturation':
-        case 'distance':
-        case 'accentSaturation':
-        case 'accentMaxLuminance':
-        case 'accentMidLuminance':
-        case 'accentMinLuminance': {
-            if (direction === 'IN') {
-                val = parseFloat(value) * 100;
-            }
-            if (direction === 'OUT') {
-                val = val / 100;
-            }
-            break;
+    }
+}
+export function transformValue(name: string, value: any, direction?): string | number {
+    let val = parseInt(value);
+    let valueMap = getValueMap(name);
+    
+    if(isNull(value) && direction === 'IN') {
+        return  "";
+    }
+
+    if (name == 'customPrimaryColor') {
+        val = value;
+    }
+    
+    if (isFloatField(name)) {
+        if (direction === 'IN') {
+            val = parseFloat(value) * 100;
+        }
+        if (direction === 'OUT') {
+            val = val / 100;
         }
     }
 
     if (isNaN(val)) {
         // this is string value we need to convert to number
-        return valueMap && direction === 'IN' ? valueMap.indexOf(value) : value;
+        if(valueMap && direction === 'IN') {
+            return valueMap.indexOf(value);
+        }
+
+        return value || val || "";
     }
     else {
         return valueMap ? valueMap[value] : val;
@@ -171,6 +196,8 @@ export function generateMiniPreview(masterData: ImportFormData) {
 }
 
 export function generatePreview(form: HTMLFormElement, sliders) {
+    debugger;
+
     let data = getFormData(form);
 
     if (data === null) return;
@@ -180,7 +207,7 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
     const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
-    exportCodeTextarea.value = JSON.stringify(data, null, 2);
+    exportCodeTextarea.value = JSON.stringify(data, null, 4);
 
     const primaryColorHUE = data.primary
     const shades = getGlobalAccent(
@@ -302,6 +329,8 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
 
 export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
 
+    debugger;
+    
     data = Object.assign({}, defaultSettings, data);
 
     const formElements = form.querySelectorAll(`input[name]`);

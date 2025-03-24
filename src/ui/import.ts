@@ -388,6 +388,14 @@ luminanceSliderVals.forEach((element, index) => {
 
 mainForm.addEventListener("input", debounce((e) => {
     console.log(e.target.name);
+
+    if(e.target.name == "theme") {
+        let data = getFormData(mainForm);
+        if(data.theme == 'dark') {
+        
+        }
+    }
+
     generatePreview(mainForm, sliders);
 }, 1));
 
@@ -427,17 +435,15 @@ window.onmessage = ({ data: { pluginMessage } }) => {
     }
     else if (pluginMessage.type === "EXPORT_RESULT_JSON") {
         const data = pluginMessage.files as CollectionExportRecord[];
-        document.querySelector('#exportTokensTab [name=exportTokensTextarea]').innerHTML = JSON.stringify(data, null, 2);
+        document.querySelector('#exportTokensTextarea').innerHTML = JSON.stringify(data, null, 2);
     }    
     else if (pluginMessage.type === "EXPORT_RESULT_BRAND") {
         const data = pluginMessage.files as CollectionExportRecord[];
-        document.querySelector('#exportBrandVariantTab [name=exportTokensTextarea]').innerHTML = JSON.stringify(data, null, 2);
+        document.querySelector('#exportBrandTokensTextarea').innerHTML = JSON.stringify(data, null, 2);
     }    
     else {
         const data = pluginMessage as ImportFormData;
-
         // convert string values into numbers for sliders
-
         loadSettings(mainForm, data);
     }
 }

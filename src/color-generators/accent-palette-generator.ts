@@ -4,7 +4,7 @@ import { ImportFormData } from "../import-ui";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
 import { DesignToken, DesignTokensRaw } from "../import-tokens";
 
-interface SystemAccentList {
+export interface SystemAccentList {
     red: ColorShadesScale;
     amber: ColorShadesScale;
     brown: ColorShadesScale;
