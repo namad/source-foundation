@@ -3,7 +3,7 @@
     <input type="hidden" name="darkSaturation" value="" />
     <input type="hidden" name="darkDistance" value="" />
     <input type="hidden" name="darkAccentSaturation" value="" />
-    
+
     <dialog class="simple" id="typographyScaleModal">
         <div class="modal-container">
             <div class="header">
@@ -94,11 +94,11 @@
         </div>
 
         <div class="card-sticky">
-            <div class="card brand-card gradient-tint-10 bg-blend-overlay" id="brandCard">
+            <div class="card brand-card -gradient-tint-10 -bg-blend-overlay" id="brandCard">
                 <div class="height-expander">
                     <div class="flex flex-col gap-minor-sm overflow-hidden">
                         <h3 class="text-lg font-bold">Primary / Brand Colour</h3>
-                        <p class="color-text-contrast-500">
+                        <p class="color-text-accent-500">
                             Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
                         </p>
                     </div>
@@ -115,11 +115,21 @@
             </div>
             <div class="flex flex-col gap-y-xs">
                 <div class="flex flex-row gap-0 overflow-hidden rounded">
-                    <div class="color-box flex-1 bg-fill-base-200"></div>
-                    <div class="color-box flex-1 bg-fill-base-300"></div>
-                    <div class="color-box flex-1 bg-fill-base-400"></div>
-                    <div class="color-box flex-1 bg-fill-base-500"></div>
-                    <div class="color-box flex-1 bg-fill-base-600"></div>
+                    <div class="color-box flex-1 bg-fill-base-200">
+                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase200"></span>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-300">
+                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase300"></span>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-400">
+                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase400"></span>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-500">
+                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase500"></span>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-600">
+                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase600"></span>
+                    </div>
                 </div>
             </div>
 
@@ -277,7 +287,7 @@
                         </div>
                         <h4 class="mt-3 text-md font-bold">Accent color luminance</h4>
                         <div class="sliders flex flex-row items-center">
-                            <div id="luminanceSlider">
+                            <div id="luminanceSlider" class="single-slider-component">
                                 <div class="slider"></div>
                             </div>
                             <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
@@ -291,6 +301,112 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="card" id="textColor">
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Text Colours</h3>
+                <a href="#" data-command="UPGRADE_TEXT_COLORS" id="upgradeTextPaletteLink" class="_hidden">Upgrade text palette</a>
+            </div>
+
+            <h4 class="mt-3 text-md font-bold">Text color brightness</h4>
+
+            <div class="flex flex-row gap-0 overflow-hidden rounded-md">
+                <div class="flex flex-col gap-1 px-base py-minor-sm text-left flex-1 bg-fill-base-300">
+                    <div class="color-text-base-600">Text on light surface</div>
+                    <div class="color-text-base-500 font-mono text-xs flex justify-between">
+                        <span>{grey-<span data-value="textBlackBrightness">0</span>}</span>
+                        <span><span data-value="textBlackContrast">0</span>:1</span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1 px-base py-minor-sm text-left flex-1 bg-fill-contrast-300" style="background-color: var(--grey-20);">
+                    <div class="color-text-contrast-600">Text on dark surface</div>
+                    <div class="color-text-contrast-500 font-mono text-xs flex justify-between">
+                        <strong class="hidden">text.contrast.600</strong>
+                        <span>{grey-<span data-value="textWhiteBrightness">0</span>}</span>
+                        <span><span data-value="textWhiteContrast">0</span>:1</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="color-text-base-500">
+                This is where you set colours for text elements. Select how much dark will be your black and how light you want your white
+            </p>
+
+            <div class="sliders flex flex-row items-center border border-stroke-base-100 px-base py-minor-sm rounded-md">
+                <span class="text-label">Black</span>
+                <div id="textBrightnessSlider" class="single-slider-component">
+                    <div class="slider"></div>
+                </div>
+                <span class="text-label text-right">White</span>
+                <input type="hidden" name="textWhiteBrightness" id="textWhiteBrightnessVal" value="100" />
+                <input type="hidden" name="textBlackBrightness" id="textBlackBrightnessVal" value="6"/>
+            </div>
+
+            <!-- 
+            <div class="flex flex-row items-center gap-1 pl-base pr-minor-sm py-minor-sm overflow-hidden bg-primary-400 color-text-accent-600 rounded-md">
+                <div class="block text-left flex-1 ">
+                    <div class="">Text on accent surface</div>
+                    <div class="color-text-accent-500 font-mono text-xs flex justify-between">
+                        <strong class="">text.accent.600</strong>
+                    </div>
+                </div>
+                <div class="radio-segment on-accent">
+                    <label>
+                        <input type="radio" name="acentTextColor" value="black" />
+                        <span class="container">
+                            Black
+                        </span>
+                    </label>
+                    <label>
+                        <input type="radio" name="acentTextColor" value="auto" checked />
+                        <span class="container">
+                            Auto
+                        </span>
+                    </label>
+                    <label>
+                        <input type="radio" name="acentTextColor" value="white" />
+                        <span class="container">
+                            White
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <label class="checkbox flex flex-row gap-2">
+                <input type="checkbox" name="evenTextColors" value="true" /><span>Even text colours</span>
+            </label>
+
+
+            <h4 class="mt-3 text-md font-bold">Semantic Text Colour</h4>
+
+            <div class="flex flex-col gap-y-xs">
+                <div class="flex flex-row gap-0 overflow-hidden rounded">
+                    <div class="block py-sm text-center flex-1 bg-fill-base-200">
+                        <span class="block color-text-base-info">Info text</span>
+                        <span class="block color-text-base-success">Success text</span>
+                        <span class="block color-text-base-warning">Warning text</span>
+                        <span class="block color-text-base-danger">Danger text</span>
+                    </div>
+                    <div class="block py-sm text-center flex-1 bg-fill-contrast-200">
+                        <span class="block color-text-contrast-info">Info text</span>
+                        <span class="block color-text-contrast-success">Success text</span>
+                        <span class="block color-text-contrast-warning">Warning text</span>
+                        <span class="block color-text-contrast-danger">Danger text</span>
+                    </div>
+                </div>
+            </div>
+
+            <label class="checkbox flex flex-row gap-2">
+                <input type="checkbox" name="customAccentTextSaturation" value="true" /><span>Custom Accent Text Colour Saturation</span>
+            </label>
+            <p class="color-text-base-500">
+                By default, accent text colour is connected to it's respective accent. Untick checkbox above to enable independent saturation control for bright texts.
+            </p>
+            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 20, "syncValue": true}'>
+            </div>
+            -->
+
         </div>
 
         <div class="card" id="semanticColors">
@@ -493,10 +609,10 @@
 
     <div class="flex flex-row justify-between px-sm py-sm text-right">
         <div class="flex gap-2">
-            <button id="exportModalButton" data-modal="exportModal" title="Export settings">
+            <button id="openExportModalButton" data-modal="exportModal" title="Export settings">
                 <span class="icon icon-upload"></span>
             </button>
-            <button id="importModalButton" data-modal="importModal" title="Import settings">
+            <button id="openImportModalButton" data-modal="importModal" title="Import settings">
                 <span class="icon icon-download"></span>
             </button>
         </div>
@@ -599,15 +715,19 @@
 
         <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
             <div class="body">
-                <textarea cols="10" name="importToeknsTextarea" placeholde="Paste json tokens here" onfocus="this.select();" id="importToeknsTextarea" class="h-80 resize-none font-mono text-sm whitespace-pre"></textarea>
-                <!-- <div class="flex flex-row gap-sm items-center flex-nowrap">
-                    <label class="checkbox flex flex-row gap-2" title="Add Source Foundation text styles to your file. This will also add all typography variables"><input type="checkbox" name="importTextStyles" value="true" checked /><span>Add Source Text Styles</span></label>
-                    <label class="checkbox flex flex-row gap-2" title="Add Source Foundation effect styles to your file"><input type="checkbox" name="importEffects" value="true" checked /><span>Add Source Effects</span></label>
-                </div> -->
+                <div class="flex flex-col gap-minor-xs w-full" id="sourceLibrariesList">
+                    <!-- 
+                        <span class="color-text-base-500 flex-1">Select source library:</span>
+                        <div class="flex flex-col gap-minor-xs w-full">
+                            <label class="flex flex-row gap-2"><input type="radio" name="tokenLibraryName" value="${fileKey}" /><span>${fileKey}</span></label> 
+                        </div>
+                    -->
+                </div>
+                <textarea cols="10" name="code" placeholde="Paste json tokens here" onfocus="this.select();" id="importTokensTextarea" class="h-80 resize-none font-mono text-sm whitespace-pre"></textarea>
             </div>
             <div class="footer">
                 <div class="flex-1">
-                    <button class="" data-action="clipboardPaste" data-target="#importModal textarea[name=importToeknsTextarea]">
+                    <button class="" data-action="clipboardPaste" data-target="#importModal textarea[name=code]">
                         <span class="icon icon-clipboard gap-xs2">Paste Tokens</span>
                     </button>
                 </div>

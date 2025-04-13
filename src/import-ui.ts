@@ -12,8 +12,14 @@ import { outputHSL } from "./color-generators/swatches-generator";
 import { flattenObject } from "./utils/flatten-object";
 import { getPresetContentTemplate, getPresets } from "./presets";
 import { DesignToken } from "./import-tokens";
+import nouislider, { API } from 'nouislider';
+import { SliderComponent } from "./ui/slider";
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
+
+export interface SlidersColleciton {
+    [key: string]: SliderComponent;
+}
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -48,10 +54,11 @@ export interface ImportFormData {
     verticalSpacing: "even" | "uneven";
     singleCollection: boolean;
 
-    darkHue: null | number,
-    darkSaturation: null | number,
-    darkDistance: null | number,
-    darkAccentSaturation: null | number,
+    customAccentTextSaturation: boolean;
+    accentTextSaturation: null | number;
+    acentTextColor: "auto" | "black" | "white";
+    textWhiteBrightness: number;
+    textBlackBrightness: number;
 
     createComponentTokens: boolean;
     createColorTokens: boolean;
@@ -67,6 +74,7 @@ function isFloatField(name: string): boolean {
     if (
         name === "saturation" ||
         name === "distance" ||
+        name == "accentTextSaturation" ||
         name === "accentSaturation" ||
         name === "accentMaxLuminance" ||
         name === "accentMidLuminance" ||
@@ -137,8 +145,8 @@ export function transformValue(name: string, value: any, direction?): string | n
     }
 }
 
-export function collectValues(form): ImportFormData {
-    const formElements = form.querySelectorAll('input[name]');
+export function collectValues(form) {
+    const formElements = form.querySelectorAll('input[name], textarea');
 
     let rawValues = {};
 
@@ -160,15 +168,15 @@ export function collectValues(form): ImportFormData {
         rawValues[fieldName] = transformValue(formEl.name, formEl.value, "OUT");
     })
 
-    return rawValues as ImportFormData;
+    return rawValues;
 }
 
 function inputCustomPrimary(element) {
     debugger;
 }
 
-export function getFormData(form): ImportFormData {
-    let data = collectValues(form);
+export function getFormData(form: HTMLFormElement): ImportFormData {
+    let data = collectValues(form) as ImportFormData;
 
     return {
         type: 'IMPORT',
@@ -183,7 +191,7 @@ export function generateMiniPreview(masterData: ImportFormData) {
     presetsListElement.innerHTML = '';
 
     presets.forEach((data, index) => {
-        const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
+        const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', {...defaultSettings, ...data});
 
         const label = document.createElement('label');
         label.classList.add('theme-item');
@@ -195,9 +203,12 @@ export function generateMiniPreview(masterData: ImportFormData) {
     })
 }
 
+function doThis(data: ImportFormData) {
+    if(data.theme == 'dark') {
+        
+    }
+}
 export function generatePreview(form: HTMLFormElement, sliders) {
-    debugger;
-
     let data = getFormData(form);
 
     if (data === null) return;
@@ -222,8 +233,9 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     })
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
+    const globalNeutrals = getGlobalNeutrals();
 
-    generateCSSVars({ ...themeColors, ...globalAccent });
+    generateCSSVars({ ...themeColors, ...globalAccent, ...globalNeutrals });
 
     generateAccentsPreview(themeColors, data);
 
@@ -231,13 +243,54 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     generateCSSVars(typescaleTokens.getTypographyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacingTokens.getSpacingTokens(data.verticalSpacing, data.spacing));
 
-    updateValuesDisplay(data, form);
+    const darkSurfaceColor = globalNeutrals[`grey-20`].$value;
+    const textWhiteColor = globalNeutrals[`grey-${data.textWhiteBrightness}`].$value;
+    const textBlackColor = globalNeutrals[`grey-${data.textBlackBrightness}`].$value;
+
+    const extension = {
+        textBlackContrast: roundTwoDigits(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
+        textWhiteContrast: roundTwoDigits(chroma.contrast(chroma(textWhiteColor), chroma(darkSurfaceColor))),
+        fillBase100: themeColors['fill/base/100']['$value'],
+        fillBase200: themeColors['fill/base/200']['$value'],
+        fillBase300: themeColors['fill/base/300']['$value'],
+        fillBase400: themeColors['fill/base/400']['$value'],
+        fillBase500: themeColors['fill/base/500']['$value'],
+        fillBase600: themeColors['fill/base/600']['$value'],
+    }
+
+    updateValuesDisplay({...data, ...extension}, form);
 
     generateMiniPreview(data);
-
+    setCustomAccentTextSaturationSlider(sliders, data);
+    
     parent.postMessage({
         pluginMessage: { type: 'RESIZE', params: data }
     }, "*");
+}
+
+function checkTextContrast(data: ImportFormData) {
+    const textWhite = data.textWhiteBrightness
+}
+
+function setCustomAccentTextSaturationSlider(sliders: SlidersColleciton, data: ImportFormData) {
+    const sliderComponent = sliders["accentTextSaturation"]
+    const slider = sliderComponent.slider;
+
+    const accentSaturationSlider = sliders["accentSaturation"].slider;
+    const accentTextSaturation = transformValue("accentTextSaturation", data.accentTextSaturation, "IN") as number;
+    const primaryColorName = data.primary
+    const saturation = accentTextSaturation <= 0 ? accentSaturationSlider.get() as number : accentTextSaturation;
+
+    sliders['accentTextSaturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data[primaryColorName], saturation, 0.5).hex());
+
+    if (data.customAccentTextSaturation == true) {
+        slider.set(saturation);
+        slider.enable();
+    }
+    else {
+        slider.set('0');
+        slider.disable();
+    }
 }
 
 function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
@@ -261,21 +314,29 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                 chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl');
             }
 
-            const contrast1 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 1), chromaColor));
-            const contrast2 = roundTwoDigits(chroma.contrast(chroma.hsl(0, 0, 0.22), chromaColor));
+            const contrastWhite = roundTwoDigits(
+                                            chroma.contrast(
+                                                chroma.hsl(0, 0, data.textWhiteBrightness / 100), chromaColor
+                                            )
+                                        );
+            const contrastBlack = roundTwoDigits(
+                                            chroma.contrast(
+                                                chroma.hsl(0, 0, data.textBlackBrightness / 100), chromaColor
+                                            )
+                                        );
             const hsl = outputHSL(chromaColor).join(", ");
             let contrastWarn = 'none';
 
             if (index == '400' || index == '500') {
-                contrastWarn = contrast1 < 4.5 ? 'color-negative-contrast' : 'color-positive-contrast';
+                contrastWarn = contrastWhite < 4.5 ? 'color-negative-contrast' : 'color-positive-contrast';
             }
 
             if (index == '300') {
-                contrastWarn = contrast1 < 3 ? 'color-negative-contrast' : 'color-positive-contrast';
+                contrastWarn = contrastWhite < 3 ? 'color-negative-contrast' : 'color-positive-contrast';
             }
 
             if (valueEl) {
-                valueEl.innerHTML = `${contrast1}`;
+                valueEl.innerHTML = `${contrastWhite}`;
             }
             if (toolTip) {
                 toolTip.innerHTML = `
@@ -285,11 +346,11 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs white</span>
-                        <span class="text-size-xs whitespace-nowrap ${contrastWarn}">${contrast1} : 1</span>
+                        <span class="text-size-xs whitespace-nowrap ${contrastWarn}">${contrastWhite} : 1</span>
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs black</span>
-                        <span class="text-size-xs whitespace-nowrap">${contrast2} : 1</span>
+                        <span class="text-size-xs whitespace-nowrap">${contrastBlack} : 1</span>
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">hsl</span>
@@ -328,9 +389,6 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
 
 
 export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
-
-    debugger;
-    
     data = Object.assign({}, defaultSettings, data);
 
     const formElements = form.querySelectorAll(`input[name]`);

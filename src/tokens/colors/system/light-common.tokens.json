@@ -1,16 +1,16 @@
 {
     "text": {
         "base": {
-            "400": {
-                "$value": "rgba({grey-6}, 0.45)",
+            "600": {
+                "$value": "{text.black}",
                 "$type": "color"
             },
             "500": {
-                "$value": "rgba({grey-6}, 0.65)",
+                "$value": "rgba({text.black}, 0.7)",
                 "$type": "color"
             },
-            "600": {
-                "$value": "{grey-6}",
+            "400": {
+                "$value": "rgba({text.black}, 0.45)",
                 "$type": "color"
             },
             "action": {
@@ -35,16 +35,16 @@
             }
         },
         "contrast": {
-            "400": {
-                "$value": "rgba(#FFFFFF, 0.45)",
+            "600": {
+                "$value": "{text.white}",
                 "$type": "color"
             },
             "500": {
-                "$value": "rgba(255, 255, 255, 0.70)",
+                "$value": "rgba({text.white}, 0.7)",
                 "$type": "color"
             },
-            "600": {
-                "$value": "#ffffff",
+            "400": {
+                "$value": "rgba({text.white}, 0.45)",
                 "$type": "color"
             },
             "action": {

@@ -75,6 +75,9 @@
     --text-contrast-success: var(--success-600);
     --text-contrast-warning: var(--warning-600);
     --text-contrast-danger: var(--danger-600);
+    --text-accent-600: "var(--text-contrast-600)";
+    --text-accent-500: "var(--text-contrast-500)";
+    --text-accent-400: "var(--text-contrast-400)";
     --alt-base-100: hsla(190.99,100%,13.92%,0.04);
     --alt-base-200: hsla(190.99,100%,13.92%,0.08);
     --alt-base-300: hsla(190.99,100%,13.92%,0.12);

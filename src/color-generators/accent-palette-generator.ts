@@ -54,7 +54,7 @@ export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
                 "description": `Base background color`
             },
             "500": {
-                "$value": "{500}",
+                "$value": "{600}",
                 "$type": "color",
                 "description": `Text on light surface`
             },

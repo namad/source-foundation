@@ -1,12 +1,13 @@
-import nouislider from 'nouislider';
+import nouislider, { API } from 'nouislider';
 import { toTitleCase } from '../utils/text-to-title-case';
+import { debounce } from '../utils/debounce';
 
-interface SliderComponent {
+export interface SliderComponent {
     rootElement: HTMLElement;
     params: SliderOptions;
     valueInput: HTMLInputElement;
     displayInput: HTMLInputElement;
-    slider: any;
+    slider: API;
 }
 
 interface SliderOptions {
@@ -23,10 +24,15 @@ interface SliderOptions {
 
 export function initSlider(el: HTMLElement, options?): SliderComponent {
     const data = el.dataset.slider || '{}';
-    let params = JSON.parse(data) as SliderOptions;
-    params = Object.assign(params, options || {})
+    try {
+        let params = JSON.parse(data) as SliderOptions;
+        params = Object.assign(params, options || {})
+        return { rootElement: el, params, ...processComponent(el, params) };
+    }
 
-    return { rootElement: el, params, ...processComponent(el, params) };
+    catch(e) {
+        debugger;
+    }
 }
 
 function getMarkup({ label, name, min, max, step, value }) {
@@ -62,13 +68,19 @@ function processComponent(el, options: SliderOptions) {
 
     displayInput.value = getDisplayValue(options.value, options.valueMap);
 
-    slider.on('update', function (values, handle) {
+    slider.on('update', debounce((values, handle) => {
+        
         var value = parseInt(values[handle]);
-        valueInput.value = `${value}`;
+        const currentValue = valueInput.value;
+        const newValue = `${value}`;
+        valueInput.value = newValue;
 
-        displayInput.dispatchEvent(new Event('input', { 'bubbles': true }));
+        if(currentValue != newValue) {
+            displayInput.dispatchEvent(new Event('input', { 'bubbles': true }));
+        }
+
         displayInput.value = getDisplayValue(value, options.valueMap);
-    });
+    }, 1))
 
     valueInput.addEventListener("input", (event) => {
         slider.set([valueInput.value]);

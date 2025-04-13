@@ -6,7 +6,7 @@
     --spacing: 0.5rem 1rem;
     --slider-thumb-size: calc(var(--line-height-md) + var(--spacing-minor-xs));
     --slider-track-size: calc(var(--slider-thumb-size) / 4);
-    --slider-margin: var(--slider-thumb-size);
+    --slider-margin: calc(var(--slider-thumb-size) / 2);
     --scrollbar-width: 8px;
     --form-gap: var(--spacing-sm);
 }
@@ -69,7 +69,7 @@ a:hover {
 .brand-card {
     --bg-color: var(--primary-400);
     background-color: var(--bg-color);
-    color: var(--text-contrast-600);
+    color: var(--text-accent-600);
 
     & .slider {
         transition: opacity 200ms ease-in-out;
@@ -201,7 +201,7 @@ button:hover {
 button.primary {
     background-color: var(--primary-400);
     border: none;
-    color: var(--text-contrast-600);
+    color: var(--text-accent-600);
 }
 
 button.primary:hover {
@@ -257,12 +257,18 @@ input[type=radio]:checked {
     border: var(--width) solid var(--primary-400);
 }
 
+
 .radio-segment {
+    --bg-color: var(--alt-base-200);
     display: flex;
     flex-flow: row;
-    background-color: var(--alt-base-200);
-    outline: 1px solid var(--alt-base-200);
+    background-color: var(--bg-color);
+    outline: 1px solid var(--bg-color);
     border-radius: var(--radii-base);
+
+    &.on-accent {
+        --bg-color: var(--alt-contrast-400);
+    }
 }
 
 .radio-segment input[type=radio] {
@@ -289,6 +295,7 @@ input[type=radio]:checked {
 }
 
 .radio-segment input[type=radio]:checked+.container {
+    color: var(--text-base-600);
     background-color: var(--utility-tint-600);
     outline: 1px solid var(--utility-shade-100);
     box-shadow: var(--elevation-2);
@@ -408,22 +415,8 @@ fieldset {
 
 
 [data-slider],
-#luminanceSlider {
-    --thumb-color: var(--primary-400);
-}
-
-#luminanceSlider {
-    flex: 1;
-    border-radius: var(--radii-round);
-    background-color: var(--alt-base-300);
-    margin: var(--spacing-minor-sm) 0;
-    padding-left: calc(var(--slider-thumb-size) / 2 + 2px);
-    padding-right: calc(var(--slider-thumb-size) / 2 + 2px);
-}
-
-#luminanceSlider .slider {
-    background-color: transparent;
-    margin: 0;
+.single-slider-component {
+    --thumb-color: var(--fill-contrast-100);
 }
 
 .sliders label {
@@ -448,6 +441,30 @@ fieldset {
     border-radius: var(--radii-round);
 }
 
+.single-slider-component {
+    flex: 1;
+    margin: var(--spacing-minor-sm) 0;
+    padding-left: calc(var(--slider-thumb-size) / 2);
+    padding-right: calc(var(--slider-thumb-size) / 2);
+    background-color: var(--alt-base-300);
+    border-radius: var(--radii-round);
+}
+
+.single-slider-component .slider {
+    --slider-margin: 0;
+    background-color: transparent;
+}
+
+.sliders .slider[disabled] {
+    --thumb-color: var(--fill-base-600);
+    opacity: 0.5;
+}
+
+.sliders .slider[disabled] + input[type=text] {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .sliders input[type=text] {
     width: 5rem;
     border: 1px solid var(--stroke-base-300);
@@ -461,6 +478,9 @@ fieldset {
 }
 
 .sliders .slider .noUi-connect {
+    --effect-opacity: 50%;
+    background-image: linear-gradient(180deg, hsl(0deg 100% 100% / var(--effect-opacity)), hsl(0deg 100% 100% / var(--effect-opacity)));
+    background-blend-mode: overlay;
     background-color: var(--thumb-color);
 }
 
@@ -687,13 +707,13 @@ a[data-expanded=true]::before {
     }
 
     & .noUi-connect {
-        background-color: var(--text-contrast-400);
+        background-color: var(--text-accent-400);
     }
 
     & input[type=text] {
         background-color: var(--alt-contrast-200);
         border-color: var(--alt-contrast-300);
-        color: var(--text-contrast-600)
+        color: var(--text-accent-600)
     }
 }
 

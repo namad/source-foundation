@@ -42,6 +42,9 @@
     --text-contrast-600: #FFFFFF;
     --text-contrast-500: rgba(255, 255, 255, 0.65);
     --text-contrast-400: rgba(255, 255, 255, 0.45);
+    --text-accent-600: var(--text-contrast-600);
+    --text-accent-500: var(--text-contrast-500);
+    --text-accent-400: var(--text-contrast-400);
     --stroke-base-600: #9CA1AB;
     --stroke-base-500: #ACB0B9;
     --stroke-base-400: #D2D5DA;

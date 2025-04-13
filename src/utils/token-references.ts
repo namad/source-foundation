@@ -54,8 +54,9 @@ function findGlobalTokenByName(name, dictionary) {
     const token = dictionary[name];
 
     if(!token) {
-        const msg = `Cannot find token ${name}`;
-        figma.notify(msg, {error: true});
+        const msg = `Cannot find token ${name} in global disctionary:`;
+        console.warn(msg, dictionary);
+        // figma.notify(msg, {error: true});
         return null;
     };
 

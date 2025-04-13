@@ -1,4 +1,5 @@
 import { DesignToken } from "../import-tokens";
+import * as figlib from './figma-library-variables';
 
 export function figmaAliasToDesignTokens(alias: string) {
     return alias.replace(/\//g, ".");
@@ -31,10 +32,9 @@ export async function findFigmaVariableByName(variableName: string, collectionNa
     if (collectionName) {
         return await findVariableInCollection(variableName, collectionName);
     }
-    else {
-        const figmaVariables = await figma.variables.getLocalVariablesAsync();
-        return figmaVariables.find(variable => variable.name === variableName);
-    }
+
+    return figlib.findVariableByName(variableName);
+
 }
 
 export async function findFigmaVariableCollectionByName(name:string): Promise<VariableCollection|null> {
@@ -119,15 +119,14 @@ export function variableNameToObject({name, targetObject}): DesignToken {
     return obj;
 }
 
-export async function getDefaultVariableValue(figmaVariable: Variable) {
+export async function getDefaultVariableValue(figmaVariable: Variable, modeId?) {
     const collectionID = figmaVariable.variableCollectionId;
     const collection = await figma.variables.getVariableCollectionByIdAsync(collectionID);
-    const defaultMode = collection.modes[0].modeId;
-    const defaultValue: VariableValue = figmaVariable.valuesByMode[defaultMode];
+    const defaultValue: VariableValue = figmaVariable.valuesByMode[modeId || collection.defaultModeId];
 
     if(defaultValue['type'] == "VARIABLE_ALIAS") {
         const variable = await figma.variables.getVariableByIdAsync(defaultValue['id']);
-        return await getDefaultVariableValue(variable);
+        return await getDefaultVariableValue(variable, modeId);
     }
     else {
         return defaultValue;

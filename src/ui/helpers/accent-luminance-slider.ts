@@ -1,0 +1,42 @@
+import nouislider, { API } from 'nouislider';
+import { debounce } from '../../utils/debounce';
+
+export function initiateAccentLuminanceSliders(mainForm) {
+const luminanceSlider = document.querySelector('#luminanceSlider .slider') as HTMLDivElement;
+const luminanceSliderVals = [
+    document.getElementById('luminanceValMin') as HTMLInputElement,
+    document.getElementById('luminanceValMid') as HTMLInputElement,
+    document.getElementById('luminanceValMax') as HTMLInputElement
+]
+
+nouislider.create(luminanceSlider, {
+    start: [10, 18, 45],
+    connect: [false, true, true, false],
+    step: 1,
+    tooltips: true,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+}).on('update', debounce((values, handle) => {
+    luminanceSliderVals[handle].value = values[handle] as string;
+    mainForm.dispatchEvent(new Event('input', { 'bubbles': true }));
+}, 1))
+
+luminanceSlider['noUiSlider'].on('start', (values, handle) => {
+    const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
+    colorPreviewDiv.classList.add("hover");
+})
+
+luminanceSlider['noUiSlider'].on('end', (values, handle) => {
+    const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
+    colorPreviewDiv.classList.remove("hover");
+})
+
+luminanceSliderVals.forEach((element, index) => {
+    element.addEventListener("input", () => {
+        const val = luminanceSliderVals.map(el => el.value);
+        luminanceSlider['noUiSlider'].set(val);
+    });
+});
+}

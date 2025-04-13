@@ -1,5 +1,6 @@
-import { getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
+import { getColorSystemVersion, getComponentColors, getGlobalNeutrals, getThemeColors, upgradeTextPalette } from './color-tokens';
 import * as typographyTokens from './typography-tokens';
+import * as figlib from './utils/figma-library-variables';
 
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette } from './color-generators/accent-palette-generator';
@@ -8,6 +9,7 @@ import { addToGlobalTokensDictionary } from './utils/token-references';
 import { ConfigColors, ImportFormData } from './import-ui';
 import { CollectionExportRecord, exportBrandVariantToJSON, exportToJSON, importFromJSON } from './import-export-json';
 import { importAllTokens, initiateImport } from './import-tokens';
+import { defaultSettings } from './defaults';
 
 console.clear();
 
@@ -23,11 +25,18 @@ interface MessagePayload {
     params?: ImportFormData;
     exportJSONParams?: ExportEventParameters;
     exportBrandParams?: ExportEventParameters;
+    importJSONParams?: ImportEventParameters;
     data?: CollectionExportRecord[];
     colorFormat?:  'hex'|'hsl'|'rgba';
     colorName?: ConfigColors;
     alertParams?: any,
     fileName?: string;
+    tokenLibraryName?: string;
+}
+
+export interface ImportEventParameters  {
+    code?: 'string';
+    tokenLibraryName?: 'string';
 }
 
 export interface ExportEventParameters  {
@@ -53,10 +62,13 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         await exportBrandVariantToJSON(eventData.exportBrandParams, eventData.params);
     }
     else if (eventData.type === "IMPORT_JSON") {
+        debugger;
         addToGlobalTokensDictionary({
             ...getGlobalNeutrals(params),
             ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
         });
+
+        figlib.setSelectedLibrary(eventData.importJSONParams.tokenLibraryName);
         
         await importFromJSON(eventData.data, eventData.params).catch(error => {
             console.error(error);
@@ -83,15 +95,33 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         const neutralTokens = generateNeutrals(params);
         renderNeutrals(neutralTokens, `Global Neutrals`);
     }
+    else if (eventData.type === "UPGRADE_TEXT_COLORS") {
+        await upgradeTextPalette(params);
+    }
     else if (eventData.type === "LOADED") {
+        const store = await figlib.getStoreData();
+        const colorSystemVersion = await getColorSystemVersion();
+
+        let savedPreset: ImportFormData = null;
+
         try {
             const pluginData = figma.root.getPluginData('SDS');
-            const data = JSON.parse(pluginData);
-            figma.ui.postMessage(data)
+            savedPreset = JSON.parse(pluginData) as ImportFormData;
         }
         catch (e) {
             console.warn('failed to read plugin data', e);
         }
+
+        savedPreset = savedPreset ? Object.assign(defaultSettings, savedPreset) : null;
+
+        figma.ui.postMessage({
+            type: "LOAD",
+            data: {
+                colorSystemVersion,
+                savedPreset,
+                tokenLibraries: figlib.serialize()
+            }
+        })
     }
     else if (eventData.type == 'RESIZE') {
         switch (params.baseFontSize) {

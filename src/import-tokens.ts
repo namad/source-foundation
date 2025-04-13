@@ -23,6 +23,7 @@ import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
 import { _clone } from './utils/clone';
+import { LOCAL_LIB_NAME } from './utils/figma-library-variables';
 
 console.clear();
 
@@ -163,7 +164,7 @@ export async function importAllTokens(params: ImportFormData) {
 
     params.createColorTokens && await importColorTheme(params);
 
-    params.createColorTokens && await importVariables({
+    params.createComponentTokens && await importVariables({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors()
@@ -336,16 +337,17 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
         type
     } = await getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
+    debugger
+    
     for(const token of tokens) {
         let type = '$type' in token ? token.$type : 'string';
-
         await processToken({
             collection,
             modeId,
             type: type,
             variableName: token.name,
             token: token,
-            overrideValues: overrideValues
+            overrideValues
         });
     }
 
@@ -398,7 +400,7 @@ async function processToken({
     type,
     variableName,
     token,
-    overrideValues = true
+    overrideValues
 }) {
     type = type || token.$type;
     // if key is a meta field, move on
@@ -415,7 +417,7 @@ async function processToken({
                 modeId,
                 "COLOR",
                 variableName,
-                await getColorTokenValue(token),
+                await getColorTokenValue(token, modeId),
                 token.scopes || ['ALL_SCOPES'],
                 token.description || null
             );
