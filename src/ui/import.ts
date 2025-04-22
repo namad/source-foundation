@@ -7,17 +7,14 @@ import "./styles/color-box.css";
 import "../../node_modules/nouislider/dist/nouislider.css";
 import "./styles/noui-slider.css";
 
-
 import { defaultSettings } from "../defaults";
-
 import { debounce } from "../utils/debounce";
-import { ImportFormData, SlidersColleciton, collectValues, refreshUI, getFormData, loadData } from "../import-ui";
+import { ImportFormData, collectValues, refreshUI, getFormData, loadData } from "../import-ui";
 import { getPresets } from "../presets";
-
 import { delayAsync } from "../utils/delay-async";
 import { CollectionExportRecord } from "../import-export-json";
-
 import { ImportEventParameters } from "../main";
+import { mainForm } from "./ref/main-form";
 
 import "./helpers/modal";
 import "./helpers/tabs";
@@ -29,7 +26,6 @@ import "./helpers/noui-slider";
 import "./helpers/accent-hue-sliders";
 import "./helpers/accent-luminance-slider";
 import "./helpers/text-brightness-slider";
-import { mainForm } from "./ref/main-form";
 
 
 /*
@@ -40,42 +36,6 @@ import { mainForm } from "./ref/main-form";
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let exportThemeButton = document.getElementById('exportThemeButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
-
-
-// document.querySelector('#setCustomBrandColor').addEventListener('click', (e) => {
-//     e.stopPropagation();
-//     e.preventDefault();
-
-//     const el = document.querySelector('dialog input[name=customPrimaryColor') as HTMLFormElement;
-//     const value = el.value;
-
-//     let data = getFormData(form);
-
-//     debugger;
-
-
-//     const customPrimaryValue = value.replace('#', '');
-
-//     if (customPrimaryValue.length) {
-//         const customPrimaryColor = chroma(`#${customPrimaryValue}`);
-//         const customAccentLuminanceMid = customPrimaryColor.luminance();
-//         const customAccentHUE = customPrimaryColor.get('hsl.h');
-        
-//         const updatedData = {
-//             primary: 'custom',
-//             accentMinLuminance: customAccentLuminanceMid * 0.55,
-//             accentMidLuminance: customAccentLuminanceMid,
-//             accentMaxLuminance: Math.max(1, customAccentLuminanceMid * 3.33),
-//         }
-
-//         loadSettings(form, {
-//             ...getFormData(form),
-//             ...updatedData
-//         });
-//     }
-
-//     return false
-// })
 
 document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -230,25 +190,6 @@ function fireTokenExportEvent() {
         } 
     }, "*");
 }
-
-// document.querySelectorAll('[data-radio-toggle]').forEach((el: HTMLFormElement) => {
-//     el.addEventListener('input', (e) => {
-//         const name = el.name;
-//         document.querySelectorAll(`input[type=radio][name=${name}]`).forEach((radiobutton: HTMLFormElement) => {
-//             const containerId = radiobutton.dataset.radioToggle;
-//             const isChecked = radiobutton.checked;
-//             const container = document.getElementById(containerId) as HTMLDivElement;
-//             container.style.display = isChecked ? '' : 'none';
-//         });
-//     });
-// });
-
-// const customAccentTextSaturation = document.querySelector('[name=customAccentTextSaturation]') as HTMLInputElement;
-
-// customAccentTextSaturation && customAccentTextSaturation.addEventListener('click', () => {
-//     let data = getFormData(mainForm);
-//     refreshUI(mainForm, data);
-// });
 
 mainForm.addEventListener("input", debounce((e) => {
     const targetName = e.target.name;
