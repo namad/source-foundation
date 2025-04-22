@@ -107,7 +107,7 @@ export const defaultSettings: ImportFormData = {
     accentSaturation: 0.9,
     accentMaxLuminance: 0.45,
     accentMidLuminance: 0.18,
-    accentMinLuminance: 0.10,
+    accentMinLuminance: 0.12,
     radii: 'base',
     spacing: 'base',
     verticalSpacing: 'uneven',

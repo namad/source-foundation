@@ -24,14 +24,15 @@ import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-two-digits';
 import { _clone } from './utils/clone';
 import { LOCAL_LIB_NAME } from './utils/figma-library-variables';
+import * as themeStore from './utils/themes-store';
 
 console.clear();
 
-
-export async function initiateImport(params: ImportFormData) {
+export async function initiateImport() {
+    const params: ImportFormData = themeStore.getTheme('light');
     await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
-    params.createColorTokens && await getCollectionAndPrepareTokens({
+    params.createComponentTokens && await getCollectionAndPrepareTokens({
         collectionName: collectionNames.get('componentColors'),
         modeName: "Default",
         data: getComponentColors(),
@@ -156,13 +157,15 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
     });
 }
 
-export async function importAllTokens(params: ImportFormData) {
-    figma.root.setPluginData('SDS', JSON.stringify(params));
+export async function importAllTokens() {
+
+    themeStore.save();
+    const params: ImportFormData = themeStore.getTheme('light')
 
     const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
     generateVariablesForPlayground(params, isPlayground);
 
-    params.createColorTokens && await importColorTheme(params);
+    params.createColorTokens && await importColorTheme();
 
     params.createComponentTokens && await importVariables({
         collectionName: collectionNames.get('componentColors'),
@@ -210,10 +213,10 @@ export async function importAllTokens(params: ImportFormData) {
 
     figma.notify("Figma variables has been imported");
 
-    figma.ui.postMessage("importCompleted");
+    figma.ui.postMessage("IMPORT_COMPLETED");
 }
 
-async function importColorTheme(params: ImportFormData) {
+async function importColorTheme_OG(params: ImportFormData) {
     const defaultThemes = _clone(colorThemes) as string[];
     const globalNeutrals = getGlobalNeutrals(params);
 
@@ -241,6 +244,53 @@ async function importColorTheme(params: ImportFormData) {
 
         index++;
     }
+}
+
+function getThemeParams(theme: SourceColorTheme) {
+    debugger
+
+    if (theme.startsWith('light')) {
+        return themeStore.getTheme('light');
+    }
+    if(theme.startsWith('dark')) {
+        return themeStore.getTheme('dark');
+    }
+
+    throw new Error(`Unusual theme name ${theme}`);
+}
+
+async function importColorTheme() {
+    const defaultThemes = _clone(colorThemes) as string[];
+    
+    addToGlobalTokensDictionary({     
+        ...getComponentColors(),
+    });
+
+    let index = 0;
+
+    while(defaultThemes.length) {
+        debugger
+
+        const themeName = defaultThemes.shift() as SourceColorTheme;
+        const params = getThemeParams(themeName);
+        let themeColors = getThemeColors(themeName, params);
+        const globalNeutrals = getGlobalNeutrals(params);
+
+        addToGlobalTokensDictionary({
+            ...globalNeutrals,
+            ...themeColors
+        });
+
+        await importVariables({
+            collectionName: collectionNames.get('themeColors'),
+            modeName: colorThemeNames[index],
+            data: themeColors
+        });
+
+        index++;
+    }
+
+    debugger
 }
 
 async function importSizeTokens(data: {
@@ -337,8 +387,6 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
         type
     } = await getCollectionAndPrepareTokens({ collectionName, modeName, modeIndex, data, sortFn, isSingleMode })
 
-    debugger
-    
     for(const token of tokens) {
         let type = '$type' in token ? token.$type : 'string';
         await processToken({

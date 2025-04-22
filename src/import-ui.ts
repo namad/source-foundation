@@ -14,6 +14,9 @@ import { getPresetContentTemplate, getPresets } from "./presets";
 import { DesignToken } from "./import-tokens";
 import nouislider, { API } from 'nouislider';
 import { SliderComponent } from "./ui/slider";
+import { getTokenLibrariesListMarkup } from "./ui/helpers/figma-libraries-selector";
+import { sliders } from "./ui/ref/sliders-collection";
+import { mainForm } from "./ui/ref/main-form";
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
 
@@ -208,14 +211,13 @@ function doThis(data: ImportFormData) {
         
     }
 }
-export function generatePreview(form: HTMLFormElement, sliders) {
-    let data = getFormData(form);
+export function refreshUI(data: ImportFormData) {
 
-    if (data === null) return;
+    if (data === null) throw new Error(`Cannot refresh UI, data is missing`);
 
     // set colours on neutrals hue & sdaturation sliders
-    sliders['hue'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
-    sliders['saturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
+    sliders['hue'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
+    sliders['saturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
     const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
     exportCodeTextarea.value = JSON.stringify(data, null, 4);
@@ -233,7 +235,8 @@ export function generatePreview(form: HTMLFormElement, sliders) {
     })
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
-    const globalNeutrals = getGlobalNeutrals();
+    const globalNeutrals = getGlobalNeutrals(data);
+
 
     generateCSSVars({ ...themeColors, ...globalAccent, ...globalNeutrals });
 
@@ -258,14 +261,10 @@ export function generatePreview(form: HTMLFormElement, sliders) {
         fillBase600: themeColors['fill/base/600']['$value'],
     }
 
-    updateValuesDisplay({...data, ...extension}, form);
+    updateValuesDisplay({...data, ...extension}, mainForm);
 
     generateMiniPreview(data);
-    setCustomAccentTextSaturationSlider(sliders, data);
-    
-    parent.postMessage({
-        pluginMessage: { type: 'RESIZE', params: data }
-    }, "*");
+    // setCustomAccentTextSaturationSlider(sliders, data);
 }
 
 function checkTextContrast(data: ImportFormData) {
@@ -281,7 +280,7 @@ function setCustomAccentTextSaturationSlider(sliders: SlidersColleciton, data: I
     const primaryColorName = data.primary
     const saturation = accentTextSaturation <= 0 ? accentSaturationSlider.get() as number : accentTextSaturation;
 
-    sliders['accentTextSaturation'].rootElement.style.setProperty('--thumb-color', chroma.hsl(data[primaryColorName], saturation, 0.5).hex());
+    sliders['accentTextSaturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data[primaryColorName], saturation, 0.5).hex());
 
     if (data.customAccentTextSaturation == true) {
         slider.set(saturation);
@@ -387,15 +386,46 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
     })
 }
 
+interface LoadDataOptions {
+    params: ImportFormData,
+    tokenLibraries?: any,
+    customDarkMode: boolean,
+    colorSystemVersion?: number,
+    silent?: boolean
+}
 
-export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent = false) {
-    data = Object.assign({}, defaultSettings, data);
+export function loadData(options: LoadDataOptions) {
+    if(options.tokenLibraries) {
+        const tokenLibrariesListMarkup = getTokenLibrariesListMarkup(options.tokenLibraries);
+        document.getElementById('sourceLibrariesList').innerHTML = tokenLibrariesListMarkup;
+    }
 
-    const formElements = form.querySelectorAll(`input[name]`);
+    let darkModeControlFn = options.params.theme == 'dark' ? 'remove' : 'add';
+
+    const darkModeControlDiv = document.getElementById('darkModeControl') as HTMLDivElement;
+    
+    if(options.params.theme == 'dark') {
+        darkModeControlDiv.classList.replace('hidden', 'flex')
+    }
+    else {
+        darkModeControlDiv.classList.replace('flex', 'hidden')
+    }
+
+    if(options.customDarkMode === true) {
+    }
+        
+    applyData(options.params)
+    refreshUI(options.params)
+}
+
+function applyData(params: ImportFormData, silent = false) {
+    params = Object.assign({}, defaultSettings, params);
+
+    const formElements = mainForm.querySelectorAll(`input[name]`);
 
     formElements.forEach((formEl: HTMLFormElement) => {
         const name = formEl.name;
-        const value = data[name]
+        const value = params[name]
         const val = transformValue(name, value, "IN");
         if (formEl.type == 'radio') {
             if (formEl.value === value) {
@@ -413,4 +443,5 @@ export function loadSettings(form: HTMLFormElement, data: ImportFormData, silent
             formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
         }
     });
+
 }

@@ -1,6 +1,7 @@
-import { getColorSystemVersion, getComponentColors, getGlobalNeutrals, getThemeColors, upgradeTextPalette } from './color-tokens';
+import { getColorSystemVersion, getComponentColors, getGlobalNeutrals, upgradeTextPalette } from './color-tokens';
 import * as typographyTokens from './typography-tokens';
 import * as figlib from './utils/figma-library-variables';
+import * as themeStore from './utils/themes-store';
 
 import { renderAccents } from "./color-generators/render-accents";
 import { generateGlobalAccentPalette } from './color-generators/accent-palette-generator';
@@ -9,7 +10,6 @@ import { addToGlobalTokensDictionary } from './utils/token-references';
 import { ConfigColors, ImportFormData } from './import-ui';
 import { CollectionExportRecord, exportBrandVariantToJSON, exportToJSON, importFromJSON } from './import-export-json';
 import { importAllTokens, initiateImport } from './import-tokens';
-import { defaultSettings } from './defaults';
 
 console.clear();
 
@@ -54,15 +54,16 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     const params = eventData.params;
 
     if (eventData.type === "IMPORT") {
-        await initiateImport(params as ImportFormData);
-        await importAllTokens(params as ImportFormData);
+        themeStore.setTheme(params);
+
+        await initiateImport();
+        await importAllTokens();
     }
     else if (eventData.type === "EXPORT") {
-        await exportToJSON(eventData.exportJSONParams, eventData.params);
-        await exportBrandVariantToJSON(eventData.exportBrandParams, eventData.params);
+        await exportToJSON(eventData.exportJSONParams, params);
+        await exportBrandVariantToJSON(eventData.exportBrandParams, params);
     }
     else if (eventData.type === "IMPORT_JSON") {
-        debugger;
         addToGlobalTokensDictionary({
             ...getGlobalNeutrals(params),
             ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
@@ -70,14 +71,14 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
 
         figlib.setSelectedLibrary(eventData.importJSONParams.tokenLibraryName);
         
-        await importFromJSON(eventData.data, eventData.params).catch(error => {
+        await importFromJSON(eventData.data, params).catch(error => {
             console.error(error);
-            figma.ui.postMessage("importCompleted");
+            figma.ui.postMessage("IMPORT_COMPLETED");
             figma.notify(error, {error: true});
         });
 
         figma.notify(`Figma variables has been imported`);
-        figma.ui.postMessage("importCompleted");
+        figma.ui.postMessage("IMPORT_COMPLETED");
     }
     else if (eventData.type === "ALERT") {
         figma.notify(`${eventData.data}`, eventData.alertParams || {});
@@ -98,32 +99,25 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     else if (eventData.type === "UPGRADE_TEXT_COLORS") {
         await upgradeTextPalette(params);
     }
-    else if (eventData.type === "LOADED") {
-        const store = await figlib.getStoreData();
-        const colorSystemVersion = await getColorSystemVersion();
-
-        let savedPreset: ImportFormData = null;
-
-        try {
-            const pluginData = figma.root.getPluginData('SDS');
-            savedPreset = JSON.parse(pluginData) as ImportFormData;
-        }
-        catch (e) {
-            console.warn('failed to read plugin data', e);
-        }
-
-        savedPreset = savedPreset ? Object.assign(defaultSettings, savedPreset) : null;
+    else if (eventData.type === "UI_READY") {
+        const colorSystemVersion = 1; //await getColorSystemVersion();
+        await figlib.getStoreData();
+        themeStore.load();
 
         figma.ui.postMessage({
-            type: "LOAD",
+            type: "REFRESH_UI",
             data: {
                 colorSystemVersion,
-                savedPreset,
+                params: themeStore.getTheme('light'),
                 tokenLibraries: figlib.serialize()
             }
         })
     }
-    else if (eventData.type == 'RESIZE') {
+    else if (eventData.type == 'UPDATE') {
+        debugger
+
+        themeStore.setTheme(params);
+
         switch (params.baseFontSize) {
             default: {
                 figma.ui.resize(500, 800)
@@ -134,5 +128,34 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
                 break;
             }
         }    
+    }
+    else if (eventData.type == 'RESET') {
+        themeStore.resetDefaults();
+        figma.ui.postMessage({
+            type: "REFRESH_UI",
+            data: {
+                colorSystemVersion: 1,
+                params: themeStore.getTheme("light"),
+                tokenLibraries: figlib.serialize()
+            }
+        }) 
+    }
+    else if(eventData.type == 'UPDATE_ACTIVE_THEME') {
+        debugger
+
+        const selectedTheme = params.theme;
+        const selectedThemeData = themeStore.getTheme(params.theme);
+
+        selectedThemeData.theme = params.theme;
+
+        figma.ui.postMessage({
+            type: "REFRESH_UI",
+            data: {
+                colorSystemVersion: 1,
+                params: selectedThemeData,
+                customDarkMode: themeStore.isCustomDarkMode(),
+                tokenLibraries: figlib.serialize()
+            }
+        })        
     }
 };

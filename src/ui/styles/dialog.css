@@ -1,5 +1,9 @@
 dialog {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
     left: 0;
     top: 0;
     height: 100%;
@@ -8,13 +12,15 @@ dialog {
     max-height: none;
     overflow: hidden;
     margin: 0;
-    background-color: color-mix(in srgb, var(--fill-base-300), var(--utility-transparent) 20%);
+    background-color: transparent;
+    transition: all 450ms ease-in-out;    
+    z-index: 999;
 }
 
 dialog[open] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    opacity: 1;
+    pointer-events: all;
+    background-color: color-mix(in srgb, var(--fill-base-300), var(--utility-transparent) 20%);
 }
 
 dialog::backdrop {
@@ -24,15 +30,23 @@ dialog::backdrop {
 dialog .modal-container {
     display: flex;
     flex-flow: column;
-    width: 95%;
+    width: calc(100% - var(--spacing-sm));
     padding: 0;
     color: var(--text-base-600);
     background-color: var(--fill-base-100);
     border-radius: var(--radii-lg);
-    outline: 1px solid var(--alt-base-400);
-    max-height: 95vh;
-    animation: open-modal 250ms ease-in-out;
+    border: var(--border-width-base) solid var(--utility-tint-300);
+    outline: var(--border-width-base) solid var(--utility-shade-100);
+    max-height: calc(100% - var(--spacing-sm));
+    /* animation: open-modal 450ms cubic-bezier(0.53, 0.04, 0.12, 1.08); */
+    transform: translateY(-55%);
+    transition: all 450ms cubic-bezier(0.53, 0.04, 0.02, 1.12);
     @apply shadow-6;
+}
+
+dialog[open] .modal-container {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 dialog .header {
@@ -132,7 +146,7 @@ dialog .body + .presets-list {
     from {
         background-color: transparent;
         opacity: 0;
-        transform: translateY(-25%);    
+        transform: translateY(-55%);    
     }
     to {
         opacity: 1;

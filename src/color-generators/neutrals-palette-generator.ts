@@ -2,6 +2,7 @@ import chroma from "chroma-js";
 import { renderColor } from "./swatches-generator";
 import { ImportFormData } from "../import-ui";
 import { flattenObject } from "../utils/flatten-object";
+import { DesignTokensRaw } from "../import-tokens";
 
 
 function getSaturationModifier(lightness) {
@@ -24,13 +25,15 @@ export function generateNeutrals(params: ImportFormData) {
         distance
     } = params || {};
 
-    let tokens = flattenObject({
+    let tokens: DesignTokensRaw = flattenObject({
         "text": {
             "black": {
                 "$value": `{grey-${params.textBlackBrightness}}`,
+                "$type": 'color'
             },
             "white": {
                 "$value": `{grey-${params.textWhiteBrightness}}`,
+                "$type": 'color'
             }
         }
     });

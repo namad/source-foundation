@@ -30,8 +30,6 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             continue;
         }
 
-        debugger
-        
         const resolved = await parseValues(token.$value as TypographyTokenValue, tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;

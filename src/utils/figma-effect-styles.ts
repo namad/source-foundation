@@ -51,8 +51,6 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
         boundProps 
     } = await resolveBoundValues(value)
 
-    debugger;
-    
     let effect = {
         type: effectTokenValue.type,
         radius: parseFloat(effectTokenValue.radius),

@@ -31,6 +31,4 @@ export function getTokenLibrariesListMarkup(storedData: StoredData): string {
             ${markup.join('')}
         </div>
     `
-    
-    
 }

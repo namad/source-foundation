@@ -294,17 +294,12 @@ export function resolveColorTokenValue(token: DesignToken, dictionary, output = 
     }
 }
 export async function getColorTokenValue(token: DesignToken, modeId: string): Promise<VariableAlias | RGBA | string> {
-    debugger
-
     let valueString = (`${token.$value}`).trim()
     const variableAlias = await findVariableAlias(valueString);
     const rawValue = resolveColorTokenValue(token, getGlobalTokensDictionary());
 
     if (token.$type != "color") {
         return
-    }
-    if (typeof token.$value == 'string' && token.$value.indexOf('rgb') >= 0 && variableAlias) {
-        debugger
     }
 
     if (variableAlias && typeof variableAlias == 'object') {
@@ -330,8 +325,6 @@ export async function getColorTokenValue(token: DesignToken, modeId: string): Pr
     if (rawValue) {
         return rawValue;
     }
-
-    debugger;
 }
 
 export async function upgradeTextPalette(params: ImportFormData) {

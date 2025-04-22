@@ -108,8 +108,6 @@ export function setSelectedLibrary(name: string) {
 export async function findVariableByName(variableName:string) {
     const libraryName = getSelectedLibrary();
     
-    if(variableName == "text/contrast/600") debugger;
-
     if(libraryName == LOCAL_LIB_NAME) {
         const figmaVariables = await figma.variables.getLocalVariablesAsync();
         return figmaVariables.find(variable => variable.name === variableName);

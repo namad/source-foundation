@@ -1,8 +1,8 @@
 import nouislider, { API } from 'nouislider';
 import { debounce } from '../../utils/debounce';
+import { mainForm } from '../ref/main-form';
 
-export function initiateAccentLuminanceSliders(mainForm) {
-const luminanceSlider = document.querySelector('#luminanceSlider .slider') as HTMLDivElement;
+const luminanceSlider = document.querySelector('#luminanceSlider') as HTMLDivElement;
 const luminanceSliderVals = [
     document.getElementById('luminanceValMin') as HTMLInputElement,
     document.getElementById('luminanceValMid') as HTMLInputElement,
@@ -39,4 +39,3 @@ luminanceSliderVals.forEach((element, index) => {
         luminanceSlider['noUiSlider'].set(val);
     });
 });
-}

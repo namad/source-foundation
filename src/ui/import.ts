@@ -5,41 +5,41 @@ import "./styles/icons.css";
 import "./styles/dialog.css";
 import "./styles/color-box.css";
 import "../../node_modules/nouislider/dist/nouislider.css";
+import "./styles/noui-slider.css";
 
 
-import noUiSlider, { API } from 'nouislider';
-import { initSlider } from "./slider";
-import { toTitleCase } from "../utils/text-to-title-case";
-import { defaultAccentHUEs, defaultSettings, radiiSizeName, radiiSizeValues, spacingSizeName, systemAccentList, typographySizeName, typographySizeValues } from "../defaults";
+import { defaultSettings } from "../defaults";
 
 import { debounce } from "../utils/debounce";
-import { ImportFormData, SlidersColleciton, collectValues, generateMiniPreview, generatePreview, getFormData, loadSettings, transformValue } from "../import-ui";
+import { ImportFormData, SlidersColleciton, collectValues, refreshUI, getFormData, loadData } from "../import-ui";
 import { getPresets } from "../presets";
 
 import { delayAsync } from "../utils/delay-async";
 import { CollectionExportRecord } from "../import-export-json";
 
+import { ImportEventParameters } from "../main";
+
 import "./helpers/modal";
 import "./helpers/tabs";
 import "./helpers/paste-button";
 import "./helpers/intersection-observer";
-import { getTokenLibrariesListMarkup } from "./helpers/figma-libraries-selector";
-import { ImportEventParameters } from "../main";
-import { initiateAccentLuminanceSliders } from "./helpers/accent-luminance-slider";
-import { initiateAccentHUESliders } from "./helpers/accent-hue-sliders";
-import { initiateTextBrightnessSlider } from "./helpers/text-brightness-slider";
+import "./helpers/command-actions";
+import "./helpers/expander";
+import "./helpers/noui-slider";
+import "./helpers/accent-hue-sliders";
+import "./helpers/accent-luminance-slider";
+import "./helpers/text-brightness-slider";
+import { mainForm } from "./ref/main-form";
+
 
 /*
     UI INITIALIZATION
 */
 
-const mainForm = document.querySelector('form') as HTMLFormElement;
 
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
 let exportThemeButton = document.getElementById('exportThemeButton') as HTMLButtonElement;
 let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
-
-let sliders: SlidersColleciton = {};
 
 
 // document.querySelector('#setCustomBrandColor').addEventListener('click', (e) => {
@@ -146,7 +146,13 @@ document.getElementById('applyPresetButton').addEventListener('click', (e) => {
         data = getPresets()[themeNumber];
     }
 
-    loadSettings(mainForm, data);
+    loadData({
+        params: {
+            ...defaultSettings,
+            ...data
+        },
+        customDarkMode: false
+    });
 
     modal.close();
 })
@@ -225,85 +231,52 @@ function fireTokenExportEvent() {
     }, "*");
 }
 
+// document.querySelectorAll('[data-radio-toggle]').forEach((el: HTMLFormElement) => {
+//     el.addEventListener('input', (e) => {
+//         const name = el.name;
+//         document.querySelectorAll(`input[type=radio][name=${name}]`).forEach((radiobutton: HTMLFormElement) => {
+//             const containerId = radiobutton.dataset.radioToggle;
+//             const isChecked = radiobutton.checked;
+//             const container = document.getElementById(containerId) as HTMLDivElement;
+//             container.style.display = isChecked ? '' : 'none';
+//         });
+//     });
+// });
 
-document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
-    el.addEventListener('click', (e) => {
-        const params = getFormData(mainForm);
-        const command = el.dataset.command;
+// const customAccentTextSaturation = document.querySelector('[name=customAccentTextSaturation]') as HTMLInputElement;
 
-        parent.postMessage({
-            pluginMessage: {
-                type: command,
-                params: params
-            }
-        }, "*");
-
-    });
-});
-
-document.querySelectorAll('[data-radio-toggle]').forEach((el: HTMLFormElement) => {
-    el.addEventListener('input', (e) => {
-        const name = el.name;
-        document.querySelectorAll(`input[type=radio][name=${name}]`).forEach((radiobutton: HTMLFormElement) => {
-            const containerId = radiobutton.dataset.radioToggle;
-            const isChecked = radiobutton.checked;
-            const container = document.getElementById(containerId) as HTMLDivElement;
-            container.style.display = isChecked ? '' : 'none';
-        });
-    });
-});
-
-
-document.querySelectorAll('[data-expander][data-role="trigger"]').forEach((el: HTMLAnchorElement) => {
-    const next = el.nextElementSibling as HTMLDivElement;
-    if (next.dataset.role == 'container') {
-        el.addEventListener('click', (e) => {
-            e.preventDefault();
-            next.classList.toggle('collapsed');
-            el.setAttribute('data-expanded', `${!next.classList.contains('collapsed')}`);
-        })
-    }
-    else {
-        console.warn('Cannot find container to expand')
-    }
-});
-
-
-document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
-    const valueMaps = {
-        'semantics': systemAccentList,
-        'typography': typographySizeValues,
-        'radii': radiiSizeName,
-        'spacing': spacingSizeName
-    };
-
-    const type = el.dataset.type;
-
-    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null });
-    sliders[sliderComponent.params.name] = sliderComponent;
-});
-
-
-
-const customAccentTextSaturation = document.querySelector('[name=customAccentTextSaturation]') as HTMLInputElement;
-
-customAccentTextSaturation && customAccentTextSaturation.addEventListener('click', () => {
-    let data = getFormData(mainForm);
-    loadSettings(mainForm, data);
-});
-
-
+// customAccentTextSaturation && customAccentTextSaturation.addEventListener('click', () => {
+//     let data = getFormData(mainForm);
+//     refreshUI(mainForm, data);
+// });
 
 mainForm.addEventListener("input", debounce((e) => {
-    console.log(e.target.name);
-    generatePreview(mainForm, sliders);
-}, 1));
+    const targetName = e.target.name;
+    const params = getFormData(mainForm)
+
+    console.log(targetName);
+
+    if(targetName == "theme") {
+        return parent.postMessage({ pluginMessage: {
+            type: "UPDATE_ACTIVE_THEME",
+            params: params
+        } }, "*");
+    }
+    
+    refreshUI(params);
+
+    parent.postMessage({
+        pluginMessage: { type: 'UPDATE', params }
+    }, "*");
+
+}, 2));
 
 
 resetDefaultsButton.addEventListener('click', (e) => {
     e.preventDefault();
-
-    loadSettings(mainForm, defaultSettings);
+    parent.postMessage({ pluginMessage: {
+        type: "RESET"
+    } }, "*");
 });
 
 importButton.addEventListener('click', async (e) => {
@@ -321,18 +294,18 @@ importButton.addEventListener('click', async (e) => {
     parent.postMessage({ pluginMessage: message }, "*");
 })
 
-parent.postMessage({
-    pluginMessage: { type: 'LOADED' }
-}, "*");
 
-initiateAccentHUESliders(mainForm, defaultAccentHUEs, sliders);
-initiateAccentLuminanceSliders(mainForm);
-initiateTextBrightnessSlider(mainForm);
-loadSettings(mainForm, defaultSettings);
-
+interface LoadEventData {
+    customDarkMode?: boolean;
+    params?: ImportFormData;
+    tokenLibraries: {
+        [key: string]: LibraryVariable[]
+    };
+    colorSystemVersion?: number;
+}
 
 window.onmessage = ({ data: { pluginMessage } }) => {
-    if(pluginMessage == 'importCompleted') {
+    if(pluginMessage == 'IMPORT_COMPLETED') {
         importButton.classList.remove('loading');
     }
     else if (pluginMessage.type === "EXPORT_RESULT_JSON") {
@@ -343,21 +316,29 @@ window.onmessage = ({ data: { pluginMessage } }) => {
         const data = pluginMessage.files as CollectionExportRecord[];
         document.querySelector('#exportBrandTokensTextarea').innerHTML = JSON.stringify(data, null, 2);
     }    
-    else if (pluginMessage.type == "LOAD") {
-        const savedPreset = pluginMessage.data.savedPreset as ImportFormData;
-        const tokenLibraries = pluginMessage.data.tokenLibraries;
-        const colorSystemVersion = pluginMessage.data.colorSystemVersion;
+    else if (pluginMessage.type == "REFRESH_UI") {
+        const data = pluginMessage.data as LoadEventData;
+        const {
+            params,
+            tokenLibraries,
+            customDarkMode,
+            colorSystemVersion        
+        } = data;
 
-        const tokenLibrariesListMarkup = getTokenLibrariesListMarkup(tokenLibraries);
-
-        document.getElementById('sourceLibrariesList').innerHTML = tokenLibrariesListMarkup;
-
-        savedPreset && loadSettings(mainForm, savedPreset);
+        loadData({
+            params,
+            tokenLibraries,
+            customDarkMode,
+            colorSystemVersion       
+        });
         // colorSystemVersion == 1 && enableUpgradeTextColorsLink();
     }
 }
 
-
 function enableUpgradeTextColorsLink() {
     const upgradeLink = document.getElementById('upgradeTextPaletteLink').classList.remove('hidden');
 }
+
+parent.postMessage({
+    pluginMessage: { type: 'UI_READY' }
+}, "*");

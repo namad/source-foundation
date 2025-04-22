@@ -1,0 +1,97 @@
+:root {
+    --slider-thumb-size: calc(var(--line-height-base) + 2 * var(--spacing-minor-xs2));
+    --slider-track-size: calc(var(--slider-thumb-size) / 4);
+    --slider-margin: calc((var(--slider-thumb-size) - var(--slider-track-size)) /2);
+    --slider-thumb-color: var(--fill-contrast-100);
+}
+
+.noui-slider {
+    display: flex;
+    border: 0 none;
+    box-sizing: content-box;
+    background-clip: padding-box;
+    height: var(--slider-track-size);
+    background-color: var(--alt-base-300);
+    box-shadow: none;
+    border-radius: var(--radii-round);
+    padding-right: calc(var(--slider-thumb-size) / 2);
+}
+
+.noui-slider[disabled] {
+    --slider-thumb-color: var(--fill-contrast-100);
+    opacity: 0.5;
+    pointer-events: none;
+
+    & .noUi-connect {
+        background-image: none;
+    }
+}
+
+.noui-slider[disabled] + input[type=text] {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.noui-slider .noUi-connect {
+    --effect-opacity: 30%;
+    background-image: linear-gradient(180deg, hsl(0deg 100% 100% / var(--effect-opacity)), hsl(0deg 100% 100% / var(--effect-opacity)));
+    background-blend-mode: overlay;
+    background-color: var(--slider-thumb-color);
+}
+
+.noui-slider .noUi-handle {
+    border: calc(var(--slider-thumb-size) / 10) solid white;
+    cursor: default;
+    box-shadow: none;
+
+    aspect-ratio: 1/2;
+    height: var(--slider-thumb-size);
+    width: auto;
+
+    top: calc((var(--slider-thumb-size) - var(--slider-track-size)) / -2);
+    right: calc(var(--slider-thumb-size) / -2);
+
+    transform: translateX(0);
+
+    box-shadow: 
+        0px 1px 2px 0px var(--utility-shade-100), 
+        0px 1px 3px 0px var(--utility-shade-100), 
+        0px 0px 0px var(--border-width-base) var(--utility-shade-200);
+
+    /*custom styles*/
+    background: var(--slider-thumb-color);
+    border-radius: var(--radii-md);
+
+}
+
+.noui-slider .noUi-tooltip {
+    --effect-opacity: 10%;
+    top: initial;
+    bottom: 130%; 
+    /* calc(var(--slider-thumb-size) - var(--slider-thumb-size) / 10); */
+    font-size: var(--font-size-xs2);
+    line-height: var(--line-height-xs2);
+    visibility: hidden;
+    background: var(--fill-base-100);
+    background-image: linear-gradient(180deg, hsl(0deg 100% 100% / var(--effect-opacity)), hsl(0deg 100% 100% / var(--effect-opacity)));
+    background-blend-mode: overlay;
+    border-width: var(--border-width-base);
+    border-color: var(--stroke-base-300);
+    color: var(--text-base-600);
+    border-radius: var(--radii-base);
+    @apply shadow-4;
+}
+
+.noui-slider .noUi-handle:hover {
+    border: calc(var(--slider-thumb-size) / 8) solid white;
+}
+
+.noui-slider .noUi-active .noUi-tooltip,
+.noui-slider:not(.noUi-state-drag):hover .noUi-tooltip {
+    visibility: visible;
+}
+
+.noui-slider .noUi-handle::before,
+.noui-slider .noUi-handle::after {
+    display: none;
+}

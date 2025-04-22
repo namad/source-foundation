@@ -37,9 +37,9 @@ export function initSlider(el: HTMLElement, options?): SliderComponent {
 
 function getMarkup({ label, name, min, max, step, value }) {
     return `
-        <div class="sliders flex flex-row items-center" data-name=${name}>
+        <div class="sliders flex flex-row items-center w-full gap-xs" data-name=${name}>
             <span class="text-label">${label}</span>
-            <div class="slider"></div>
+            <div class="noui-slider flex-1"></div>
             <input data-display-element type="text" readonly>
             <input data-value-element type="hidden" name="${name}" value="${value}">
         </div>    
@@ -51,7 +51,7 @@ function processComponent(el, options: SliderOptions) {
 
     const displayInput = el.querySelector(`input[data-display-element]`) as HTMLInputElement;
     const valueInput = el.querySelector(`input[data-value-element]`) as HTMLInputElement;
-    let slider = el.querySelector(`.slider`);
+    let slider = el.querySelector(`.noui-slider`);
 
     slider = nouislider.create(slider, {
         connect: 'lower',

@@ -104,7 +104,7 @@ export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
     throw new Error(`Theme: ${theme} is invalid`);
 }
 
-function getColorParams(theme, params: ImportFormData) {
+function getColorParams(theme: 'light' | 'dark', params: ImportFormData) {
     let colorParams = {
         saturation: params.accentSaturation, //0.9 is default value
         minLuminance: params.accentMinLuminance,
@@ -118,7 +118,7 @@ function getColorParams(theme, params: ImportFormData) {
     return colorParams;
 }
 
-export function generateSystemAccentPalette(theme, params: ImportFormData): SystemAccentList {
+export function generateSystemAccentPalette(theme: 'light' | 'dark', params: ImportFormData): SystemAccentList {
     const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
 
     let accents: SystemAccentList = {
@@ -144,7 +144,7 @@ export function generateSystemAccentPalette(theme, params: ImportFormData): Syst
     return accents;
 }
 
-export function generateGlobalAccentPalette(theme: string, params: ImportFormData): SystemAccentList {
+export function generateGlobalAccentPalette(theme: 'light'|'dark', params: ImportFormData): SystemAccentList {
     const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
