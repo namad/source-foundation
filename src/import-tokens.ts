@@ -21,7 +21,7 @@ import { ImportFormData } from './import-ui';
 import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
-import { roundTwoDigits } from './utils/round-two-digits';
+import { roundTwoDigits } from './utils/round-decimals';
 import { _clone } from './utils/clone';
 import { LOCAL_LIB_NAME } from './utils/figma-library-variables';
 import * as themeStore from './utils/themes-store';

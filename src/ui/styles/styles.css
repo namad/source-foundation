@@ -7,6 +7,7 @@
     --scrollbar-width: 8px;
     --form-gap: var(--spacing-sm);
     --border-width-base: 1px;
+    --easing-fn: cubic-bezier(0.53, 0.04, 0.02, 1.12);
 }
 
 * {
@@ -129,7 +130,7 @@ a:hover {
 
 .card-sticky.is-pinned .card {
     outline: var(--border-width-base) solid var(--utility-tint-300);
-    outline-offset: calc( var(--border-width-base) * -1 );
+    outline-offset: calc(var(--border-width-base) * -1);
     @apply shadow-5 shadow-utility-shade-300;
 
     & .height-expander {
@@ -161,7 +162,7 @@ button {
     appearance: none;
     border-radius: var(--radii-base);
     padding: var(--spacing-minor-xs) var(--spacing-sm);
-    color: var(--text-base-action);
+    color: currentColor;
 
     & .spinner {
         display: none;
@@ -177,9 +178,9 @@ button {
         left: calc(50% - var(--line-height-base)/2);
     }
 
-     &.loading .text-label {
+    &.loading .text-label {
         visibility: hidden;
-     }
+    }
 }
 
 button:hover {
@@ -187,7 +188,7 @@ button:hover {
 }
 
 button.outline-button {
-    box-shadow: inset 0 0 0 1px var(--text-base-action);
+    box-shadow: inset 0 0 0 1px currentColor;
 }
 
 button.primary {
@@ -672,5 +673,51 @@ a[data-expanded=true]::before {
 
     100% {
         transform: rotate(1turn)
+    }
+}
+
+
+[data-custom-dark="false"] #darkModeControl {
+    display: none;
+    overflow: hidden;
+    opacity: 0;
+    max-height: 0;
+    transition-property: display, opacity, max-height;
+    transition-duration: 600ms;
+    transition-timing-function: var(--easing-fn);
+    transition-delay: 100ms;
+    transition-behavior: allow-discrete;
+}
+[data-theme="dark"] #darkModeControl {
+    display: block;
+    max-height: 1000px;
+    opacity: 1;
+    overflow: initial;
+
+    @starting-style {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+[data-custom-dark="false"] #darkModeControl #customDarkModeEnabled{
+    display: none;
+}
+[data-custom-dark="true"] #darkModeControl #customDarkModeDisabled{
+    display: none;
+}
+
+
+.dark-mode-lock {
+    display: none;
+}
+
+[data-theme="dark"][data-custom-dark="false"] {
+
+    & [data-name=hue] .dark-mode-lock,
+    & [data-name=saturation] .dark-mode-lock,
+    & [data-name=distance] .dark-mode-lock,
+    & [data-name=accentSaturation] .dark-mode-lock {
+        display: inline-flex;
     }
 }

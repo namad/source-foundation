@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { roundTwoDigits } from "../utils/round-two-digits";
+import { roundTwoDigits } from "../utils/round-decimals";
 import { resolveColorTokenValue } from "../color-tokens";
 
 function getBoundVariables(node: SceneNode) {

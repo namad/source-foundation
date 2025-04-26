@@ -2,13 +2,13 @@
     min-height: 2.5rem;
     position: relative;
     padding: 0.5rem;
-    color: var(--text-accent-600);
     font-size: var(--font-size-sm);
     line-height: var(--line-height-sm);
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: center;
+    gap: var(--spacing-minor-xs3);
 }
 
 .l-1 {

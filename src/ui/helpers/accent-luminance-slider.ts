@@ -14,6 +14,7 @@ nouislider.create(luminanceSlider, {
     connect: [false, true, true, false],
     step: 1,
     tooltips: true,
+    direction: 'rtl',
     range: {
         'min': 0,
         'max': 100

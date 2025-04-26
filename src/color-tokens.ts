@@ -30,7 +30,7 @@ import { DesignToken, DesignTokensRaw, importVariables } from './import-tokens';
 import { _mergeDeep } from './utils/merge-deep';
 import { figmaAliasToDesignTokens, getDefaultVariableValue } from './utils/figma-variables';
 import chroma from 'chroma-js';
-import { roundTwoDigits } from './utils/round-two-digits';
+import { roundTwoDigits } from './utils/round-decimals';
 import { getColorTokensSortFn } from './utils/sort-tokens';
 
 // const _merge = require('lodash.merge')

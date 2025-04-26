@@ -1,12 +1,14 @@
 import { getFormData } from "../../import-ui";
 import { mainForm } from "../ref/main-form";
 
-document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
-    el.addEventListener('click', (e) => {
-        e.preventDefault();
-        
+mainForm.addEventListener('click', (event) => {
+    const eventTarget = event.target as HTMLElement;
+    if(eventTarget.matches('[data-command]')) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
         const params = getFormData(mainForm);
-        const command = el.dataset.command;
+        const command = eventTarget.dataset.command;
 
         parent.postMessage({
             pluginMessage: {
@@ -14,6 +16,7 @@ document.querySelectorAll('[data-command]').forEach((el: HTMLAnchorElement) => {
                 params: params
             }
         }, "*");
-
-    });
-});
+        
+        return false;
+    }
+})

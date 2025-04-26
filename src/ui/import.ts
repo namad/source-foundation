@@ -1,7 +1,6 @@
 import "./styles/source-vars.css";
 import "./styles/utils.css";
 import "./styles/styles.css";
-import "./styles/icons.css";
 import "./styles/dialog.css";
 import "./styles/color-box.css";
 import "../../node_modules/nouislider/dist/nouislider.css";
@@ -204,7 +203,7 @@ mainForm.addEventListener("input", debounce((e) => {
         } }, "*");
     }
     
-    refreshUI(params);
+    refreshUI({params});
 
     parent.postMessage({
         pluginMessage: { type: 'UPDATE', params }

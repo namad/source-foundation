@@ -5,7 +5,7 @@ import * as spacingTokens from "./spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
-import { roundTwoDigits } from "./utils/round-two-digits";
+import { roundOneDigit, roundTwoDigits } from "./utils/round-decimals";
 import { getGlobalNeutrals, getThemeColors, resolveColorTokenValue } from "./color-tokens";
 import { parseColorValue } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
@@ -211,8 +211,14 @@ function doThis(data: ImportFormData) {
         
     }
 }
-export function refreshUI(data: ImportFormData) {
 
+interface UIDataOptions {
+    customDarkMode?: boolean;
+}
+
+export function refreshUI(options: LoadDataOptions) {
+
+    const data = options.params;
     if (data === null) throw new Error(`Cannot refresh UI, data is missing`);
 
     // set colours on neutrals hue & sdaturation sliders
@@ -236,6 +242,13 @@ export function refreshUI(data: ImportFormData) {
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
     const globalNeutrals = getGlobalNeutrals(data);
+
+    // THEME MODES
+    mainForm.dataset.theme = data.theme;
+
+    if(options.customDarkMode != undefined) {
+        mainForm.dataset.customDark = options.customDarkMode === true ? 'true' : 'false';
+    }
 
 
     generateCSSVars({ ...themeColors, ...globalAccent, ...globalNeutrals });
@@ -264,7 +277,11 @@ export function refreshUI(data: ImportFormData) {
     updateValuesDisplay({...data, ...extension}, mainForm);
 
     generateMiniPreview(data);
+
     // setCustomAccentTextSaturationSlider(sliders, data);
+}
+
+function setThemeModes() {
 }
 
 function checkTextContrast(data: ImportFormData) {
@@ -313,12 +330,12 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                 chromaColor = chroma.mix(chromaColor, 'white', 1 - alpha, 'hsl');
             }
 
-            const contrastWhite = roundTwoDigits(
+            const contrastWhite = roundOneDigit(
                                             chroma.contrast(
                                                 chroma.hsl(0, 0, data.textWhiteBrightness / 100), chromaColor
                                             )
                                         );
-            const contrastBlack = roundTwoDigits(
+            const contrastBlack = roundOneDigit(
                                             chroma.contrast(
                                                 chroma.hsl(0, 0, data.textBlackBrightness / 100), chromaColor
                                             )
@@ -339,7 +356,7 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
             }
             if (toolTip) {
                 toolTip.innerHTML = `
-                    <div class="row flex flex-row justify-between gap-3">
+                    <div class="row hidden flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">alias</span>
                         <span class="text-size-xs whitespace-nowrap">${resolvedTo}</span>
                     </div>
@@ -389,7 +406,7 @@ function generateCSSVars(tokens = {}, context = document.documentElement) {
 interface LoadDataOptions {
     params: ImportFormData,
     tokenLibraries?: any,
-    customDarkMode: boolean,
+    customDarkMode?: boolean,
     colorSystemVersion?: number,
     silent?: boolean
 }
@@ -400,22 +417,11 @@ export function loadData(options: LoadDataOptions) {
         document.getElementById('sourceLibrariesList').innerHTML = tokenLibrariesListMarkup;
     }
 
-    let darkModeControlFn = options.params.theme == 'dark' ? 'remove' : 'add';
-
-    const darkModeControlDiv = document.getElementById('darkModeControl') as HTMLDivElement;
-    
-    if(options.params.theme == 'dark') {
-        darkModeControlDiv.classList.replace('hidden', 'flex')
-    }
-    else {
-        darkModeControlDiv.classList.replace('flex', 'hidden')
-    }
-
     if(options.customDarkMode === true) {
     }
         
     applyData(options.params)
-    refreshUI(options.params)
+    refreshUI(options)
 }
 
 function applyData(params: ImportFormData, silent = false) {

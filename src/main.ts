@@ -158,4 +158,37 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             }
         })        
     }
+    else if(eventData.type == 'ENABLE_CUSTOM_DARK_MODE') {
+        debugger
+
+        themeStore.enableCustomDarkMode();
+
+        figma.ui.postMessage({
+            type: "REFRESH_UI",
+            data: {
+                colorSystemVersion: 1,
+                params: params,
+                customDarkMode: themeStore.isCustomDarkMode(),
+                tokenLibraries: figlib.serialize()
+            }
+        })        
+    }
+    else if(eventData.type == 'DISABLE_CUSTOM_DARK_MODE') {
+        debugger
+
+        themeStore.disableCustomDarkMode();
+
+        figma.ui.postMessage({
+            type: "REFRESH_UI",
+            data: {
+                colorSystemVersion: 1,
+                params: {
+                    ...themeStore.getTheme('light'),
+                    theme: params.theme
+                },
+                customDarkMode: themeStore.isCustomDarkMode(),
+                tokenLibraries: figlib.serialize()
+            }
+        })        
+    }
 };

@@ -1,4 +1,5 @@
 import chroma from "chroma-js";
+import * as themeStore from '../utils/themes-store';
 import { resolveGlobalTokenValue } from "../utils/token-references";
 import { ImportFormData } from "../import-ui";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
@@ -111,7 +112,7 @@ function getColorParams(theme: 'light' | 'dark', params: ImportFormData) {
         midLuminance: params.accentMidLuminance,
         maxLuminance: params.accentMaxLuminance,    
     }
-    if (theme == 'dark') {
+    if (theme == 'dark' && themeStore.isCustomDarkMode() === false) {
         colorParams.saturation = params.accentSaturation * 0.85;
         // colorParams.maxLuminance = params.accentMaxLuminance * 0.85;
     }

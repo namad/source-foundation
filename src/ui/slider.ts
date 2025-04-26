@@ -40,6 +40,7 @@ function getMarkup({ label, name, min, max, step, value }) {
         <div class="sliders flex flex-row items-center w-full gap-xs" data-name=${name}>
             <span class="text-label">${label}</span>
             <div class="noui-slider flex-1"></div>
+            <span class="icon-sm icon icon-link-2 opacity-70 dark-mode-lock"></span>
             <input data-display-element type="text" readonly>
             <input data-value-element type="hidden" name="${name}" value="${value}">
         </div>    

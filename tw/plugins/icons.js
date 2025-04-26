@@ -4,8 +4,8 @@ module.exports = plugin(function ({ matchUtilities, addComponents }) {
     addComponents({
         '.icon': {
             '--bg-image': 'none',
-            '--icon-size': `var(--icon-size-base)`,
-            'min-height': `var(--line-height-base)`,
+            '--icon-size': `var(--line-height-base)`,
+            'min-height': `var(--icon-size)`,
             'display': 'inline-flex',
             'align-items': 'center',
             'flex-flow': 'row',
@@ -571,15 +571,15 @@ module.exports = plugin(function ({ matchUtilities, addComponents }) {
         },
         {
             values: {
-                'sm': 'var(--icon-size-sm)',
-                'base': 'var(--icon-size-base)',
-                'md': 'var(--icon-size-md)',
-                'lg': 'var(--icon-size-lg)',
-                'xl': 'var(--icon-size-xl)',
-                'xl2': 'var(--icon-size-xl2)',
-                'xl3': 'var(--icon-size-xl3)',
-                'xl4': 'var(--icon-size-xl4)',
-                'xl5': 'var(--icon-size-xl5)',
+                'sm': 'var(--line-height-sm)',
+                'base': 'var(--line-height-base)',
+                'md': 'var(--line-height-md)',
+                'lg': 'var(--line-height-lg)',
+                'xl': 'var(--line-height-xl)',
+                'xl2': 'var(--line-height-xl2)',
+                'xl3': 'var(--line-height-xl3)',
+                'xl4': 'var(--line-height-xl4)',
+                'xl5': 'var(--line-height-xl5)',
             }
         }
     )
