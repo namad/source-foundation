@@ -501,8 +501,8 @@ export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: De
 
     value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
 
-    if (isAlias(value)) {
-        const aliasName = getReferenceName(value);
+    if (isAlias(token.$value)) {
+        const aliasName = getReferenceName(token.$value as string);
         value = `var(--${aliasName.replace(/\./g, "-")})`;
     }
 

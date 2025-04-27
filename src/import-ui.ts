@@ -208,12 +208,6 @@ export function generatePresetsPreview(masterData: ImportFormData) {
     })
 }
 
-function doThis(data: ImportFormData) {
-    if(data.theme == 'dark') {
-        
-    }
-}
-
 interface UIDataOptions {
     customDarkMode?: boolean;
 }
@@ -283,21 +277,14 @@ export function refreshUI(options: LoadDataOptions) {
     setCustomAccentTextSaturationSlider(data);
 }
 
-function setThemeModes() {
-}
-
-function checkTextContrast(data: ImportFormData) {
-    const textWhite = data.textWhiteBrightness
-}
-
 function setCustomAccentTextSaturationSlider(data: ImportFormData) {
     const sliderComponent = sliders["accentTextSaturation"]
     const slider = sliderComponent.slider;
 
-    const accentSaturationSlider = sliders["accentSaturation"].slider;
     const accentTextSaturation = transformValue("accentTextSaturation", data.accentTextSaturation, "IN") as number;
+    const accentSaturation = transformValue("accentSaturation", data.accentSaturation, "IN") as number;
     const primaryColorName = data.primary
-    const saturation = accentTextSaturation <= 0 ? accentSaturationSlider.get() as number : accentTextSaturation;
+    const saturation = accentTextSaturation <= 0 ? accentSaturation : accentTextSaturation;
 
     sliders['accentTextSaturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data[primaryColorName], saturation, 0.5).hex());
 
@@ -306,7 +293,6 @@ function setCustomAccentTextSaturationSlider(data: ImportFormData) {
         slider.enable();
     }
     else {
-        slider.set('0');
         slider.disable();
     }
 }

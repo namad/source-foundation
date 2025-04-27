@@ -115,8 +115,6 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         })
     }
     else if (eventData.type == 'UPDATE') {
-        debugger
-
         themeStore.setTheme(params);
 
         switch (params.baseFontSize) {

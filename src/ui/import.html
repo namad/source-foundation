@@ -347,9 +347,7 @@
                 <span class="icon icon-sm icon-link-2 opacity-70 dark-mode-lock" id="darkModeLockTextBrightness"></span>
             </h4>
 
-
-
-            <div class="flex flex-row gap-0 overflow-hidden rounded-md" id="textColorPreview">
+            <div class="flex flex-row gap-0 overflow-hidden rounded" id="textColorPreview">
                 <div class="flex flex-col gap-2 px-base py-minor-sm text-center flex-1 bg-fill-base-300">
                     <div class="color-text-base-600">
                         <b>text.base.</b>600
@@ -380,7 +378,7 @@
 
             <p class="color-text-base-500 text-sm">
                 Set black and white percentages for texts colours on light and dark surfaces.
-                It might be good idea to softer up a bit, no need to use pure black or 100% white
+                It might be good idea to soften up a bit, no need to use pure black or 100% white
             </p>
 
             <h4 class="mt-3 text-md font-bold">Semantic Text Colour</h4>
@@ -408,7 +406,7 @@
             <p class="color-text-base-500 text-sm">
                 By default, accent text colour is connected to it's respective accent. Tick checkbox above to enable custom saturation for bright texts.
             </p>
-            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 30, "max": 100, "step": 1, "value": 20, "syncValue": true}'></div>
+            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 100, "syncValue": true}'></div>
 
 
             <!-- 
@@ -659,7 +657,7 @@
             </button>
         </div>
         <div class="flex gap-2">
-            <button class="color-text-base-action" id="resetDefaultsButton">Reset</button>
+            <button class="color-text-base-action" data-command="RESET">Reset</button>
             <button id="importVariablesButton" class="primary">
                 <span class="flex flex-row gap-xs2">
                     <span class="spinner"></span>

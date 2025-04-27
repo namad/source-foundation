@@ -212,13 +212,6 @@ mainForm.addEventListener("input", debounce((e) => {
 }, 2));
 
 
-resetDefaultsButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    parent.postMessage({ pluginMessage: {
-        type: "RESET"
-    } }, "*");
-});
-
 importButton.addEventListener('click', async (e) => {
     e.preventDefault();
 
