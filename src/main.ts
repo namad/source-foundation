@@ -108,6 +108,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion,
+                customDarkMode: themeStore.isCustomDarkMode(),
                 params: themeStore.getTheme('light'),
                 tokenLibraries: figlib.serialize()
             }
@@ -141,9 +142,6 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         }) 
     }
     else if(eventData.type == 'UPDATE_ACTIVE_THEME') {
-        debugger
-
-        const selectedTheme = params.theme;
         const selectedThemeData = themeStore.getTheme(params.theme);
 
         selectedThemeData.theme = params.theme;
@@ -159,8 +157,6 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         })        
     }
     else if(eventData.type == 'ENABLE_CUSTOM_DARK_MODE') {
-        debugger
-
         themeStore.enableCustomDarkMode();
 
         figma.ui.postMessage({
@@ -174,8 +170,6 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
         })        
     }
     else if(eventData.type == 'DISABLE_CUSTOM_DARK_MODE') {
-        debugger
-
         themeStore.disableCustomDarkMode();
 
         figma.ui.postMessage({

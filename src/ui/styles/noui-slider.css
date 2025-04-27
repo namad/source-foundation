@@ -39,8 +39,12 @@
     background-color: var(--slider-thumb-color);
 }
 
+.noui-slider .noUi-connects {
+    border-radius: var(--radii-round);
+}
+
 .noui-slider .noUi-handle {
-    border: calc(var(--slider-thumb-size) / 10) solid white;
+    border: 0;
     cursor: default;
     box-shadow: none;
 
@@ -64,6 +68,11 @@
 
 }
 
+.noui-slider .noUi-touch-area {
+    border-radius: var(--radii-md);
+    border: calc(var(--slider-thumb-size) / 10) solid white;
+}
+
 .noui-slider .noUi-tooltip {
     --effect-opacity: 10%;
     top: initial;
@@ -82,12 +91,39 @@
     @apply shadow-4;
 }
 
-.noui-slider .noUi-handle:hover {
-    border: calc(var(--slider-thumb-size) / 8) solid white;
+
+/* .noui-slider .noUi-handle-upper .noUi-tooltip {
+    transform: translate(0);
+    left: 0;
 }
 
+
+.noui-slider .noUi-handle-lower .noUi-tooltip {
+    transform: translate(0);
+    left: initial;
+    right: 0;
+}
+
+.noui-slider.noUi-rtl .noUi-handle-lower .noUi-tooltip {
+    transform: translate(0);
+    left: initial;
+    right: 0;
+}
+.noui-slider.noUi-rtl .noUi-handle-upper .noUi-tooltip {
+    transform: translate(0);
+    left: 0;
+    right: initial;
+} */
+
+
+
+.noui-slider .noUi-handle:hover .noUi-touch-area {
+    border-width: calc(var(--slider-thumb-size) / 8);
+}
+
+/* .noui-slider:not(.noUi-state-drag):hover .noUi-tooltip, */
 .noui-slider .noUi-active .noUi-tooltip,
-.noui-slider:not(.noUi-state-drag):hover .noUi-tooltip {
+.noui-slider .noUi-handle:hover .noUi-tooltip {
     visibility: visible;
 }
 

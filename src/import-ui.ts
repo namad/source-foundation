@@ -6,12 +6,12 @@ import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
 import { roundOneDigit, roundTwoDigits } from "./utils/round-decimals";
-import { getGlobalNeutrals, getThemeColors, resolveColorTokenValue } from "./color-tokens";
+import { getGlobalNeutrals, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "./color-tokens";
 import { parseColorValue } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
 import { flattenObject } from "./utils/flatten-object";
 import { getPresetContentTemplate, getPresets } from "./presets";
-import { DesignToken } from "./import-tokens";
+import { DesignToken, DesignTokensRaw } from "./import-tokens";
 import nouislider, { API } from 'nouislider';
 import { SliderComponent } from "./ui/slider";
 import { getTokenLibrariesListMarkup } from "./ui/helpers/figma-libraries-selector";
@@ -59,7 +59,7 @@ export interface ImportFormData {
 
     customAccentTextSaturation: boolean;
     accentTextSaturation: null | number;
-    acentTextColor: "auto" | "black" | "white";
+    accentTextColor: "auto" | "black" | "white";
     textWhiteBrightness: number;
     textBlackBrightness: number;
 
@@ -187,21 +187,23 @@ export function getFormData(form: HTMLFormElement): ImportFormData {
     };
 }
 
-export function generateMiniPreview(masterData: ImportFormData) {
+export function generatePresetsPreview(masterData: ImportFormData) {
     const presetsListElement = document.getElementById('presetsList');
     const presets = getPresets();
 
     presetsListElement.innerHTML = '';
 
     presets.forEach((data, index) => {
-        const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', {...defaultSettings, ...data});
+        data = {...defaultSettings, ...data};
+        const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
+        const globalNeutrals = getGlobalNeutrals(data);
 
         const label = document.createElement('label');
         label.classList.add('theme-item');
         label.innerHTML = getPresetContentTemplate(index);
         presetsListElement.appendChild(label);
 
-        generateCSSVars({ ...themeColors }, label);
+        generateCSSVars({ ...themeColors, ...globalNeutrals }, label);
         updateValuesDisplay(data, label);
     })
 }
@@ -259,9 +261,9 @@ export function refreshUI(options: LoadDataOptions) {
     generateCSSVars(typescaleTokens.getTypographyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacingTokens.getSpacingTokens(data.verticalSpacing, data.spacing));
 
-    const darkSurfaceColor = globalNeutrals[`grey-20`].$value;
-    const textWhiteColor = globalNeutrals[`grey-${data.textWhiteBrightness}`].$value;
-    const textBlackColor = globalNeutrals[`grey-${data.textBlackBrightness}`].$value;
+    const darkSurfaceColor = globalNeutrals[`grey-20`].$value as string;
+    const textWhiteColor = globalNeutrals[`grey-${data.textWhiteBrightness}`].$value as string;
+    const textBlackColor = globalNeutrals[`grey-${data.textBlackBrightness}`].$value as string;
 
     const extension = {
         textBlackContrast: roundTwoDigits(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
@@ -276,9 +278,9 @@ export function refreshUI(options: LoadDataOptions) {
 
     updateValuesDisplay({...data, ...extension}, mainForm);
 
-    generateMiniPreview(data);
+    generatePresetsPreview(data);
 
-    // setCustomAccentTextSaturationSlider(sliders, data);
+    setCustomAccentTextSaturationSlider(data);
 }
 
 function setThemeModes() {
@@ -288,7 +290,7 @@ function checkTextContrast(data: ImportFormData) {
     const textWhite = data.textWhiteBrightness
 }
 
-function setCustomAccentTextSaturationSlider(sliders: SlidersColleciton, data: ImportFormData) {
+function setCustomAccentTextSaturationSlider(data: ImportFormData) {
     const sliderComponent = sliders["accentTextSaturation"]
     const slider = sliderComponent.slider;
 
@@ -310,7 +312,7 @@ function setCustomAccentTextSaturationSlider(sliders: SlidersColleciton, data: I
 }
 
 function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
-    const systemAccentShades = getShadesTemplate(data.theme);
+    const systemAccentShades = getShadesTemplate(data.theme, data);
 
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {
@@ -386,19 +388,19 @@ function updateValuesDisplay(data: ImportFormData, context = document.documentEl
     })
 }
 
-function generateCSSVars(tokens = {}, context = document.documentElement) {
+function generateCSSVars(tokens: DesignTokensRaw, context = document.documentElement) {
     Object.entries(tokens).forEach(([name, token]) => {
         const varName = `--${name.replace(/\//g, "-")}`;
         const type = token['$type'];
 
         if (type == 'number') {
-            const varValue = parseInt(token["$value"]);
+            const varValue = parseInt(token.$value as string);
             context.style.setProperty(varName, `${varValue}px`);
         }
 
         if (type == 'color') {
-            const rgb = resolveColorTokenValue(token as DesignToken, { ...tokens, ...getGlobalNeutrals() }, 'rgb');
-            context.style.setProperty(varName, `${rgb}`);
+            let value = processColorTokenCSSValue(token, tokens);
+            context.style.setProperty(varName, value);
         }
     })
 }

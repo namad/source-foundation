@@ -18,30 +18,70 @@ import paletteDarkBase4 from './tokens/colors/system/dark-base-4.tokens.json';
 import paletteTextDark from './tokens/colors/system/dark-text-base.json';
 
 import { flattenObject } from './utils/flatten-object';
-import { ColorShadesScale, generateSystemAccentPalette, getGlobalAccent, getShadesTemplate } from './color-generators/accent-palette-generator';
+import { ColorShadesScale, generateSystemAccentPalette, getGlobalAccent, getShadesTemplate, SystemAccentList } from './color-generators/accent-palette-generator';
 import { generateNeutrals } from './color-generators/neutrals-palette-generator';
 import { ImportFormData } from './import-ui';
 import { SemanticAccentColors, collectionNames, colorThemeNames, defaultSemanticAccents } from './defaults';
 import { _clone } from './utils/clone';
-import { addToGlobalTokensDictionary, findTokenReferences, findVariableAlias, getGlobalTokensDictionary, resolveGlobalTokenValue } from './utils/token-references';
+import { addToGlobalTokensDictionary, findTokenReferences, findVariableAlias, getGlobalTokensDictionary, getReferenceName, resolveGlobalTokenValue } from './utils/token-references';
 import { convertFigmaColorToRgb, parseColorValue } from './utils/figma-colors';
 import { DesignToken, DesignTokensRaw, importVariables } from './import-tokens';
 
 import { _mergeDeep } from './utils/merge-deep';
 import { figmaAliasToDesignTokens, getDefaultVariableValue } from './utils/figma-variables';
-import chroma from 'chroma-js';
-import { roundTwoDigits } from './utils/round-decimals';
 import { getColorTokensSortFn } from './utils/sort-tokens';
 
 // const _merge = require('lodash.merge')
 
 let GlobalNeutrals;
 
+interface ColorDesignTokens {
+    primary: ColorShadesScale;
+    fill: PaletteColorTypes;
+    stroke: PaletteColorTypes;
+    info: ColorShadesScale;
+    success: ColorShadesScale;
+    warning: ColorShadesScale;
+    danger: ColorShadesScale;
+    alt: PaletteColorTypes;
+    utility: UtyilityColors;
+    accent: SystemAccentList;
+    text: {
+        base: TextColors;
+        contrast: TextColors;
+    }
+}
+
+interface PaletteColorTypes {
+    base: ColorShadesScale;
+    contrast: ColorShadesScale;
+}
+
+interface UtyilityColors {
+    white: DesignToken;
+    black: DesignToken;
+    transparent: DesignToken;
+    tint: ColorShadesScale;
+    shade: ColorShadesScale;
+}
+
+interface TextColors {
+    600: DesignToken;
+    500: DesignToken;
+    400: DesignToken;
+    action: DesignToken;
+    info: DesignToken;
+    success: DesignToken;
+    warning: DesignToken;
+    danger: DesignToken;
+}
+
+
 export function getSemanticAccentSettings(): SemanticAccentColors {
     return defaultSemanticAccents;
 }
 
-export function getGlobalNeutrals(params?: ImportFormData) {
+export function getGlobalNeutrals(params?: ImportFormData): DesignTokensRaw {
     if (params) {
         GlobalNeutrals = generateNeutrals(params)
     }
@@ -68,7 +108,7 @@ function getTextOnAccentColors(formData: ImportFormData) {
     // const blackTextColor = chroma.hsl(formData.hue, formData.saturation, formData.textBlackBrightness / 100);
     // const whiteTextContrast = roundTwoDigits(chroma.contrast(whiteTextColor, systemAccentColor));
     // const blackTextContrast = roundTwoDigits(chroma.contrast(blackTextColor, systemAccentColor));
-    let finalColor = formData.acentTextColor;
+    let finalColor = formData.accentTextColor;
 
     if (finalColor == 'auto') {
         finalColor = formData.accentMidLuminance > 0.3 ? 'black' : 'white';
@@ -108,15 +148,51 @@ function getTextOnAccentColors(formData: ImportFormData) {
     return template;
 }
 
+function adjustTextSaturation(formData: ImportFormData, tokens: ColorDesignTokens) {
+    const template = {
+        "action": {
+            "adjustments": {
+                "s": formData.accentTextSaturation
+            }
+        },
+        "info": {
+            "adjustments": {
+                "s": formData.accentTextSaturation
+            }
+        },
+        "success": {
+            "adjustments": {
+                "s": formData.accentTextSaturation
+            }
+        },
+        "warning": {
+            "adjustments": {
+                "s": formData.accentTextSaturation
+            }
+        },
+        "danger": {
+            "adjustments": {
+                "s": formData.accentTextSaturation
+            }
+        }
+    }
+
+    _mergeDeep(tokens.text.base, template);
+    _mergeDeep(tokens.text.contrast, template);
+
+    return tokens;
+}
+
 export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData): DesignTokensRaw {
-    let lightCommon = {
-        ...paletteLightCommon,
-        // ..._mergeDeep(paletteTextLight, getTextOnAccentColors(formData))
-    }
-    let darkCommon = {
-        ...paletteDarkCommon,
-        // ..._mergeDeep(paletteTextDark, getTextOnAccentColors(formData))
-    }
+
+
+    let lightCommon = _clone(paletteLightCommon) as ColorDesignTokens;
+    let darkCommon = _clone(paletteDarkCommon) as ColorDesignTokens;
+
+    // if(formData.customAccentTextSaturation === true) {
+    //     lightCommon = adjustTextSaturation(formData, lightCommon);
+    //     darkCommon = adjustTextSaturation(formData, darkCommon);
+    // }
 
     let params = {
         ...normalizeFormData(formData)
@@ -135,7 +211,6 @@ export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData
     let lightAccentTokens = generateSystemAccentPalette('light', params);
     let darkAccentTokens = generateSystemAccentPalette('dark', params);
 
-
     const lightSemanticTokens = generateSemanticPalette(semanticAccents, lightAccentTokens);
     const darkSemanticTokens = generateSemanticPalette(semanticAccents, darkAccentTokens);
 
@@ -143,13 +218,13 @@ export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData
         accent: lightAccentTokens,
         ...lightCommon,
         ...lightSemanticTokens,
-    }
+    } as ColorDesignTokens;
 
     const darkCommonTokens = {
         accent: darkAccentTokens,
         ...darkCommon,
         ...darkSemanticTokens
-    }
+    } as ColorDesignTokens;
 
     let commonColors = {};
     let themeColors = {};
@@ -411,4 +486,25 @@ export async function getColorSystemVersion(): Promise<number> {
     }
 
     return 0;
+}
+
+function isAlias(value) {
+    try {
+        return value.toString().trim().charAt(0) === "{";
+    }
+    catch(e) {
+        debugger
+    }
+}
+export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: DesignTokensRaw) {
+    let value = token.$value as string;
+
+    value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
+
+    if (isAlias(value)) {
+        const aliasName = getReferenceName(value);
+        value = `var(--${aliasName.replace(/\./g, "-")})`;
+    }
+
+    return value
 }

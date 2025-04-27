@@ -91,8 +91,6 @@ export function save() {
 }
 
 export function load() {
-    debugger
-
     const pluginDataText = figma.root.getPluginData('SDS');
     let data: ImportFormData|ImportFormData[];
 

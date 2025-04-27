@@ -16,7 +16,7 @@ function getSaturationModifier(lightness) {
 }
 
 
-export function generateNeutrals(params: ImportFormData) {
+export function generateNeutrals(params: ImportFormData): DesignTokensRaw {
     const min = 4;
     const max = 100;
     const {

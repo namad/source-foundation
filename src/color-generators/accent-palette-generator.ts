@@ -31,78 +31,89 @@ interface GlobalAccentList {
     [key: string]: ColorShadesScale;
 }
 
-export function getShadesTemplate(theme: 'light' | 'dark'): ColorShadesScale {
-    if (theme == 'light') {
-        return {
-            "100": {
-                "$value": "rgba({200}, 0.125)",
-                "$type": "color",
-                "description": `Subtle semitransparent accent`
-            },
-            "200": {
-                "$value": "rgba({200}, 0.33)",
-                "$type": "color",
-                "description": `Light semitransparent accent`
-            },
-            "300": {
-                "$value": "{300}",
-                "$type": "color",
-                "description": `Non textual elements`
-            },
-            "400": {
-                "$value": "{400}",
-                "$type": "color",
-                "description": `Base background color`
-            },
-            "500": {
-                "$value": "{600}",
-                "$type": "color",
-                "description": `Text on light surface`
-            },
-            "600": {
-                "$value": "{100}",
-                "$type": "color",
-                "description": `Text on dark surface`
-            }
+export function getShadesTemplate(theme: 'light' | 'dark', params: ImportFormData): ColorShadesScale {
+    let textSaturationAdjustments = {};
+    
+    if (params.customAccentTextSaturation === true) {
+        textSaturationAdjustments = {
+            s: params.accentTextSaturation
         }
     }
 
-    if (theme == 'dark') {
-        return {
-            "100": {
-                "$value": "rgba({200}, 0.20)",
-                "$type": "color",
-                "description": `Subtle semitransparent accent`
-            },
-            "200": {
-                "$value": "rgba({200}, 0.45)",
-                "$type": "color",
-                "description": `Light semitransparent accent`
-            },
-            "300": {
-                "$value": "{300}",
-                "$type": "color",
-                "description": `Non textual elements`
-            },
-            "400": {
-                "$value": "{400}",
-                "$type": "color",
-                "description": `Base background color`
-            },
-            "500": {
-                "$value": "{100}",
-                "$type": "color",
-                "description": `Text on light surface`
-            },
-            "600": {
-                "$value": "{100}",
-                "$type": "color",
-                "description": `Text on dark surface`
+    switch(theme) {
+        default: {
+            return {
+                "100": {
+                    "$value": "rgba({200}, 0.125)",
+                    "$type": "color",
+                    "description": `Subtle semitransparent accent`
+                },
+                "200": {
+                    "$value": "rgba({200}, 0.33)",
+                    "$type": "color",
+                    "description": `Light semitransparent accent`
+                },
+                "300": {
+                    "$value": "{300}",
+                    "$type": "color",
+                    "description": `Non textual elements`
+                },
+                "400": {
+                    "$value": "{400}",
+                    "$type": "color",
+                    "description": `Base background color`
+                },
+                "500": {
+                    "$value": "{600}",
+                    "$type": "color",
+                    "description": `Text on light surface`,
+                    "adjustments": textSaturationAdjustments
+                },
+                "600": {
+                    "$value": "{100}",
+                    "$type": "color",
+                    "description": `Text on dark surface`,
+                    "adjustments": textSaturationAdjustments
+                }
+            }
+        }
+        case "dark": {
+            return {
+                "100": {
+                    "$value": "rgba({200}, 0.20)",
+                    "$type": "color",
+                    "description": `Subtle semitransparent accent`
+                },
+                "200": {
+                    "$value": "rgba({200}, 0.45)",
+                    "$type": "color",
+                    "description": `Light semitransparent accent`
+                },
+                "300": {
+                    "$value": "{300}",
+                    "$type": "color",
+                    "description": `Non textual elements`
+                },
+                "400": {
+                    "$value": "{400}",
+                    "$type": "color",
+                    "description": `Base background color`
+                },
+                "500": {
+                    "$value": "{100}",
+                    "$type": "color",
+                    "description": `Text on light surface`,
+                    "adjustments": textSaturationAdjustments
+                },
+                "600": {
+                    "$value": "{100}",
+                    "$type": "color",
+                    "description": `Text on dark surface`,
+                    "adjustments": textSaturationAdjustments
+                }
             }
         }
     }
-
-    throw new Error(`Theme: ${theme} is invalid`);
 }
 
 function getColorParams(theme: 'light' | 'dark', params: ImportFormData) {
@@ -123,16 +134,16 @@ export function generateSystemAccentPalette(theme: 'light' | 'dark', params: Imp
     const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
 
     let accents: SystemAccentList = {
-        red: getShadesTemplate(theme),
-        amber: getShadesTemplate(theme),
-        brown: getShadesTemplate(theme),
-        green: getShadesTemplate(theme),
-        teal: getShadesTemplate(theme),
-        blue: getShadesTemplate(theme),
-        indigo: getShadesTemplate(theme),
-        violet: getShadesTemplate(theme),
-        purple: getShadesTemplate(theme),
-        pink: getShadesTemplate(theme)
+        red: getShadesTemplate(theme, params),
+        amber: getShadesTemplate(theme, params),
+        brown: getShadesTemplate(theme, params),
+        green: getShadesTemplate(theme, params),
+        teal: getShadesTemplate(theme, params),
+        blue: getShadesTemplate(theme, params),
+        indigo: getShadesTemplate(theme, params),
+        violet: getShadesTemplate(theme, params),
+        purple: getShadesTemplate(theme, params),
+        pink: getShadesTemplate(theme, params)
     };
 
     for (const [name, scale] of Object.entries(accents)) {
@@ -196,14 +207,14 @@ function getScale(colors: chroma.Color[], count = 9): ColorShadesScale {
 
 function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }): chroma.Color[] {
 
-    let color1 = chroma.hsl(hue * 0.96, saturation * 0.95, 0.5)
+    let color1 = chroma.hsl(hue * 0.96, saturation * 1, 0.5)
         .luminance(maxLuminance)
 
     // this one always 4.5 : 1 contrast ratio
     let color2 = chroma.hsl(hue, saturation * 1, 0.5)
         .luminance(midLiminance)
 
-    let color3 = chroma.hsl(hue * 1.04, saturation * 0.95, 0.5)
+    let color3 = chroma.hsl(hue * 1.04, saturation * 1, 0.5)
         .luminance(minLuminance)
 
     return [color1, color2, color3];

@@ -91,9 +91,10 @@ a:hover {
     &.collapsed {
         opacity: 0;
         grid-template-rows: 0fr;
+        height: 0;
     }
 
-    &>* {
+    & > * {
         overflow: hidden;
     }
 }
@@ -714,9 +715,12 @@ a[data-expanded=true]::before {
 
 [data-theme="dark"][data-custom-dark="false"] {
 
+    & #darkModeLockAccentColorLiminance,
+    & #darkModeLockTextBrightness,
     & [data-name=hue] .dark-mode-lock,
     & [data-name=saturation] .dark-mode-lock,
     & [data-name=distance] .dark-mode-lock,
+    & [data-name=accentTextSaturation] .dark-mode-lock,
     & [data-name=accentSaturation] .dark-mode-lock {
         display: inline-flex;
     }

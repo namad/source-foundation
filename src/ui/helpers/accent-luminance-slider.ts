@@ -25,6 +25,7 @@ nouislider.create(luminanceSlider, {
 }, 1))
 
 luminanceSlider['noUiSlider'].on('start', (values, handle) => {
+    console.log(handle)
     const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
     colorPreviewDiv.classList.add("hover");
 })

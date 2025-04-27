@@ -53,6 +53,8 @@ function findGlobalTokenByName(name, dictionary) {
     name = designTokenAliasToFigma(name);
     const token = dictionary[name];
 
+    if(name == 'grey-undefined') debugger
+    
     if(!token) {
         const msg = `Cannot find token ${name} in global disctionary:`;
         console.warn(msg, dictionary);

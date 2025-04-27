@@ -115,7 +115,7 @@ export const defaultSettings: ImportFormData = {
 
     customAccentTextSaturation: false,
     accentTextSaturation: 0,
-    acentTextColor: 'auto',
+    accentTextColor: 'auto',
     textWhiteBrightness: 100,
     textBlackBrightness: 6,
     

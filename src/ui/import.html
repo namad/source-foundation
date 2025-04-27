@@ -90,44 +90,45 @@
             </div>
         </div>
 
-            <div id="darkModeControl">
-                <!-- <div class="height-expander"> -->
-                    <div class="bg-primary-100 border border-primary-200 rounded-lg py-minor-md px-md">
-                        <div class="flex flex-col gap-minor-base" id="customDarkModeDisabled">
-                            <p>
-                                Dark mode palette uses the same parameters as the light one. 
-                                Check <span class="icon icon-link-2 icon-sm align-text-bottom"></span> icon for visual cues.
-                                Hit the button below to enable full customisation
-                            </p>
-                            <div class="flex flex-1 justify-between items-center">
-                                <a href="#" data-modal="customDarkModeHelp" class="icon icon-info gap-xs2">Learn more</a>
-                                <button class="outline-button color-text-base-action" data-command="ENABLE_CUSTOM_DARK_MODE">Enable Custom Dark Mode</button>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-minor-base" id="customDarkModeEnabled">
-                            <p>
-                                The dark mode palette is fully customisable. Hit the button below to revert back to default
-                            </p>
-                            <div class="flex flex-1 flex-row-reverse">
-                                <button class="outline-button color-text-base-action" data-command="DISABLE_CUSTOM_DARK_MODE">Disable Custom Dark Mode</button>
-                            </div>
-                        </div>
-                    </div>
-                <!-- </div> -->
-            </div>
-
-
-            <div class="card brand-card -gradient-tint-10 -bg-blend-overlay" id="brandCard">
-                <div class="height-expander">
-                    <div class="flex flex-col gap-minor-sm overflow-hidden">
-                        <h3 class="text-lg font-bold">Primary / Brand Colour</h3>
-                        <p class="color-text-accent-500">
-                            Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
-                        </p>
+        <div id="darkModeControl">
+            <!-- <div class="height-expander"> -->
+            <div class="bg-primary-100 border border-primary-200 rounded-lg py-minor-md px-md">
+                <div class="flex flex-col gap-minor-base" id="customDarkModeDisabled">
+                    <p>
+                        Dark mode palette uses the same parameters as the light one.
+                        Check <span class="icon icon-link-2 icon-sm align-text-bottom"></span> icon for visual cues.
+                        Hit the button below to enable full customisation
+                    </p>
+                    <div class="flex flex-1 justify-between items-center">
+                        <a href="#" data-modal="customDarkModeHelp" class="icon icon-info gap-xs2">Learn more</a>
+                        <button class="outline-button color-text-base-action" data-command="ENABLE_CUSTOM_DARK_MODE">Enable Custom Dark Mode</button>
                     </div>
                 </div>
-                <div data-type="semantics" id="brandAccent" data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
+                <div class="flex flex-col gap-minor-base" id="customDarkModeEnabled">
+                    <p>
+                        The dark mode palette is fully customisable. Hit the button below to revert back to default
+                    </p>
+                    <div class="flex flex-1 justify-between items-center">
+                        <a href="#" data-modal="customDarkModeHelp" class="icon icon-info gap-xs2">Learn more</a>
+                        <button class="outline-button color-text-base-action" data-command="DISABLE_CUSTOM_DARK_MODE">Disable Custom Dark Mode</button>
+                    </div>
+                </div>
             </div>
+            <!-- </div> -->
+        </div>
+
+
+        <div class="card brand-card -gradient-tint-10 -bg-blend-overlay" id="brandCard">
+            <div class="height-expander">
+                <div class="flex flex-col gap-minor-sm overflow-hidden">
+                    <h3 class="text-lg font-bold">Primary / Brand Colour</h3>
+                    <p class="color-text-accent-500">
+                        Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
+                    </p>
+                </div>
+            </div>
+            <div data-type="semantics" id="brandAccent" data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
+        </div>
 
         <div class="card" id="neutralColors">
             <div class="flex flex-row items-baseline justify-between">
@@ -171,10 +172,10 @@
 
             <h4 class="mt-3 text-md font-bold">Colour Pattern</h4>
             <div data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
-            <p class="color-text-base-500 text-sm">
-                Difference in lightness percent between two adjacent colours. Wider
-                steps outcome greater contrast overall
-            </p>
+                <p class="color-text-base-500 text-sm">
+                    Difference in lightness percent between two adjacent colours. Wider
+                    steps outcome greater contrast overall
+                </p>
             </div>
         </div>
 
@@ -201,10 +202,10 @@
             </p>
             <hr />
 
-            <div>
-                <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Advanced Settings</a>
-                <div data-expander data-role="container" class="height-expander collapsed">
-                    <div class="flex flex-col gap-y-minor-base pt-minor-base">
+            <div class=" -mx-md">
+                <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon mx-md">Advanced Settings</a>
+                <div data-expander data-role="container" class="height-expander collapsed ">
+                    <div class="flex flex-col gap-y-minor-base px-md pt-minor-base pb-minor-xs">
                         <!-- <h4 class="text-md font-bold">Global accent preview</h4>
                         <p class="color-text-base-500">
                             Global accents are generated programatically based on accent luminancy
@@ -248,14 +249,14 @@
                             additional details
                         </p>-->
                         <h4 class="text-md font-bold flex flex-row gap-xs2">
-                            Accent color luminance
-                            <span class="icon icon-sm icon-link-2 opacity-70"></span>
-                        </h4> 
+                            Accent Colour Luminance
+                            <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70" id="darkModeLockAccentColorLiminance"></span>
+                        </h4>
                         <p>
-                            Use sliders below to customise accent palette. 
-                            The first knob sets the darkest shade. The second knob is for base shade.
+                            Use sliders below to customise accent palette.
+                            The first knob sets the darkest shade. The second knob is for the base shade.
                             The third knob defines the lightest shade.
-                        </p>                                                 
+                        </p>
                         <div class="mb-y-base flex flex-row gap-0">
                             <!-- <div class="-color-box hidden primary-100 color-text-base-600 flex-1 rounded-l">
                                 <div class="text-sm">100</div>
@@ -301,7 +302,7 @@
                                     <div class="row">Background color</div>
                                     <div class="toolip-body"></div>
                                 </div>
-                            </div>     
+                            </div>
                             <div class="color-box primary-500 color-text-contrast-600 flex-1" id="colorPreview0">
                                 <div class="text-sm">500</div>
                                 <div class="flex flex-row font-mono text-xs">
@@ -311,10 +312,10 @@
                                     <div class="row">Text on light surface</div>
                                     <div class="toolip-body"></div>
                                 </div>
-                            </div>             
+                            </div>
                             <div class="color-box primary-600 color-text-base-600 flex-1 rounded-r">
                                 <div class="text-sm">600</div>
-                                 <div class="flex flex-row  font-mono text-xs">
+                                <div class="flex flex-row  font-mono text-xs">
                                     <span class="token-value">600</span>:1
                                 </div>
                                 <div class="tooltip flex flex-col gap-minor-xs">
@@ -322,11 +323,6 @@
                                     <div class="toolip-body"></div>
                                 </div>
                             </div>
-
-
-
-
-
                         </div>
                         <div class="sliders flex">
                             <div id="luminanceSlider" class="noui-slider flex-1"></div>
@@ -347,8 +343,8 @@
             </div>
 
             <h4 class="mt-3 text-md font-bold flex flex-row gap-xs2">
-                Text color brightness
-                <span class="icon icon-sm icon-link-2 opacity-70"></span>
+                Text Colour Brightness
+                <span class="icon icon-sm icon-link-2 opacity-70 dark-mode-lock" id="darkModeLockTextBrightness"></span>
             </h4>
 
 
@@ -379,13 +375,40 @@
                 <div id="textBrightnessSlider" class="noui-slider flex-1"></div>
                 <span class="text-label text-right" -data-value="textWhiteBrightness">White text</span>
                 <input type="hidden" name="textWhiteBrightness" id="textWhiteBrightnessVal" value="100" />
-                <input type="hidden" name="textBlackBrightness" id="textBlackBrightnessVal" value="6"/>
+                <input type="hidden" name="textBlackBrightness" id="textBlackBrightnessVal" value="6" />
             </div>
 
             <p class="color-text-base-500 text-sm">
-                Set black and white percentages for texts colours on light and dark surfaces. 
+                Set black and white percentages for texts colours on light and dark surfaces.
                 It might be good idea to softer up a bit, no need to use pure black or 100% white
             </p>
+
+            <h4 class="mt-3 text-md font-bold">Semantic Text Colour</h4>
+
+            <div class="flex flex-col gap-y-xs">
+                <div class="flex flex-col gap-0 overflow-hidden rounded">
+                    <div class="block py-sm text-center flex-1 bg-fill-base-300">
+                        <span class="m-xs2 color-text-base-info">Info text</span>
+                        <span class="m-xs2 color-text-base-success">Success text</span>
+                        <span class="m-xs2 color-text-base-warning">Warning text</span>
+                        <span class="m-xs2 color-text-base-danger">Danger text</span>
+                    </div>
+                    <div class="block py-sm text-center flex-1 bg-fill-contrast-200">
+                        <span class="m-xs2 color-text-contrast-info">Info text</span>
+                        <span class="m-xs2 color-text-contrast-success">Success text</span>
+                        <span class="m-xs2 color-text-contrast-warning">Warning text</span>
+                        <span class="m-xs2 color-text-contrast-danger">Danger text</span>
+                    </div>
+                </div>
+            </div>
+
+            <label class="checkbox flex flex-row gap-2">
+                <input type="checkbox" name="customAccentTextSaturation" value="true" /><span>Custom Accent Text Colour Saturation</span>
+            </label>
+            <p class="color-text-base-500 text-sm">
+                By default, accent text colour is connected to it's respective accent. Tick checkbox above to enable custom saturation for bright texts.
+            </p>
+            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 30, "max": 100, "step": 1, "value": 20, "syncValue": true}'></div>
 
 
             <!-- 
@@ -423,33 +446,7 @@
             </label>
 
 
-            <h4 class="mt-3 text-md font-bold">Semantic Text Colour</h4>
 
-            <div class="flex flex-col gap-y-xs">
-                <div class="flex flex-row gap-0 overflow-hidden rounded">
-                    <div class="block py-sm text-center flex-1 bg-fill-base-200">
-                        <span class="block color-text-base-info">Info text</span>
-                        <span class="block color-text-base-success">Success text</span>
-                        <span class="block color-text-base-warning">Warning text</span>
-                        <span class="block color-text-base-danger">Danger text</span>
-                    </div>
-                    <div class="block py-sm text-center flex-1 bg-fill-contrast-200">
-                        <span class="block color-text-contrast-info">Info text</span>
-                        <span class="block color-text-contrast-success">Success text</span>
-                        <span class="block color-text-contrast-warning">Warning text</span>
-                        <span class="block color-text-contrast-danger">Danger text</span>
-                    </div>
-                </div>
-            </div>
-
-            <label class="checkbox flex flex-row gap-2">
-                <input type="checkbox" name="customAccentTextSaturation" value="true" /><span>Custom Accent Text Colour Saturation</span>
-            </label>
-            <p class="color-text-base-500 text-sm">
-                By default, accent text colour is connected to it's respective accent. Untick checkbox above to enable independent saturation control for bright texts.
-            </p>
-            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 20, "syncValue": true}'>
-            </div>
             -->
 
         </div>
@@ -725,7 +722,32 @@
             </button>
         </div>
         <div class="body">
-            Everything you need to know about custom dark mode is going to be listed here. Good luck commander!
+            <p>Theme colours are generated using certain parameters, and by default, they are the same in the light and dark modes.</p>
+            <div class="flex flex-col gap-minor-xs">
+                <p>Neurals</p>
+                <ul class="list-disc pl-md">
+                    <li><strong>Hue</strong> sets the tone</li>
+                    <li><strong>Saturation</strong> defines the intensity of the tone</li>
+                    <li><strong>Distance</strong> controls the difference between adjacent shades</li>
+                </ul>
+            </div>
+            <div class="flex flex-col gap-minor-xs">
+                <p>Accents</p>
+                <ul class="list-disc pl-md">
+                    <li><strong>Saturation</strong> makes it more or less vibrant</li>
+                    <li><strong>Luminance</strong> controls brightness and overall contrast</li>
+                </ul>
+            </div>
+            <div class="flex flex-col gap-minor-xs">
+                <p>Text Colours</p>
+                <ul class="list-disc pl-md">
+                    <li><strong>Accent text colour saturation</strong> enables custom saturation level for accent/semantic text</li>
+                </ul>
+            </div>
+
+            <p>
+                This creates consistency and uniformity. When you enable custom dark mode, the parameters above can be overridden to create a more nuanced dark mode.
+            </p>
         </div>
     </div>
 </dialog>

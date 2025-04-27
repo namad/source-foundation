@@ -2,7 +2,7 @@
 
 import { getReferenceName } from "../utils/token-references";
 import { parseColorValue } from "../utils/figma-colors";
-import { getGlobalNeutrals, getThemeColors, resolveColorTokenValue } from "../color-tokens";
+import { getGlobalNeutrals, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "../color-tokens";
 import { ImportFormData } from "../import-ui";
 import defaultSettings from "../presets/default.json";
 
@@ -19,9 +19,7 @@ import path from "path";
 import { EffectTokenValue } from "../effect-tokens";
 import { DesignToken, DesignTokensRaw } from "../import-tokens";
 
-function isAlias(value) {
-    return value.toString().trim().charAt(0) === "{";
-}
+
 
 export function makeFolder(filePath) {
     var dirname = path.dirname(filePath);
@@ -62,22 +60,7 @@ function collectColorVariables(theme: 'lightBase' | 'darkBase' | 'darkElevated',
     return Object.entries(themeColors as DesignTokensRaw).map(([name, token]) => {
         if (typeof token.$value !== 'string' || token.$type !== 'color') return;
 
-        let value = token.$value;
-
-        if (token.$value.indexOf('grey') != -1) {
-            value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
-        }
-        else if (isAlias(value)) {
-            const aliasName = getReferenceName(value);
-            value = `var(--${aliasName.replace(/\./g, "-")})`;
-        }
-        else if (value.startsWith('rgba(#')) {
-            value = parseColorValue(value, token.adjustments).hsl;
-        }
-        else {
-            value = resolveColorTokenValue(token as DesignToken, {}, 'hsl');
-        }
-
+        let value = processColorTokenCSSValue(token, globalNeutrals);
         return { name, value };
     })
 }
