@@ -4,6 +4,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -12,6 +13,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -20,6 +22,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -28,6 +31,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -36,6 +40,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -44,6 +49,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -52,6 +58,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -60,6 +67,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -68,6 +76,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -76,6 +85,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -84,6 +94,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -92,6 +103,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -100,6 +112,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -108,6 +121,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -116,6 +130,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -124,6 +139,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -132,6 +148,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -140,6 +157,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -148,6 +166,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -156,6 +175,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -164,6 +184,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -172,6 +193,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -180,6 +202,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -188,6 +211,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -196,6 +220,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -204,6 +229,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -212,6 +238,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -220,6 +247,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -228,6 +256,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -236,6 +265,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -244,6 +274,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -252,6 +283,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     },
@@ -260,6 +292,7 @@
         "$type": "number",
         "scopes": [
             "TEXT_CONTENT",
+            "GAP",
             "WIDTH_HEIGHT"
         ]
     }

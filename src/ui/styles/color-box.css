@@ -116,24 +116,6 @@
 }
 
 
-.color-box .tooltip {
-    position: absolute;
-    display: none;
-    min-width: 200%;
-    padding: var(--spacing-minor-sm) var(--spacing-sm);
-    background: var(--fill-contrast-100);
-    border: 1px solid var(--alt-base-500);
-    color: var(--text-contrast-600);
-    border-radius: var(--radii-base);
-    bottom: 120%;
-    left: 50%;
-    transform: translateX(-50%);
-    @apply shadow-5;
-
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-xs);
-}
-
 .color-box:first-child .tooltip {
     left: 0;
     transform: none;

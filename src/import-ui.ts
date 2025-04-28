@@ -17,6 +17,8 @@ import { SliderComponent } from "./ui/slider";
 import { getTokenLibrariesListMarkup } from "./ui/helpers/figma-libraries-selector";
 import { sliders } from "./ui/ref/sliders-collection";
 import { mainForm } from "./ui/ref/main-form";
+import { getReferenceName } from "./utils/token-references";
+import { activeModal } from "./ui/helpers/modal";
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
 
@@ -240,10 +242,10 @@ export function refreshUI(options: LoadDataOptions) {
     const globalNeutrals = getGlobalNeutrals(data);
 
     // THEME MODES
-    mainForm.dataset.theme = data.theme;
+    document.body.dataset.theme = data.theme;
 
     if(options.customDarkMode != undefined) {
-        mainForm.dataset.customDark = options.customDarkMode === true ? 'true' : 'false';
+        document.body.dataset.customDark = options.customDarkMode === true ? 'true' : 'false';
     }
 
 
@@ -262,19 +264,23 @@ export function refreshUI(options: LoadDataOptions) {
     const extension = {
         textBlackContrast: roundTwoDigits(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
         textWhiteContrast: roundTwoDigits(chroma.contrast(chroma(textWhiteColor), chroma(darkSurfaceColor))),
-        fillBase100: themeColors['fill/base/100']['$value'],
-        fillBase200: themeColors['fill/base/200']['$value'],
-        fillBase300: themeColors['fill/base/300']['$value'],
-        fillBase400: themeColors['fill/base/400']['$value'],
-        fillBase500: themeColors['fill/base/500']['$value'],
-        fillBase600: themeColors['fill/base/600']['$value'],
+        fillBase100: getReferenceName(themeColors['fill/base/100']['$value'] as string).replace('grey-', ''),
+        fillBase200: getReferenceName(themeColors['fill/base/200']['$value'] as string).replace('grey-', ''),
+        fillBase300: getReferenceName(themeColors['fill/base/300']['$value'] as string).replace('grey-', ''),
+        fillBase400: getReferenceName(themeColors['fill/base/400']['$value'] as string).replace('grey-', ''),
+        fillBase500: getReferenceName(themeColors['fill/base/500']['$value'] as string).replace('grey-', ''),
+        fillBase600: getReferenceName(themeColors['fill/base/600']['$value'] as string).replace('grey-', ''),
     }
 
-    updateValuesDisplay({...data, ...extension}, mainForm);
+    updateValuesDisplay({...data, ...extension});
 
     generatePresetsPreview(data);
 
     setCustomAccentTextSaturationSlider(data);
+
+    if(activeModal) {
+        activeModal.close()
+    }
 }
 
 function setCustomAccentTextSaturationSlider(data: ImportFormData) {
@@ -286,7 +292,7 @@ function setCustomAccentTextSaturationSlider(data: ImportFormData) {
     const primaryColorName = data.primary
     const saturation = accentTextSaturation <= 0 ? accentSaturation : accentTextSaturation;
 
-    sliders['accentTextSaturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data[primaryColorName], saturation, 0.5).hex());
+    sliders['accentTextSaturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data[primaryColorName], saturation/100, 0.5).hex());
 
     if (data.customAccentTextSaturation == true) {
         slider.set(saturation);
@@ -310,8 +316,18 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
             const systemToken = systemAccentShades[index]['$value'];
             const resolvedTo = typeof systemToken == "string" ? systemToken.replace(/{/g, "{global.") : 'N/A';
 
-            const toolTip = context.querySelector(`.color-box.primary-${index} .toolip-body`) as HTMLDivElement;
-            const valueEl = context.querySelector(`.color-box.primary-${index} .token-value`) as HTMLDivElement;
+            const colorBoxDiv = context.querySelector(`.color-box.primary-${index}`);
+
+            if(!colorBoxDiv) {
+                return
+            }
+
+            const popoverTarget = colorBoxDiv.getAttribute('popovertarget');
+            const popover = document.getElementById(popoverTarget);
+            
+            const toolTip = popover.querySelector(`.toolip-body`) as HTMLDivElement;
+            const valueEl = popover.querySelector(`.token-value`) as HTMLDivElement;
+
             const alpha = chromaColor.alpha();
 
             if (alpha < 1) {
@@ -320,23 +336,27 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
 
             const contrastWhite = roundOneDigit(
                                             chroma.contrast(
-                                                chroma.hsl(0, 0, data.textWhiteBrightness / 100), chromaColor
+                                                chroma.hsl(data.hue, data.saturation, data.textWhiteBrightness / 100), chromaColor
                                             )
                                         );
             const contrastBlack = roundOneDigit(
                                             chroma.contrast(
-                                                chroma.hsl(0, 0, data.textBlackBrightness / 100), chromaColor
+                                                chroma.hsl(data.hue, data.saturation, data.textBlackBrightness / 100), chromaColor
                                             )
                                         );
-            const hsl = outputHSL(chromaColor).join(", ");
-            let contrastWarn = 'none';
+            const hsl = outputHSL(chromaColor).join(" ");
+            let contrastWarnLightBg = 'none';
+            let contrastWarnDarkBg = 'none';
 
             if (index == '400' || index == '500') {
-                contrastWarn = contrastWhite < 4.5 ? 'color-negative-contrast' : 'color-positive-contrast';
+                contrastWarnLightBg = contrastWhite < 4.5 ? 'font-bold color-negative' : 'font-bold color-positive';
+            }
+            if (index == '600') {
+                contrastWarnDarkBg = contrastBlack < 4.5 ? 'font-bold color-negative' : 'font-bold color-positive';
             }
 
             if (index == '300') {
-                contrastWarn = contrastWhite < 3 ? 'color-negative-contrast' : 'color-positive-contrast';
+                contrastWarnLightBg = contrastWhite < 3 ? 'font-bold color-negative' : 'font-bold color-positive';
             }
 
             if (valueEl) {
@@ -350,11 +370,11 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs white</span>
-                        <span class="text-size-xs whitespace-nowrap ${contrastWarn}">${contrastWhite} : 1</span>
+                        <span class="text-size-xs whitespace-nowrap ${contrastWarnLightBg}">${contrastWhite} : 1</span>
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">vs black</span>
-                        <span class="text-size-xs whitespace-nowrap">${contrastBlack} : 1</span>
+                        <span class="text-size-xs whitespace-nowrap ${contrastWarnDarkBg}">${contrastBlack} : 1</span>
                     </div>
                     <div class="row flex flex-row justify-between gap-3">
                         <span class="text-size-xs opacity-70">hsl</span>

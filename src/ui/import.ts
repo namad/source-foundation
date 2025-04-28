@@ -3,6 +3,7 @@ import "./styles/utils.css";
 import "./styles/styles.css";
 import "./styles/dialog.css";
 import "./styles/color-box.css";
+import "./styles/tooltip.css";
 import "../../node_modules/nouislider/dist/nouislider.css";
 import "./styles/noui-slider.css";
 
@@ -25,6 +26,7 @@ import "./helpers/noui-slider";
 import "./helpers/accent-hue-sliders";
 import "./helpers/accent-luminance-slider";
 import "./helpers/text-brightness-slider";
+import "./helpers/tooltips";
 
 
 /*

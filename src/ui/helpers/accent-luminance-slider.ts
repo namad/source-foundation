@@ -27,12 +27,12 @@ nouislider.create(luminanceSlider, {
 luminanceSlider['noUiSlider'].on('start', (values, handle) => {
     console.log(handle)
     const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
-    colorPreviewDiv.classList.add("hover");
+    colorPreviewDiv.dispatchEvent(new Event('mouseenter', { 'bubbles': true }));
 })
 
 luminanceSlider['noUiSlider'].on('end', (values, handle) => {
     const colorPreviewDiv = document.getElementById(`colorPreview${handle}`);
-    colorPreviewDiv.classList.remove("hover");
+    colorPreviewDiv.dispatchEvent(new Event('mouseleave', { 'bubbles': true }));
 })
 
 luminanceSliderVals.forEach((element, index) => {

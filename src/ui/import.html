@@ -1,9 +1,9 @@
-<form id="importForm" data-theme="light" data-custom-dark="false">
+<form id="importForm">
     <dialog class="simple" id="typographyScaleModal">
         <div class="modal-container">
             <div class="header">
                 <h3 class="text-lg font-bold">Typography</h3>
-                <button class="close" value="cancel">
+                <button class="close close-modal" value="cancel">
                     <span class="icon icon-x"></span>
                 </button>
             </div>
@@ -29,7 +29,7 @@
         <div class="modal-container">
             <div class="header">
                 <h3 class="text-lg font-bold">Spacing</h3>
-                <button class="close" value="cancel">
+                <button class="close close-modal" value="cancel">
                     <span class="icon icon-x"></span>
                 </button>
             </div>
@@ -52,7 +52,7 @@
         <div class="modal-container">
             <div class="header">
                 <h3 class="text-lg font-bold">Radii Scale</h3>
-                <button class="close" value="cancel">
+                <button class="close close-modal" value="cancel">
                     <span class="icon icon-x"></span>
                 </button>
             </div>
@@ -64,12 +64,72 @@
         </div>
     </dialog>
 
+    <dialog class="simple" id="customDarkModeHelp" data-close-on-update="true">
+        <div class="modal-container">
+            <div class="header">
+                <h3 class="text-lg font-bold">Custom Dark Mode</h3>
+                <button class="close close-modal" value="cancel">
+                    <span class="icon icon-x"></span>
+                </button>
+            </div>
+            <div class="body">
+                <p>Theme colours are generated using certain parameters, and by default, they are the same in the light and dark modes.</p>
+                <div class="flex flex-col gap-minor-xs">
+                    <p>Neurals</p>
+                    <ul class="list-disc pl-md">
+                        <li><strong>Hue</strong> sets the tone</li>
+                        <li><strong>Saturation</strong> defines the intensity of the tone</li>
+                        <li><strong>Distance</strong> controls the difference between adjacent shades</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-minor-xs">
+                    <p>Accents</p>
+                    <ul class="list-disc pl-md">
+                        <li><strong>Saturation</strong> makes it more or less vibrant</li>
+                        <li><strong>Luminance</strong> controls brightness and overall contrast</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-minor-xs">
+                    <p>Text Colours</p>
+                    <ul class="list-disc pl-md">
+                        <li><strong>Accent text colour saturation</strong> enables custom saturation level for accent/semantic text</li>
+                    </ul>
+                </div>
+
+                <p>
+                    This creates consistency and uniformity. When you enable custom dark mode, the parameters above can be overridden to create a more nuanced dark mode.
+                </p>
+            </div>
+            <div class="footer gap-2">
+                <button class="close-modal">
+                    Close
+                </button>
+                <button class="primary enable-dark-mode-controls" data-command="ENABLE_CUSTOM_DARK_MODE">
+                    Enable Custom Dark Mode
+                </button>
+                <button class="primary disable-dark-mode-controls" data-command="DISABLE_CUSTOM_DARK_MODE">
+                    Disable Custom Dark Mode
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <div class="tooltip" id="colorModeConnectedToolTip" popover>
+        <div class="text-center">Affects both light and dark modes. Enable custom dark mode to override</div>
+    </div>
+    <div class="tooltip" id="darkModeOnlyToolTip" popover>
+        <div class="text-center">Affects dark mode only because of the custom dark mode</div>
+    </div>
+    <div class="tooltip" id="lightModeOnlyToolTip" popover>
+        <div class="text-center">Affects light mode only because of the custom dark mode</div>
+    </div>
+
     <div class="container relative flex flex-col">
         <div class="sentinal"></div>
         <div class="card-sticky">
             <div class="card color-preview">
-                <div class="flex flex-row items-center justify-between">
-                    <h4 class="text-md font-bold">Customise Palette</h4>
+                <div class="flex flex-row items-center gap-sm">
+                    <h4 class="text-md font-bold flex-1">Customise Palette</h4>
                     <div class="radio-segment">
                         <label>
                             <input type="radio" name="theme" value="light" />
@@ -86,6 +146,10 @@
                             </span>
                         </label>
                     </div>
+                    <span data-tooltip="bottom" data-offset="12" popovertarget="customDarkModeToolTip" data-modal="customDarkModeHelp" class="icon icon-alert-octagon custom-dark-indicator color-text-base-500 hover:color-text-base-600 hover:icon-alert-octagon-filled"></span>
+                    <div class="tooltip" id="customDarkModeToolTip" popover>
+                        <div class="whitespace-nowrap">Custom dark mode is enabled</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,7 +157,7 @@
         <div id="darkModeControl">
             <!-- <div class="height-expander"> -->
             <div class="bg-primary-100 border border-primary-200 rounded-lg py-minor-md px-md">
-                <div class="flex flex-col gap-minor-base" id="customDarkModeDisabled">
+                <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
                     <p>
                         Dark mode palette uses the same parameters as the light one.
                         Check <span class="icon icon-link-2 icon-sm align-text-bottom"></span> icon for visual cues.
@@ -104,7 +168,7 @@
                         <button class="outline-button color-text-base-action" data-command="ENABLE_CUSTOM_DARK_MODE">Enable Custom Dark Mode</button>
                     </div>
                 </div>
-                <div class="flex flex-col gap-minor-base" id="customDarkModeEnabled">
+                <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
                     <p>
                         The dark mode palette is fully customisable. Hit the button below to revert back to default
                     </p>
@@ -137,41 +201,98 @@
                     Palette</a>
             </div>
             <div class="flex flex-col gap-y-xs">
-                <div class="flex flex-row gap-0 overflow-hidden rounded pointer-events-none">
-                    <div class="color-box flex-1 bg-fill-base-200">
-                        <div class="color-text-base-600 text-sm">200</div>
-                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase200"></span>
+                <div class="flex flex-row gap-0 font-mono">
+                    <div class="color-box flex-1 bg-fill-base-200 color-text-base-400 hover:color-text-base-500 rounded-l" data-tooltip="top" data-offset="8" popovertarget="fillBase200ToolTip">
+                        <div class="p-minor-xs text-sm">
+                            <span class="text-size-xs whitespace-nowrap" data-value="fillBase200"></span>%
+                        </div>
+                        <div class="tooltip flex flex-col gap-minor-xs" id="fillBase200ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>200</b></div>
+                            <div class="toolip-body font-mono text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="text-size-xs whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="text-size-xs whitespace-nowrap" data-value="fillBase200"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="color-box flex-1 bg-fill-base-300">
-                        <div class="color-text-base-600 text-sm">300</div>
-                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase300"></span>
+                    <div class="color-box flex-1 bg-fill-base-300 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase300ToolTip">
+                        <div class="p-minor-xs text-sm">
+                            <span class="text-size-xs whitespace-nowrap" data-value="fillBase300"></span>%
+                        </div>
+                        <div class="tooltip flex flex-col gap-minor-xs" id="fillBase300ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>300</b></div>
+                            <div class="toolip-body font-mono text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="text-size-xs whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="text-size-xs whitespace-nowrap" data-value="fillBase300"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="color-box flex-1 bg-fill-base-400">
-                        <div class="color-text-base-600 text-sm">400</div>
-                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase400"></span>
+                    <div class="color-box flex-1 bg-fill-base-400 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase400ToolTip">
+                        <div class="p-minor-xs text-sm">
+                            <span class="text-size-xs whitespace-nowrap" data-value="fillBase400"></span>%
+                        </div>
+                        <div class="tooltip flex flex-col gap-minor-xs" id="fillBase400ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>400</b></div>
+                            <div class="toolip-body font-mono text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="text-size-xs whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="text-size-xs whitespace-nowrap" data-value="fillBase400"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="color-box flex-1 bg-fill-base-500">
-                        <div class="color-text-base-600 text-sm">500</div>
-                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase500"></span>
+                    <div class="color-box flex-1 bg-fill-base-500 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase500ToolTip">
+                        <div class="p-minor-xs text-sm">
+                            <span class="text-size-xs whitespace-nowrap" data-value="fillBase500"></span>%
+                        </div>
+                        <div class="tooltip flex flex-col gap-minor-xs" id="fillBase500ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>500</b></div>
+                            <div class="toolip-body font-mono text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="text-size-xs whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="text-size-xs whitespace-nowrap" data-value="fillBase500"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="color-box flex-1 bg-fill-base-600">
-                        <div class="color-text-base-600 text-sm">600</div>
-                        <span class="color-text-base-500 font-mono text-xs" data-value="fillBase600"></span>
+                    <div class="color-box flex-1 bg-fill-base-600 color-text-base-400 hover:color-text-base-500 rounded-r" data-tooltip="top" data-offset="8" popovertarget="fillBase600ToolTip">
+                        <div class="p-minor-xs text-sm">
+                            <span class="text-size-xs whitespace-nowrap" data-value="fillBase600"></span>%
+                        </div>
+                        <div class="tooltip flex flex-col gap-minor-xs" id="fillBase600ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>600</b></div>
+                            <div class="toolip-body font-mono text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="text-size-xs whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="text-size-xs whitespace-nowrap" data-value="fillBase600"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
-            <p class="color-text-base-500 text-sm">
-                Set the tone with hue slider and intensity with the saturation slider
-            </p>
-
-            <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "syncValue": true}'>
+            <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "linked": true}'>
             </div>
-            <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "syncValue": true}'>
+            <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "linked": true}'>
             </div>
 
             <h4 class="mt-3 text-md font-bold">Colour Pattern</h4>
-            <div data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "syncValue": true}'>
+            <div data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "linked": true}'>
                 <p class="color-text-base-500 text-sm">
                     Difference in lightness percent between two adjacent colours. Wider
                     steps outcome greater contrast overall
@@ -194,7 +315,7 @@
 
             <div class="flex flex-col gap-minor-xs" id="accentColorsSliders"></div>
             <hr />
-            <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "syncValue": true}'>
+            <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "linked": true}'>
             </div>
             <p class="color-text-base-500 text-sm">
                 Global saturation level for all accent colours. Please note, saturation
@@ -206,121 +327,76 @@
                 <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon mx-md">Advanced Settings</a>
                 <div data-expander data-role="container" class="height-expander collapsed ">
                     <div class="flex flex-col gap-y-minor-base px-md pt-minor-base pb-minor-xs">
-                        <!-- <h4 class="text-md font-bold">Global accent preview</h4>
-                        <p class="color-text-base-500">
-                            Global accents are generated programatically based on accent luminancy
-                            slider values below
-                        </p>
-                        <div class="mb-y-base flex flex-row gap-0">
-                            <div class="color-box global-accent-600 flex-1 rounded-l">
-                                <div class="flex flex-row gap-1">
-                                    <span class="text-size-xs opacity-70">600</span>
-                                </div>
-                            </div>
-                            <div class="color-box global-accent-500 flex-1">
-                                <div class="flex flex-row gap-1">
-                                    <span class="text-size-xs opacity-70">500</span>
-                                </div>
-                            </div>
-                            <div class="color-box global-accent-400 flex-1">
-                                <div class="flex flex-row gap-1 font-bold">
-                                    <span class="text-size-xs">400</span>
-                                </div>
-                            </div>
-                            <div class="color-box global-accent-300 flex-1">
-                                <div class="flex flex-row gap-1">
-                                    <span class="text-size-xs opacity-70">300</span>
-                                </div>
-                            </div>
-                            <div class="color-box global-accent-200 flex-1">
-                                <div class="flex flex-row gap-1">
-                                    <span class="text-size-xs opacity-70">200</span>
-                                </div>
-                            </div>
-                            <div class="color-box global-accent-100 flex-1 rounded-r">
-                                <div class="flex flex-row gap-1">
-                                    <span class="text-size-xs opacity-70">100</span>
-                                </div>
-                            </div>
-                        </div>
-                        <h4 class="mt-3 text-md font-bold">System accent preview</h4> 
-                        <p class="color-text-base-500">
-                            System accents are dervided from global ones. Hover over to see
-                            additional details
-                        </p>-->
                         <h4 class="text-md font-bold flex flex-row gap-xs2">
                             Accent Colour Luminance
-                            <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70" id="darkModeLockAccentColorLiminance"></span>
+                            <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70 hover:opacity-100"></span>
+                            <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
+                            <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
                         </h4>
                         <p>
                             Use sliders below to customise accent palette.
                             The first knob sets the darkest shade. The second knob is for the base shade.
                             The third knob defines the lightest shade.
                         </p>
-                        <div class="mb-y-base flex flex-row gap-0">
-                            <!-- <div class="-color-box hidden primary-100 color-text-base-600 flex-1 rounded-l">
-                                <div class="text-sm">100</div>
-                                <div class="flex flex-row font-mono text-xs">
-                                    <span class="token-value">100</span>:1
-                                </div>
-                                <div class="tooltip flex flex-col gap-minor-xs">
-                                    <div class="row">Subtle background</div>
-                                    <div class="toolip-body">
-                                        <div class="row flex flex-row justify-between gap-3">
-                                            <span class="text-size-xs whitespace-nowrap opacity-70">alias</span>
-                                            <span class="text-size-xs whitespace-nowrap">{resolvedTo}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="color-box primary-200 color-text-base-600 flex-1 rounded-l">
-                                <div class="text-sm">200</div>
+                        <div class="mb-y-base flex flex-row gap-0 font-mono rounded overflow-hidden">
+                            <div class="color-box primary-200 color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary200ToolTip">
+                                <div class="text-sm opacity-70">200</div>
                                 <div class="flex flex-row font-mono text-xs">
                                     <span class="token-value">200</span>:1
                                 </div>
-                                <div class="tooltip flex flex-col gap-minor-xs">
-                                    <div class="row">Light background</div>
-                                    <div class="toolip-body"></div>
+                                <div class="tooltip min-w-44 flex flex-col gap-minor-xs" popover id="primary200ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Light background</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-300 color-text-contrast-600 flex-1" id="colorPreview2">
-                                <div class="text-sm">300</div>
+                            <div class="color-box primary-300 color-text-contrast-600 flex-1" id="colorPreview2" data-tooltip="top" data-offset="8" popovertarget="primary300ToolTip">
+                                <div class="text-sm opacity-70">300</div>
                                 <div class="flex flex-row font-mono text-xs">
                                     <span class="token-value">300</span>:1
                                 </div>
-                                <div class="tooltip flex flex-col gap-minor-xs">
-                                    <div class="row">Non-textual element</div>
-                                    <div class="toolip-body"></div>
+                                <div class="tooltip min-w-44 flex flex-col gap-minor-xs" popover id="primary300ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Non-textual element</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-400 color-text-contrast-600 flex-1" id="colorPreview1">
-                                <div class="text-sm font-bold">400</div>
+                            <div class="color-box primary-400 color-text-contrast-600 flex-1" id="colorPreview1" data-tooltip="top" data-offset="8" popovertarget="primary400ToolTip">
+                                <div class="text-sm font-bold opacity-70">400</div>
                                 <div class="flex flex-row font-mono text-xs">
                                     <span class="token-value">400</span>:1
                                 </div>
-                                <div class="tooltip flex flex-col gap-minor-xs">
-                                    <div class="row">Background color</div>
-                                    <div class="toolip-body"></div>
+                                <div class="tooltip min-w-44 flex flex-col gap-minor-xs" popover id="primary400ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Background color</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-500 color-text-contrast-600 flex-1" id="colorPreview0">
-                                <div class="text-sm">500</div>
+                            <div class="color-box primary-500 color-text-contrast-600 flex-1" id="colorPreview0" data-tooltip="top" data-offset="8" popovertarget="primary500ToolTip">
+                                <div class="text-sm opacity-70">500</div>
                                 <div class="flex flex-row font-mono text-xs">
                                     <span class="token-value">500</span>:1
                                 </div>
-                                <div class="tooltip flex flex-col gap-minor-xs">
-                                    <div class="row">Text on light surface</div>
-                                    <div class="toolip-body"></div>
+                                <div class="tooltip min-w-44 flex flex-col gap-minor-xs" popover id="primary500ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Text on light surface</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-600 color-text-base-600 flex-1 rounded-r">
-                                <div class="text-sm">600</div>
+                            <div class="color-box primary-600 color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary600ToolTip">
+                                <div class="text-sm opacity-70">600</div>
                                 <div class="flex flex-row  font-mono text-xs">
                                     <span class="token-value">600</span>:1
                                 </div>
-                                <div class="tooltip flex flex-col gap-minor-xs">
-                                    <div class="row">Text on dark surface</div>
-                                    <div class="toolip-body"></div>
+                                <div class="tooltip min-w-44 flex flex-col gap-minor-xs" popover id="primary600ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Text on dark surface</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -343,59 +419,65 @@
             </div>
 
             <h4 class="mt-3 text-md font-bold flex flex-row gap-xs2">
-                Text Colour Brightness
-                <span class="icon icon-sm icon-link-2 opacity-70 dark-mode-lock" id="darkModeLockTextBrightness"></span>
+                Base Text Colours
+                <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70 hover:opacity-100"></span>
+                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
+                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
             </h4>
 
             <div class="flex flex-row gap-0 overflow-hidden rounded" id="textColorPreview">
                 <div class="flex flex-col gap-2 px-base py-minor-sm text-center flex-1 bg-fill-base-300">
-                    <div class="color-text-base-600">
-                        <b>text.base.</b>600
+                    <div class="color-text-base-600 text-sm">
+                        Text on light surface
                     </div>
                     <div class="color-text-base-500 font-mono text-xs flex justify-center items-center gap-base">
-                        <span>{grey-<span data-value="textBlackBrightness">0</span>}</span>
+
                         <span><span data-value="textBlackContrast">0</span>:1</span>
                     </div>
                 </div>
                 <div class="flex flex-col gap-1 px-base py-minor-sm text-center flex-1 bg-fill-contrast-300" style="background-color: var(--grey-20);">
-                    <div class="color-text-contrast-600">
-                        <b>text.contrast.</b>600
+                    <div class="color-text-contrast-600 text-sm">
+                        Text on dark surface
                     </div>
                     <div class="color-text-contrast-500 font-mono text-xs flex justify-center items-center gap-base">
-                        <span>{grey-<span data-value="textWhiteBrightness">0</span>}</span>
+
                         <span><span data-value="textWhiteContrast">0</span>:1</span>
                     </div>
                 </div>
             </div>
 
             <div class="sliders flex flex-row items-center gap-xs">
-                <span class="text-label" -data-value="textBlackBrightness">Black text</span>
+                <span class="text-label" -data-value="textBlackBrightness">Black <span><span data-value="textBlackBrightness">0</span>%</span></span>
                 <div id="textBrightnessSlider" class="noui-slider flex-1"></div>
-                <span class="text-label text-right" -data-value="textWhiteBrightness">White text</span>
+                <span class="text-label text-right" -data-value="textWhiteBrightness">White <span><span data-value="textWhiteBrightness">0</span>%</span></span>
                 <input type="hidden" name="textWhiteBrightness" id="textWhiteBrightnessVal" value="100" />
                 <input type="hidden" name="textBlackBrightness" id="textBlackBrightnessVal" value="6" />
             </div>
 
             <p class="color-text-base-500 text-sm">
-                Set black and white percentages for texts colours on light and dark surfaces.
-                It might be good idea to soften up a bit, no need to use pure black or 100% white
+                Set black and white percentages for texts colours on light and dark surfaces
             </p>
 
-            <h4 class="mt-3 text-md font-bold">Semantic Text Colour</h4>
+            <h4 class="mt-3 text-md font-bold flex flex-row gap-xs2">
+                Accent Text Colour
+                <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70 hover:opacity-100"></span>
+                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
+                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
+            </h4>
 
             <div class="flex flex-col gap-y-xs">
                 <div class="flex flex-col gap-0 overflow-hidden rounded">
-                    <div class="block py-sm text-center flex-1 bg-fill-base-300">
-                        <span class="m-xs2 color-text-base-info">Info text</span>
-                        <span class="m-xs2 color-text-base-success">Success text</span>
-                        <span class="m-xs2 color-text-base-warning">Warning text</span>
-                        <span class="m-xs2 color-text-base-danger">Danger text</span>
+                    <div class="flex flex-row justify-center gap-base py-sm text-center flex-1 bg-fill-base-300 text-sm">
+                        <span class="color-text-base-info">Info</span>
+                        <span class="color-text-base-success">Success</span>
+                        <span class="color-text-base-warning">Warning</span>
+                        <span class="color-text-base-danger">Danger</span>
                     </div>
-                    <div class="block py-sm text-center flex-1 bg-fill-contrast-200">
-                        <span class="m-xs2 color-text-contrast-info">Info text</span>
-                        <span class="m-xs2 color-text-contrast-success">Success text</span>
-                        <span class="m-xs2 color-text-contrast-warning">Warning text</span>
-                        <span class="m-xs2 color-text-contrast-danger">Danger text</span>
+                    <div class="flex flex-row justify-center gap-base py-sm text-center flex-1 bg-fill-contrast-200 text-sm">
+                        <span class="color-text-contrast-info">Info</span>
+                        <span class="color-text-contrast-success">Success</span>
+                        <span class="color-text-contrast-warning">Warning</span>
+                        <span class="color-text-contrast-danger">Danger</span>
                     </div>
                 </div>
             </div>
@@ -406,7 +488,7 @@
             <p class="color-text-base-500 text-sm">
                 By default, accent text colour is connected to it's respective accent. Tick checkbox above to enable custom saturation for bright texts.
             </p>
-            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 100, "syncValue": true}'></div>
+            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 100, "linked": false}'></div>
 
 
             <!-- 
@@ -672,7 +754,7 @@
     <div class="modal-container">
         <div class="header">
             <h3 class="text-lg font-bold">Custom Brand Colour</h3>
-            <button class="close" value="cancel">
+            <button class="close close-modal" value="cancel">
                 <span class="icon icon-x"></span>
             </button>
         </div>
@@ -708,53 +790,17 @@
                 </label>
             </div>
         </div>
+
     </div>
 </dialog>
 
-<dialog class="simple" id="customDarkModeHelp">
-    <div class="modal-container">
-        <div class="header">
-            <h3 class="text-lg font-bold">Custom Dark Mode</h3>
-            <button class="close" value="cancel">
-                <span class="icon icon-x"></span>
-            </button>
-        </div>
-        <div class="body">
-            <p>Theme colours are generated using certain parameters, and by default, they are the same in the light and dark modes.</p>
-            <div class="flex flex-col gap-minor-xs">
-                <p>Neurals</p>
-                <ul class="list-disc pl-md">
-                    <li><strong>Hue</strong> sets the tone</li>
-                    <li><strong>Saturation</strong> defines the intensity of the tone</li>
-                    <li><strong>Distance</strong> controls the difference between adjacent shades</li>
-                </ul>
-            </div>
-            <div class="flex flex-col gap-minor-xs">
-                <p>Accents</p>
-                <ul class="list-disc pl-md">
-                    <li><strong>Saturation</strong> makes it more or less vibrant</li>
-                    <li><strong>Luminance</strong> controls brightness and overall contrast</li>
-                </ul>
-            </div>
-            <div class="flex flex-col gap-minor-xs">
-                <p>Text Colours</p>
-                <ul class="list-disc pl-md">
-                    <li><strong>Accent text colour saturation</strong> enables custom saturation level for accent/semantic text</li>
-                </ul>
-            </div>
 
-            <p>
-                This creates consistency and uniformity. When you enable custom dark mode, the parameters above can be overridden to create a more nuanced dark mode.
-            </p>
-        </div>
-    </div>
-</dialog>
 
 <dialog id="importModal">
     <div class="modal-container h-full">
         <div class="header">
             <h3 class="text-md font-bold">Import Tokens</h3>
-            <button class="close" value="cancel">
+            <button class="close close-modal" value="cancel">
                 <span class="icon icon-x"></span>
             </button>
         </div>
@@ -821,7 +867,7 @@
     <div class="modal-container h-full">
         <div class="header">
             <h3 class="text-md font-bold">Export Theme</h3>
-            <button class="close" value="cancel">
+            <button class="close close-modal" value="cancel">
                 <span class="icon icon-x"></span>
             </button>
         </div>
