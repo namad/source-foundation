@@ -18,7 +18,7 @@ import paletteDarkBase4 from './tokens/colors/system/dark-base-4.tokens.json';
 import paletteTextDark from './tokens/colors/system/dark-text-base.json';
 
 import { flattenObject } from './utils/flatten-object';
-import { ColorShadesScale, generateSystemAccentPalette, getGlobalAccent, getShadesTemplate, SystemAccentList } from './color-generators/accent-palette-generator';
+import { generateSystemAccentPalette } from './color-generators/accent-palette-generator';
 import { generateNeutrals } from './color-generators/neutrals-palette-generator';
 import { ImportFormData } from './import-ui';
 import { SemanticAccentColors, collectionNames, colorThemeNames, defaultSemanticAccents } from './defaults';
@@ -35,37 +35,39 @@ import { getColorTokensSortFn } from './utils/sort-tokens';
 
 let GlobalNeutrals;
 
-interface ColorDesignTokens {
-    primary: ColorShadesScale;
-    fill: PaletteColorTypes;
-    stroke: PaletteColorTypes;
-    info: ColorShadesScale;
-    success: ColorShadesScale;
-    warning: ColorShadesScale;
-    danger: ColorShadesScale;
-    alt: PaletteColorTypes;
+export interface SystemColorPalette {
+    primary: ColorRamp;
+    fill: BaseColorTypes;
+    stroke: BaseColorTypes;
+    text: TextColorTypes;
+    info: ColorRamp;
+    success: ColorRamp;
+    warning: ColorRamp;
+    danger: ColorRamp;
+    alt: BaseColorTypes;
     utility: UtyilityColors;
     accent: SystemAccentList;
-    text: {
-        base: TextColors;
-        contrast: TextColors;
-    }
 }
 
-interface PaletteColorTypes {
-    base: ColorShadesScale;
-    contrast: ColorShadesScale;
+export interface TextColorTypes {
+    base: TextColors;
+    contrast: TextColors;
 }
 
-interface UtyilityColors {
+export interface BaseColorTypes {
+    base: ColorRamp;
+    contrast: ColorRamp;
+}
+
+export interface UtyilityColors {
     white: DesignToken;
     black: DesignToken;
     transparent: DesignToken;
-    tint: ColorShadesScale;
-    shade: ColorShadesScale;
+    tint: ColorRamp;
+    shade: ColorRamp;
 }
 
-interface TextColors {
+export interface TextColors {
     600: DesignToken;
     500: DesignToken;
     400: DesignToken;
@@ -76,6 +78,27 @@ interface TextColors {
     danger: DesignToken;
 }
 
+export interface SystemAccentList {
+    red: ColorRamp;
+    amber: ColorRamp;
+    brown: ColorRamp;
+    green: ColorRamp;
+    teal: ColorRamp;
+    blue: ColorRamp;
+    indigo: ColorRamp;
+    violet: ColorRamp;
+    purple: ColorRamp;
+    pink: ColorRamp;
+}
+
+export interface ColorRamp {
+    "100": DesignToken;
+    "200": DesignToken;
+    "300": DesignToken;
+    "400": DesignToken;
+    "500": DesignToken;
+    "600": DesignToken;
+}
 
 export function getSemanticAccentSettings(): SemanticAccentColors {
     return defaultSemanticAccents;
@@ -148,51 +171,11 @@ function getTextOnAccentColors(formData: ImportFormData) {
     return template;
 }
 
-function adjustTextSaturation(formData: ImportFormData, tokens: ColorDesignTokens) {
-    const template = {
-        "action": {
-            "adjustments": {
-                "s": formData.accentTextSaturation
-            }
-        },
-        "info": {
-            "adjustments": {
-                "s": formData.accentTextSaturation
-            }
-        },
-        "success": {
-            "adjustments": {
-                "s": formData.accentTextSaturation
-            }
-        },
-        "warning": {
-            "adjustments": {
-                "s": formData.accentTextSaturation
-            }
-        },
-        "danger": {
-            "adjustments": {
-                "s": formData.accentTextSaturation
-            }
-        }
-    }
-
-    _mergeDeep(tokens.text.base, template);
-    _mergeDeep(tokens.text.contrast, template);
-
-    return tokens;
-}
-
 export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData): DesignTokensRaw {
 
 
-    let lightCommon = _clone(paletteLightCommon) as ColorDesignTokens;
-    let darkCommon = _clone(paletteDarkCommon) as ColorDesignTokens;
-
-    // if(formData.customAccentTextSaturation === true) {
-    //     lightCommon = adjustTextSaturation(formData, lightCommon);
-    //     darkCommon = adjustTextSaturation(formData, darkCommon);
-    // }
+    let lightCommon = _clone(paletteLightCommon) as SystemColorPalette;
+    let darkCommon = _clone(paletteDarkCommon) as SystemColorPalette;
 
     let params = {
         ...normalizeFormData(formData)
@@ -218,13 +201,13 @@ export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData
         accent: lightAccentTokens,
         ...lightCommon,
         ...lightSemanticTokens,
-    } as ColorDesignTokens;
+    } as SystemColorPalette;
 
     const darkCommonTokens = {
         accent: darkAccentTokens,
         ...darkCommon,
         ...darkSemanticTokens
-    } as ColorDesignTokens;
+    } as SystemColorPalette;
 
     let commonColors = {};
     let themeColors = {};
@@ -273,7 +256,7 @@ export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData
     }
 }
 
-function generateSemanticShades(aliasName, accentShades): ColorShadesScale {
+function generateSemanticShades(aliasName, accentShades): ColorRamp {
     let output = {};
 
     for (var a = 1, b = 7; a < b; a++) {
@@ -284,7 +267,7 @@ function generateSemanticShades(aliasName, accentShades): ColorShadesScale {
         }
     }
 
-    return output as ColorShadesScale;
+    return output as ColorRamp;
 }
 
 function generateSemanticPalette(accents: SemanticAccentColors, palette) {

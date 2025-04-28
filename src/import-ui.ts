@@ -4,7 +4,7 @@ import * as typescaleTokens from "./typography-tokens";
 import * as spacingTokens from "./spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
-import { getGlobalAccent, getShadesTemplate } from "./color-generators/accent-palette-generator";
+import { getGlobalAccentRamp, getAccentRamp } from "./color-generators/accent-palette-generator";
 import { roundOneDigit, roundTwoDigits } from "./utils/round-decimals";
 import { getGlobalNeutrals, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "./color-tokens";
 import { parseColorValue } from "./utils/figma-colors";
@@ -227,7 +227,7 @@ export function refreshUI(options: LoadDataOptions) {
     exportCodeTextarea.value = JSON.stringify(data, null, 4);
 
     const primaryColorHUE = data.primary
-    const shades = getGlobalAccent(
+    const shades = getGlobalAccentRamp(
         data[primaryColorHUE],
         data.accentSaturation,
         data.accentMinLuminance,
@@ -304,7 +304,7 @@ function setCustomAccentTextSaturationSlider(data: ImportFormData) {
 }
 
 function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
-    const systemAccentShades = getShadesTemplate(data.theme, data);
+    const systemAccentShades = getAccentRamp(data.theme, data);
 
     Object.entries(themeColors).forEach(([name, token]) => {
         if (name.includes(data.primary)) {

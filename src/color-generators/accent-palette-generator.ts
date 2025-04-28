@@ -3,35 +3,9 @@ import * as themeStore from '../utils/themes-store';
 import { resolveGlobalTokenValue } from "../utils/token-references";
 import { ImportFormData } from "../import-ui";
 import { defaultAccentHUEs, systemAccentList } from "../defaults";
-import { DesignToken, DesignTokensRaw } from "../import-tokens";
+import { ColorRamp, SystemAccentList } from "../color-tokens";
 
-export interface SystemAccentList {
-    red: ColorShadesScale;
-    amber: ColorShadesScale;
-    brown: ColorShadesScale;
-    green: ColorShadesScale;
-    teal: ColorShadesScale;
-    blue: ColorShadesScale;
-    indigo: ColorShadesScale;
-    violet: ColorShadesScale;
-    purple: ColorShadesScale;
-    pink: ColorShadesScale;
-}
-
-export interface ColorShadesScale {
-    "100": DesignToken;
-    "200": DesignToken;
-    "300": DesignToken;
-    "400": DesignToken;
-    "500": DesignToken;
-    "600": DesignToken;
-}
-
-interface GlobalAccentList {
-    [key: string]: ColorShadesScale;
-}
-
-export function getShadesTemplate(theme: 'light' | 'dark', params: ImportFormData): ColorShadesScale {
+export function getAccentRamp(theme: 'light' | 'dark', params: ImportFormData): ColorRamp {
     let textSaturationAdjustments = {};
     
     if (params.customAccentTextSaturation === true) {
@@ -134,23 +108,23 @@ export function generateSystemAccentPalette(theme: 'light' | 'dark', params: Imp
     const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
 
     let accents: SystemAccentList = {
-        red: getShadesTemplate(theme, params),
-        amber: getShadesTemplate(theme, params),
-        brown: getShadesTemplate(theme, params),
-        green: getShadesTemplate(theme, params),
-        teal: getShadesTemplate(theme, params),
-        blue: getShadesTemplate(theme, params),
-        indigo: getShadesTemplate(theme, params),
-        violet: getShadesTemplate(theme, params),
-        purple: getShadesTemplate(theme, params),
-        pink: getShadesTemplate(theme, params)
+        red: getAccentRamp(theme, params),
+        amber: getAccentRamp(theme, params),
+        brown: getAccentRamp(theme, params),
+        green: getAccentRamp(theme, params),
+        teal: getAccentRamp(theme, params),
+        blue: getAccentRamp(theme, params),
+        indigo: getAccentRamp(theme, params),
+        violet: getAccentRamp(theme, params),
+        purple: getAccentRamp(theme, params),
+        pink: getAccentRamp(theme, params)
     };
 
     for (const [name, scale] of Object.entries(accents)) {
         const hue = params[name];
 
-        const shades = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance);
-        accents[name] = getThemeScale(scale, shades)
+        const shades = getGlobalAccentRamp(hue, saturation, minLuminance, midLuminance, maxLuminance);
+        accents[name] = resolveRampValues(scale, shades)
     }
 
     return accents;
@@ -161,49 +135,43 @@ export function generateGlobalAccentPalette(theme: 'light'|'dark', params: Impor
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
         const hue = params[name];
-        accents[name] = getGlobalAccent(hue, saturation, minLuminance, midLuminance, maxLuminance);
+        accents[name] = getGlobalAccentRamp(hue, saturation, minLuminance, midLuminance, maxLuminance);
     })
     return accents;
 }
 
-export function getGlobalAccent(hue: number, saturation: number, minLuminance: number, midLiminance: number, maxLuminance: number, steps = 7) {
-    const range = getRangeOfThree({
+export function getGlobalAccentRamp(hue: number, saturation: number, minLuminance: number, midLiminance: number, maxLuminance: number, steps = 7): ColorRamp {
+    const keyShades = getRangeOfThree({
         hue,
         saturation,
         minLuminance,
         midLiminance,
         maxLuminance
     });
-    const shades = getScale(range, steps);
-    return shades;
-}
+    let colorRamp = {};
+    const scale = chroma.scale(keyShades).colors(steps, 'hex');
 
-function getThemeScale(input: ColorShadesScale, dictionary) {
-    let output = {};
-    Object.entries(input).forEach(([shadeNumber, token]) => {
-        token.$value = resolveGlobalTokenValue(token.$value, dictionary);
-        output[shadeNumber] = token;
-    })
-
-    return output as ColorShadesScale;
-}
-
-/*
-    colors: getRangeOfThree()
-*/
-function getScale(colors: chroma.Color[], count = 9): ColorShadesScale {
-    let tokens = {};
-    // chroma scale returns array of hex values
-    const scale = chroma.scale(colors).colors(count, 'hex');
     scale.forEach((color, index) => {
-        tokens[`${index + 1}00`] = {
+        colorRamp[`${index + 1}00`] = {
             $value: color,
             $type: 'color',
             private: true
         }
     });
-    return tokens as ColorShadesScale;
+
+    return colorRamp as ColorRamp;
 }
+
+function resolveRampValues(templateRamp: ColorRamp, dictionary) {
+    let output = {};
+    Object.entries(templateRamp).forEach(([shadeNumber, token]) => {
+        token.$value = resolveGlobalTokenValue(token.$value, dictionary);
+        output[shadeNumber] = token;
+    })
+
+    return output as ColorRamp;
+}
+
 
 function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }): chroma.Color[] {
 
@@ -219,5 +187,6 @@ function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0
 
     return [color1, color2, color3];
 }
+
 export { defaultAccentHUEs as defaultAccentColors };
 

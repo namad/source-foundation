@@ -14,7 +14,7 @@ import {colorThemes, colorThemeNames, collectionNames} from './defaults';
 
 import { getSizeTokensSortFn, getColorTokensSortFn, getAlphaNumTokensSortFn  } from './utils/sort-tokens';
 import { importTextStyles } from './utils/figma-text-styles';
-import { getGlobalAccent } from './color-generators/accent-palette-generator';
+import { getGlobalAccentRamp } from './color-generators/accent-palette-generator';
 import { resolveAliasOrValue, addToGlobalTokensDictionary, getGlobalTokensDictionary } from './utils/token-references';
 import { toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
@@ -90,7 +90,7 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
     const contrastRatios = {};
 
     const primaryColorHUE = data.primary;
-    const shades = getGlobalAccent(
+    const shades = getGlobalAccentRamp(
         data[primaryColorHUE],
         data.accentSaturation,
         data.accentMinLuminance,

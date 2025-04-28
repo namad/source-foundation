@@ -1,4 +1,4 @@
-import { SystemAccentList } from "./color-generators/accent-palette-generator";
+import { SystemAccentList } from "./color-tokens";
 import { DesignToken, DesignTokensRaw } from "./import-tokens";
 
 export interface BrandCollection {

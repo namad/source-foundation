@@ -73,35 +73,49 @@
                 </button>
             </div>
             <div class="body">
-                <p>Theme colours are generated using certain parameters, and by default, they are the same in the light and dark modes.</p>
-                <div class="flex flex-col gap-minor-xs">
-                    <p>Neurals</p>
-                    <ul class="list-disc pl-md">
-                        <li><strong>Hue</strong> sets the tone</li>
-                        <li><strong>Saturation</strong> defines the intensity of the tone</li>
-                        <li><strong>Distance</strong> controls the difference between adjacent shades</li>
-                    </ul>
-                </div>
-                <div class="flex flex-col gap-minor-xs">
-                    <p>Accents</p>
-                    <ul class="list-disc pl-md">
-                        <li><strong>Saturation</strong> makes it more or less vibrant</li>
-                        <li><strong>Luminance</strong> controls brightness and overall contrast</li>
-                    </ul>
-                </div>
-                <div class="flex flex-col gap-minor-xs">
-                    <p>Text Colours</p>
-                    <ul class="list-disc pl-md">
-                        <li><strong>Accent text colour saturation</strong> enables custom saturation level for accent/semantic text</li>
-                    </ul>
+                <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
+                    Enable custom dark mode so you can override settings for neutrals, accents and text colours
                 </div>
 
-                <p>
-                    This creates consistency and uniformity. When you enable custom dark mode, the parameters above can be overridden to create a more nuanced dark mode.
-                </p>
+                <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
+                    Disable custom dark mode to restore common settings for neutrals, accents and text colours. Please note, it will reset your dark mode settings back to default
+                </div>
+
+                <div class="">
+                    <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Learn more</a>
+                    <div data-expander data-role="container" class="height-expander collapsed ">
+                        <div class="flex flex-col gap-minor-base pt-minor-base">
+                            <p>Theme colours are generated using certain parameters, and by default, they are the same in the light and dark modes.</p>
+                            <div class="flex flex-col gap-minor-xs">
+                                <p>Neurals</p>
+                                <ul class="list-disc pl-md">
+                                    <li><strong>Hue</strong> sets the tone</li>
+                                    <li><strong>Saturation</strong> defines the intensity of the tone</li>
+                                    <li><strong>Distance</strong> controls the difference between adjacent shades</li>
+                                </ul>
+                            </div>
+                            <div class="flex flex-col gap-minor-xs">
+                                <p>Accents</p>
+                                <ul class="list-disc pl-md">
+                                    <li><strong>Saturation</strong> makes it more or less vibrant</li>
+                                    <li><strong>Luminance</strong> controls brightness and overall contrast</li>
+                                </ul>
+                            </div>
+                            <div class="flex flex-col gap-minor-xs">
+                                <p>Text Colours</p>
+                                <ul class="list-disc pl-md">
+                                    <li><strong>Accent text colour saturation</strong> enables custom saturation level for accent/semantic text</li>
+                                </ul>
+                            </div>
+                            <p>
+                                This creates consistency and uniformity. When you enable custom dark mode, the parameters above can be overridden to create a more nuanced dark mode.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="footer gap-2">
-                <button class="close-modal">
+                <button class="close-modal color-primary-500">
                     Close
                 </button>
                 <button class="primary enable-dark-mode-controls" data-command="ENABLE_CUSTOM_DARK_MODE">
@@ -158,23 +172,22 @@
             <!-- <div class="height-expander"> -->
             <div class="bg-primary-100 border border-primary-200 rounded-lg py-minor-md px-md">
                 <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
-                    <p>
+                    <p class="hidden">
                         Dark mode palette uses the same parameters as the light one.
                         Check <span class="icon icon-link-2 icon-sm align-text-bottom"></span> icon for visual cues.
                         Hit the button below to enable full customisation
                     </p>
                     <div class="flex flex-1 justify-between items-center">
-                        <a href="#" data-modal="customDarkModeHelp" class="icon icon-info gap-xs2">Learn more</a>
-                        <button class="outline-button color-text-base-action" data-command="ENABLE_CUSTOM_DARK_MODE">Enable Custom Dark Mode</button>
+                        <p class="flex items-center gap-sm">
+                            Custom dark mode is not enabled
+                        </p>
+                        <button class="outline-button color-text-base-action" data-modal="customDarkModeHelp">Enable</button>
                     </div>
                 </div>
                 <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
-                    <p>
-                        The dark mode palette is fully customisable. Hit the button below to revert back to default
-                    </p>
                     <div class="flex flex-1 justify-between items-center">
-                        <a href="#" data-modal="customDarkModeHelp" class="icon icon-info gap-xs2">Learn more</a>
-                        <button class="outline-button color-text-base-action" data-command="DISABLE_CUSTOM_DARK_MODE">Disable Custom Dark Mode</button>
+                        <p>Custom dark mode is enabled</p>
+                        <button class="outline-button color-text-base-action" data-modal="customDarkModeHelp">Disable</button>
                     </div>
                 </div>
             </div>

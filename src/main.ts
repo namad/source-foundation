@@ -85,10 +85,8 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     }
     else if (eventData.type === "RENDER_ACCENTS") {
         await figma.loadFontAsync({ family: "Inter", style: "Regular" });
-        const lightAccentTokens = generateGlobalAccentPalette('light', params);
-        const darkAccentTokens = generateGlobalAccentPalette('dark', params);
-        const frameLightPalette = renderAccents(lightAccentTokens, 'Light Mode Accents');
-        const frameDarkPalette = renderAccents(darkAccentTokens, 'Dark Mode Accents');
+        const frameLightPalette = renderAccents('light', params, 'Light Mode Accents');
+        const frameDarkPalette = renderAccents('dark', params, 'Dark Mode Accents');
         frameDarkPalette.y = frameLightPalette.height + 64;
     }
     else if (eventData.type === "RENDER_NEUTRALS") {
