@@ -25,6 +25,13 @@ export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue"
 export interface SlidersColleciton {
     [key: string]: SliderComponent;
 }
+export interface SemanticAccentColors {
+    primary: ConfigColors;
+    info: ConfigColors;
+    success: ConfigColors;
+    warning: ConfigColors;
+    danger: ConfigColors;
+}
 
 export interface ImportFormData {
     type: 'IMPORT' | 'RENDER_ACCENTS' | 'RENDER_NEUTRALS';
@@ -326,7 +333,7 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
             const popover = document.getElementById(popoverTarget);
             
             const toolTip = popover.querySelector(`.toolip-body`) as HTMLDivElement;
-            const valueEl = popover.querySelector(`.token-value`) as HTMLDivElement;
+            const valueEl = colorBoxDiv.querySelector(`.token-value`) as HTMLDivElement;
 
             const alpha = chromaColor.alpha();
 

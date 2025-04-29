@@ -7,7 +7,7 @@
                     <span class="icon icon-x"></span>
                 </button>
             </div>
-            <div class="body">
+            <div class="body overflow-auto">
                 <p class="color-text-base-500 text-sm">
                     Select default font size / line height and desired type scale.
                 </p>
@@ -67,7 +67,7 @@
     <dialog class="simple" id="customDarkModeHelp" data-close-on-update="true">
         <div class="modal-container">
             <div class="header">
-                <h3 class="text-lg font-bold">Custom Dark Mode</h3>
+                <h3 class="text-lg font-bold">Custom Dark Mode is <span class="disable-dark-mode-controls">ON</span><span class="enable-dark-mode-controls">OFF</span></h3>
                 <button class="close close-modal" value="cancel">
                     <span class="icon icon-x"></span>
                 </button>
@@ -85,11 +85,13 @@
                     <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon">Learn more</a>
                     <div data-expander data-role="container" class="height-expander collapsed ">
                         <div class="flex flex-col gap-minor-base pt-minor-base">
-                            <p>Theme colours are generated using certain parameters, and by default, they are the same in the light and dark modes.</p>
+                            <p>
+                                Theme colours are generated programatically, and by default, they are the same in the light and dark modes.
+                                Custom dark mode allows you to fine-tune light and dark theme colours independently
+                            </p>
                             <div class="flex flex-col gap-minor-xs">
                                 <p>Neurals</p>
                                 <ul class="list-disc pl-md">
-                                    <li><strong>Hue</strong> sets the tone</li>
                                     <li><strong>Saturation</strong> defines the intensity of the tone</li>
                                     <li><strong>Distance</strong> controls the difference between adjacent shades</li>
                                 </ul>
@@ -181,13 +183,17 @@
                         <p class="flex items-center gap-sm">
                             Custom dark mode is not enabled
                         </p>
-                        <button class="outline-button color-text-base-action" data-modal="customDarkModeHelp">Enable</button>
+                        <button class="outline-button color-text-base-action" data-modal="customDarkModeHelp">
+                            <span class="icon icon-sliders gap-xs2">Enable</span>
+                        </button>
                     </div>
                 </div>
                 <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
                     <div class="flex flex-1 justify-between items-center">
                         <p>Custom dark mode is enabled</p>
-                        <button class="outline-button color-text-base-action" data-modal="customDarkModeHelp">Disable</button>
+                        <button class="outline-button color-text-base-action" data-modal="customDarkModeHelp">
+                            <span class="icon icon-sliders gap-xs2">Disable</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -299,7 +305,7 @@
                 </div>
             </div>
 
-            <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "linked": true}'>
+            <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "linked": false}'>
             </div>
             <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "linked": true}'>
             </div>

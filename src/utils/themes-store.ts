@@ -11,6 +11,7 @@ const store: Map<themeKey, ImportFormData> = new Map();
 
 function syncValues(data: ImportFormData) {
     const sharedProps = [
+        'hue',
         'primary',
         'info',
         'success',

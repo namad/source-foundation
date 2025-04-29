@@ -7,10 +7,6 @@
 
 }
 
-.icon {
-    --icon-size: var(--line-height-base);
-}
-
 .icon-typography::before {
     --icon-src: var(--ads-typography);
 }

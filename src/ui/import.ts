@@ -1,5 +1,6 @@
 import "./styles/source-vars.css";
 import "./styles/utils.css";
+import "./styles/icons.css";
 import "./styles/styles.css";
 import "./styles/dialog.css";
 import "./styles/color-box.css";

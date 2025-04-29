@@ -1,4 +1,4 @@
-import { ImportFormData } from "./import-ui"
+import { ImportFormData, SemanticAccentColors } from "./import-ui"
 
 export const colorThemes = [
     'lightBase',
@@ -80,27 +80,22 @@ export const defaultAccentHUEs = {
     "pink": 340
 }
 
+export const defaultSemanticAccents: SemanticAccentColors = {
+    primary: 'blue',
+    info: 'teal',
+    success: 'green',
+    warning: 'amber',
+    danger: 'red'
+}
+
 export const defaultSettings: ImportFormData = {
+    ...defaultAccentHUEs,
+    ...defaultSemanticAccents,
     type: 'IMPORT',
     theme: 'light',
     hue: 190,
     saturation: 0.2,
     distance: 0.02,
-    primary: 'blue',
-    info: 'teal',
-    success: 'green',
-    warning: 'amber',
-    danger: 'red',
-    red: 4,
-    amber: 25,
-    brown: 33,
-    green: 150,
-    teal: 185,
-    blue: 210,
-    indigo: 240,
-    violet: 260,
-    purple: 280,
-    pink: 340,
     baseFontSize: 'base',
     typeScale: 'minorThird',
     createStyles: true,
@@ -128,22 +123,6 @@ export const defaultSettings: ImportFormData = {
     createGlobalSizeTokens: true,
     createOpacityTokens: true,    
 }
-
-export interface SemanticAccentColors {
-    primary: string;
-    info: string;
-    success: string;
-    warning: string;
-    danger: string;
-}
-
-export const defaultSemanticAccents: SemanticAccentColors = {
-    primary: 'blue',
-    info: 'teal',
-    success: 'green',
-    warning: 'amber',
-    danger: 'red'
-};
 
 export const collectionNames = new Map<string, string>([
     ["brandColors", "Color Theme"],

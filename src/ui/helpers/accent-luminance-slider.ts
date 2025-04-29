@@ -10,14 +10,14 @@ const luminanceSliderVals = [
 ]
 
 nouislider.create(luminanceSlider, {
-    start: [10, 18, 45],
+    start: [12, 18, 45],
     connect: [false, true, true, false],
-    step: 1,
+    step: 0.5,
     tooltips: true,
     direction: 'rtl',
     range: {
-        'min': 0,
-        'max': 100
+        'min': 5,
+        'max': 70
     }
 }).on('update', debounce((values, handle) => {
     luminanceSliderVals[handle].value = values[handle] as string;
