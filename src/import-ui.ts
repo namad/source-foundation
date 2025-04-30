@@ -6,7 +6,7 @@ import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
 import { getGlobalAccentRamp, getAccentRamp } from "./color-generators/accent-palette-generator";
 import { roundOneDigit, roundTwoDigits } from "./utils/round-decimals";
-import { getGlobalNeutrals, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "./color-tokens";
+import { getGlobalNeutrals, getShadowColorTokens, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "./color-tokens";
 import { parseColorValue } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
 import { flattenObject } from "./utils/flatten-object";
@@ -19,6 +19,7 @@ import { sliders } from "./ui/ref/sliders-collection";
 import { mainForm } from "./ui/ref/main-form";
 import { getReferenceName } from "./utils/token-references";
 import { activeModal } from "./ui/helpers/modal";
+import { EffectTokenValue, getElevationTokens } from "./effect-tokens";
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
 
@@ -79,7 +80,10 @@ export interface ImportFormData {
     createElevationTokens: boolean;
     createRadiiTokens: boolean;
     createGlobalSizeTokens: boolean;
-    createOpacityTokens    : boolean;
+    createOpacityTokens: boolean;
+
+    shadowsStyle: 'normal'|'deep';
+    shadowsColor: 'normal'|'soft';
 }
 
 function isFloatField(name: string): boolean {
@@ -124,17 +128,13 @@ function getValueMap(name: string): string[] {
     }
 }
 export function transformValue(name: string, value: any, direction?): string | number {
-    let val = parseInt(value);
+    let val = typeof value == 'string' ? parseInt(value) : value;
     let valueMap = getValueMap(name);
     
     if(isNull(value) && direction === 'IN') {
         return  "";
     }
 
-    if (name == 'customPrimaryColor') {
-        val = value;
-    }
-    
     if (isFloatField(name)) {
         if (direction === 'IN') {
             val = parseFloat(value) * 100;
@@ -264,13 +264,22 @@ export function refreshUI(options: LoadDataOptions) {
     generateCSSVars(typescaleTokens.getTypographyTokens(data.baseFontSize, data.typeScale));
     generateCSSVars(spacingTokens.getSpacingTokens(data.verticalSpacing, data.spacing));
 
-    const darkSurfaceColor = globalNeutrals[`grey-20`].$value as string;
-    const textWhiteColor = globalNeutrals[`grey-${data.textWhiteBrightness}`].$value as string;
-    const textBlackColor = globalNeutrals[`grey-${data.textBlackBrightness}`].$value as string;
+    generateBoxShadowsCSS(data, globalNeutrals);
+
+    const darkSurfaceColorRaw = globalNeutrals[`grey-20`].$value as string;
+    const darkSurfaceColor = chroma(darkSurfaceColorRaw);
+    const textWhiteColor = chroma.hsl(data.hue, data.accentSaturation, data.textWhiteBrightness/100);
+    const textBlackColor = chroma.hsl(data.hue, data.accentSaturation, data.textBlackBrightness/100);
+    const textAcentColorOnLightRaw = themeColors[`accent/${data.primary}/500`]['$value'] as string;
+    const textAcentColorOnLight = chroma(textAcentColorOnLightRaw);
+    const textAcentColorOnDarkRaw = themeColors[`accent/${data.primary}/600`]['$value'] as string;
+    const textAcentColorOnDark = chroma(textAcentColorOnDarkRaw);
 
     const extension = {
-        textBlackContrast: roundTwoDigits(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
-        textWhiteContrast: roundTwoDigits(chroma.contrast(chroma(textWhiteColor), chroma(darkSurfaceColor))),
+        textAcentContrastOnLight: roundOneDigit(chroma.contrast(textAcentColorOnLight, textWhiteColor)),
+        textAcentContrastOnDark: roundOneDigit(chroma.contrast(textAcentColorOnDark, darkSurfaceColor)),
+        textBlackContrast: roundOneDigit(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
+        textWhiteContrast: roundOneDigit(chroma.contrast(textWhiteColor, darkSurfaceColor)),
         fillBase100: getReferenceName(themeColors['fill/base/100']['$value'] as string).replace('grey-', ''),
         fillBase200: getReferenceName(themeColors['fill/base/200']['$value'] as string).replace('grey-', ''),
         fillBase300: getReferenceName(themeColors['fill/base/300']['$value'] as string).replace('grey-', ''),
@@ -418,6 +427,27 @@ function generateCSSVars(tokens: DesignTokensRaw, context = document.documentEle
     })
 }
 
+function generateBoxShadowsCSS(params: ImportFormData, dictionary: DesignTokensRaw) {
+    const shadowColors = getShadowColorTokens(params.theme, params);
+    const shadowTokens = getElevationTokens(params.shadowsStyle) as DesignTokensRaw;
+
+    generateCSSVars({...shadowColors, ...dictionary});
+
+    Object.entries(shadowTokens).forEach(([name, token]) => {
+        const shadows = token.$value as EffectTokenValue[];
+        const varName = `--${name.replace(/\//g, "-")}`;
+
+        const cssString = shadows.map((shadowSettings) => {
+            const aliasName = getReferenceName(shadowSettings.color);
+            const value = `var(--${aliasName.replace(/\./g, "-")})`;            
+            return `${shadowSettings.offsetX}px ${shadowSettings.offsetY}px ${shadowSettings.radius}px ${shadowSettings.spread}px ${value}`
+        })
+
+        debugger;
+        document.documentElement.style.setProperty(varName, cssString.join(', '));
+    });
+
+}
 interface LoadDataOptions {
     params: ImportFormData,
     tokenLibraries?: any,

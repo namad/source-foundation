@@ -3,7 +3,17 @@ export var activeModal: HTMLDialogElement;
 document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
     const modalID = el.dataset.modal;
     const modal = document.getElementById(modalID) as HTMLDialogElement;
+    const modalContainer = modal.querySelector('.modal-container');
+
     const cloneOnUpdate = 'closeOnUpdate' in modal.dataset;
+
+    modal.addEventListener('click', (e) => {
+        modal.close();
+    })
+    
+    modalContainer.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+    })
 
     el.addEventListener('click', (e) => {
         e.preventDefault();

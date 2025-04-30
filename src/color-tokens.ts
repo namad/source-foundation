@@ -1,5 +1,7 @@
 import componentTokens from './tokens/colors/components/component-tokens.json';
+
 import paletteLightCommon from './tokens/colors/system/light-common.tokens.json';
+import paletteLightSoftShades from './tokens/colors/system/light-soft-shadows.tokens.json';
 
 import paletteLight2 from './tokens/colors/system/light-2.tokens.json';
 import paletteLight3 from './tokens/colors/system/light-3.tokens.json';
@@ -7,6 +9,7 @@ import paletteLight4 from './tokens/colors/system/light-4.tokens.json';
 import paletteTextLight from './tokens/colors/system/light-text-base.json';
 
 import paletteDarkCommon from './tokens/colors/system/dark-common.tokens.json';
+import paletteDarkSoftShades from './tokens/colors/system/dark-soft-shadows.tokens.json';
 
 import paletteDarkElevated2 from './tokens/colors/system/dark-elevated-2.tokens.json';
 import paletteDarkElevated3 from './tokens/colors/system/dark-elevated-3.tokens.json';
@@ -336,6 +339,7 @@ async function getColorVariableAliasValue(tokenValue: string, variableId: string
 
     return result;
 }
+
 export function resolveColorTokenValue(token: DesignToken, dictionary, output = 'gl') {
     const color = token.$value as string;
 
@@ -351,6 +355,7 @@ export function resolveColorTokenValue(token: DesignToken, dictionary, output = 
         //throw new Error("Invalid color format");
     }
 }
+
 export async function getColorTokenValue(token: DesignToken, modeId: string): Promise<VariableAlias | RGBA | string> {
     let valueString = (`${token.$value}`).trim()
     const variableAlias = await findVariableAlias(valueString);
@@ -490,4 +495,30 @@ export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: De
     }
 
     return value
+}
+
+export function getShadowColorTokens(theme: 'light'|'dark', params: ImportFormData): DesignTokensRaw {
+    const style = params.shadowsStyle;
+    const color = params.shadowsColor;
+
+    switch(theme) {
+        case 'light':{
+            const softShadowColours = flattenObject(paletteLightSoftShades);
+            const normalShadowColours = flattenObject({
+                utility: {
+                    shade: paletteLightCommon.utility.shade
+                }
+            });
+            return color == 'soft' ? softShadowColours : normalShadowColours;
+        }
+        case 'dark': {
+            const softShadowColours = flattenObject(paletteDarkSoftShades);
+            const normalShadowColours = flattenObject({
+                utility: {
+                    shade: paletteDarkCommon.utility.shade
+                }
+            });
+            return color == 'soft' ? softShadowColours : normalShadowColours;
+        }
+    }
 }

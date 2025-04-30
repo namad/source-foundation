@@ -38,7 +38,6 @@ export function initSlider(el: HTMLElement, options?): SliderComponent {
 
 function getMarkup({ label, name, min, max, step, value, linked }) {
     const linkIndicator = linked === true ? `
-        <span class="icon-sm icon icon-link-2 opacity-70 hover:opacity-100 dark-mode-lock" data-tooltip="top" data-offset="8" popovertarget="colorModeConnectedToolTip"></span>
         <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
         <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>         
     ` : '';

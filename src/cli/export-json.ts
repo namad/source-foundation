@@ -144,7 +144,7 @@ catch (e) {
     data = data.concat(collectSizingVariables('Typography', defaults.typographySizeName, typescale));
 
     data.push({ collection: 'Opacity', mode: 'default', tokens: opacity })
-    data.push(collectElevationVariables('Elevation', effects.elevation))
+    data.push(collectElevationVariables('Elevation', effects.normalShadows))
 
     if (!path.extname(output)) {
         console.warn('No output file specified, using default name instead', defaultOutputName)

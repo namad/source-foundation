@@ -41,7 +41,7 @@ export async function findVariableByReferences(alias: string): Promise<Variable>
             results.push(figmaVariable);
         }
         else {
-            console.warn(`findVariableByReferences() call failed -> cannot find value for ${reference}`);
+            console.warn(`findVariableByReferences(${alias}) call failed -> cannot find value for ${reference}`);
         }
     }
 

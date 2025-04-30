@@ -7,6 +7,40 @@
     --global-accent-600: rgb(28,86,239);
     --global-accent-700: rgb(32,78,238);
 }
+
+:root {
+    --shadow-1-100: 0px 0.75px 0.5px 0px var(--utility-shade-100);
+    --shadow-1-200: 0px 0.75px 0.5px 0px var(--utility-shade-200);
+    --shadow-1-300: 0px 0.75px 0.5px 0px var(--utility-shade-300);
+    --shadow-1-400: 0px 0.75px 0.5px 0px var(--utility-shade-400);
+    --shadow-1-500: 0px 0.75px 0.5px 0px var(--utility-shade-500);
+    --shadow-2-100: 0px 1px 2px -1px var(--utility-shade-100), 0px 2px 4px -1px var(--utility-shade-100);
+    --shadow-2-200: 0px 1px 2px -1px var(--utility-shade-200), 0px 1px 4px -1px var(--utility-shade-200);
+    --shadow-2-300: 0px 1px 2px -1px var(--utility-shade-300), 0px 1px 4px -1px var(--utility-shade-300);
+    --shadow-2-400: 0px 1px 2px -1px var(--utility-shade-400), 0px 1px 4px -1px var(--utility-shade-400);
+    --shadow-2-500: 0px 1px 2px -1px var(--utility-shade-500), 0px 1px 4px -1px var(--utility-shade-500);
+    --shadow-3-100: 0px 2px 4px -2px var(--utility-shade-100), 0px 4px 6px -2px var(--utility-shade-100);
+    --shadow-3-200: 0px 2px 4px -2px var(--utility-shade-200), 0px 4px 6px -2px var(--utility-shade-200);
+    --shadow-3-300: 0px 2px 4px -2px var(--utility-shade-300), 0px 4px 6px -2px var(--utility-shade-300);
+    --shadow-3-400: 0px 2px 4px -2px var(--utility-shade-400), 0px 4px 6px -2px var(--utility-shade-400);
+    --shadow-3-500: 0px 2px 4px -2px var(--utility-shade-500), 0px 4px 6px -2px var(--utility-shade-500);
+    --shadow-4-100: 0px 4px 6px -4px var(--utility-shade-100), 0px 10px 15px -3px var(--utility-shade-100);
+    --shadow-4-200: 0px 4px 6px -4px var(--utility-shade-200), 0px 10px 15px -3px var(--utility-shade-200);
+    --shadow-4-300: 0px 4px 6px -4px var(--utility-shade-300), 0px 10px 15px -3px var(--utility-shade-300);
+    --shadow-4-400: 0px 4px 6px -4px var(--utility-shade-400), 0px 10px 15px -3px var(--utility-shade-400);
+    --shadow-4-500: 0px 4px 6px -4px var(--utility-shade-500), 0px 10px 15px -3px var(--utility-shade-500);
+    --shadow-5-100: 0px 12px 10px -6px var(--utility-shade-100), 0px 20px 25px -5px var(--utility-shade-100);
+    --shadow-5-200: 0px 12px 10px -6px var(--utility-shade-200), 0px 20px 25px -5px var(--utility-shade-200);
+    --shadow-5-300: 0px 12px 10px -6px var(--utility-shade-300), 0px 20px 25px -5px var(--utility-shade-300);
+    --shadow-5-400: 0px 12px 10px -6px var(--utility-shade-400), 0px 20px 25px -5px var(--utility-shade-400);
+    --shadow-5-500: 0px 12px 10px -6px var(--utility-shade-500), 0px 20px 25px -5px var(--utility-shade-500);
+    --shadow-6-100: 0px 23px 28px -7px var(--utility-shade-100), 0px 16px 10px -7px var(--utility-shade-100), 0px 24px 48px -10px var(--utility-shade-100);
+    --shadow-6-200: 0px 23px 28px -7px var(--utility-shade-200), 0px 16px 10px -7px var(--utility-shade-200), 0px 24px 48px -10px var(--utility-shade-200);
+    --shadow-6-300: 0px 23px 28px -7px var(--utility-shade-300), 0px 16px 10px -7px var(--utility-shade-300), 0px 24px 48px -10px var(--utility-shade-300);
+    --shadow-6-400: 0px 23px 28px -7px var(--utility-shade-400), 0px 16px 10px -7px var(--utility-shade-400), 0px 24px 48px -10px var(--utility-shade-400);
+    --shadow-6-500: 0px 23px 28px -7px var(--utility-shade-500), 0px 16px 10px -7px var(--utility-shade-500), 0px 24px 48px -10px var(--utility-shade-500);
+}
+
 :root {
     --primary-600: #5FABF3;
     --primary-500: #1C5FF0;

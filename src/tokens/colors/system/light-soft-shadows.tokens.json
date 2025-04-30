@@ -1,0 +1,54 @@
+{
+    "utility": {
+        "shade": {
+            "100": {
+                "$type": "color",
+                "$value": "rgba({grey-8}, 0.02)",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "description": ""
+            },
+            "200": {
+                "$type": "color",
+                "$value": "rgba({grey-8}, 0.04)",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "description": ""
+            },
+            "300": {
+                "$type": "color",
+                "$value": "rgba({grey-8}, 0.08)",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "description": ""
+            },
+            "400": {
+                "$type": "color",
+                "$value": "rgba({grey-8}, 0.12)",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "description": ""
+            },
+            "500": {
+                "$type": "color",
+                "$value": "rgba({grey-8}, 0.16)",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "description": ""
+            },
+            "600": {
+                "$type": "color",
+                "$value": "rgba({grey-8}, 0.24)",
+                "scopes": [
+                    "ALL_SCOPES"
+                ],
+                "description": ""
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { SourceColorTheme, getColorTokenValue, getComponentColors, getGlobalNeutrals, getThemeColors } from './color-tokens';
+import { SourceColorTheme, getColorTokenValue, getComponentColors, getGlobalNeutrals, getShadowColorTokens, getThemeColors } from './color-tokens';
 import { findFigmaVariableCollectionByName, getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 
 import chroma from 'chroma-js';
@@ -191,9 +191,7 @@ export async function importAllTokens() {
         tokens: radiiTokens
     });
 
-    if(params.createTypographyTokens) {
-        await importTypographyTokens(params);
-    } 
+    params.createTypographyTokens && await importTypographyTokens(params);
 
 
     params.createOpacityTokens && await importVariables({
@@ -209,7 +207,7 @@ export async function importAllTokens() {
     });
 
 
-    params.createElevationTokens && await importEffectStyles(effectsTokens.elevation);
+    params.createElevationTokens && await importEffectTokens(params);
 
     figma.notify("Figma variables has been imported");
 
@@ -401,6 +399,37 @@ export async function importVariables({ collectionName, modeName, modeIndex = -1
 
 }
 
+async function importShadowVariables(params: ImportFormData) {
+
+    const style = params.shadowsStyle;
+
+    addToGlobalTokensDictionary({
+        ...getGlobalNeutrals(params)
+    });
+
+    await importVariables({
+        collectionName: collectionNames.get('themeColors'),
+        modeName: 'Light Base',
+        data: getShadowColorTokens('light', params)
+    });        
+    await importVariables({
+        collectionName: collectionNames.get('themeColors'),
+        modeName: 'Dark Base',
+        data: getShadowColorTokens('dark', params)
+    });        
+    await importVariables({
+        collectionName: collectionNames.get('themeColors'),
+        modeName: 'Dark Elevated',
+        data: getShadowColorTokens('dark', params)
+    });
+}
+
+async function importEffectTokens(params: ImportFormData) {
+    debugger;
+    const tokens = effectsTokens.getElevationTokens(params.shadowsStyle);
+    await importShadowVariables(params);
+    await importEffectStyles(tokens);
+}
 
 async function importTypographyTokens(params: ImportFormData) {
     const tokens = typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale);

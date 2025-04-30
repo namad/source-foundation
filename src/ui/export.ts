@@ -1,4 +1,4 @@
-import "./styles/source-vars.css";
+import "./styles/source-variables.css";
 import "./styles/utils.css";
 import "./styles/styles.css";
 import "./styles/icons.css";
