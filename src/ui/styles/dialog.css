@@ -41,7 +41,7 @@ dialog .modal-container {
     /* animation: open-modal 450ms cubic-bezier(0.53, 0.04, 0.12, 1.08); */
     transform: translateY(-55%);
     transition: all 450ms cubic-bezier(0.53, 0.04, 0.02, 1.12);
-    @apply shadow-6;
+    box-shadow: var(--shadow-6-100);
 }
 
 dialog[open] .modal-container {

@@ -1,7 +1,7 @@
 import componentTokens from './tokens/colors/components/component-tokens.json';
 
 import paletteLightCommon from './tokens/colors/system/light-common.tokens.json';
-import paletteLightSoftShades from './tokens/colors/system/light-soft-shadows.tokens.json';
+import paletteLightShadows from './tokens/colors/system/light-shadow-colors.tokens.json';
 
 import paletteLight2 from './tokens/colors/system/light-2.tokens.json';
 import paletteLight3 from './tokens/colors/system/light-3.tokens.json';
@@ -9,7 +9,7 @@ import paletteLight4 from './tokens/colors/system/light-4.tokens.json';
 import paletteTextLight from './tokens/colors/system/light-text-base.json';
 
 import paletteDarkCommon from './tokens/colors/system/dark-common.tokens.json';
-import paletteDarkSoftShades from './tokens/colors/system/dark-soft-shadows.tokens.json';
+import paletteDarkShadows from './tokens/colors/system/dark-shadow-colors.tokens.json';
 
 import paletteDarkElevated2 from './tokens/colors/system/dark-elevated-2.tokens.json';
 import paletteDarkElevated3 from './tokens/colors/system/dark-elevated-3.tokens.json';
@@ -203,12 +203,14 @@ export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData
     const lightCommonTokens = {
         accent: lightAccentTokens,
         ...lightCommon,
+        ...getShadowColorTokens('light', formData),
         ...lightSemanticTokens,
     } as SystemColorPalette;
 
     const darkCommonTokens = {
         accent: darkAccentTokens,
         ...darkCommon,
+        ...getShadowColorTokens('dark', formData),
         ...darkSemanticTokens
     } as SystemColorPalette;
 
@@ -497,28 +499,14 @@ export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: De
     return value
 }
 
+const shadowColours = {
+    light: paletteLightShadows,
+    dark: paletteDarkShadows,
+}
 export function getShadowColorTokens(theme: 'light'|'dark', params: ImportFormData): DesignTokensRaw {
     const style = params.shadowsStyle;
     const color = params.shadowsColor;
+    const tokenOptions = shadowColours[theme];
 
-    switch(theme) {
-        case 'light':{
-            const softShadowColours = flattenObject(paletteLightSoftShades);
-            const normalShadowColours = flattenObject({
-                utility: {
-                    shade: paletteLightCommon.utility.shade
-                }
-            });
-            return color == 'soft' ? softShadowColours : normalShadowColours;
-        }
-        case 'dark': {
-            const softShadowColours = flattenObject(paletteDarkSoftShades);
-            const normalShadowColours = flattenObject({
-                utility: {
-                    shade: paletteDarkCommon.utility.shade
-                }
-            });
-            return color == 'soft' ? softShadowColours : normalShadowColours;
-        }
-    }
+    return flattenObject(tokenOptions[params.shadowsColor]);
 }

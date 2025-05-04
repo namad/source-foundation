@@ -137,7 +137,10 @@ async function getStyleByName(name) {
     }
 };
 
-function parseBoolean(val: string) {
+function parseBoolean(val: string|boolean) {
+    if (typeof val == 'boolean') {
+        return val
+    }
     return val !== "false";
 }
 

@@ -102,7 +102,7 @@ export function writeTheFileIntoDirectory(stream, dataFn) {
     });
 }
 
-function writeElevationVariables(stream, style: 'normal'|'deep' = 'normal') {
+function writeElevationVariables(stream, style = 0) {
     const tokens = effects.getElevationTokens(style, true);
     
     const data = Object.keys(tokens).map((name, index) => {

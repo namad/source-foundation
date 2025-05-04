@@ -91,7 +91,8 @@ function collectSizingVariables(name, sizes, tokens): CollectionExportRecord[] {
     return collections;
 }
 
-function collectElevationVariables(name, tokens): CollectionExportRecord {
+function collectElevationVariables(name, settings: ImportFormData): CollectionExportRecord {
+    const tokens = effects.getElevationTokens(settings.shadowsStyle)
     const collection = { collection: name, mode: 'default', tokens: {} } as CollectionExportRecord;
 
     Object.entries(tokens as DesignTokensRaw).forEach(([name, token]) => {
@@ -144,7 +145,7 @@ catch (e) {
     data = data.concat(collectSizingVariables('Typography', defaults.typographySizeName, typescale));
 
     data.push({ collection: 'Opacity', mode: 'default', tokens: opacity })
-    data.push(collectElevationVariables('Elevation', effects.normalShadows))
+    data.push(collectElevationVariables('Elevation', settings as ImportFormData))
 
     if (!path.extname(output)) {
         console.warn('No output file specified, using default name instead', defaultOutputName)

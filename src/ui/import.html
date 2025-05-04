@@ -357,7 +357,7 @@
                             The first knob sets the darkest shade. The second knob is for the base shade.
                             The third knob defines the lightest shade.
                         </p>
-                        <div class="mb-y-base flex flex-row gap-0 font-mono rounded overflow-hidden">
+                        <div class="mb-y-base flex flex-row gap-0 rounded overflow-hidden">
                             <div class="color-box primary-200 color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary200ToolTip">
                                 <div class="text-sm opacity-70">200</div>
                                 <div class="flex flex-row font-mono text-xs">
@@ -466,9 +466,9 @@
             </div>
 
             <div class="sliders flex flex-row items-center gap-xs">
-                <span class="text-label" -data-value="textBlackBrightness">Black <span><span data-value="textBlackBrightness">0</span>%</span></span>
+                <span class="text-label text-sm" -data-value="textBlackBrightness">Black <span><span data-value="textBlackBrightness">0</span>%</span></span>
                 <div id="textBrightnessSlider" class="noui-slider flex-1"></div>
-                <span class="text-label text-right" -data-value="textWhiteBrightness">White <span><span data-value="textWhiteBrightness">0</span>%</span></span>
+                <span class="text-label text-sm text-right" -data-value="textWhiteBrightness">White <span><span data-value="textWhiteBrightness">0</span>%</span></span>
                 <input type="hidden" name="textWhiteBrightness" id="textWhiteBrightnessVal" value="100" />
                 <input type="hidden" name="textBlackBrightness" id="textBlackBrightnessVal" value="6" />
             </div>
@@ -703,31 +703,31 @@
         </div>
 
         <div class="card" id="shadowsStyle">
-            <h3 class="text-lg font-bold">Shadows</h3>
-            <p class="color-text-base-500 text-sm">
-                Select shadows style and colour
-            </p>
-             <div class="tiles-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); grid-auto-rows: min-content; grid-gap: var(--spacing-sm);">
-                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-200 rounded-md flex-1 items-center justify-center flex">
-                    <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs">shadow-1</span>
+            <h3 class="text-lg font-bold">Shadows / Elevation</h3>
+             <div class="tiles-grid mb-minor-base" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); grid-auto-rows: min-content; grid-gap: var(--spacing-sm);">
+                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-100 rounded-md flex-1 items-center justify-center flex">
+                    <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs ">shadow-1</span>
                 </div>
-                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-2-200 rounded-md flex-1 items-center justify-center flex">
+                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-2-100 rounded-md flex-1 items-center justify-center flex">
                     <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs">shadow-2</span>
                 </div>
-                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-3-200 rounded-md flex-1 items-center justify-center flex">
+                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-3-100 rounded-md flex-1 items-center justify-center flex">
                     <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs">shadow-3</span>
                 </div>
-                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-4-200 rounded-md flex-1 items-center justify-center flex">
+                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-4-100 rounded-md flex-1 items-center justify-center flex">
                     <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs">shadow-4</span>
                 </div>
-                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-5-200 rounded-md flex-1 items-center justify-center flex">
+                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-5-100 rounded-md flex-1 items-center justify-center flex">
                     <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs">shadow-5</span>
                 </div>
-                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-6-200 rounded-md flex-1 items-center justify-center flex">
+                <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-6-100 rounded-md flex-1 items-center justify-center flex">
                     <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs">shadow-6</span>
                 </div>
             </div>
-            <div class="flex flex-row gap-base w-full">
+            <div data-slider='{"label": "Softness", "name": "shadowsColor", "min": 0, "max": 3, "step": 1, "value": 0, "linked": false}'></div>
+            <div data-slider='{"label": "Depth", "name": "shadowsStyle", "min": 0, "max": 7, "step": 1, "value": 0, "linked": true}'></div>            
+
+            <!-- <div class="flex flex-row gap-base w-full">
                 <div class="flex flex-col gap-minor-xs w-full">
                     <span class="">Shadows Colour</span>
                     <div class="flex flex-row gap-sm flex-1">
@@ -742,7 +742,7 @@
                         <label class="flex flex-row gap-2"><input type="radio" name="shadowsStyle" value="deep" /><span>Deep</span></label>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 

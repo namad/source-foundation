@@ -1,0 +1,123 @@
+[
+    {
+        "utility": {
+            "shade": {
+                "100": {
+                    "$value": "rgba(#000000, 0.08)",
+                    "$type": "color"
+                },
+                "200": {
+                    "$value": "rgba(#000000, 0.12)",
+                    "$type": "color"
+                },
+                "300": {
+                    "$value": "rgba(#000000, 0.16)",
+                    "$type": "color"
+                },
+                "400": {
+                    "$value": "rgba(#000000, 0.24)",
+                    "$type": "color"
+                },
+                "500": {
+                    "$value": "rgba(#000000, 0.32)",
+                    "$type": "color"
+                },
+                "600": {
+                    "$value": "rgba(#000000, 0.48)",
+                    "$type": "color"
+                }
+            }
+        }
+    },
+    {
+        "utility": {
+            "shade": {
+                "100": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.06)"
+                },
+                "200": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.10)"
+                },
+                "300": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.14)"
+                },
+                "400": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.22)"
+                },
+                "500": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.30)"
+                },
+                "600": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.46)"
+                }
+            }
+        }
+    },    
+    {
+        "utility": {
+            "shade": {
+                "100": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.04)"
+                },
+                "200": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.08)"
+                },
+                "300": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.12)"
+                },
+                "400": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.20)"
+                },
+                "500": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.28)"
+                },
+                "600": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.44)"
+                }
+            }
+        }
+    },
+
+    {
+        "utility": {
+            "shade": {
+                "100": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.02)"
+                },
+                "200": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.06)"
+                },
+                "300": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.10)"
+                },
+                "400": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.18)"
+                },
+                "500": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.26)"
+                },
+                "600": {
+                    "$type": "color",
+                    "$value": "rgba(#000000, 0.42)"
+                }
+            }
+        }
+    }
+]

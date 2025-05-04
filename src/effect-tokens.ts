@@ -1,6 +1,6 @@
 import { DesignToken, DesignTokensRaw } from './import-tokens';
-import normalShadowTokens from './tokens/effects/shadows-normal.tokens.json';
-import softShadowTokens from './tokens/effects/shadows-material.tokens.json';
+import shadowAllTokens from './tokens/effects/shadows-all.tokens.json';
+
 import { flattenObject } from "./utils/flatten-object";
 
 export interface EffectStyleToken extends DesignToken {
@@ -20,16 +20,7 @@ export interface EffectTokenValue {
 }
 
 
-export const normalShadows: DesignTokensRaw = flattenObject(normalShadowTokens);
-export const softShadows: DesignTokensRaw = flattenObject(softShadowTokens);
-
-export function getElevationTokens(style: 'normal'|'deep', raw?: boolean) {
-    switch(style) {
-        case 'normal': {
-            return raw === true ? normalShadowTokens : flattenObject(normalShadowTokens)
-        }
-        case 'deep': {
-            return raw === true ? softShadowTokens : flattenObject(softShadowTokens)
-        }
-    }
+export function getElevationTokens(style: number, raw?: boolean) {
+    const tokens = shadowAllTokens[style];
+    return raw === true ? tokens : flattenObject(tokens)
 }

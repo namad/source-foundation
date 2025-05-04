@@ -82,8 +82,8 @@ export interface ImportFormData {
     createGlobalSizeTokens: boolean;
     createOpacityTokens: boolean;
 
-    shadowsStyle: 'normal'|'deep';
-    shadowsColor: 'normal'|'soft';
+    shadowsStyle: number;
+    shadowsColor: number;
 }
 
 function isFloatField(name: string): boolean {
@@ -195,8 +195,13 @@ export function getFormData(form: HTMLFormElement): ImportFormData {
         ...data
     };
 }
+let _presetsReady = false;
 
 export function generatePresetsPreview(masterData: ImportFormData) {
+    if(_presetsReady === true) {
+        return
+    }
+
     const presetsListElement = document.getElementById('presetsList');
     const presets = getPresets();
 
@@ -215,6 +220,8 @@ export function generatePresetsPreview(masterData: ImportFormData) {
         generateCSSVars({ ...themeColors, ...globalNeutrals }, label);
         updateValuesDisplay(data, label);
     })
+
+    _presetsReady = true;
 }
 
 interface UIDataOptions {
@@ -442,8 +449,6 @@ function generateBoxShadowsCSS(params: ImportFormData, dictionary: DesignTokensR
             const value = `var(--${aliasName.replace(/\./g, "-")})`;            
             return `${shadowSettings.offsetX}px ${shadowSettings.offsetY}px ${shadowSettings.radius}px ${shadowSettings.spread}px ${value}`
         })
-
-        debugger;
         document.documentElement.style.setProperty(varName, cssString.join(', '));
     });
 

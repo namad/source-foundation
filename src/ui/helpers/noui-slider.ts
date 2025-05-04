@@ -7,7 +7,13 @@ document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
         'semantics': systemAccentList,
         'typography': typographySizeValues,
         'radii': radiiSizeName,
-        'spacing': spacingSizeName
+        'spacing': spacingSizeName,
+        'shadowsColor': [
+            'normal', 'soft', 'softer'
+        ],
+        'shadowsStyle': [
+            'normal', 'deep', 'deeper'
+        ]
     };
 
     const type = el.dataset.type;
