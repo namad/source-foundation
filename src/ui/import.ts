@@ -5,7 +5,8 @@ import "./styles/styles.css";
 import "./styles/dialog.css";
 import "./styles/color-box.css";
 import "./styles/tooltip.css";
-import "../../node_modules/nouislider/dist/nouislider.css";
+// import "../../node_modules/nouislider/dist/nouislider.css";
+// import "./styles/vendor/nouislider.css";
 import "./styles/noui-slider.css";
 
 import { defaultSettings } from "../defaults";

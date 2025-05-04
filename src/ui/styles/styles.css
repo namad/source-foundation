@@ -61,7 +61,7 @@ a:hover {
     border-radius: var(--radii-lg);
     padding: var(--spacing-minor-md) var(--spacing-md);
     gap: var(--spacing-minor-base);
-
+    box-shadow: var(--shadow-1-100);
     @apply flex flex-col;
 }
 

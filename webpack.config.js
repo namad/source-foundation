@@ -1,11 +1,13 @@
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
+
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 
 const path = require('path')
-
-module.exports = ((env, argv) => {
+const webpackConfig = ((env, argv) => {
 
     if (argv.target == 'web') {
         return {
@@ -51,15 +53,9 @@ module.exports = ((env, argv) => {
             },
             // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it
             plugins: [
+                // new BundleAnalyzerPlugin(),
                 new webpack.DefinePlugin({
                     'global': {} // Fix missing symbol error when running in developer VM
-                }),
-                new HtmlWebpackPlugin({
-                    template: './src/ui/export.html',
-                    filename: 'export.html',
-                    inject: "body",
-                    inlineSource: '.(js|css)$',
-                    chunks: ['export'],
                 }),
                 new HtmlWebpackPlugin({
                     template: './src/ui/import.html',
@@ -125,3 +121,6 @@ module.exports = ((env, argv) => {
     }
 
 })
+
+// module.exports = smp.wrap(webpackConfig)
+module.exports = webpackConfig
