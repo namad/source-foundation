@@ -217,8 +217,9 @@ async function exportFigmaVariableCollection(collection: VariableCollection, col
     const collections: CollectionExportRecord[] = [];
     const variableReferences = collection.variableIds.sort();
 
-    const typeNames = new Map<string, string>([
+    const typeNames = new Map<string, 'boolean' |'color' |'number' |'string' |'typography' |'effect'>([
         ["COLOR", "color"],
+        ["BOOLEAN", "boolean"],
         ["FLOAT", "number"],
         ["STRING", "string"]
     ]);
@@ -245,7 +246,7 @@ async function exportFigmaVariableCollection(collection: VariableCollection, col
             const value = valuesByMode[mode.modeId] as any;
             // const valueObject = variableNameToObject(name, collectionRecord.tokens);
 
-            const token: DesignToken = {
+            const token = {
                 $type: typeNames.get(resolvedType),
                 $value: await getTokenValueFromVariable(value, figmaVariable, colorFormat),
                 scopes: scopes,

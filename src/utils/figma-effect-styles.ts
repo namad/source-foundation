@@ -1,5 +1,4 @@
-import { EffectTokenValue } from "../effect-tokens";
-import { DesignToken } from "../import-tokens";
+import { DesignToken, EffectTokenValue } from "../import-tokens";
 import { _clone } from "./clone";
 import { ColorFormat, FigmaRGB, convertFigmaColorToRgb, parseColorValue } from "./figma-colors";
 import { getAliasName, getDefaultVariableValue } from "./figma-variables";
@@ -25,7 +24,7 @@ export async function importEffectStyles(tokens, dictionary?) {
             if(!figmaStyle) {
                 figmaStyle = figma.createEffectStyle();
             }
-            const values = token.$value as EffectTokenValue[];
+            const values = token.$value;
             const effects = [];
 
             for(const effectValue of values) {
@@ -53,7 +52,7 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
 
     let effect = {
         type: effectTokenValue.type,
-        radius: parseFloat(effectTokenValue.radius),
+        radius: effectTokenValue.radius,
         visible: true
     }
 
@@ -61,10 +60,10 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
         effect = Object.assign(effect, {
             color: figma.util.rgba(effectTokenValue.color),
             offset: {
-                x: parseFloat(effectTokenValue.offsetX),
-                y: parseFloat(effectTokenValue.offsetY)
+                x: effectTokenValue.offsetX,
+                y: effectTokenValue.offsetY
             },
-            spread: parseFloat(effectTokenValue.spread),
+            spread: effectTokenValue.spread,
             blendMode: "NORMAL"
         })
     }
@@ -80,7 +79,7 @@ async function convertEffectStyleToFigma(value: EffectTokenValue): Promise<Effec
         const effectCopy = figma.variables.setBoundVariableForEffect(effect as Effect,  boundData.propName, boundData.variable) as any;
 
         if(effect.type == "DROP_SHADOW" || effect.type == 'INNER_SHADOW') {
-            effectCopy.spread = parseFloat(effectTokenValue.spread);
+            effectCopy.spread = effectTokenValue.spread;
         }
 
         effect = effectCopy;
@@ -160,17 +159,17 @@ export async function convertFigmaEffectStyleToToken(style: EffectStyle, colorFo
 
 async function convertFigmaShadowEffectToToken(effect: Effect, colorFormat?: ColorFormat): Promise<EffectTokenValue> {
     let effectTokenValue: EffectTokenValue = {
-        "type": `${effect.type}`,
-        "radius": `${effect.radius}`,
+        "type": effect.type,
+        "radius": effect.radius,
     };
 
     if(effect.type == "DROP_SHADOW" || effect.type == "INNER_SHADOW") {
         effectTokenValue = Object.assign(effectTokenValue, {
             "color": convertFigmaColorToRgb(effect.color, colorFormat),
-            "blendMode": `${effect.blendMode}`,
-            "offsetX": `${effect.offset.x}`,
-            "offsetY": `${effect.offset.y}`,
-            "spread": `${effect.spread}`,
+            "blendMode": effect.blendMode,
+            "offsetX": effect.offset.x,
+            "offsetY": effect.offset.y,
+            "spread": effect.spread,
         });
     }
 

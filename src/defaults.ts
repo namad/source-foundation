@@ -123,8 +123,9 @@ export const defaultSettings: ImportFormData = {
     createGlobalSizeTokens: true,
     createOpacityTokens: true,
 
-    shadowsStyle: 0,
+    shadowsStyle: 1,
     shadowsColor: 1,
+    shadowsSpread: -1
 }
 
 export const collectionNames = new Map<string, string>([

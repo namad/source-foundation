@@ -15,8 +15,7 @@
     outline: var(--border-width-base) solid var(--utility-shade-100);
     color: var(--text-base-600);
     border-radius: var(--radii-base);
-    @apply shadow-4;
-    @apply shadow-utility-shade-300;
+    box-shadow: var(--shadow-4-300);
     
     /* bottom: 120%;
     left: 50%;

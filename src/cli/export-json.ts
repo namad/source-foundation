@@ -17,7 +17,6 @@ import { opacity } from '../opacity-tokens';
 
 import fs from 'fs';
 import path from "path";
-import { EffectTokenValue } from "../effect-tokens";
 import { makeFolder, writeTheFileIntoDirectory } from "./export-css";
 import { variableNameToObject } from "../utils/figma-variables";
 
@@ -92,10 +91,10 @@ function collectSizingVariables(name, sizes, tokens): CollectionExportRecord[] {
 }
 
 function collectElevationVariables(name, settings: ImportFormData): CollectionExportRecord {
-    const tokens = effects.getElevationTokens(settings.shadowsStyle)
+    const tokens = effects.getElevationTokens(settings)
     const collection = { collection: name, mode: 'default', tokens: {} } as CollectionExportRecord;
 
-    Object.entries(tokens as DesignTokensRaw).forEach(([name, token]) => {
+    Object.entries(tokens).forEach(([name, token]) => {
         let tokenData = collection.tokens;
         name.split("/").forEach((groupName) => {
             tokenData[groupName] = tokenData[groupName] || {};

@@ -214,39 +214,7 @@ export async function importAllTokens() {
     figma.ui.postMessage("IMPORT_COMPLETED");
 }
 
-async function importColorTheme_OG(params: ImportFormData) {
-    const defaultThemes = _clone(colorThemes) as string[];
-    const globalNeutrals = getGlobalNeutrals(params);
-
-    addToGlobalTokensDictionary({
-        ...globalNeutrals,
-        ...getComponentColors(),
-    });
-
-    let index = 0;
-
-    while(defaultThemes.length) {
-        const theme = defaultThemes.shift() as SourceColorTheme;;
-
-        let themeColors = getThemeColors(theme, params);
-
-        addToGlobalTokensDictionary({
-            ...themeColors
-        });
-
-        await importVariables({
-            collectionName: collectionNames.get('themeColors'),
-            modeName: colorThemeNames[index],
-            data: themeColors
-        });
-
-        index++;
-    }
-}
-
 function getThemeParams(theme: SourceColorTheme) {
-    debugger
-
     if (theme.startsWith('light')) {
         return themeStore.getTheme('light');
     }
@@ -267,8 +235,6 @@ async function importColorTheme() {
     let index = 0;
 
     while(defaultThemes.length) {
-        debugger
-
         const themeName = defaultThemes.shift() as SourceColorTheme;
         const params = getThemeParams(themeName);
         let themeColors = getThemeColors(themeName, params);
@@ -425,8 +391,7 @@ async function importShadowVariables(params: ImportFormData) {
 }
 
 async function importEffectTokens(params: ImportFormData) {
-    debugger;
-    const tokens = effectsTokens.getElevationTokens(params.shadowsStyle);
+    const tokens = effectsTokens.getElevationTokens(params);
     await importShadowVariables(params);
     await importEffectStyles(tokens);
 }
@@ -457,11 +422,10 @@ async function importTypographyTokens(params: ImportFormData) {
 }
 
 export interface DesignTokensRaw {
-    [key: string]: DesignTokensRaw | DesignToken | typographyTokens.TextStyleToken | effectsTokens.EffectStyleToken
+    [key: string]: DesignTokensRaw | DesignToken
 }
 
-export interface DesignToken {
-    $value: string | object[] | typographyTokens.TypographyTokenValue | effectsTokens.EffectTokenValue[];
+interface DesignTokenBase {
     $type: string;
     name?: string;
     private?: boolean;
@@ -469,6 +433,61 @@ export interface DesignToken {
     description?: string;
     documentationLink?: DocumentationLink;
     adjustments?: any;
+}
+
+export type DesignToken = StringDesignToken | NumberDesignToken | ColorDesignToken | EffectDesignToken | TypographtDesignToken | BooleanDesignToken;
+
+export interface BooleanDesignToken extends DesignTokenBase {
+    $type: 'boolean';
+    $value: boolean;
+}
+
+export interface ColorDesignToken extends DesignTokenBase {
+    $type: 'color';
+    $value: string;
+}
+
+export interface NumberDesignToken extends DesignTokenBase {
+    $type: 'number';
+    $value: number;
+}
+
+export interface StringDesignToken extends DesignTokenBase {
+    $type: 'string';
+    $value: string;
+}
+
+export interface TypographtDesignToken extends DesignTokenBase {
+    $type: 'typography';
+    $value: TypographyTokenValue;
+}
+
+export interface TypographyTokenValue {
+    "fontFamily": string,
+    "lineHeight": string|number,
+    "fontSize": number,
+    "letterSpacing": string|number,
+    "paragraphSpacing": number,
+    "listSpacing"?: number,
+    "fontStyle": string,
+    "textCase": string,
+    "textDecoration": string,
+}
+
+export interface EffectDesignToken extends DesignTokenBase {
+    $type: 'effect';
+    $value: EffectTokenValue[];
+}
+
+export interface EffectTokenValue {
+    "color"?: string,
+    "showShadowBehindNode"?: boolean,
+    "blendMode"?: string,
+    "type": 'LAYER_BLUR' | 'BACKGROUND_BLUR' | 'DROP_SHADOW' | 'INNER_SHADOW',
+    "offsetX"?: number,
+    "offsetY"?: number,
+    "radius": number,
+    "spread"?: number,
 }
 
 async function processToken({

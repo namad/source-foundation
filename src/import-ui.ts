@@ -19,7 +19,7 @@ import { sliders } from "./ui/ref/sliders-collection";
 import { mainForm } from "./ui/ref/main-form";
 import { getReferenceName } from "./utils/token-references";
 import { activeModal } from "./ui/helpers/modal";
-import { EffectTokenValue, getElevationTokens } from "./effect-tokens";
+import { getElevationTokens } from "./effect-tokens";
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
 
@@ -84,6 +84,7 @@ export interface ImportFormData {
 
     shadowsStyle: number;
     shadowsColor: number;
+    shadowsSpread: number;
 }
 
 function isFloatField(name: string): boolean {
@@ -423,8 +424,7 @@ function generateCSSVars(tokens: DesignTokensRaw, context = document.documentEle
         const type = token['$type'];
 
         if (type == 'number') {
-            const varValue = parseInt(token.$value as string);
-            context.style.setProperty(varName, `${varValue}px`);
+            context.style.setProperty(varName, `${token.$value}px`);
         }
 
         if (type == 'color') {
@@ -436,20 +436,22 @@ function generateCSSVars(tokens: DesignTokensRaw, context = document.documentEle
 
 function generateBoxShadowsCSS(params: ImportFormData, dictionary: DesignTokensRaw) {
     const shadowColors = getShadowColorTokens(params.theme, params);
-    const shadowTokens = getElevationTokens(params.shadowsStyle) as DesignTokensRaw;
+    const shadowTokens = getElevationTokens(params);
 
     generateCSSVars({...shadowColors, ...dictionary});
 
     Object.entries(shadowTokens).forEach(([name, token]) => {
-        const shadows = token.$value as EffectTokenValue[];
-        const varName = `--${name.replace(/\//g, "-")}`;
+        if(token.$type == 'effect') {
+            const shadows = token.$value;
+            const varName = `--${name.replace(/\//g, "-")}`;
 
-        const cssString = shadows.map((shadowSettings) => {
-            const aliasName = getReferenceName(shadowSettings.color);
-            const value = `var(--${aliasName.replace(/\./g, "-")})`;            
-            return `${shadowSettings.offsetX}px ${shadowSettings.offsetY}px ${shadowSettings.radius}px ${shadowSettings.spread}px ${value}`
-        })
-        document.documentElement.style.setProperty(varName, cssString.join(', '));
+            const cssString = shadows.map((shadowSettings) => {
+                const aliasName = getReferenceName(shadowSettings.color);
+                const value = `var(--${aliasName.replace(/\./g, "-")})`;            
+                return `${shadowSettings.offsetX}px ${shadowSettings.offsetY}px ${shadowSettings.radius}px ${shadowSettings.spread}px ${value}`
+            })
+            document.documentElement.style.setProperty(varName, cssString.join(', '));
+        }
     });
 
 }

@@ -58,13 +58,17 @@ dialog .header {
 
 dialog .body {
     padding: var(--spacing-minor-lg) var(--spacing-lg);
-    @apply flex flex-col gap-y-base;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-minor-base);
     flex: 1;
 }
 
 dialog .footer {
     padding: 0 var(--spacing-lg) var(--spacing-minor-lg);
-    @apply flex flex-row justify-end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 button.close {
@@ -87,7 +91,11 @@ button.close:hover {
 }
 
 .theme-item {
-    @apply rounded-md bg-alt-base-100 flex flex-row relative;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    border-radius: var(--radii-md);
+    background-color: var(--alt-base-100);
 }
 
 .theme-item input[type=radio] {
@@ -119,20 +127,43 @@ dialog .body + .presets-list {
 }
 
 .theme-item .col-info {
-    @apply flex flex-col flex-1 justify-center px-base gap-minor-xs3
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    padding-left: var(--spacing-base);
+    padding-right: var(--spacing-base);
+    gap: var(--spacing-minor-xs3)
+    
 }
 .theme-item .col-info .info-item {
-    @apply flex flex-row gap-xs2 text-sm flex-nowrap whitespace-nowrap items-center;
+    display: flex;
+    flex-direction: row;
+    gap:var(--spacing-minor-xs2);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);    
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    align-items: center;
 }
 
 .theme-item .col-swatches {
-    @apply flex flex-col gap-xs p-xs flex-1
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: center;
+    padding: var(--spacing-xs);
+    gap: var(--spacing-xs)    
 }
 
 .swatches {
     outline: 1px solid var(--alt-base-100);
     outline-offset: -1px;
-    @apply flex flex-row gap-0 rounded overflow-hidden;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    border-radius: var(--radii-base);
+    overflow: hidden;    
 }
 
 .swatches .swatch {

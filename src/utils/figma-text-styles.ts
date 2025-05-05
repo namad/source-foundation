@@ -1,5 +1,4 @@
-import { DesignTokensRaw } from "../import-tokens";
-import { TypographyTokenValue } from "../typography-tokens";
+import { DesignTokensRaw, TypographyTokenValue } from "../import-tokens";
 import { _clone } from "./clone";
 import { getAliasName, getDefaultVariableValue } from "./figma-variables";
 import { findVariableByReferences, getGlobalTokensDictionary, resolveGlobalTokenValue } from "./token-references";
@@ -30,7 +29,7 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             continue;
         }
 
-        const resolved = await parseValues(token.$value as TypographyTokenValue, tokens);
+        const resolved = await parseValues(token.$value, tokens);
         const normalized = convertTextStyleToFigma(name, resolved);
         let fontName: FontName = normalized.fontName;
 
@@ -63,12 +62,16 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
                 textStyle[key] = normalized[key];
             })
 
-            const lineHeightVariable = await findVariableByReferences(token.$value['lineHeight']);
-            
-            const fontSizeVariable = await findVariableByReferences(token.$value['fontSize']);
-            const paragraphSpacingVariable = await findVariableByReferences(token.$value['paragraphSpacing']);
-            const fontFamilyVariable = await findVariableByReferences(token.$value['fontFamily']);
-            const fontStyleVariable = await findVariableByReferences(token.$value['fontStyle']);
+            const lineHeightValue = token.$value.lineHeight;
+            const lineHeightVariable = typeof lineHeightValue == 'string' ? await findVariableByReferences(lineHeightValue) : null;          
+            const fontSizeValue = token.$value.fontSize;
+            const fontSizeVariable = typeof fontSizeValue == 'string' ? await findVariableByReferences(fontSizeValue) : null;
+            const paragraphSpacingValue = token.$value.paragraphSpacing;
+            const paragraphSpacingVariable = typeof paragraphSpacingValue == 'string' ? await findVariableByReferences(paragraphSpacingValue) : null;
+            const fontFamilyValue = token.$value.fontFamily;
+            const fontFamilyVariable = typeof fontFamilyValue == 'string' ? await findVariableByReferences(fontFamilyValue) : null;
+            const fontStyleValue = token.$value.fontStyle;
+            const fontStyleVariable = typeof fontStyleValue == 'string' ? await findVariableByReferences(fontStyleValue) : null;
 
             lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
             fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);

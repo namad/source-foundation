@@ -24,7 +24,7 @@ import { flattenObject } from './utils/flatten-object';
 import { generateSystemAccentPalette } from './color-generators/accent-palette-generator';
 import { generateNeutrals } from './color-generators/neutrals-palette-generator';
 import { ImportFormData, SemanticAccentColors } from './import-ui';
-import { collectionNames, defaultSemanticAccents } from './defaults';
+import { collectionNames, defaultSemanticAccents, defaultSettings } from './defaults';
 import { _clone } from './utils/clone';
 import { addToGlobalTokensDictionary, findTokenReferences, findVariableAlias, getGlobalTokensDictionary, getReferenceName, resolveGlobalTokenValue } from './utils/token-references';
 import { convertFigmaColorToRgb, parseColorValue } from './utils/figma-colors';
@@ -504,9 +504,9 @@ const shadowColours = {
     dark: paletteDarkShadows,
 }
 export function getShadowColorTokens(theme: 'light'|'dark', params: ImportFormData): DesignTokensRaw {
-    const style = params.shadowsStyle;
-    const color = params.shadowsColor;
-    const tokenOptions = shadowColours[theme];
-
+    const tokenOptions = shadowColours[theme || 'light'];
+    if(params.shadowsColor == undefined) {
+        params.shadowsColor = defaultSettings.shadowsColor;
+    }    
     return flattenObject(tokenOptions[params.shadowsColor]);
 }

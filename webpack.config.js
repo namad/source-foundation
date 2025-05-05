@@ -1,13 +1,9 @@
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
-
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const webpack = require('webpack');
 
 const path = require('path')
-const webpackConfig = ((env, argv) => {
+module.exports = ((env, argv) => {
 
     if (argv.target == 'web') {
         return {
@@ -18,7 +14,6 @@ const webpackConfig = ((env, argv) => {
 
             entry: {
                 import: './src/ui/import.ts', // The entry point for your UI code
-                // export: './src/ui/export.ts', // The entry point for your UI code
                 plugin: './src/main.ts', // The entry point for your plugin code
             },
 
@@ -30,13 +25,35 @@ const webpackConfig = ((env, argv) => {
             module: {
                 rules: [
                     // Converts TypeScript code to JavaScript
-                    { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+                    {
+                        test: /\.tsx?$/,
+                        use: 'ts-loader',
+                        include: [
+                            path.resolve(__dirname, 'src'),
+                        ]
+                    },
 
                     // Enables including CSS by doing "import './file.css'" in your TypeScript code
-                    { test: /\.css$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }] },
+                    {
+                        test: /\.css$/,
+                        use: [
+                            { loader: 'style-loader' },
+                            { loader: 'css-loader' },
+                            { loader: 'postcss-loader' }
+                        ],
+                        include: [
+                            path.resolve(__dirname, 'src/ui'),
+                        ]
+                    },
 
                     // Allows you to use "<%= require('./file.svg') %>" in your HTML code to get a data URI
-                    { test: /\.(png|jpg|gif|webp|svg)$/, loader: 'url-loader' },
+                    {
+                        test: /\.(png|jpg|gif|webp|svg)$/,
+                        loader: 'url-loader',
+                        include: [
+                            path.resolve(__dirname, 'src'),
+                        ]                        
+                    },
                 ],
             },
 
@@ -121,6 +138,3 @@ const webpackConfig = ((env, argv) => {
     }
 
 })
-
-// module.exports = smp.wrap(webpackConfig)
-module.exports = webpackConfig

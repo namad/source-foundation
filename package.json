@@ -6,11 +6,17 @@
   "scripts": {
     "export-css": "jiti ./src/cli/export-css.ts",
     "export-json": "jiti ./src/cli/export-json.ts",
-    "build-tokens": "grunt default",
+
     "watch": "npx webpack --mode=development --target=web --watch",
-    "build": "npx webpack --mode=development --target=web",
+
+    "build": "npm run build-css && npm run build-plugin",
+
+    "build-css": "npx tailwindcss -i ./src/ui/styles/main.css -o ./src/ui/styles.css",
+    "build-plugin": "npx webpack --mode=development --target=web",
+
     "build-cli": "npx webpack --mode=production --target=node",
     "build-tcs": "tsc -p tsconfig.json",
+
     "pack-cli": "npm pack ./cli --pack-destination ~",
     "pack-tw": "npm pack ./tw --pack-destination ~"
   },

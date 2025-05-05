@@ -115,23 +115,6 @@
     line-height: var(--line-height-xs);
 }
 
-
-.color-box:first-child .tooltip {
-    left: 0;
-    transform: none;
-}
-
-.color-box:last-child .tooltip {
-    left: initial;
-    right: 0;
-    transform: none;
-}
-
-.color-box.hover .tooltip,
-.color-box:hover .tooltip {
-    display: flex;
-}
-
 .color-box .contrast-1::before {
     content: var(--contrast-white);
     display: inline;

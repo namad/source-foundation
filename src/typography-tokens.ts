@@ -15,24 +15,6 @@ import largeMajorSecond from "./tokens/typography/major-second/typescale-large.j
 
 import { flattenObject } from "./utils/flatten-object";
 import { findFigmaVariableCollectionByName } from "./utils/figma-variables";
-import { DesignToken } from "./import-tokens";
-
-export interface TextStyleToken extends DesignToken{
-    "$value": TypographyTokenValue,
-    "$type": "typography"
-}
-
-export interface TypographyTokenValue {
-    "fontFamily": string,
-    "lineHeight": string|number,
-    "fontSize": number,
-    "letterSpacing": string|number,
-    "paragraphSpacing": number,
-    "listSpacing"?: number,
-    "fontStyle": string,
-    "textCase": string,
-    "textDecoration": string,
-}
 
 export const base = flattenObject(baseMinorThird);
 export const compact = flattenObject(compactMinorThird);

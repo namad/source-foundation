@@ -16,8 +16,7 @@ import { opacity } from '../opacity-tokens';
 
 import fs from 'fs';
 import path from "path";
-import { EffectTokenValue } from "../effect-tokens";
-import { DesignToken, DesignTokensRaw } from "../import-tokens";
+import { DesignToken, DesignTokensRaw, EffectTokenValue } from "../import-tokens";
 
 
 
@@ -102,8 +101,8 @@ export function writeTheFileIntoDirectory(stream, dataFn) {
     });
 }
 
-function writeElevationVariables(stream, style = 0) {
-    const tokens = effects.getElevationTokens(style, true);
+function writeElevationVariables(stream, settings: ImportFormData) {
+    const tokens = effects.getElevationTokens(settings, true);
     
     const data = Object.keys(tokens).map((name, index) => {
         const variants = tokens[name];
@@ -209,7 +208,7 @@ console.log('settings', settings);
             writeSizingVariables(stream, 'typography', defaults.typographySizeName, typescale);
             writeSizingVariables(stream, 'iconSize', defaults.iconSizeName, sizing);
             writeOpacityVariables(stream);
-            writeElevationVariables(stream);
+            writeElevationVariables(stream, settings as ImportFormData);
 
             stream.close()
         })

@@ -1,13 +1,4 @@
-import "./styles/source-variables.css";
-import "./styles/utils.css";
-import "./styles/icons.css";
-import "./styles/styles.css";
-import "./styles/dialog.css";
-import "./styles/color-box.css";
-import "./styles/tooltip.css";
-// import "../../node_modules/nouislider/dist/nouislider.css";
-// import "./styles/vendor/nouislider.css";
-import "./styles/noui-slider.css";
+import "./styles/main.css";
 
 import { defaultSettings } from "../defaults";
 import { debounce } from "../utils/debounce";
@@ -36,9 +27,63 @@ import "./helpers/tooltips";
 */
 
 
+const cardCarousel = document.getElementById('cardCarouse');
+
+
+let startX, moveOffsetX = 0, startTranslateX, offsetTranslateX;
+
+const cardWidth = cardCarousel.offsetWidth;
+const parentWidth = cardCarousel.parentElement.offsetWidth;
+const maxOffset = cardWidth/4;
+
+function _mouseMove(e) {
+    moveOffsetX = e.clientX - startX;
+    offsetTranslateX = startTranslateX + moveOffsetX;
+
+    console.log('move', {
+        moveOffsetX,
+        offsetTranslateX,
+        maxOffset
+    })
+
+    if(Math.abs(offsetTranslateX) < maxOffset) {
+        cardCarousel.style.setProperty('--move-offset', `${offsetTranslateX}px`)
+    }
+
+
+}
+
+function _mouseUp(e) {
+    console.log(moveOffsetX)
+
+    cardCarousel.classList.remove('dragging');
+    cardCarousel.removeEventListener('mousemove', _mouseMove);
+    cardCarousel.removeEventListener('mouseup', _mouseUp);
+    cardCarousel.removeEventListener('mouseleave', _mouseUp);
+}
+
+cardCarousel.addEventListener('mousedown', (e) => {
+    startX = e.clientX;
+    moveOffsetX = 0;
+    startTranslateX = parseInt(cardCarousel.style.getPropertyValue('--move-offset') || '0');
+
+    console.log('start', {
+        startX,
+        moveOffsetX,
+        startTranslateX
+    })
+
+    cardCarousel.addEventListener('mousemove', _mouseMove);
+    cardCarousel.addEventListener('mouseup', _mouseUp);
+    cardCarousel.addEventListener('mouseleave', _mouseUp);
+
+    cardCarousel.classList.add('dragging');
+})
+
+
+
+
 let importButton = document.getElementById('importVariablesButton') as HTMLButtonElement;
-let exportThemeButton = document.getElementById('exportThemeButton') as HTMLButtonElement;
-let resetDefaultsButton = document.getElementById('resetDefaultsButton') as HTMLButtonElement;
 
 document.querySelectorAll('#copyExportedCodeButton').forEach(btn => {
     btn.addEventListener('click', (e) => {

@@ -97,6 +97,15 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     else if (eventData.type === "UPGRADE_TEXT_COLORS") {
         await upgradeTextPalette(params);
     }
+    else if (eventData.type == 'CENTER_WINDOW') {
+        let pluginWidth = 500,
+            pluginHeight = 800,
+            zoom = figma.viewport.zoom,
+            centerX = Math.round(figma.viewport.center.x - (zoom / 2)) - pluginWidth / 2,
+            centerY = Math.round(figma.viewport.center.y - (zoom / 2)) - pluginHeight / 2;
+
+        figma.ui.reposition(centerX, centerY);
+    }    
     else if (eventData.type === "UI_READY") {
         const colorSystemVersion = 1; //await getColorSystemVersion();
         await figlib.getStoreData();

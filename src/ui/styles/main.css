@@ -1,6 +1,16 @@
+@import "./source-variables.css";
+@import "./utils.css";
+@import "./icons.css";
+@import "./dialog.css";
+@import "./color-box.css";
+@import "./tooltip.css";
+@import "./noui-slider.css";
+@import "./card-carousel.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 :root {
     --spacing: 0.5rem 1rem;
@@ -57,12 +67,13 @@ a:hover {
 }
 
 .card {
+    display: flex;
+    flex-direction: column;
     background-color: var(--fill-base-100);
     border-radius: var(--radii-lg);
     padding: var(--spacing-minor-md) var(--spacing-md);
     gap: var(--spacing-minor-base);
     box-shadow: var(--shadow-1-100);
-    @apply flex flex-col;
 }
 
 .brand-card {
@@ -306,13 +317,16 @@ input[type=radio]:checked {
 
 
 .radiogroup {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radii-base);
     background-color: var(--fill-base-300);
     padding: 2px;
     gap: 1px;
-    @apply flex flex-row rounded;
 }
 
 .radiogroup input[type=radio] {
+    border-radius: var(--radii-none);
     background-color: var(--primary-400);
     border: 0 none;
     appearance: none;
@@ -323,13 +337,11 @@ input[type=radio]:checked {
     vertical-align: middle;
     transition: 0.2s all linear;
     opacity: 0.5;
-
-    @apply rounded-none;
 }
 
 .radiogroup input[type=radio]:checked {
     opacity: 1;
-    @apply shadow-1;
+    box-shadow: var(--shadow-1-100);
 }
 
 input:focus,
@@ -528,9 +540,7 @@ a[data-expander] {
     flex-flow: row-reverse;
     gap: var(--spacing-xs2);
     transition: transform 150ms ease-in-out;
-
-    @apply icon-chevron-right;
-
+    
     &::before {
         transition: transform 200ms ease-in-out;
     }
