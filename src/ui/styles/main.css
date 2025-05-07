@@ -5,6 +5,7 @@
 @import "./color-box.css";
 @import "./tooltip.css";
 @import "./noui-slider.css";
+@import "./slider.css";
 @import "./card-carousel.css";
 
 @tailwind base;
@@ -69,6 +70,8 @@ a:hover {
 .card {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    min-block-size: min-content;
     background-color: var(--fill-base-100);
     border-radius: var(--radii-lg);
     padding: var(--spacing-minor-md) var(--spacing-md);
@@ -246,8 +249,15 @@ textarea {
 input:hover,
 select:hover,
 textarea:hover {
+    border-color: var(--primary-300);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
     border-color: var(--primary-500);
 }
+
 
 input[type=radio] {
     appearance: none;
@@ -344,11 +354,6 @@ input[type=radio]:checked {
     box-shadow: var(--shadow-1-100);
 }
 
-input:focus,
-textarea:focus {
-    border-color: var(--primary-500);
-    /* outline: none; */
-}
 
 textarea {
     flex: 1;
@@ -362,113 +367,6 @@ fieldset {
     border-width: var(--border-width-base);
 }
 
-[data-name='red'] {
-    --slider-thumb-color: var(--accent-red-400);
-}
-
-[data-name='amber'] {
-    --slider-thumb-color: var(--accent-amber-400);
-}
-
-[data-name='brown'] {
-    --slider-thumb-color: var(--accent-brown-400);
-}
-
-[data-name='green'] {
-    --slider-thumb-color: var(--accent-green-400);
-}
-
-[data-name='teal'] {
-    --slider-thumb-color: var(--accent-teal-400);
-}
-
-[data-name='cyan'] {
-    --slider-thumb-color: var(--accent-cyan-400);
-}
-
-[data-name='blue'] {
-    --slider-thumb-color: var(--accent-blue-400);
-}
-
-[data-name='indigo'] {
-    --slider-thumb-color: var(--accent-indigo-400);
-}
-
-[data-name='violet'] {
-    --slider-thumb-color: var(--accent-violet-400);
-}
-
-[data-name='purple'] {
-    --slider-thumb-color: var(--accent-purple-400);
-}
-
-[data-name='pink'] {
-    --slider-thumb-color: var(--accent-pink-400);
-}
-
-[data-name='info'] {
-    --slider-thumb-color: var(--info-400);
-}
-
-[data-name='warning'] {
-    --slider-thumb-color: var(--warning-400);
-}
-
-[data-name='success'] {
-    --slider-thumb-color: var(--success-400);
-}
-
-[data-name='danger'] {
-    --slider-thumb-color: var(--danger-400);
-}
-
-[data-slider] {
-    display: flex;
-}
-
-.sliders label {
-    display: flex;
-    align-items: center;
-}
-
-.sliders .text-label {
-    width: 20%;
-}
-
-.sliders .noui-slider {
-    margin: var(--slider-margin) 0;
-}
-
-.sliders input[type=text] {
-    width: 5rem;
-    border: var(--border-width-base) solid var(--stroke-base-300);
-    background: transparent;
-    text-align: center;
-    border-radius: var(--radii-base);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-sm);
-    padding-left: 0;
-    padding-right: 0;
-}
-
-[data-semantics] .sliders input[type=text] {
-    font-size: 0.9rem;
-}
-
-#textColorPreview {
-    & .sliders {
-        width: calc(200% + var(--spacing-base) * 2);
-    }
-}
-
-#textBrightnessSlider {
-    background-image: linear-gradient(90deg, var(--alt-base-300), var(--alt-contrast-500));
-
-    & .noUi-handle {
-        background: var(--text-black);
-        border-color: var(--text-white);
-    }
-}
 
 main {
     display: flex;
@@ -548,6 +446,9 @@ a[data-expander] {
 
 a[data-expanded=true]::before {
     transform: rotate(90deg);
+}
+a[data-expanded=true]::after {
+    opacity: 0;
 }
 
 .font-preview-box {
@@ -746,4 +647,41 @@ a[data-expanded=true]::before {
 
 [data-custom-dark="true"] .custom-dark-indicator {
     display: inline-flex;
+}
+
+[data-name=textBlackBrightness],
+[data-name=textWhiteBrightness] {
+    & .text-label,
+    [data-display-element] {
+        display: none;;
+    }
+}
+
+[data-name=textWhiteBrightness] {
+    & .noui-slider {
+        background-color: var(--alt-contrast-600);
+    }
+    & .noUi-connect {
+        background-color: var(--text-contrast-400);
+    }
+}
+
+.w-dot {
+    --indicator-size: calc(var(--line-height-xs) / 3);
+    position: relative;
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        aspect-ratio: 1/1;
+        width: var(--indicator-size);
+        border-radius: var(--radii-round);
+        
+        right: calc(100% + var(--spacing-xs2));
+        top: calc(50% - var(--indicator-size) / 2);
+        background-color: var(--info-300);
+        /* outline: 3px solid var(--info-100); */
+
+        transition: all 1s ease-in-out;
+    }
 }

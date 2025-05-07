@@ -38,7 +38,7 @@
 
 .noui-slider .noUi-connect {
     --effect-opacity: 30%;
-    background-image: linear-gradient(180deg, hsl(0deg 100% 100% / var(--effect-opacity)), hsl(0deg 100% 100% / var(--effect-opacity)));
+    background-image: linear-gradient(180deg, hsl(0deg 100% 100% / var(--effect-opacity)), hsl(0deg 100% 100% / 0));
     background-blend-mode: overlay;
     background-color: var(--slider-thumb-color);
 }

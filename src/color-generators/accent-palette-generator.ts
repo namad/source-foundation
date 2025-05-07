@@ -8,11 +8,11 @@ import { ColorRamp, SystemAccentList } from "../color-tokens";
 export function getAccentRamp(theme: 'light' | 'dark', params: ImportFormData): ColorRamp {
     let textSaturationAdjustments = {};
     
-    if (params.customAccentTextSaturation === true) {
-        textSaturationAdjustments = {
-            s: params.accentTextSaturation
-        }
-    }
+    // if (params.customAccentTextSaturation === true) {
+    //     textSaturationAdjustments = {
+    //         s: params.accentTextSaturation
+    //     }
+    // }
 
     switch(theme) {
         default: {

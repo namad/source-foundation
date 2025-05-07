@@ -141,6 +141,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion: 1,
+                customDarkMode: themeStore.isCustomDarkMode(),
                 params: themeStore.getTheme("light"),
                 tokenLibraries: figlib.serialize()
             }

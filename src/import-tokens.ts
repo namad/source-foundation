@@ -304,7 +304,8 @@ export async function getCollectionAndPrepareTokens({ collectionName, modeName, 
             }
             catch(e) {
                 figma.notify("Cannot create more than one mode. Is your file under Pro team or org plan?", {error: true});
-                console.error(e);
+                console.error("Cannot create more than one mode. Is your file under Pro team or org plan?", e);
+                throw new Error(e)
                 figma.closePlugin();
             }
         }

@@ -174,11 +174,62 @@ function getTextOnAccentColors(formData: ImportFormData) {
     return template;
 }
 
+function processCommonColors(formData: ImportFormData, tokens) {
+    let textSaturationAdjustments = {};
+
+    if (formData.customAccentTextSaturation === true) {
+        textSaturationAdjustments = {
+            s: formData.accentTextSaturation
+        }
+    }
+    const adjustments = {
+        "text": {
+            "base": {
+                "action": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "info": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "success": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "warning": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "danger": {
+                    "adjustments": textSaturationAdjustments
+                }
+            },
+            "contrast": {
+                "action": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "info": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "success": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "warning": {
+                    "adjustments": textSaturationAdjustments
+                },
+                "danger": {
+                    "adjustments": textSaturationAdjustments
+                }
+            }
+        }
+    }
+
+    tokens = _clone(tokens);
+    return _mergeDeep(tokens, adjustments);
+}
+
 export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData): DesignTokensRaw {
 
 
-    let lightCommon = _clone(paletteLightCommon) as SystemColorPalette;
-    let darkCommon = _clone(paletteDarkCommon) as SystemColorPalette;
+    let lightCommon = processCommonColors(formData, paletteLightCommon) as SystemColorPalette;
+    let darkCommon = processCommonColors(formData, paletteDarkCommon) as SystemColorPalette;
 
     let params = {
         ...normalizeFormData(formData)
@@ -363,8 +414,16 @@ export async function getColorTokenValue(token: DesignToken, modeId: string): Pr
     const variableAlias = await findVariableAlias(valueString);
     const rawValue = resolveColorTokenValue(token, getGlobalTokensDictionary());
 
+    if(token.name == 'text/base/action') debugger
+
     if (token.$type != "color") {
         return
+    }
+
+    const hasAdjustments = typeof token.adjustments == 'object' && Object.keys(token.adjustments).length > 0;
+
+    if (hasAdjustments && rawValue) {
+        return rawValue
     }
 
     if (variableAlias && typeof variableAlias == 'object') {
@@ -376,15 +435,8 @@ export async function getColorTokenValue(token: DesignToken, modeId: string): Pr
                 return parsedValue;
             }
         }
-
         return variableAlias;
 
-    }
-
-    const hasAdjustments = typeof token.adjustments == 'object';
-
-    if (hasAdjustments && rawValue) {
-        return rawValue
     }
 
     if (rawValue) {
@@ -482,7 +534,7 @@ function isAlias(value) {
     try {
         return value.toString().trim().charAt(0) === "{";
     }
-    catch(e) {
+    catch (e) {
         debugger
     }
 }
@@ -490,6 +542,12 @@ export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: De
     let value = token.$value as string;
 
     value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
+
+    const hasAdjustments = typeof token.adjustments == 'object' && Object.keys(token.adjustments).length > 0;
+
+    if (hasAdjustments) {
+        return value
+    }
 
     if (isAlias(token.$value)) {
         const aliasName = getReferenceName(token.$value as string);
@@ -503,10 +561,10 @@ const shadowColours = {
     light: paletteLightShadows,
     dark: paletteDarkShadows,
 }
-export function getShadowColorTokens(theme: 'light'|'dark', params: ImportFormData): DesignTokensRaw {
+export function getShadowColorTokens(theme: 'light' | 'dark', params: ImportFormData): DesignTokensRaw {
     const tokenOptions = shadowColours[theme || 'light'];
-    if(params.shadowsColor == undefined) {
+    if (params.shadowsColor == undefined) {
         params.shadowsColor = defaultSettings.shadowsColor;
-    }    
+    }
     return flattenObject(tokenOptions[params.shadowsColor]);
 }

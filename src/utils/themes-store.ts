@@ -42,6 +42,9 @@ function syncValues(data: ImportFormData) {
         'createRadiiTokens',
         'createGlobalSizeTokens',
         'createOpacityTokens',
+        'shadowsStyle',
+        'shadowsSpread',
+        'textBlackBrightness'
     ];
 
     store.forEach((params, themeKey) => {

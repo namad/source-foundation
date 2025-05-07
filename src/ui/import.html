@@ -1,6 +1,6 @@
 <form id="importForm">
     <dialog class="simple" id="typographyScaleModal">
-        <div class="modal-container">
+        <div class="modal-container pb-minor-lg">
             <div class="header">
                 <h3 class="text-lg font-bold">Typography</h3>
                 <button class="close close-modal" value="cancel">
@@ -26,7 +26,7 @@
     </dialog>
 
     <dialog class="simple" id="spacingScaleModal">
-        <div class="modal-container">
+        <div class="modal-container pb-minor-lg">
             <div class="header">
                 <h3 class="text-lg font-bold">Spacing</h3>
                 <button class="close close-modal" value="cancel">
@@ -49,7 +49,7 @@
     </dialog>
 
     <dialog class="simple" id="radiiScaleModal">
-        <div class="modal-container">
+        <div class="modal-container pb-minor-lg">
             <div class="header">
                 <h3 class="text-lg font-bold">Radii Scale</h3>
                 <button class="close close-modal" value="cancel">
@@ -72,9 +72,24 @@
                     <span class="icon icon-x"></span>
                 </button>
             </div>
-            <div class="body">
+            <div class="body overflow-auto">
                 <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
-                    Enable custom dark mode so you can override settings for neutrals, accents and text colours
+                    Enable custom dark mode so you can override settings for neutrals, accents and text colours. 
+
+                    <div class="px-base py-minor-base border border-alt-base-200 rounded-md">
+                        <p class="text-sm color-text-base-500 mb-minor-sm">
+                            Look for these visual cues to identify theme releated parameters
+                        </p>
+                        <div class="sliders w-dot flex flex-row items-center w-full gap-xs custom-dark-preview">
+                            <span class="text-label">Saturation</span>
+                            <div class="noui-slider flex-1 noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr"><div class="noUi-base"><div class="noUi-connects"><div class="noUi-connect" style="transform: translate(0%, 0px) scale(0.5, 1);"></div></div><div class="noUi-origin" style="transform: translate(-50%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="40.0" aria-valuenow="20.0" aria-valuetext="20.00"><div class="noUi-touch-area"></div></div></div></div></div>
+                            <div class="">
+                                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100"></span>
+                            </div>
+
+                            <input type="text" readonly="" value="20" />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
@@ -342,10 +357,10 @@
             <hr />
 
             <div class=" -mx-md">
-                <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon icon-chevron-right mx-md">Advanced Settings</a>
+                <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon icon-chevron-right mx-md w-dot">Advanced Settings</a>
                 <div data-expander data-role="container" class="height-expander collapsed ">
                     <div class="flex flex-col gap-y-minor-base px-md pt-minor-base pb-minor-xs">
-                        <h4 class="text-md font-bold flex flex-row gap-xs2">
+                        <h4 class="text-md font-bold flex flex-row gap-xs2 w-dot">
                             Accent Colour Luminance
                             <!-- <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70 hover:opacity-100" data-tooltip="top" data-offset="8" popovertarget="colorModeConnectedToolTip"></span> -->
                             <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
@@ -357,10 +372,10 @@
                             The third knob defines the lightest shade.
                         </p>
                         <div class="mb-y-base flex flex-row gap-0 rounded overflow-hidden">
-                            <div class="color-box primary-200 color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary200ToolTip">
-                                <div class="text-sm opacity-70">200</div>
+                            <div class="color-box primary-200 color-text-base-500 hover:color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary200ToolTip">
+                                <div class="text-sm">200</div>
                                 <div class="flex flex-row font-mono text-xs">
-                                    <span class="token-value">200</span>:1
+                                    <span class="token-value color-text-base-500">200</span>:1
                                 </div>
                                 <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary200ToolTip">
                                     <div class="px-2 py-1 flex flex-col gap-minor-xs">
@@ -369,10 +384,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-300 color-text-contrast-600 flex-1" id="colorPreview2" data-tooltip="top" data-offset="8" popovertarget="primary300ToolTip">
-                                <div class="text-sm opacity-70">300</div>
+                            <div class="color-box primary-300 color-text-contrast-500 hover:color-text-contrast-600 flex-1" id="colorPreview2" data-tooltip="top" data-offset="8" popovertarget="primary300ToolTip">
+                                <div class="text-sm">300</div>
                                 <div class="flex flex-row font-mono text-xs">
-                                    <span class="token-value">300</span>:1
+                                    <span class="token-value color-text-contrast-500">300</span>:1
                                 </div>
                                 <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary300ToolTip">
                                     <div class="px-2 py-1 flex flex-col gap-minor-xs">
@@ -381,10 +396,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-400 color-text-contrast-600 flex-1" id="colorPreview1" data-tooltip="top" data-offset="8" popovertarget="primary400ToolTip">
-                                <div class="text-sm font-bold opacity-70">400</div>
+                            <div class="color-box primary-400 color-text-contrast-500 hover:color-text-contrast-600 flex-1" id="colorPreview1" data-tooltip="top" data-offset="8" popovertarget="primary400ToolTip">
+                                <div class="text-sm font-bold">400</div>
                                 <div class="flex flex-row font-mono text-xs">
-                                    <span class="token-value">400</span>:1
+                                    <span class="token-value color-text-contrast-500">400</span>:1
                                 </div>
                                 <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary400ToolTip">
                                     <div class="px-2 py-1 flex flex-col gap-minor-xs">
@@ -393,10 +408,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-500 color-text-contrast-600 flex-1" id="colorPreview0" data-tooltip="top" data-offset="8" popovertarget="primary500ToolTip">
-                                <div class="text-sm opacity-70">500</div>
+                            <div class="color-box primary-500 color-text-contrast-500 hover:color-text-contrast-600 flex-1" id="colorPreview0" data-tooltip="top" data-offset="8" popovertarget="primary500ToolTip">
+                                <div class="text-sm">500</div>
                                 <div class="flex flex-row font-mono text-xs">
-                                    <span class="token-value">500</span>:1
+                                    <span class="token-value color-text-contrast-500">500</span>:1
                                 </div>
                                 <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary500ToolTip">
                                     <div class="px-2 py-1 flex flex-col gap-minor-xs">
@@ -405,10 +420,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="color-box primary-600 color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary600ToolTip">
-                                <div class="text-sm opacity-70">600</div>
+                            <div class="color-box primary-600 color-text-base-500 hover:color-text-base-600 flex-1" data-tooltip="top" data-offset="8" popovertarget="primary600ToolTip">
+                                <div class="text-sm">600</div>
                                 <div class="flex flex-row  font-mono text-xs">
-                                    <span class="token-value">600</span>:1
+                                    <span class="token-value color-text-base-500">600</span>:1
                                 </div>
                                 <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary600ToolTip">
                                     <div class="px-2 py-1 flex flex-col gap-minor-xs">
@@ -436,56 +451,49 @@
                 <a href="#" data-command="UPGRADE_TEXT_COLORS" id="upgradeTextPaletteLink" class="hidden">Upgrade text palette</a>
             </div>
 
-            <h4 class="mt-3 text-md font-bold flex flex-row gap-xs2">
-                Base Text Colours
-                <!-- <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70 hover:opacity-100" data-tooltip="top" data-offset="8" popovertarget="colorModeConnectedToolTip"></span> -->
-                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
-                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
-            </h4>
-
-            <div class="flex flex-row gap-0 overflow-hidden rounded" id="textColorPreview">
-                <div class="flex flex-col gap-2 px-base py-minor-sm text-center flex-1 bg-fill-base-300">
+            <div class="flex flex-color items-center px-base py-minor-base gap-base overflow-hidden bg-fill-base-300 rounded" id="whiteTextColorPreview">
+                <div class="flex flex-col gap-0.5 flex-1">
                     <div class="color-text-base-600 text-sm">
                         Text on light surface
                     </div>
-                    <div class="color-text-base-500 font-mono text-xs flex justify-center items-center gap-base">
-
+                    <div class="flex flex-row gap-base color-text-base-500 font-mono text-xs">
+                        <span>Black <span data-value="textBlackBrightness">0</span>%</span>
                         <span><span data-value="textBlackContrast">0</span>:1</span>
                     </div>
                 </div>
-                <div class="flex flex-col gap-1 px-base py-minor-sm text-center flex-1 bg-fill-contrast-300" style="background-color: var(--grey-20);">
-                    <div class="color-text-contrast-600 text-sm">
+                <div class="flex-1">
+                    <div data-slider='{"label": "White %", "name": "textBlackBrightness", "min": 4, "max": 50, "step": 1, "value": 6, "direction": "rtl", "linked": false}'></div>
+                </div>                
+            </div>
+
+            <div class="flex flex-color items-center px-base py-minor-base gap-base overflow-hidden bg-fill-contrast-300 color-text-contrast-600 rounded" style="background-color: var(--grey-20);" id="whiteTextColorPreview">
+                <div class="flex flex-col gap-0.5 flex-1">
+                    <div class=" text-sm">
                         Text on dark surface
                     </div>
-                    <div class="color-text-contrast-500 font-mono text-xs flex justify-center items-center gap-base">
-
+                    <div class="flex flex-row gap-base color-text-contrast-500 font-mono text-xs">
+                        <span>White <span data-value="textWhiteBrightness">0</span>%</span>
                         <span><span data-value="textWhiteContrast">0</span>:1</span>
                     </div>
                 </div>
+                <div class="flex-1">
+                    <div data-slider='{"label": "White %", "name": "textWhiteBrightness", "min": 50, "max": 100, "step": 1, "value": 100, "linked": true}'></div>
+                </div>                
             </div>
 
-            <div class="sliders flex flex-row items-center gap-xs">
-                <span class="text-label text-sm" -data-value="textBlackBrightness">Black <span><span data-value="textBlackBrightness">0</span>%</span></span>
-                <div id="textBrightnessSlider" class="noui-slider flex-1"></div>
-                <span class="text-label text-sm text-right" -data-value="textWhiteBrightness">White <span><span data-value="textWhiteBrightness">0</span>%</span></span>
-                <input type="hidden" name="textWhiteBrightness" id="textWhiteBrightnessVal" value="100" />
-                <input type="hidden" name="textBlackBrightness" id="textBlackBrightnessVal" value="6" />
-            </div>
+
 
             <p class="color-text-base-500 text-sm">
                 Set black and white percentages for texts colours on light and dark surfaces
             </p>
 
             <h4 class="mt-3 text-md font-bold flex flex-row gap-xs2">
-                Accent Text Colours
-                <!-- <span class="icon icon-sm icon-link-2 dark-mode-lock opacity-70 hover:opacity-100" data-tooltip="top" data-offset="8" popovertarget="colorModeConnectedToolTip"></span> -->
-                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
-                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
+                Accent / Semantic Text Colours
             </h4>
 
             <div class="flex flex-col gap-y-xs">
                 <div class="flex flex-col gap-0 overflow-hidden rounded">
-                    <div class="flex flex-row items-baseline px-base py-sm text-center flex-1 bg-fill-base-300 text-sm">
+                    <div class="flex flex-row items-baseline p-base text-center flex-1 bg-fill-base-300 text-sm">
                         <span class="rounded-sm color-text-base-600 font-mono text-xs bg-fill-base-100 py-0.5 px-1.5">
                             <span>500</span>
                         </span>
@@ -524,7 +532,7 @@
                             <span data-value="textAcentContrastOnLight"></span>:1
                         </span>
                     </div>
-                    <div class="flex flex-row items-baseline px-base py-sm text-center flex-1 bg-fill-contrast-200 text-sm">
+                    <div class="hidden flex-row items-baseline px-base py-sm text-center flex-1 bg-fill-contrast-200 text-sm">
                         <span class="rounded-sm color-text-base-600 font-mono text-xs bg-fill-base-400 py-0.5 px-1.5">
                             <span>600</span>
                         </span>
@@ -569,12 +577,12 @@
             </div>
 
             <label class="checkbox flex flex-row gap-2">
-                <input type="checkbox" name="customAccentTextSaturation" value="true" /><span>Custom Accent Text Colour Saturation</span>
+                <input type="checkbox" name="customAccentTextSaturation" value="true" /><span>Enable custom saturation</span>
             </label>
             <p class="color-text-base-500 text-sm">
                 By default, accent text colour is connected to it's respective accent. Tick checkbox above to enable custom saturation for bright texts.
             </p>
-            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 100, "linked": false}'></div>
+            <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 0, "max": 100, "step": 1, "value": 100, "linked": true}'></div>
 
 
             <!-- 
@@ -647,6 +655,38 @@
             </div>
         </div>
 
+        <div class="card" id="shadowsStyle">
+            <h3 class="text-lg font-bold">Shadows / Elevation</h3>
+            <div class="-mx-md px-md overflow-hidden">
+
+                <div class="grid justify-center card-carrousel-wrapper">
+                    <div class="card-carousel" id="cardCarouse" style="transform: translateX(var(--move-offset));" draggable="false" >
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs  pointer-events-none">shadow-1</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-2-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-2</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-3-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-3</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-4-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-4</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-5-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-5</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-6-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-slider='{"label": "Softness", "name": "shadowsColor", "min": 0, "max": 3, "step": 1, "value": 0, "linked": true}'></div>
+            <div data-slider='{"label": "Depth", "name": "shadowsStyle", "min": 1, "max": 5, "step": 1, "value": 0, "linked": false}'></div>            
+            <div data-slider='{"label": "Spread", "name": "shadowsSpread", "min": -5, "max": 5, "step": 1, "value": 0, "linked": false}'></div>            
+        </div>
+
         <div class="card" id="ui-scale">
             <h3 class="text-lg font-bold">UI Scale</h3>
             <p class="color-text-base-500 text-sm">
@@ -698,37 +738,7 @@
             </span>
         </div>
 
-        <div class="card" id="shadowsStyle">
-            <h3 class="text-lg font-bold">Shadows / Elevation</h3>
-            <div class="-mx-md px-md overflow-hidden">
 
-                <div class="grid justify-center card-carrousel-wrapper">
-                    <div class="card-carousel" id="cardCarouse" style="transform: translateX(var(--move-offset));" >
-                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-200 rounded-md flex-1 items-center justify-center flex">
-                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs  pointer-events-none">shadow-1</span>
-                        </div>
-                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-2-200 rounded-md flex-1 items-center justify-center flex">
-                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-2</span>
-                        </div>
-                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-3-200 rounded-md flex-1 items-center justify-center flex">
-                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-3</span>
-                        </div>
-                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-4-200 rounded-md flex-1 items-center justify-center flex">
-                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-4</span>
-                        </div>
-                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-5-200 rounded-md flex-1 items-center justify-center flex">
-                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-5</span>
-                        </div>
-                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-6-200 rounded-md flex-1 items-center justify-center flex">
-                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-6</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div data-slider='{"label": "Softness", "name": "shadowsColor", "min": 0, "max": 3, "step": 1, "value": 0, "linked": false}'></div>
-            <div data-slider='{"label": "Depth", "name": "shadowsStyle", "min": 1, "max": 5, "step": 1, "value": 0, "linked": true}'></div>            
-            <div data-slider='{"label": "Spread", "name": "shadowsSpread", "min": -5, "max": 5, "step": 1, "value": 0, "linked": true}'></div>            
-        </div>
 
         <div class="card" id="importOptions">
             <h3 class="text-lg font-bold">Import Options</h3>
@@ -931,7 +941,7 @@
                 <span class="icon icon-x"></span>
             </button>
         </div>
-        <div class="radio-segment mx-lg mt-minor-lg mb-1" data-tabs id="importOptionsSegment">
+        <div class="radio-segment mx-lg mb-minor-base" data-tabs id="importOptionsSegment">
             <label class="flex-1">
                 <input type="radio" name="importAs" value="preset" data-tab="importPresetTab" checked />
                 <span class="container">
@@ -945,7 +955,7 @@
                 </span>
             </label>
         </div>
-        <div class="flex flex-col flex-1 gap-minor-sm overflow-hidden" id="importPresetTab">
+        <div class="flex flex-col flex-1 overflow-hidden" id="importPresetTab">
             <div class="flex flex-col flex-1 overflow-auto">
                 <div class="body">
                     <p class="color-text-base-500 text-sm">Paste preset code to the textarea below</p>

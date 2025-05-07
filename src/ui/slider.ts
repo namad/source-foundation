@@ -19,6 +19,7 @@ interface SliderOptions {
     value: number;
     syncValue: boolean;
     tooltips?: boolean;
+    direction?: 'ltr'|'rtl';
     valueMap?: string[];
     linked: boolean;
 }
@@ -41,12 +42,14 @@ function getMarkup({ label, name, min, max, step, value, linked }) {
         <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
         <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>         
     ` : '';
-
+    const linkedClassName = linked === true ? 'theme-specific' : '';
     return `
-        <div class="sliders flex flex-row items-center w-full gap-xs" data-name=${name}>
+        <div class="sliders w-dot flex flex-row items-center w-full gap-xs ${linkedClassName}" data-name=${name}>
             <span class="text-label">${label}</span>
             <div class="noui-slider flex-1"></div>
-            ${linkIndicator}
+            <div class="icon-indicator-wrap">
+                ${linkIndicator}
+            </div>
             <input data-display-element type="text" readonly>
             <input data-value-element type="hidden" name="${name}" value="${value}">
         </div>
@@ -61,10 +64,11 @@ function processComponent(el, options: SliderOptions) {
     let slider = el.querySelector(`.noui-slider`);
 
     slider = nouislider.create(slider, {
-        connect: 'lower',
+        connect: options.direction == 'rtl' ? 'upper' : 'lower',
         animate: false,
         start: [options.value],
         step: options.step,
+        direction: options.direction || 'ltr',
         tooltips: options.tooltips || false,
         range: {
             'min': [options.min],

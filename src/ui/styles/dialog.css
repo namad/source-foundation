@@ -31,7 +31,6 @@ dialog .modal-container {
     display: flex;
     flex-flow: column;
     width: calc(100% - var(--spacing-sm));
-    padding: 0;
     color: var(--text-base-600);
     background-color: var(--fill-base-100);
     border-radius: var(--radii-lg);
@@ -50,14 +49,15 @@ dialog[open] .modal-container {
 }
 
 dialog .header {
-    padding: var(--spacing-minor-lg) var(--spacing-lg) 0;
+    padding: var(--spacing-minor-lg) var(--spacing-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 dialog .body {
-    padding: var(--spacing-minor-lg) var(--spacing-lg);
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
     display: flex;
     flex-direction: column;
     row-gap: var(--spacing-minor-base);
@@ -65,7 +65,7 @@ dialog .body {
 }
 
 dialog .footer {
-    padding: 0 var(--spacing-lg) var(--spacing-minor-lg);
+    padding: var(--spacing-minor-lg) var(--spacing-lg) ;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

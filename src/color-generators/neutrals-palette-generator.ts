@@ -3,6 +3,7 @@ import { renderColor } from "./swatches-generator";
 import { ImportFormData } from "../import-ui";
 import { flattenObject } from "../utils/flatten-object";
 import { DesignTokensRaw } from "../import-tokens";
+import { defaultSettings } from "../defaults";
 
 
 function getSaturationModifier(lightness) {
@@ -28,11 +29,11 @@ export function generateNeutrals(params: ImportFormData): DesignTokensRaw {
     let tokens: DesignTokensRaw = flattenObject({
         "text": {
             "black": {
-                "$value": `{grey-${params.textBlackBrightness}}`,
+                "$value": `{grey-${params.textBlackBrightness || defaultSettings.textBlackBrightness}}`,
                 "$type": 'color'
             },
             "white": {
-                "$value": `{grey-${params.textWhiteBrightness}}`,
+                "$value": `{grey-${params.textWhiteBrightness || defaultSettings.textWhiteBrightness}}`,
                 "$type": 'color'
             }
         }
