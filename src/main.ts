@@ -10,6 +10,7 @@ import { addToGlobalTokensDictionary } from './utils/token-references';
 import { ConfigColors, ImportFormData } from './import-ui';
 import { CollectionExportRecord, exportBrandVariantToJSON, exportToJSON, importFromJSON } from './import-export-json';
 import { importAllTokens, initiateImport } from './import-tokens';
+import { createUpdateElevationComponents } from './effect-tokens';
 
 console.clear();
 
@@ -26,6 +27,7 @@ interface MessagePayload {
     exportJSONParams?: ExportEventParameters;
     exportBrandParams?: ExportEventParameters;
     importJSONParams?: ImportEventParameters;
+    options?: any;
     data?: CollectionExportRecord[];
     colorFormat?:  'hex'|'hsl'|'rgba';
     colorName?: ConfigColors;
@@ -71,10 +73,10 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
 
         figlib.setSelectedLibrary(eventData.importJSONParams.tokenLibraryName);
         
-        await importFromJSON(eventData.data, params).catch(error => {
+        await importFromJSON(eventData.data, params).catch((error: Error) => {
             console.error(error);
             figma.ui.postMessage("IMPORT_COMPLETED");
-            figma.notify(error, {error: true});
+            figma.notify(error.message, {error: true});
         });
 
         figma.notify(`Figma variables has been imported`);
@@ -97,6 +99,21 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
     else if (eventData.type === "UPGRADE_TEXT_COLORS") {
         await upgradeTextPalette(params);
     }
+    else if (eventData.type === "START_ELEVATION_COMPONENTS") {
+        figma.ui.postMessage({
+            type: "START_ELEVATION_COMPONENTS",
+            data: {
+                pages: figma.root.children.map(node => node.name),
+                currentPage: figma.currentPage.name
+            }
+        })
+    }
+    else if (eventData.type === "CREATE_ELEVATION_COMPONENTS") {
+        const page = eventData.options['componentPage'];
+        await createUpdateElevationComponents(params, page).catch((error: Error) => {
+            figma.notify(error.message, {error: true});
+        });
+    }
     else if (eventData.type == 'CENTER_WINDOW') {
         let pluginWidth = 500,
             pluginHeight = 800,
@@ -115,6 +132,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion,
+                preset: themeStore.serialize(),
                 customDarkMode: themeStore.isCustomDarkMode(),
                 params: themeStore.getTheme('light'),
                 tokenLibraries: figlib.serialize()
@@ -141,6 +159,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion: 1,
+                preset: themeStore.serialize(),
                 customDarkMode: themeStore.isCustomDarkMode(),
                 params: themeStore.getTheme("light"),
                 tokenLibraries: figlib.serialize()
@@ -156,6 +175,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion: 1,
+                preset: themeStore.serialize(),
                 params: selectedThemeData,
                 customDarkMode: themeStore.isCustomDarkMode(),
                 tokenLibraries: figlib.serialize()
@@ -169,6 +189,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion: 1,
+                preset: themeStore.serialize(),
                 params: params,
                 customDarkMode: themeStore.isCustomDarkMode(),
                 tokenLibraries: figlib.serialize()
@@ -182,6 +203,7 @@ figma.ui.onmessage = async (eventData: MessagePayload) => {
             type: "REFRESH_UI",
             data: {
                 colorSystemVersion: 1,
+                preset: themeStore.serialize(),
                 params: {
                     ...themeStore.getTheme('light'),
                     theme: params.theme

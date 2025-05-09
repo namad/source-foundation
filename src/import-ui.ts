@@ -20,6 +20,7 @@ import { mainForm } from "./ui/ref/main-form";
 import { getReferenceName } from "./utils/token-references";
 import { activeModal } from "./ui/helpers/modal";
 import { getElevationTokens } from "./effect-tokens";
+import * as themeStore from './utils/themes-store';
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
 
@@ -239,7 +240,7 @@ export function refreshUI(options: LoadDataOptions) {
     sliders['saturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
     const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
-    exportCodeTextarea.value = JSON.stringify(data, null, 4);
+    exportCodeTextarea.value = JSON.stringify(options.preset, null, 4);
 
     const primaryColorHUE = data.primary
     const shades = getGlobalAccentRamp(
@@ -455,12 +456,13 @@ function generateBoxShadowsCSS(params: ImportFormData, dictionary: DesignTokensR
     });
 
 }
-interface LoadDataOptions {
+export interface LoadDataOptions {
     params: ImportFormData,
     tokenLibraries?: any,
     customDarkMode?: boolean,
     colorSystemVersion?: number,
-    silent?: boolean
+    silent?: boolean,
+    preset?: ImportFormData[]
 }
 
 export function loadData(options: LoadDataOptions) {

@@ -2,7 +2,7 @@ import "./styles/main.css";
 
 import { defaultSettings } from "../defaults";
 import { debounce } from "../utils/debounce";
-import { ImportFormData, collectValues, refreshUI, getFormData, loadData } from "../import-ui";
+import { ImportFormData, collectValues, refreshUI, getFormData, loadData, LoadDataOptions } from "../import-ui";
 import { getPresets } from "../presets";
 import { delayAsync } from "../utils/delay-async";
 import { CollectionExportRecord } from "../import-export-json";
@@ -109,6 +109,21 @@ document.getElementById('applyPresetButton').addEventListener('click', (e) => {
     });
 
     modal.close();
+})
+
+document.getElementById('createUpdateElevationComponentsButton').addEventListener('click', (e) => {
+    const modal = document.getElementById('manageElevationComponentsModal') as HTMLDialogElement;
+    const options = collectValues(modal) as ImportEventParameters;
+    const params = getFormData(mainForm);
+    parent.postMessage({ 
+        pluginMessage: { 
+            type: "CREATE_ELEVATION_COMPONENTS", 
+            params,
+            options
+        }
+    }, "*");   
+
+    modal.close();    
 })
 
 document.getElementById('importCustomThemeButton').addEventListener('click', (e) => {
@@ -223,15 +238,6 @@ importButton.addEventListener('click', async (e) => {
 })
 
 
-interface LoadEventData {
-    customDarkMode?: boolean;
-    params?: ImportFormData;
-    tokenLibraries: {
-        [key: string]: LibraryVariable[]
-    };
-    colorSystemVersion?: number;
-}
-
 window.onmessage = ({ data: { pluginMessage } }) => {
     if(pluginMessage == 'IMPORT_COMPLETED') {
         importButton.classList.remove('loading');
@@ -244,20 +250,31 @@ window.onmessage = ({ data: { pluginMessage } }) => {
         const data = pluginMessage.files as CollectionExportRecord[];
         document.querySelector('#exportBrandTokensTextarea').innerHTML = JSON.stringify(data, null, 2);
     }    
+    else if (pluginMessage.type === "START_ELEVATION_COMPONENTS") {
+        const data =  pluginMessage.data;
+        const pages = data.pages as string[];
+        const currentPage = data.currentPage as string;
+
+        document.querySelector('#pagesList').innerHTML = pages.map(pageName => {
+            return `<label class="flex flex-row gap-2"><input type="radio" name="componentPage" value="${pageName}" ${pageName == currentPage ? 'checked' : ''}/><span>${pageName}</span></label> `
+        }).join('')
+    }    
     else if (pluginMessage.type == "REFRESH_UI") {
-        const data = pluginMessage.data as LoadEventData;
+        const data = pluginMessage.data as LoadDataOptions;
         const {
             params,
             tokenLibraries,
             customDarkMode,
-            colorSystemVersion        
+            colorSystemVersion,
+            preset
         } = data;
 
         loadData({
             params,
             tokenLibraries,
             customDarkMode,
-            colorSystemVersion       
+            colorSystemVersion,
+            preset   
         });
         // colorSystemVersion == 1 && enableUpgradeTextColorsLink();
     }

@@ -16,6 +16,7 @@ document.querySelectorAll('[data-modal').forEach((el: HTMLAnchorElement) => {
     })
 
     el.addEventListener('click', (e) => {
+        console.log('Opening modal', modalID);
         e.preventDefault();
         modal.showModal();
 

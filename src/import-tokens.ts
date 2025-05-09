@@ -483,7 +483,7 @@ export interface EffectDesignToken extends DesignTokenBase {
 export interface EffectTokenValue {
     "color"?: string,
     "showShadowBehindNode"?: boolean,
-    "blendMode"?: string,
+    "blendMode"?: BlendMode,
     "type": 'LAYER_BLUR' | 'BACKGROUND_BLUR' | 'DROP_SHADOW' | 'INNER_SHADOW',
     "offsetX"?: number,
     "offsetY"?: number,

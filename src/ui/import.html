@@ -656,9 +656,14 @@
         </div>
 
         <div class="card" id="shadowsStyle">
-            <h3 class="text-lg font-bold">Shadows / Elevation</h3>
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Shadows / Elevation</h3>
+                <a href="#" class="icon icon-figma-component gap-1" data-command="START_ELEVATION_COMPONENTS" data-tooltip="top" data-offset="12" popovertarget="slevationComponentsToolTip" data-modal="manageElevationComponentsModal">
+                    <span>Make Components</span>
+                </a>
+                <div class="tooltip text-center" id="slevationComponentsToolTip" popover>Create or update elevation components</div>                
+            </div>        
             <div class="-mx-md px-md overflow-hidden">
-
                 <div class="grid justify-center card-carrousel-wrapper">
                     <div class="card-carousel" id="cardCarouse" style="transform: translateX(var(--move-offset));" draggable="false" >
                         <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-200 rounded-md flex-1 items-center justify-center flex">
@@ -1093,5 +1098,31 @@
                 Copy Code
             </button>
         </div>
+    </div>
+</dialog>
+
+<dialog id="manageElevationComponentsModal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Create / Update Elevation Components</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+
+        <div class="body">
+            <div class="flex flex-col gap-minor-xs w-full">
+                <span class="color-text-base-500 flex-1">Select destination page:</span>
+                <div class="flex flex-col gap-minor-xs w-full" id="pagesList">
+                    <span class="spinner"></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="flex-1">
+            </div>
+            <button class="primary import-theme-button close-modal" id="createUpdateElevationComponentsButton" autofocus>Create / Update Components</button>
+        </div>
+
     </div>
 </dialog>
