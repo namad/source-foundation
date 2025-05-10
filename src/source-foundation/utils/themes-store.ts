@@ -121,7 +121,7 @@ export function load() {
     _isCustomDarkMode = formData.length > 1;
 
     formData.forEach(params => {
-        store.set(params.theme, params)
+        setTheme(params)
     });
 }
 

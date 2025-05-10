@@ -185,15 +185,12 @@ function generateShadows(size: number, spread: number): ElevationTokens {
 
 function findShadowComponent(name, destinationPage: PageNode): ComponentNode {
     const pageComponents = destinationPage.findAllWithCriteria({
-        types: ['COMPONENT'],
-        pluginData: {
-            keys: ["SourceShadow"]
-        }
+        types: ['COMPONENT']
     });
 
     return pageComponents.find(node => {
         const pluginData = node.getPluginData('SourceShadow');
-        return pluginData === name;
+        return pluginData === name || node.name.includes(name);
     });
 }
 
@@ -211,10 +208,10 @@ function createShadowComponent(name, shadowToken: EffectDesignToken): ComponentN
     const baseRectInner = figma.createRectangle();
     const union = figma.subtract([baseRectInner, baseRectOuter], shadowComponentFrame);
 
-    baseRectOuter.name = 'outer';
+    baseRectOuter.name = 'mask-outer';
     baseRectOuter.constraints = constraints;
     baseRectOuter.setPluginData('SourceShadowElement', 'mask-outer');
-    baseRectInner.name = 'inner';
+    baseRectInner.name = 'mask-inner';
     baseRectInner.constraints = constraints;
     baseRectInner.setPluginData('SourceShadowElement', 'mask-inner');
 
@@ -224,11 +221,13 @@ function createShadowComponent(name, shadowToken: EffectDesignToken): ComponentN
     shadowToken.$value.forEach((effectValue, index) => {
         const shadowLayer = figma.createRectangle();
         shadowLayer.name = `shadow-${index++}`;
-        shadowLayer.constraints = constraints;
+        shadowLayer.constraints = constraints;        
         shadowComponentFrame.appendChild(shadowLayer)
+        shadowLayer.locked = true;
     })    
 
     union.isMask = true;
+    union.locked = true;
 
     const shadowComponent = figma.createComponentFromNode(shadowComponentFrame);
 
@@ -260,13 +259,13 @@ export async function createUpdateElevationComponents(params: ImportFormData, de
         const shadowToken = shadowRamp['200'];
 
         const shadowComponent = getShadowComponent(key, page, shadowToken);
-        const maskLayer = shadowComponent.findOne(node => node.getPluginData('SourceShadowElement') == 'mask') as BooleanOperationNode;
+        const maskLayer = shadowComponent.findOne(node => node.getPluginData('SourceShadowElement') == 'mask' || node.name == 'mask') as BooleanOperationNode;
 
         if(!maskLayer) {
             throw new Error(`Error processing ${shadowComponent.name}. Cannot find mask layer, aborting...`);
         }
 
-        const baseRectOuter = maskLayer.findOne(node => node.getPluginData('SourceShadowElement') == 'mask-outer') as RectangleNode
+        const baseRectOuter = maskLayer.findOne(node => node.getPluginData('SourceShadowElement') == 'mask-outer' || node.name == 'mask-outer') as RectangleNode
 
         if(!baseRectOuter) {
             throw new Error(`Error processing ${shadowComponent.name} > ${maskLayer.name}. Cannot find mask outer mask rectangle, aborting...`);
@@ -288,7 +287,6 @@ export async function createUpdateElevationComponents(params: ImportFormData, de
     }
 
     await delayAsync(200);
-    debugger
 
     figma.currentPage.selection = shadowComponents;
     figma.viewport.scrollAndZoomIntoView(shadowComponents)
@@ -297,6 +295,7 @@ export async function createUpdateElevationComponents(params: ImportFormData, de
 async function updateMaskComponentLayers(shadowComponent: ComponentNode, shadowToken: EffectDesignToken) {
         const shadowTokenValue = shadowToken.$value;
         const shadowLayersChildren = shadowComponent.children as Array<SceneNode>;
+
         let shadowLayerIndex = shadowLayersChildren.length - 1;
         while(shadowLayerIndex > shadowTokenValue.length) {
             shadowLayersChildren[shadowLayerIndex].remove();

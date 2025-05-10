@@ -44,7 +44,7 @@ function getMarkup({ label, name, min, max, step, value, linked }) {
     ` : '';
     const linkedClassName = linked === true ? 'theme-specific' : '';
     return `
-        <div class="sliders w-dot flex flex-row items-center w-full gap-xs ${linkedClassName}" data-name=${name}>
+        <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs ${linkedClassName}" data-name=${name}>
             <span class="text-label">${label}</span>
             <div class="noui-slider flex-1"></div>
             <div class="icon-indicator-wrap">

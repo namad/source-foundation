@@ -239,9 +239,6 @@ export function refreshUI(options: LoadDataOptions) {
     sliders['hue'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
     sliders['saturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
-    const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
-    exportCodeTextarea.value = JSON.stringify(options.preset, null, 4);
-
     const primaryColorHUE = data.primary
     const shades = getGlobalAccentRamp(
         data[primaryColorHUE],
@@ -264,6 +261,9 @@ export function refreshUI(options: LoadDataOptions) {
         document.body.dataset.customDark = options.customDarkMode === true ? 'true' : 'false';
     }
 
+    if(options.colorSystemVersion) {
+        document.body.dataset.colorSystemVersion = `version-${options.colorSystemVersion}`;
+    }
 
     generateCSSVars({ ...themeColors, ...globalAccent, ...globalNeutrals });
 

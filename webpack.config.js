@@ -13,8 +13,8 @@ module.exports = ((env, argv) => {
             devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
             entry: {
-                import: './src/ui/import.ts', // The entry point for your UI code
-                plugin: './src/main.ts', // The entry point for your plugin code
+                import: './src/source-foundation/ui/import.ts', // The entry point for your UI code
+                plugin: './src/source-foundation/main.ts', // The entry point for your plugin code
             },
 
             stats: {
@@ -42,7 +42,7 @@ module.exports = ((env, argv) => {
                             { loader: 'postcss-loader' }
                         ],
                         include: [
-                            path.resolve(__dirname, 'src/ui'),
+                            path.resolve(__dirname, 'src/source-foundation/ui'),
                         ]
                     },
 
@@ -75,7 +75,7 @@ module.exports = ((env, argv) => {
                     'global': {} // Fix missing symbol error when running in developer VM
                 }),
                 new HtmlWebpackPlugin({
-                    template: './src/ui/import.html',
+                    template: './src/source-foundation/ui/import.html',
                     filename: 'import.html',
                     inject: "body",
                     inlineSource: '.(js|css)$',

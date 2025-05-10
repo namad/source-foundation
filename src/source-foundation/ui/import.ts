@@ -192,7 +192,7 @@ function fireTokenExportEvent() {
     const exportBrandParams = collectValues(brandParamsForm);
     parent.postMessage({ 
         pluginMessage: { 
-            type: "EXPORT",
+            type: "GET_EXPORT_DATA",
             params,
             exportJSONParams,
             exportBrandParams
@@ -243,11 +243,16 @@ window.onmessage = ({ data: { pluginMessage } }) => {
         importButton.classList.remove('loading');
     }
     else if (pluginMessage.type === "EXPORT_RESULT_JSON") {
-        const data = pluginMessage.files as CollectionExportRecord[];
+        const data = pluginMessage.exportRecords as CollectionExportRecord[];
         document.querySelector('#exportTokensTextarea').innerHTML = JSON.stringify(data, null, 2);
     }    
+    else if (pluginMessage.type === "EXPORT_RESULT_PRESET") {
+        const data = pluginMessage.exportRecords as CollectionExportRecord[];
+        const exportCodeTextarea = document.querySelector('[name=exportCodeTextarea') as HTMLInputElement;
+        exportCodeTextarea.value = JSON.stringify(data, null, 2);        
+    }    
     else if (pluginMessage.type === "EXPORT_RESULT_BRAND") {
-        const data = pluginMessage.files as CollectionExportRecord[];
+        const data = pluginMessage.exportRecords as CollectionExportRecord[];
         document.querySelector('#exportBrandTokensTextarea').innerHTML = JSON.stringify(data, null, 2);
     }    
     else if (pluginMessage.type === "START_ELEVATION_COMPONENTS") {

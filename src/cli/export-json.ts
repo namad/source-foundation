@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 
-import { getReferenceName } from "../utils/token-references";
-import { parseColorValue } from "../utils/figma-colors";
-import { getGlobalNeutrals, getThemeColors, resolveColorTokenValue } from "../color-tokens";
-import { ImportFormData } from "../import-ui";
-import { DesignToken, DesignTokensRaw } from "../import-tokens";
-import defaultSettings from "../presets/default.json";
+import { getReferenceName } from "../source-foundation/utils/token-references";
+import { parseColorValue } from "../source-foundation/utils/figma-colors";
+import { getGlobalNeutrals, getThemeColors, resolveColorTokenValue } from "../source-foundation/color-tokens";
+import { ImportFormData } from "../source-foundation/import-ui";
+import { DesignToken, DesignTokensRaw } from "../source-foundation/import-tokens";
+import defaultSettings from "../source-foundation/presets/default.json";
 
-import * as defaults from '../defaults';
-import * as spacing from '../spacing-tokens';
-import * as radii from '../radii-tokens';
-import * as typescale from '../typography-tokens';
-import * as sizing from '../sizing-tokens';
-import * as effects from '../effect-tokens';
-import { opacity } from '../opacity-tokens';
+import * as defaults from '../source-foundation/defaults';
+import * as spacing from '../source-foundation/spacing-tokens';
+import * as radii from '../source-foundation/radii-tokens';
+import * as typescale from '../source-foundation/typography-tokens';
+import * as sizing from '../source-foundation/sizing-tokens';
+import * as effects from '../source-foundation/effect-tokens';
+import { opacity } from '../source-foundation/opacity-tokens';
 
 import fs from 'fs';
 import path from "path";
 import { makeFolder, writeTheFileIntoDirectory } from "./export-css";
-import { variableNameToObject } from "../utils/figma-variables";
+import { variableNameToObject } from "../source-foundation/utils/figma-variables";
 
 function isAlias(value) {
     return value.toString().trim().charAt(0) === "{";

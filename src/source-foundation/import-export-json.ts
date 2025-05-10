@@ -86,7 +86,7 @@ function remapPrimaryVariables(exportedData: CollectionExportRecord[], getPath: 
     return exportData;
 }
 
-export async function exportToJSON(exportParams: ExportEventParameters, formData: ImportFormData) {
+export async function exportToJSON(exportParams: ExportEventParameters, formData: ImportFormData): Promise<CollectionExportRecord[]> {
     const collections: VariableCollection[] = await figma.variables.getLocalVariableCollectionsAsync();
     const files: CollectionExportRecord[] = [];
 
@@ -111,10 +111,10 @@ export async function exportToJSON(exportParams: ExportEventParameters, formData
     exportedTextStyles && files.push(exportedTextStyles);
     exportedEffectStyles && files.push(exportedEffectStyles);
 
-    figma.ui.postMessage({ type: "EXPORT_RESULT_JSON", files });
+    return files;
 }
 
-export async function exportBrandVariantToJSON(params: ExportEventParameters, formData: ImportFormData) {
+export async function exportBrandVariantToJSON(params: ExportEventParameters, formData: ImportFormData): Promise<CollectionExportRecord[]> {
     const collections: VariableCollection[] = await figma.variables.getLocalVariableCollectionsAsync();
     const brandModeName = formData.primary;
     let brandVariantCollection = makeBrandVariantRecord(brandModeName);
@@ -158,11 +158,8 @@ export async function exportBrandVariantToJSON(params: ExportEventParameters, fo
 
     }
 
-    figma.ui.postMessage({ type: "EXPORT_RESULT_BRAND", files });
+    return files;
 }
-
-
-
 
 
 export interface CollectionExportRecord {
