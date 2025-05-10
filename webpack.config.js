@@ -13,8 +13,8 @@ module.exports = ((env, argv) => {
             devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
             entry: {
-                import: './src/source-foundation/ui/import.ts', // The entry point for your UI code
-                plugin: './src/source-foundation/main.ts', // The entry point for your plugin code
+                import: path.resolve(__dirname, 'source-foundation/src/ui/import.ts'), // The entry point for your UI code
+                plugin: path.resolve(__dirname, 'source-foundation/src/main.ts'), // The entry point for your plugin code
             },
 
             stats: {
@@ -29,7 +29,7 @@ module.exports = ((env, argv) => {
                         test: /\.tsx?$/,
                         use: 'ts-loader',
                         include: [
-                            path.resolve(__dirname, 'src'),
+                            path.resolve(__dirname, 'source-foundation/src'),
                         ]
                     },
 
@@ -42,7 +42,7 @@ module.exports = ((env, argv) => {
                             { loader: 'postcss-loader' }
                         ],
                         include: [
-                            path.resolve(__dirname, 'src/source-foundation/ui'),
+                            path.resolve(__dirname, 'source-foundation/src/ui'),
                         ]
                     },
 
@@ -63,7 +63,7 @@ module.exports = ((env, argv) => {
             output: {
                 publicPath: '/',
                 filename: '[name].js',
-                path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist"
+                path: path.resolve(__dirname, 'source-foundation/dist'), // Compile into a folder called "dist"
             },
             optimization: {
                 usedExports: true, // <- remove unused function
@@ -75,7 +75,7 @@ module.exports = ((env, argv) => {
                     'global': {} // Fix missing symbol error when running in developer VM
                 }),
                 new HtmlWebpackPlugin({
-                    template: './src/source-foundation/ui/import.html',
+                    template: path.resolve(__dirname, 'source-foundation/src/ui/import.html'),
                     filename: 'import.html',
                     inject: "body",
                     inlineSource: '.(js|css)$',

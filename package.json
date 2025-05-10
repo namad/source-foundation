@@ -4,14 +4,14 @@
   "description": "Your Figma plugin",
   "main": "code.js",
   "scripts": {
-    "export-css": "jiti ./src/cli/export-css.ts",
-    "export-json": "jiti ./src/cli/export-json.ts",
+    "export-css": "jiti ./source-foundation/src/cli/export-css.ts",
+    "export-json": "jiti ./source-foundation/src/cli/export-json.ts",
 
     "watch": "npx webpack --mode=development --target=web --watch",
 
     "build": "npm run build-css && npm run build-plugin",
 
-    "build-css": "npx tailwindcss -i ./src/ui/styles/main.css -o ./src/ui/styles.css",
+    "build-css": "npx tailwindcss -i ./source-foundation/src/ui/styles/main.css -o ./source-foundation/src/ui/styles.css",
     "build-plugin": "npx webpack --mode=development --target=web",
 
     "build-cli": "npx webpack --mode=production --target=node",
