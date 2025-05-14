@@ -2,7 +2,8 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = {
     content: [
-        './dist/*.html',
+        // './dist/*.html',
+        './source-foundation/src/ui/*.html',
         './src/**/*.{ts, html, css}',
     ],
     presets: [

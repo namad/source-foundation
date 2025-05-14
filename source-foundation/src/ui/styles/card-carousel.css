@@ -1,0 +1,38 @@
+.card-carousel {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(120px, 1fr));
+    grid-gap: var(--spacing-sm);
+    grid-template-rows: minmax(60px, 1fr);
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: var(--spacing-xl4) var(--spacing-md);
+    width: fit-content;
+
+    transition: transform 500ms var(--easing-fn);
+    cursor: grab;
+}
+
+.dragging {
+    cursor: grabbing;
+    transition: none;
+}
+
+.card-carousel > div {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.card-carrousel-wrapper {
+    background-color: var(--fill-base-300);
+    border-radius: var(--radii-md);
+    margin: 0 calc(var(--spacing-md) / -2);
+}
+
+.horizontal-scroll-wrapper {
+    transform: rotate(-90deg);
+}
+
+.horizontal-scroll-wrapper > div {
+    transform: rotate(90deg);
+}

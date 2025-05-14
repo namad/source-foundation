@@ -3,6 +3,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "target": "ES6",
     "checkJs": false,
     "module": "ES6",
@@ -10,7 +11,11 @@
     "jsx": "react",
     "typeRoots": [
       "./node_modules/@types",
+      "./node_modules/nouislider/dist",
       "./node_modules/@figma"
-    ]
+    ],
+    "paths": {
+      "@foundation/*": ["./source-foundation/src/*"]
+    }    
   }
 }

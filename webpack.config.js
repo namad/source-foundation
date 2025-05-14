@@ -1,10 +1,9 @@
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const path = require('path')
-
 module.exports = ((env, argv) => {
 
     if (argv.target == 'web') {
@@ -15,9 +14,8 @@ module.exports = ((env, argv) => {
             devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
             entry: {
-                import: './src/ui/import.ts', // The entry point for your UI code
-                export: './src/ui/export.ts', // The entry point for your UI code
-                plugin: './src/main.ts', // The entry point for your plugin code
+                import: path.resolve(__dirname, 'source-foundation/src/ui/import.ts'), // The entry point for your UI code
+                plugin: path.resolve(__dirname, 'source-foundation/src/main.ts'), // The entry point for your plugin code
             },
 
             stats: {
@@ -28,39 +26,60 @@ module.exports = ((env, argv) => {
             module: {
                 rules: [
                     // Converts TypeScript code to JavaScript
-                    { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+                    {
+                        test: /\.tsx?$/,
+                        use: 'ts-loader',
+                        include: [
+                            path.resolve(__dirname, 'source-foundation/src'),
+                        ]
+                    },
 
                     // Enables including CSS by doing "import './file.css'" in your TypeScript code
-                    { test: /\.css$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }] },
+                    {
+                        test: /\.css$/,
+                        use: [
+                            { loader: 'style-loader' },
+                            { loader: 'css-loader' },
+                            { loader: 'postcss-loader' }
+                        ],
+                        include: [
+                            path.resolve(__dirname, 'source-foundation/src/ui'),
+                        ]
+                    },
 
                     // Allows you to use "<%= require('./file.svg') %>" in your HTML code to get a data URI
-                    { test: /\.(png|jpg|gif|webp|svg)$/, loader: 'url-loader' },
+                    {
+                        test: /\.(png|jpg|gif|webp|svg)$/,
+                        loader: 'url-loader',
+                        include: [
+                            path.resolve(__dirname, 'src'),
+                        ]                        
+                    },
                 ],
             },
 
             // Webpack tries these extensions for you if you omit the extension like "import './file'"
-            resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.css'] },
+            resolve: { 
+                extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.css'],
+                plugins: [new TsconfigPathsPlugin()]
+            },
 
             output: {
                 publicPath: '/',
                 filename: '[name].js',
-                path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist"
+                path: path.resolve(__dirname, 'source-foundation/dist'), // Compile into a folder called "dist"
             },
-
+            optimization: {
+                usedExports: true, // <- remove unused function
+            },
             // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it
             plugins: [
+                // new BundleAnalyzerPlugin(),
                 new webpack.DefinePlugin({
                     'global': {} // Fix missing symbol error when running in developer VM
                 }),
                 new HtmlWebpackPlugin({
-                    template: './src/ui/export.html',
-                    filename: 'export.html',
-                    inject: "body",
-                    inlineSource: '.(js|css)$',
-                    chunks: ['export'],
-                }),
-                new HtmlWebpackPlugin({
-                    template: './src/ui/import.html',
+                    template: path.resolve(__dirname, 'source-foundation/src/ui/import.html'),
                     filename: 'import.html',
                     inject: "body",
                     inlineSource: '.(js|css)$',
@@ -121,5 +140,5 @@ module.exports = ((env, argv) => {
 
         }
     }
-    
+
 })

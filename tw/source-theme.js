@@ -248,13 +248,21 @@ module.exports = {
             "xl2": "var(--radii-xl2)",
             "round": "var(--radii-round)",
         },
+        // boxShadow: {
+        //     1: `0px 1px 0.5px 0px var(--box-shadow-color)`,
+        //     2: `0px 2px 3px -1px var(--box-shadow-color), 0px 1px 2px -1px var(--box-shadow-color)`,
+        //     3: `0px 2px 4px -2px var(--box-shadow-color), 0px 4px 6px -1px var(--box-shadow-color)`,
+        //     4: `0px 4px 6px -4px var(--box-shadow-color), 0px 10px 15px -3px var(--box-shadow-color)`,
+        //     5: `0px 8px 10px -6px var(--box-shadow-color), 0px 20px 25px -5px var(--box-shadow-color)`,
+        //     6: '0px 16px 10px -7px var(--box-shadow-color), 0px 24px 28px -8px var(--box-shadow-color), 0px 24px 48px -10px var(--box-shadow-color)',
+        // },
         boxShadow: {
-            1: `0px 1px 0.5px 0px var(--box-shadow-color)`,
-            2: `0px 2px 3px -1px var(--box-shadow-color), 0px 1px 2px -1px var(--box-shadow-color)`,
-            3: `0px 2px 4px -2px var(--box-shadow-color), 0px 4px 6px -1px var(--box-shadow-color)`,
-            4: `0px 4px 6px -4px var(--box-shadow-color), 0px 10px 15px -3px var(--box-shadow-color)`,
-            5: `0px 8px 10px -6px var(--box-shadow-color), 0px 20px 25px -5px var(--box-shadow-color)`,
-            6: '0px 16px 10px -7px var(--box-shadow-color), 0px 24px 28px -8px var(--box-shadow-color), 0px 24px 48px -10px var(--box-shadow-color)'
+            1: "var(--shadow-1)",
+            2: "var(--shadow-2)",
+            3: "var(--shadow-3)",
+            4: "var(--shadow-4)",
+            5: "var(--shadow-5)",
+            6: "var(--shadow-6)",
         },
         innerShadow: {
             1: 'inset 0px 1px 0px 0px var(--inner-shadow-color)',

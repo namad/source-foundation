@@ -1,0 +1,103 @@
+.color-negative {
+    color: var(--text-base-danger)
+}
+.color-positive {
+    color: var(--text-base-success)
+}
+.color-negative-contrast {
+    color: var(--text-contrast-danger)
+}
+.color-positive-contrast {
+    color: var(--text-contrast-success)
+}
+
+.shadow-1-100 {
+    box-shadow: var(--shadow-1-100);
+}
+.shadow-1-200 {
+    box-shadow: var(--shadow-1-200);
+}    
+.shadow-1-300 {
+    box-shadow: var(--shadow-1-300);
+}    
+.shadow-1-400 {
+    box-shadow: var(--shadow-1-400);
+}    
+.shadow-1-500 {
+    box-shadow: var(--shadow-1-500);
+}    
+.shadow-2-100 {
+    box-shadow: var(--shadow-2-100);
+}    
+.shadow-2-200 {
+    box-shadow: var(--shadow-2-200);
+}    
+.shadow-2-300 {
+    box-shadow: var(--shadow-2-300);
+}    
+.shadow-2-400 {
+    box-shadow: var(--shadow-2-400);
+}    
+.shadow-2-500 {
+    box-shadow: var(--shadow-2-500);
+}    
+.shadow-3-100 {
+    box-shadow: var(--shadow-3-100);
+}    
+.shadow-3-200 {
+    box-shadow: var(--shadow-3-200);
+}    
+.shadow-3-300 {
+    box-shadow: var(--shadow-3-300);
+}    
+.shadow-3-400 {
+    box-shadow: var(--shadow-3-400);
+}    
+.shadow-3-500 {
+    box-shadow: var(--shadow-3-500);
+}    
+.shadow-4-100 {
+    box-shadow: var(--shadow-4-100);
+}    
+.shadow-4-200 {
+    box-shadow: var(--shadow-4-200);
+}    
+.shadow-4-300 {
+    box-shadow: var(--shadow-4-300);
+}    
+.shadow-4-400 {
+    box-shadow: var(--shadow-4-400);
+}    
+.shadow-4-500 {
+    box-shadow: var(--shadow-4-500);
+}    
+.shadow-5-100 {
+    box-shadow: var(--shadow-5-100);
+}    
+.shadow-5-200 {
+    box-shadow: var(--shadow-5-200);
+}    
+.shadow-5-300 {
+    box-shadow: var(--shadow-5-300);
+}    
+.shadow-5-400 {
+    box-shadow: var(--shadow-5-400);
+}    
+.shadow-5-500 {
+    box-shadow: var(--shadow-5-500);
+}    
+.shadow-6-100 {
+    box-shadow: var(--shadow-6-100);
+}    
+.shadow-6-200 {
+    box-shadow: var(--shadow-6-200);
+}    
+.shadow-6-300 {
+    box-shadow: var(--shadow-6-300);
+}    
+.shadow-6-400 {
+    box-shadow: var(--shadow-6-400);
+}    
+.shadow-6-500 {
+    box-shadow: var(--shadow-6-500);
+}    

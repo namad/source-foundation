@@ -1,0 +1,19 @@
+{
+    "name": "Source Foundation",
+    "id": "1297031341980383999",
+    "api": "1.0.0",
+    "main": "./dist/plugin.js",
+    "networkAccess": {
+        "allowedDomains": [
+            "none"
+        ]
+    },
+    "permissions": [
+        "teamlibrary"
+    ],
+    "documentAccess": "dynamic-page",
+    "editorType": [
+        "figma"
+    ],
+    "ui":  "./dist/import.html"
+}

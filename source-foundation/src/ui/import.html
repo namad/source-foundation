@@ -1,0 +1,1257 @@
+<form id="importForm">
+    <dialog class="simple" id="typographyScaleModal">
+        <div class="modal-container pb-minor-lg">
+            <div class="header">
+                <h3 class="text-lg font-bold">Typography</h3>
+                <button class="close close-modal" value="cancel">
+                    <span class="icon icon-x"></span>
+                </button>
+            </div>
+            <div class="body overflow-auto">
+                <p class="color-text-base-500 text-sm">
+                    Select default font size / line height and desired type scale.
+                </p>
+                <div data-type="typography" data-slider='{"label": "Base Size", "name": "baseFontSize", "min": 0, "max": 2, "step": 1, "value": 0}'>
+                </div>
+                <div class="mt-2 flex flex-row">
+                    <div class="w-1/5">Scale</div>
+                    <div class="flex flex-1 flex-col gap-3" style="margin: 0 var(--slider-margin) 0">
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorThird" checked /><span>Major Third (1.250)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="minorThird" checked /><span>Minor Third (1.200)</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="typeScale" value="majorSecond" /><span>Major Second (1.125)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="simple" id="spacingScaleModal">
+        <div class="modal-container pb-minor-lg">
+            <div class="header">
+                <h3 class="text-lg font-bold">Spacing</h3>
+                <button class="close close-modal" value="cancel">
+                    <span class="icon icon-x"></span>
+                </button>
+            </div>
+            <div class="body">
+                <p class="color-text-base-500 text-sm">Select base spacing</p>
+                <div data-type="spacing" data-slider='{"label": "Spacing", "name": "spacing", "min": 0, "max": 3, "step": 1, "value": 0}'>
+                </div>
+                <div class="mt-2 flex flex-row">
+                    <div class="w-1/5">Vertical / Minor</div>
+                    <div class="flex flex-1 flex-col gap-3" style="margin: 0 var(--slider-margin) 0">
+                        <label class="flex flex-row gap-2"><input type="radio" name="verticalSpacing" value="even" checked /><span>Even</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="verticalSpacing" value="uneven" checked /><span>Uneven</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="simple" id="radiiScaleModal">
+        <div class="modal-container pb-minor-lg">
+            <div class="header">
+                <h3 class="text-lg font-bold">Radii Scale</h3>
+                <button class="close close-modal" value="cancel">
+                    <span class="icon icon-x"></span>
+                </button>
+            </div>
+            <div class="body">
+                <p class="color-text-base-500 text-sm">Select base border radius</p>
+                <div data-type="radii" data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog class="simple" id="customDarkModeHelp" data-close-on-update="true">
+        <div class="modal-container">
+            <div class="header">
+                <h3 class="text-lg font-bold"><span class="disable-dark-mode-controls">Disable</span><span class="enable-dark-mode-controls">Enable</span> Custom Dark Mode</h3>
+                <button class="close close-modal" value="cancel">
+                    <span class="icon icon-x"></span>
+                </button>
+            </div>
+            <div class="body overflow-auto">
+                <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
+                    Enable custom dark mode to set the neutrals, accents and text colours individually for light and dark modes.
+
+                    <div class="-mx-base px-base py-minor-base rounded-md bg-utility-tint-200 shadow-2">
+                        <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs custom-dark-preview">
+                            <div class="w-1.5 h-1.5 rounded bg-primary-300"></div>
+                            <span class="text-label">Saturation</span>
+                            <div class="noui-slider flex-1 noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr">
+                                <div class="noUi-base">
+                                    <div class="noUi-connects">
+                                        <div class="noUi-connect" style="transform: translate(0%, 0px) scale(0.5, 1);"></div>
+                                    </div>
+                                    <div class="noUi-origin" style="transform: translate(-50%, 0px); z-index: 4;">
+                                        <div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="40.0" aria-valuenow="20.0" aria-valuetext="20.00">
+                                            <div class="noUi-touch-area"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="">
+                                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100"></span>
+                            </div>
+
+                            <input type="text" readonly="" value="20" />
+                        </div>
+                    </div>
+                    <p class="text-sm color-text-base-500 mb-minor-sm">
+                        Look for these visual cues to identify theme releated parameters
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
+                    Disable custom dark mode to restore common settings for neutrals, accents and text colours. Please note, it will reset your dark mode settings back to default
+                </div>
+
+                <div class="">
+                    <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon icon-chevron-right">Learn more</a>
+                    <div data-expander data-role="container" class="height-expander collapsed ">
+                        <div class="flex flex-col gap-minor-base pt-minor-base">
+                            <p>
+                                These colours are generated programmatically, and by default, they are the same in the light and dark modes.
+                                This creates consistency and uniformity. To have a more nuanced visual experience, enable custom dark mode.
+                            </p>
+                            <p>
+                                With custom dark mode you can fine-tune light and dark theme colours independently by overriding the parameters listed below.
+                            </p>
+                            <div class="flex flex-col gap-minor-xs text-sm">
+                                <p>Neurals</p>
+                                <ul class="list-disc pl-md">
+                                    <li><strong>Saturation</strong> defines the intensity of the tone</li>
+                                    <li><strong>Distance</strong> controls the difference between adjaccent shades</li>
+                                </ul>
+                            </div>
+                            <div class="flex flex-col gap-minor-xs text-sm">
+                                <p>Accents</p>
+                                <ul class="list-disc pl-md">
+                                    <li><strong>Saturation</strong> makes it more or less vibrant</li>
+                                    <li><strong>Luminance</strong> controls brightness and overall contrast</li>
+                                </ul>
+                            </div>
+                            <div class="flex flex-col gap-minor-xs text-sm">
+                                <p>Text Colours</p>
+                                <ul class="list-disc pl-md">
+                                    <li><strong>Accent text colour saturation</strong> enables custom saturation level for accent/semantic text</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer gap-2">
+                <button class="close-modal color-primary-500">
+                    Close
+                </button>
+                <button class="primary enable-dark-mode-controls" data-command="ENABLE_CUSTOM_DARK_MODE">
+                    Enable Custom Dark Mode
+                </button>
+                <button class="primary disable-dark-mode-controls" data-command="DISABLE_CUSTOM_DARK_MODE">
+                    Disable Custom Dark Mode
+                </button>
+            </div>
+        </div>
+    </dialog>
+
+    <div class="tooltip" id="colorModeConnectedToolTip" popover>
+        <div class="text-center">Affects both light and dark modes. Enable custom dark mode to override</div>
+    </div>
+    <div class="tooltip" id="darkModeOnlyToolTip" popover>
+        <div class="text-center">Affects dark mode only because of the custom dark mode</div>
+    </div>
+    <div class="tooltip" id="lightModeOnlyToolTip" popover>
+        <div class="text-center">Affects light mode only because of the custom dark mode</div>
+    </div>
+
+    <div class="container relative flex flex-col">
+        <div class="sentinal"></div>
+        <div class="card-sticky">
+            <div class="card color-preview">
+                <div class="flex flex-row items-center gap-sm">
+                    <h4 class="text-md font-bold flex-1">Palette Settings</h4>
+                    <div class="radio-segment">
+                        <label>
+                            <input type="radio" name="theme" value="light" />
+                            <span class="container">
+                                <span class="icon icon-sun"></span>
+                                <span>Light</span>
+                            </span>
+                        </label>
+                        <label>
+                            <input type="radio" name="theme" value="dark" />
+                            <span class="container">
+                                <span class="icon icon-moon"></span>
+                                <span>Dark</span>
+                            </span>
+                        </label>
+                    </div>
+                    <span data-tooltip="bottom" data-offset="12" popovertarget="customDarkModeToolTip" data-modal="customDarkModeHelp" class="icon icon-alert-octagon custom-dark-indicator color-text-base-500 hover:color-text-base-600 hover:icon-alert-octagon-filled"></span>
+                    <div class="tooltip" id="customDarkModeToolTip" popover>
+                        <div class="whitespace-nowrap">Custom dark mode is enabled</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="darkModeControl" class="bg-fill-base-200 rounded-lg">
+            <!-- <div class="height-expander"> -->
+            <div class="bg-primary-100 border border-primary-200 rounded-lg py-minor-md px-md">
+                <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
+                    <p class="hidden">
+                        Dark mode palette uses the same parameters as the light one.
+                        Check <span class="icon icon-link-2 icon-sm align-text-bottom"></span> icon for visual cues.
+                        Hit the button below to enable full customisation
+                    </p>
+                    <div class="flex flex-1 justify-between items-center">
+                        <p class="flex items-center gap-sm">
+                            Custom dark mode is not enabled
+                        </p>
+                        <button class="outline-button color-text-base-primary" data-modal="customDarkModeHelp">
+                            <span class="icon icon-sliders gap-xs2">Change</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
+                    <div class="flex flex-1 justify-between items-center">
+                        <p>Custom dark mode is enabled</p>
+                        <button class="outline-button color-text-base-primary" data-modal="customDarkModeHelp">
+                            <span class="icon icon-sliders gap-xs2">Change</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+
+
+        <div class="card brand-card gradient-tint-10 bg-blend-overlay" id="brandCard">
+            <div class="height-expander">
+                <div class="flex flex-col gap-minor-sm overflow-hidden">
+                    <h3 class="text-lg font-bold">Primary / Brand Colour</h3>
+                    <p class="color-text-accent-500">
+                        Use the slider below to select you primary / brand colour. There are ten beautiful accent colours to choose from.
+                    </p>
+                </div>
+            </div>
+            <div data-type="semantics" id="brandAccent" data-slider='{"label": "Primary", "name": "primary", "min": 0, "max": 9, "step": 1, "value": 6}'></div>
+        </div>
+
+        <div class="card" id="neutralColors">
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Neutral Colours</h3>
+                <!-- <a href="#" data-command="RENDER_NEUTRALS" title="Get palette colours as Figma frames">Extract Neutrals Palette</a> -->
+                <a href="#" data-modal="gloabalNeutralsModal" title="Get palette colours as Figma frames">View</a>
+            </div>
+            <div class="flex flex-col gap-y-xs">
+                <div class="flex flex-row gap-0 font-mono">
+                    <div class="color-box flex-1 bg-fill-base-200 color-text-base-400 hover:color-text-base-500 rounded-l" data-tooltip="top" data-offset="8" popovertarget="fillBase200ToolTip">
+                        <div class="p-minor-xs text-xs">
+                            <span class="whitespace-nowrap" data-value="fillBase200"></span>%
+                        </div>
+                        <div class="tooltip flex-col gap-minor-xs" id="fillBase200ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>200</b></div>
+                            <div class="toolip-body text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="font-mono whitespace-nowrap" data-value="fillBase200"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-300 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase300ToolTip">
+                        <div class="p-minor-xs text-xs">
+                            <span class="whitespace-nowrap" data-value="fillBase300"></span>%
+                        </div>
+                        <div class="tooltip flex-col gap-minor-xs" id="fillBase300ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>300</b></div>
+                            <div class="toolip-body text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="font-mono whitespace-nowrap" data-value="fillBase300"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-400 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase400ToolTip">
+                        <div class="p-minor-xs text-xs">
+                            <span class="whitespace-nowrap" data-value="fillBase400"></span>%
+                        </div>
+                        <div class="tooltip flex-col gap-minor-xs" id="fillBase400ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>400</b></div>
+                            <div class="toolip-body text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="font-mono whitespace-nowrap" data-value="fillBase400"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-500 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase500ToolTip">
+                        <div class="p-minor-xs text-xs">
+                            <span class="whitespace-nowrap" data-value="fillBase500"></span>%
+                        </div>
+                        <div class="tooltip flex-col gap-minor-xs" id="fillBase500ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>500</b></div>
+                            <div class="toolip-body text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="font-mono whitespace-nowrap" data-value="fillBase500"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="color-box flex-1 bg-fill-base-600 color-text-base-400 hover:color-text-base-500 rounded-r" data-tooltip="top" data-offset="8" popovertarget="fillBase600ToolTip">
+                        <div class="p-minor-xs text-xs">
+                            <span class="whitespace-nowrap" data-value="fillBase600"></span>%
+                        </div>
+                        <div class="tooltip flex-col gap-minor-xs" id="fillBase600ToolTip" popover>
+                            <div class="row text-sm">fill.base.<b>600</b></div>
+                            <div class="toolip-body text-xs">
+                                <div class="row flex flex-row justify-between gap-3">
+                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
+                                    <div>
+                                        <span class="font-mono whitespace-nowrap" data-value="fillBase600"></span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "linked": false}'>
+            </div>
+            <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "linked": true}'>
+            </div>
+
+            <h4 class="mt-3 text-md font-bold">Colour Pattern</h4>
+            <div data-slider='{"label": "Distance, %", "name": "distance", "min": 2, "max": 4, "step": 1, "value": 2, "linked": true}'>
+                <p class="color-text-base-500 text-sm">
+                    Difference in lightness percent between two adjaccent colours. Wider
+                    steps outcome greater contrast overall
+                </p>
+            </div>
+        </div>
+
+        <div class="card" id="accentColors">
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Accent Colours</h3>
+                <a href="#" data-command="RENDER_ACCENTS" title="Get palette colours as Figma frames">Extract Accent
+                    Palette</a>
+            </div>
+
+            <p class="color-text-base-500 text-sm">
+                Finetune each accent colour with custom hue value. Lightness of the base
+                colour to be set to fit into WCAG2 Level AA. Global saturation controls
+                are below
+            </p>
+
+            <div class="flex flex-col gap-minor-xs" id="accentColorsSliders"></div>
+            <hr />
+            <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "linked": true}'>
+            </div>
+            <p class="color-text-base-500 text-sm">
+                Global saturation level for all accent colours. Please note, saturation
+                is 15% lower in dark mode
+            </p>
+            <hr />
+
+            <div class=" -mx-md" id="accentColorAdvancedSettings">
+                <a href="#" data-expander data-role="trigger" data-expanded="no" class="icon icon-chevron-right mx-md custom-dark-dot">Advanced Settings</a>
+                <div data-expander data-role="container" class="height-expander collapsed ">
+                    <div class="flex flex-col gap-y-minor-base px-md pt-minor-base pb-minor-xs">
+                        <h4 class="text-md font-bold flex flex-row gap-xs2">
+                            Accent Colour Luminance
+                        </h4>
+                        <p class="color-text-base-500 text-sm">
+                            Use sliders below to customise accent palette.
+                            The first knob sets the lightest shade. The middle knob is for the base shade.
+                            The last knob defines the darkest shade.
+                        </p>
+                        <div class="mb-y-base flex flex-row gap-0 rounded overflow-hidden border-shadow-primary-100" id="accentPalettePreview">
+                            <div class="color-box primary-200 color-text-base-500 hover:color-text-base-600 flex-1" data-color-handle="2" data-tooltip="top" data-offset="8" popovertarget="primary200ToolTip">
+                                <div class="hidden text-sm">200</div>
+                                <div class="flex flex-row font-mono text-xs">
+                                    <span class="token-value color-text-base-500">200</span>:1
+                                </div>
+                                <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary200ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Light background</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-300 color-text-contrast-500 hover:color-text-contrast-600 flex-1" data-color-key="2" data-color-handle="2" data-tooltip="top" data-offset="8" popovertarget="primary300ToolTip">
+                                <div class="hidden text-sm">300</div>
+                                <div class="flex flex-row font-mono text-xs">
+                                    <span class="token-value color-text-contrast-500">300</span>:1
+                                </div>
+                                <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary300ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Non-textual element</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-400 color-text-contrast-500 hover:color-text-contrast-600 flex-1" data-color-key="1" data-color-handle="1" data-tooltip="top" data-offset="8" popovertarget="primary400ToolTip">
+                                <div class="hidden text-sm font-bold">400</div>
+                                <div class="flex flex-row font-mono text-xs">
+                                    <span class="token-value color-text-contrast-500">400</span>:1
+                                </div>
+                                <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary400ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Background color</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-500 color-text-contrast-500 hover:color-text-contrast-600 flex-1" data-color-key="0" data-color-handle="0" data-tooltip="top" data-offset="8" popovertarget="primary500ToolTip">
+                                <div class="hidden text-sm">500</div>
+                                <div class="flex flex-row font-mono text-xs">
+                                    <span class="token-value color-text-contrast-500">500</span>:1
+                                </div>
+                                <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary500ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Text on light surface</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="color-box primary-600 color-text-base-500 hover:color-text-base-600 flex-1" data-color-handle="2" data-tooltip="top" data-offset="8" popovertarget="primary600ToolTip">
+                                <div class="hidden text-sm">600</div>
+                                <div class="flex flex-row  font-mono text-xs">
+                                    <span class="token-value color-text-base-500">600</span>:1
+                                </div>
+                                <div class="tooltip min-w-44 flex-col gap-minor-xs" popover id="primary600ToolTip">
+                                    <div class="px-2 py-1 flex flex-col gap-minor-xs">
+                                        <div class="row text-sm">Text on dark surface</div>
+                                        <div class="toolip-body text-xs flex flex-col gap-0.5 font-mono"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs theme-specific">
+                            <div id="luminanceSlider" class="noui-slider flex-1"></div>
+                            <div class="icon-indicator-wrap">
+                                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
+                                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
+                            </div>
+                            <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
+                            <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
+                            <input type="hidden" name="accentMaxLuminance" id="luminanceValMax" />
+                        </div>
+
+                        <div class="flex flex-row gap-xs2 text-sm color-text-base-500 items-start dark-mode-only linked-dark-mode-only ">
+                            <span class="icon icon-info icon-sm gap-xs3"></span>
+                            <span class="flex-1">
+                                Please note, it's better to perform these adjustments in light mode as dark palette slightly reduced
+                            </span>
+                        </div>
+
+                        <h4 class="text-md mt-3 font-bold flex flex-row gap-xs2">
+                            Accent Colour Hue Spin
+                        </h4>
+
+                        <div class="mb-y-base flex flex-row gap-0 rounded overflow-hidden">
+                            <div class="color-box global-accent-100 flex-1"></div>
+                            <div class="color-box global-accent-200 flex-1"></div>
+                            <div class="color-box global-accent-300 flex-1"></div>
+                            <div class="color-box global-accent-400 flex-1"></div>
+                            <div class="color-box global-accent-500 flex-1"></div>
+                            <div class="color-box global-accent-600 flex-1"></div>
+                            <div class="color-box global-accent-700 flex-1"></div>
+                        </div>
+
+                        <div data-slider='{"label": "Hue Spin %", "name": "accentHueSpin", "min": -30, "max": 30, "step": 1, "value": 0, "linked": false, "-range": {"15%": -10, "85%": 10}}'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="textColor">
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Text Colours</h3>
+                <a href="#" data-command="UPGRADE_TEXT_COLORS" class="palette-v1-controls">Upgrade Text Palette</a>
+            </div>
+
+            <div class="colors-grid">
+                <div class="colors-grid-card bg-fill-base-300 rounded linked-dark-mode-only" id="whiteTextColorPreview">
+                    <div class="flex flex-col gap-0.5">
+                        <div class="color-text-base-600 text-sm">
+                            Text on light background
+                        </div>
+                        <div class="flex flex-row gap-base color-text-base-500 font-mono text-xs">
+                            <span>Black <span data-value="textBlackBrightness">0</span>%</span>
+                            <span><span data-value="textBlackContrast">0</span>:1</span>
+                        </div>
+                    </div>
+                    <div data-slider='{"label": "White %", "name": "textBlackBrightness", "min": 4, "max": 50, "step": 1, "value": 6, "direction": "rtl", "linked": false}'></div>
+                </div>
+
+                <div class="colors-grid-card custom-dark-dot bg-fill-contrast-300 color-text-contrast-600 rounded" style="background-color: var(--grey-20);" id="whiteTextColorPreview">
+                    <div class="flex flex-col gap-0.5">
+                        <div class=" text-sm">
+                            Text on dark background
+                        </div>
+                        <div class="flex flex-row gap-base color-text-contrast-500 font-mono text-xs">
+                            <span>White <span data-value="textWhiteBrightness">0</span>%</span>
+                            <span><span data-value="textWhiteContrast">0</span>:1</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-hidden" data-slider='{"label": "White %", "name": "textWhiteBrightness", "min": 50, "max": 100, "step": 1, "value": 100, "linked": true}'></div>
+                </div>
+
+                <div class="colors-grid-card custom-dark-dot bg-primary-400 color-text-accent-600 rounded-md">
+                    <div class="flex flex-col gap-0.5">
+                        <div class="text-sm">Text on accent background</div>
+                        <div class="flex flex-row gap-base color-text-accent-500 font-mono text-xs">
+                            <span data-value="accentTextColor"></span>
+                            <span><span data-value="textOnAccentContrast">0</span>:1</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row gap-xs">
+                        <div class="radio-segment on-accent flex-1">
+                            <label class="flex-1">
+                                <input type="radio" name="accentTextColor" value="black" />
+                                <span class="container text-sm flex-1">
+                                    Black
+                                </span>
+                            </label>
+                            <label class="flex-1">
+                                <input type="radio" name="accentTextColor" value="auto" checked />
+                                <span class="container text-sm flex-1">
+                                    Auto
+                                </span>
+                            </label>
+                            <label class="flex-1">
+                                <input type="radio" name="accentTextColor" value="white" />
+                                <span class="container text-sm flex-1">
+                                    White
+                                </span>
+                            </label>
+                        </div>
+                        <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
+                        <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
+                    </div>
+
+                </div>
+            </div>
+
+            <h4 class="mt-3 text-md font-bold flex flex-row gap-xs2">
+                Accent / Semantic Text Colours
+            </h4>
+
+            <div class="flex flex-col gap-y-xs">
+                <div class="flex flex-col gap-0 overflow-hidden rounded">
+                    <div class="flex flex-row items-baseline p-base text-center flex-1 bg-fill-base-300 text-sm">
+                        <div class="flex flex-1 justify-center gap-base">
+                            <span class="color-text-base-primary font-bold" data-tooltip="top" data-offset="12" popovertarget="textInfoColorToolTip">Primary</span>
+                            <span class="color-text-base-success" data-tooltip="top" data-offset="12" popovertarget="textSuccessColorToolTip">Success</span>
+                            <span class="color-text-base-warning" data-tooltip="top" data-offset="12" popovertarget="textWarningColorToolTip">Warning</span>
+                            <span class="color-text-base-danger" data-tooltip="top" data-offset="12" popovertarget="textDangerColorToolTip">Danger</span>
+
+                            <div class="tooltip" id="textInfoColorToolTip" popover>
+                                <div class="row text-sm">text.base.<b>primary</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="primary"></span>.500}
+                                </div>
+                            </div>
+                            <div class="tooltip" id="textSuccessColorToolTip" popover>
+                                <div class="row text-sm">text.base.<b>success</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="success"></span>.500}
+                                </div>
+                            </div>
+                            <div class="tooltip" id="textWarningColorToolTip" popover>
+                                <div class="row text-sm">text.base.<b>warning</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="warning"></span>.500}
+                                </div>
+                            </div>
+                            <div class="tooltip" id="textDangerColorToolTip" popover>
+                                <div class="row text-sm">text.base.<b>danger</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="danger"></span>.500}
+                                </div>
+                            </div>
+                        </div>
+                        <span class="color-text-base-500 font-mono text-xs">
+                            <span data-value="textAccentContrastOnLight"></span>:1
+                        </span>
+                    </div>
+                    <div class="hidden flex-row items-baseline px-base py-sm text-center flex-1 bg-fill-contrast-200 text-sm">
+                        <span class="rounded-sm color-text-base-600 font-mono text-xs bg-fill-base-400 py-0.5 px-1.5">
+                            <span>600</span>
+                        </span>
+                        <div class="flex flex-1 justify-center gap-base">
+
+                            <span class="color-text-contrast-info" data-tooltip="top" data-offset="12" popovertarget="textColorInfoContrastToolTip">Info</span>
+                            <span class="color-text-contrast-success" data-tooltip="top" data-offset="12" popovertarget="textSucColorcessContrastToolTip">Success</span>
+                            <span class="color-text-contrast-warning" data-tooltip="top" data-offset="12" popovertarget="textWarColorningContrastToolTip">Warning</span>
+                            <span class="color-text-contrast-danger" data-tooltip="top" data-offset="12" popovertarget="textDaColorngerContrastToolTip">Danger</span>
+
+                            <div class="tooltip" id="textColorInfoContrastToolTip" popover>
+                                <div class="row text-sm">text.contrast.<b>info</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="info"></span>.600}
+                                </div>
+                            </div>
+                            <div class="tooltip" id="textSucColorcessContrastToolTip" popover>
+                                <div class="row text-sm">text.contrast.<b>success</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="success"></span>.600}
+                                </div>
+                            </div>
+                            <div class="tooltip" id="textWarColorningContrastToolTip" popover>
+                                <div class="row text-sm">text.contrast.<b>warning</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="warning"></span>.600}
+                                </div>
+                            </div>
+                            <div class="tooltip" id="textDaColorngerContrastToolTip" popover>
+                                <div class="row text-sm">text.contrast.<b>danger</b></div>
+                                <div class="toolip-body text-xs font-mono lowercase">
+                                    {accent.<span data-value="danger"></span>.600}
+                                </div>
+                            </div>
+
+                        </div>
+                        <span class="color-text-contrast-500 font-mono text-xs">
+                            <span data-value="textAccentContrastOnDark"></span>:1
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tooltip" id="customAccentTextSaturationToolTip" popover>
+                By default, accent text colour is connected to it's respective accent. Tick this checkbox to enable custom saturation for bright texts.
+            </div>
+            <div>
+                <label class="checkbox flex flex-row gap-2" data-tooltip="top" data-offset="12" popovertarget="customAccentTextSaturationToolTip">
+                    <input type="checkbox" name="customAccentTextSaturation" data-check-expander="accentTextSaturationControl" value="true"/>
+                    <span>Enable custom saturation</span>
+                </label>
+                <div class="height-expander collapsed" id="accentTextSaturationControl">
+                    <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 30, "max": 100, "step": 1, "value": 100, "linked": true}' class="pt-minor-base"></div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="card" id="semanticColors">
+            <h3 class="text-lg font-bold">Semantic Colours</h3>
+
+            <div class="flex flex-row gap-0 overflow-hidden rounded color-text-accent-600">
+                <div class="color-box flex-1 rounded-l bg-info-400">
+                    <div>Info</div>
+                    <div class="token-value opacity-70" data-value="info"></div>
+                </div>
+                <div class="color-box flex-1 bg-success-400">
+                    <div>Success</div>
+                    <div class="token-value opacity-70" data-value="success"></div>
+                </div>
+                <div class="color-box flex-1 bg-warning-400">
+                    <div>Warning</div>
+                    <div class="token-value opacity-70" data-value="warning"></div>
+                </div>
+                <div class="color-box flex-1 bg-danger-400">
+                    <div>Danger</div>
+                    <div class="token-value opacity-70" data-value="danger"></div>
+                </div>
+            </div>
+
+            <div data-expander data-role="container" class="flex flex-col gap-minor-xs">
+                <div data-type="semantics" data-slider='{"label": "Info", "name": "info", "min": 0, "max": 10, "step": 1, "value": 5}'></div>
+                <div data-type="semantics" data-slider='{"label": "Success", "name": "success", "min": 0, "max": 10, "step": 1, "value": 3}'></div>
+                <div data-type="semantics" data-slider='{"label": "Warning", "name": "warning", "min": 0, "max": 10, "step": 1, "value": 1}'></div>
+                <div data-type="semantics" data-slider='{"label": "Danger", "name": "danger", "min": 0, "max": 10, "step": 1, "value": 0}'></div>
+            </div>
+        </div>
+
+        <div class="card" id="shadowsStyle">
+            <div class="flex flex-row items-baseline justify-between">
+                <h3 class="text-lg font-bold">Shadows / Elevation</h3>
+                <a href="#" class="icon icon-figma-component gap-1" data-command="START_ELEVATION_COMPONENTS" data-tooltip="top" data-offset="12" popovertarget="slevationComponentsToolTip" data-modal="manageElevationComponentsModal">
+                    <span>Make Components</span>
+                </a>
+                <div class="tooltip text-center" id="slevationComponentsToolTip" popover>Create or update elevation components</div>
+            </div>
+            <div class="-mx-md px-md overflow-hidden">
+                <div class="grid justify-center card-carrousel-wrapper relative">
+                    <div class="card-carousel" id="cardCarouse" style="transform: translateX(var(--move-offset));" draggable="false">
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs  pointer-events-none">shadow-1</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-2-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-2</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-3-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-3</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-4-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-4</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-5-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-5</span>
+                        </div>
+                        <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-6-200 rounded-md flex-1 items-center justify-center flex">
+                            <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-6</span>
+                        </div>
+                    </div>
+                    <div class="text-center text-xs py-minor-xs color-text-base-400 absolute bottom-0 left-0 right-0 pointer-events-none">
+                        Scroll or drag
+                    </div>
+                </div>
+            </div>
+            <div data-slider='{"label": "Softness", "name": "shadowsColor", "min": 0, "max": 3, "step": 1, "value": 0, "linked": true}'></div>
+            <div data-slider='{"label": "Depth", "name": "shadowsStyle", "min": 1, "max": 5, "step": 1, "value": 0, "linked": false}'></div>
+            <div data-slider='{"label": "Spread", "name": "shadowsSpread", "min": -5, "max": 5, "step": 1, "value": 0, "linked": false}'></div>
+        </div>
+
+        <div class="card" id="ui-scale">
+            <h3 class="text-lg font-bold">UI Scale</h3>
+            <p class="color-text-base-500 text-sm">
+                Select default mode for spacing, radii and typography
+            </p>
+            <ul class="action-list">
+                <li>
+                    <a href="#" data-modal="spacingScaleModal">
+                        <span>Spacing</span>
+                        <span class="flex flex-row gap-2">
+                            <span data-value="spacing" data-type="spacing"></span>
+                            <span class="icon icon-chevron-right"></span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-modal="radiiScaleModal">
+                        <span>Radii</span>
+                        <span class="flex flex-row gap-2">
+                            <span data-value="radii" data-type="radii"></span>
+                            <span class="icon icon-chevron-right"></span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-modal="typographyScaleModal">
+                        <span>Typography</span>
+                        <span class="flex flex-row gap-2">
+                            <span data-value="typeScale" data-type="typography"></span> /
+                            <span data-value="baseFontSize" data-type="typography"></span>
+                            <span class="icon icon-chevron-right"></span>
+                        </span>
+
+                    </a>
+                </li>
+            </ul>
+
+            <span class="hidden">
+                <hr class="mb-y-base" />
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="singleCollection" value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Import Spacing, Radii and Type Scale tokens as sinlge
+                            collection</span>
+                        <span class="text-sm opacity-70">All the tokens to go into a single "UI Scale" collection. Otherwise
+                            different token types to get their own collections.</span>
+                    </span>
+                </label>
+            </span>
+        </div>
+
+
+
+        <div class="card" id="importOptions">
+            <h3 class="text-lg font-bold">Import Options</h3>
+            <p class="color-text-base-500 text-sm">
+                Select default tokens you would like to import. Sometimes it makes more sense to update only certain sets keeping others intact.
+            </p>
+            <p class="flex gap-base">
+                <a href="#" data-import-options="all">Select All</a>
+                <a href="#" data-import-options="none">Select None</a>
+            </p>
+            <div id="importOptionsCheckboxes" class="flex flex-col gap-minor-xs">
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createColorTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Color Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createComponentTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Component Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createTypographyTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Typography Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createSpacingTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Spacing Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createElevationTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Elevation Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createRadiiTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Radii Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createGlobalSizeTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Global Sizing Tokens</span>
+                    </span>
+                </label>
+                <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                    <input type="checkbox" name="createOpacityTokens" checked value="true" />
+                    <span class="flex flex-col gap-minor-xs">
+                        <span>Opacity Tokens</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="text-lg font-bold">More Tools</h3>
+            <p class="color-text-base-500 text-sm">
+                Connect Source Foundation with development
+            </p>
+            <ul class="flex flex-col gap-minor-base">
+                <li class="icon icon-tailwind gap-xs2 items-start color-text-base-primary">
+                    <div>
+                        <a href="https://namad.github.io/source-foundation-docs/" target="_blank">
+                            Tailwind CSS Integration
+                        </a>
+                        <p class="text-sm color-text-base-500">
+                            Integrate Source Foundation with Tailwind CSS
+                        </p>
+                    </div>
+                </li>
+                <li class="icon icon-terminal-window gap-xs2 items-start color-text-base-primary">
+                    <div>
+                        <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">
+                            Node CLI Generator
+                        </a>
+                        <p class="text-sm color-text-base-500">
+                            Export settings to build CSS variables file with command line tool
+                        </p>
+                    </div>
+
+                </li>
+                <hr>
+                <li class="icon icon-upload gap-xs2 items-start color-text-base-primary">
+                    <div>
+                        <a href="#" data-modal="exportModal">
+                            Export Theme
+                        </a>
+                        <p class="text-sm color-text-base-500">
+                            Get the code snippet that you can use with CLI generator
+                        </p>
+                    </div>
+                </li>
+                <li class="icon icon-download gap-xs2 items-start color-text-base-primary">
+                    <div>
+                        <a href="#" data-modal="importModal">
+                            Import Theme
+                        </a>
+                        <p class="text-sm color-text-base-500">
+                            Paste the code snippet to import previously saved theme
+                        </p>
+                    </div>
+
+                </li>
+                <hr>
+                <li class="icon icon-maximize gap-xs2 items-start color-text-base-primary">
+                    <div>
+                        <a href="#" data-command="CENTER_WINDOW">
+                            Center Plugin Window
+                        </a>
+                        <p class="text-sm color-text-base-500">
+                            Paste the code snippet to import previously saved theme
+                        </p>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex flex-row justify-between px-sm py-sm text-right">
+        <div class="flex gap-2">
+            <button class="color-text-base-primary" id="openExportModalButton" data-modal="exportModal" title="Export settings">
+                <span class="icon icon-upload"></span>
+            </button>
+            <button class="color-text-base-primary" id="openImportModalButton" data-modal="importModal" title="Import settings">
+                <span class="icon icon-download"></span>
+            </button>
+        </div>
+        <div class="flex gap-2">
+            <button class="color-text-base-primary" data-command="RESET">Reset</button>
+            <button id="importVariablesButton" class="primary">
+                <span class="flex flex-row gap-xs2">
+                    <span class="spinner"></span>
+                    <span class="text-label">Generate Variables</span>
+                </span>
+            </button>
+        </div>
+    </div>
+</form>
+
+<dialog class="simple" id="customBrandColor">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-lg font-bold">Custom Brand Colour</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+        <div class="body">
+            <p class="color-text-base-500 text-sm">Set custom brand colour</p>
+
+            <div class="flex flex-col gap-minor-sm">
+                <div class="flex flex-row items-center gap-3">
+                    <span class="w-1/5">Color</span>
+                    <div class="custom-select flex-1">
+                        <select>
+                            <option value="red">red</option>
+                            <option value="amber">amber</option>
+                            <option value="brown">brown</option>
+                            <option value="green">green</option>
+                            <option value="teal">teal</option>
+                            <option value="cyan">cyan</option>
+                            <option value="blue">blue</option>
+                            <option value="indigo">indigo</option>
+                            <option value="violet">violet</option>
+                            <option value="purple">purple</option>
+                            <option value="pink">pink</option>
+                        </select>
+                        <span class="icon icon-chevron-down"></span>
+                    </div>
+                </div>
+                <label class="flex flex-row items-center gap-3">
+                    <span class="w-1/5">Value</span>
+                    <input type="text" class="w-1/3 text-sm" placeholder="HEX" maxlength="7" name="customPrimaryColor" />
+                    <button id="setCustomBrandColor" class="primary flex-1">
+                        Set Brand Colour
+                    </button>
+                </label>
+            </div>
+        </div>
+
+    </div>
+</dialog>
+
+<dialog id="importModal">
+    <div class="modal-container h-full">
+        <div class="header">
+            <h3 class="text-md font-bold">Import Tokens</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+        <div class="radio-segment mx-lg mb-minor-base" data-tabs id="importOptionsSegment">
+            <label class="flex-1">
+                <input type="radio" name="importAs" value="preset" data-tab="importPresetTab" checked />
+                <span class="container">
+                    <span>Apply Preset</span>
+                </span>
+            </label>
+            <label class="flex-1">
+                <input type="radio" name="importAs" value="tokens" data-tab="importTokensTab" />
+                <span class="container">
+                    <span>Import Tokens</span>
+                </span>
+            </label>
+        </div>
+        <div class="flex flex-col flex-1 overflow-hidden" id="importPresetTab">
+            <div class="flex flex-col flex-1 overflow-auto">
+                <div class="body">
+                    <p class="color-text-base-500 text-sm">Paste preset code to the textarea below</p>
+                    <textarea cols="10" name="importCodeTextarea" onfocus="this.select();" id="importCodeTextarea" class="h-80 resize-none font-mono text-sm whitespace-pre"></textarea>
+                    <p class="color-text-base-500 text-sm">Or select one of the presets</p>
+                </div>
+                <div class="flex flex-col flex-1 gap-minor-xs4 px-lg" id="presetsList">
+                </div>
+            </div>
+            <div class="footer">
+                <div class="flex-1">
+                    <button class="color-text-base-primary" data-action="clipboardPaste" data-target="#importModal textarea[name=importCodeTextarea]">
+                        <span class="icon icon-clipboard gap-xs2">Paste Tokens</span>
+                    </button>
+                </div>
+                <button class="primary import-theme-button" id="applyPresetButton">Apply Preset</button>
+            </div>
+        </div>
+
+        <div class="flex flex-col flex-1 overflow-hidden" id="importTokensTab">
+            <div class="body">
+                <div class="flex flex-col gap-minor-xs w-full" id="sourceLibrariesList">
+                    <!-- 
+                        <span class="color-text-base-500 flex-1">Select source library:</span>
+                        <div class="flex flex-col gap-minor-xs w-full">
+                            <label class="flex flex-row gap-2"><input type="radio" name="tokenLibraryName" value="${fileKey}" /><span>${fileKey}</span></label> 
+                        </div>
+                    -->
+                </div>
+                <textarea cols="10" name="code" placeholde="Paste json tokens here" onfocus="this.select();" id="importTokensTextarea" class="h-80 resize-none font-mono text-sm whitespace-pre"></textarea>
+            </div>
+            <div class="footer">
+                <div class="flex-1">
+                    <button class="" data-action="clipboardPaste" data-target="#importModal textarea[name=code]">
+                        <span class="icon icon-clipboard gap-xs2">Paste Tokens</span>
+                    </button>
+                </div>
+                <button class="primary import-theme-button" id="importCustomThemeButton">Import Custom Tokens</button>
+            </div>
+        </div>
+
+    </div>
+</dialog>
+
+<dialog id="exportModal" class="modal">
+    <div class="modal-container h-full">
+        <div class="header">
+            <h3 class="text-md font-bold">Export Theme</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+        <div class="body max-h-">
+            <div class="radio-segment" data-tabs id="exportOptionsSegment">
+                <label class="flex-1">
+                    <input type="radio" name="exportAs" value="preset" data-tab="exportPresetTab" checked />
+                    <span class="container">
+                        <span>Export Preset</span>
+                    </span>
+                </label>
+                <label class="flex-1">
+                    <input type="radio" name="exportAs" value="tokens" data-tab="exportTokensTab" />
+                    <span class="container">
+                        <span>Export Tokens</span>
+                    </span>
+                </label>
+                <label class="flex-1">
+                    <input type="radio" name="exportAs" value="brandVariant" data-tab="exportBrandVariantTab" />
+                    <span class="container">
+                        <span>Brand Setup</span>
+                    </span>
+                </label>
+            </div>
+            <div id="exportPresetTab" class="flex flex-col flex-1 gap-xs">
+                <p class="color-text-base-500 text-sm">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
+                <textarea cols="10" onfocus="this.select();" name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono text-sm whitespace-pre"></textarea>
+            </div>
+            <div id="exportTokensTab" class="flex flex-col flex-1 gap-xs items-center">
+                <div class="flex flex-row gap-sm items-center w-full">
+                    <span class="color-text-base-500 flex-1">Select color format:</span>
+                    <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="hex" /><span>HEX</span></label>
+                    <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="rgba" /><span>RGBA</span></label>
+                    <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="hsl" checked /><span>HSL</span></label>
+                </div>
+                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
+            </div>
+            <div id="exportBrandVariantTab" class="flex flex-col flex-1 gap-xs items-center">
+
+                <div class="flex flex-row gap-base w-full">
+                    <div class="flex flex-col gap-minor-xs w-full" id="brandTokensOptionsCheckboxes">
+                        <span class="color-text-base-500">Brand Specific Tokens:</span>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createColorTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Color Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createComponentTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Component Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createTypographyTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Typography Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createSpacingTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Spacing Tokens</span>
+                            </span>
+                        </label>
+                        <label class="checkbox flex flex-row items-start gap-xs2 align-top">
+                            <input type="checkbox" name="createRadiiTokens" checked value="true" />
+                            <span class="flex flex-col gap-minor-xs">
+                                <span>Radii Tokens</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="flex flex-col gap-minor-xs w-full">
+                        <span class="color-text-base-500">Select color format:</span>
+                        <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="hex" /><span>HEX</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="rgba" /><span>RGBA</span></label>
+                        <label class="flex flex-row gap-2"><input type="radio" name="brandColorFormat" value="hsl" checked /><span>HSL</span></label>
+                    </div>
+                </div>
+                <textarea cols="10" onfocus="this.select();" name="exportBrandTokensTextarea" id="exportBrandTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
+            </div>
+        </div>
+        <div class="footer">
+            <button class="primary" id="copyExportedCodeButton" data-target="exportCodeTextarea">
+                Copy Code
+            </button>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="manageElevationComponentsModal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Create / Update Elevation Components</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+
+        <div class="body">
+            <p>Create design components that implement shadows with layers. This way you can make shadows any colour you like, and even use images for colour bleen shadows</p>
+            <div class="flex flex-col gap-minor-xs w-full">
+                <span class="color-text-base-500 flex-1">Select destination page:</span>
+                <div class="flex flex-col gap-minor-xs w-full" id="pagesList">
+                    <span class="spinner"></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="flex-1">
+            </div>
+            <button class="primary import-theme-button close-modal" id="createUpdateElevationComponentsButton" autofocus>Create / Update Components</button>
+        </div>
+
+    </div>
+</dialog>
+
+<dialog id="promptTextColorsUpgradeModal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Upgrade Text Colour Palette</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+
+        <div class="body">
+            <p>Please note there are few changes to text colour variables. This version interoduces separate group of colours to work on accent surfaces.
+                To prevent any breaking changes the plugin will rename <code>text.contrast</code> colours to <code>text.accent</code> and it will alias brand new colours back to <code>text.contrast</code></p>
+        </div>
+        <div class="footer">
+            <div class="flex-1">
+            </div>
+            <button class="close-modal">Cancel Import</button>
+            <button class="primary import-theme-button close-modal" id="createUpdateElevationComponentsButton" autofocus>Continue with Export</button>
+        </div>
+
+    </div>
+</dialog>
+
+<dialog id="gloabalNeutralsModal">
+    <div class="modal-container">
+        <div class="header">
+            <h3 class="text-md font-bold">Global Neutrals</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+
+        <div class="body">
+            <div style=" display: grid;
+                         grid-template-columns: repeat(10, auto);
+                         grid-template-rows: repeat(10, 32px);
+                         grid-gap: 1px;
+                         height: auto;
+                         overflow: hidden;
+                         border-radius: var(--radii-md);
+                         overflow: auto;" id="gloablNeutralsPreview">
+            
+            </div>
+        </div>
+        <div class="footer">
+            <div class="flex-1 hidden">
+                <button class="close-modal color-text-base-primary">Export to Frames</button>
+                <button class="close-modal color-text-base-primary">Export to Variables</button>
+            </div>
+            <button class="primary import-theme-button close-modal" autofocus>Close</button>
+        </div>
+
+    </div>
+</dialog>
+
+<template id="presetItemTemplate">
+    <label class="theme-item">
+        <input type="radio" name="theme" value="" />
+        <span class="col-info">
+            <span class="info-item">
+                <span class="icon icon-16 icon-colors" title="Color pattern"></span>
+                <span>
+                    <span class="text-text-base-600" data-value="distance" data-transform="IN">2</span><span class="text-text-base-400">%</span>
+                </span>
+            </span>
+            <span class="info-item">
+                <span class="icon icon-16 icon-typography" title="Typography"></span>
+                <span>
+                    <span class="text-text-base-600" data-value="typeScale">Minor Third</span> /
+                    <span class="text-text-base-600" data-value="baseFontSize">Base</span>
+                </span>
+            </span>
+            <span class="flex flex-row gap-base">
+                <span class="info-item">
+                    <span class="icon icon-16 icon-spacing" title="Spacing"></span>
+                    <span class="text-text-base-600" data-value="spacing">Base</span>
+                </span>
+                <span class="info-item">
+                    <span class="icon icon-16 icon-radii" title="Radii"></span>
+                    <span class="text-text-base-600" data-value="radii">Base</span>
+                </span>
+            </span>
+        </span>
+        <span class="col-swatches">
+            <span class="swatches">
+                <span class="swatch bg-fill-base-200"></span>
+                <span class="swatch bg-fill-base-300"></span>
+                <span class="swatch bg-fill-base-400"></span>
+                <span class="swatch bg-fill-base-500"></span>
+            </span>
+            <span class="swatches">
+                <span class="swatch bg-primary-500"></span>
+                <span class="swatch bg-primary-400"></span>
+                <span class="swatch bg-primary-300"></span>
+                <span class="swatch bg-primary-200"></span>
+            </span>
+        </span>
+    </label>
+</template>
