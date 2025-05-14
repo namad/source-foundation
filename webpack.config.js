@@ -1,6 +1,7 @@
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const path = require('path')
 module.exports = ((env, argv) => {
@@ -58,7 +59,10 @@ module.exports = ((env, argv) => {
             },
 
             // Webpack tries these extensions for you if you omit the extension like "import './file'"
-            resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.css'] },
+            resolve: { 
+                extensions: ['.tsx', '.ts', '.jsx', '.js', '.json', '.css'],
+                plugins: [new TsconfigPathsPlugin()]
+            },
 
             output: {
                 publicPath: '/',

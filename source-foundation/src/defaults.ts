@@ -99,10 +99,13 @@ export const defaultSettings: ImportFormData = {
     baseFontSize: 'base',
     typeScale: 'minorThird',
     createStyles: true,
+
     accentSaturation: 0.9,
     accentMaxLuminance: 0.45,
     accentMidLuminance: 0.18,
     accentMinLuminance: 0.12,
+    accentHueSpin: 0,
+
     radii: 'base',
     spacing: 'base',
     verticalSpacing: 'uneven',

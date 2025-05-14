@@ -1,9 +1,10 @@
+import { defaultSettings } from "@foundation/defaults";
+import { DesignTokensRaw } from "@foundation/import-tokens";
+import { ImportFormData } from "@foundation/import-ui";
+import { flattenObject } from "@foundation/utils/flatten-object";
 import chroma from "chroma-js";
 import { renderColor } from "./swatches-generator";
-import { ImportFormData } from "../import-ui";
-import { flattenObject } from "../utils/flatten-object";
-import { DesignTokensRaw } from "../import-tokens";
-import { defaultSettings } from "../defaults";
+
 
 
 function getSaturationModifier(lightness) {
@@ -27,15 +28,13 @@ export function generateNeutrals(params: ImportFormData): DesignTokensRaw {
     } = params || {};
 
     let tokens: DesignTokensRaw = flattenObject({
-        "text": {
-            "black": {
-                "$value": `{grey-${params.textBlackBrightness || defaultSettings.textBlackBrightness}}`,
-                "$type": 'color'
-            },
-            "white": {
-                "$value": `{grey-${params.textWhiteBrightness || defaultSettings.textWhiteBrightness}}`,
-                "$type": 'color'
-            }
+        "black": {
+            "$value": `{grey-${params.textBlackBrightness || defaultSettings.textBlackBrightness}}`,
+            "$type": 'color'
+        },
+        "white": {
+            "$value": `{grey-${params.textWhiteBrightness || defaultSettings.textWhiteBrightness}}`,
+            "$type": 'color'
         }
     });
 

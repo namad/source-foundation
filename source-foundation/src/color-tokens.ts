@@ -6,7 +6,6 @@ import paletteLightShadows from './tokens/colors/system/light-shadow-colors.toke
 import paletteLight2 from './tokens/colors/system/light-2.tokens.json';
 import paletteLight3 from './tokens/colors/system/light-3.tokens.json';
 import paletteLight4 from './tokens/colors/system/light-4.tokens.json';
-import paletteTextLight from './tokens/colors/system/light-text-base.json';
 
 import paletteDarkCommon from './tokens/colors/system/dark-common.tokens.json';
 import paletteDarkShadows from './tokens/colors/system/dark-shadow-colors.tokens.json';
@@ -18,7 +17,6 @@ import paletteDarkElevated4 from './tokens/colors/system/dark-elevated-4.tokens.
 import paletteDarkBase2 from './tokens/colors/system/dark-base-2.tokens.json';
 import paletteDarkBase3 from './tokens/colors/system/dark-base-3.tokens.json';
 import paletteDarkBase4 from './tokens/colors/system/dark-base-4.tokens.json';
-import paletteTextDark from './tokens/colors/system/dark-text-base.json';
 
 import { flattenObject } from './utils/flatten-object';
 import { generateSystemAccentPalette } from './color-generators/accent-palette-generator';
@@ -28,15 +26,18 @@ import { collectionNames, defaultSemanticAccents, defaultSettings } from './defa
 import { _clone } from './utils/clone';
 import { addToGlobalTokensDictionary, findTokenReferences, findVariableAlias, getGlobalTokensDictionary, getReferenceName, resolveGlobalTokenValue } from './utils/token-references';
 import { convertFigmaColorToRgb, parseColorValue } from './utils/figma-colors';
-import { DesignToken, DesignTokensRaw, importVariables } from './import-tokens';
+import { ColorDesignToken, DesignToken, DesignTokensRaw, importVariables } from './import-tokens';
 
 import { _mergeDeep } from './utils/merge-deep';
-import { figmaAliasToDesignTokens, getDefaultVariableValue } from './utils/figma-variables';
+import { figmaAliasToDesignTokens, findFigmaVariableCollectionByName, getDefaultVariableValue, setFigmaVariable } from './utils/figma-variables';
 import { getColorTokensSortFn } from './utils/sort-tokens';
+import chroma from 'chroma-js';
+import { roundTwoDigits } from './utils/round-decimals';
 
 // const _merge = require('lodash.merge')
 
 let GlobalNeutrals;
+let ColorSystemVersion;
 
 export interface SystemColorPalette {
     primary: ColorRamp;
@@ -129,63 +130,72 @@ export type SourceColorTheme = 'lightBase' | 'darkBase' | 'darkElevated';
 
 function getTextOnAccentColors(formData: ImportFormData): DesignTokensRaw {
     const primaryHUE = formData[formData.primary];
-    // const systemAccentColor = chroma.hsl(primaryHUE, formData.accentSaturation, 0.5).luminance(formData.accentMidLuminance);
-    // const whiteTextColor = chroma.hsl(formData.hue, formData.saturation, formData.textWhiteBrightness / 100);
-    // const blackTextColor = chroma.hsl(formData.hue, formData.saturation, formData.textBlackBrightness / 100);
-    // const whiteTextContrast = roundTwoDigits(chroma.contrast(whiteTextColor, systemAccentColor));
-    // const blackTextContrast = roundTwoDigits(chroma.contrast(blackTextColor, systemAccentColor));
+    const systemAccentColor = chroma.hsl(primaryHUE, formData.accentSaturation, 0.5).luminance(formData.accentMidLuminance);
+    const whiteTextColor = chroma.hsl(formData.hue, formData.saturation, formData.textWhiteBrightness / 100);
+    const blackTextColor = chroma.hsl(formData.hue, formData.saturation, formData.textBlackBrightness / 100);
+    const whiteTextContrast = roundTwoDigits(chroma.contrast(whiteTextColor, systemAccentColor));
+    const blackTextContrast = roundTwoDigits(chroma.contrast(blackTextColor, systemAccentColor));
+
     let finalColor = formData.accentTextColor;
 
     if (finalColor == 'auto') {
-        finalColor = formData.accentMidLuminance > 0.3 ? 'black' : 'white';
+        finalColor = whiteTextContrast < 3 ? 'black' : 'white';
     }
-   
-    if(finalColor == 'black') {
-        return {
-            "text": {
-                "accent": {
-                    "400": {
-                        "$value": `rgba({text.${finalColor}}, 0.45)`,
-                        "$type": "color",
-                        "adjustments": {
-                            "h": primaryHUE,
-                            "s": "0.9"
-                        }
-                    },
-                    "500": {
-                        "$value": `rgba({text.${finalColor}}, 0.7)`,
-                        "$type": "color",
-                        "adjustments": {
-                            "h": primaryHUE,
-                            "s": "0.9"
-                        }
-                    },
-                    "600": {
-                        "$value": `{text.${finalColor}}`,
-                        "$type": "color",
-                        "adjustments": {
-                            "h": primaryHUE,
-                            "s": "0.9"
-                        }
+    return {
+        "text": {
+            "accent": {
+                "400": {
+                    "$value": `{text.${finalColor}.400}`,
+                    "$type": "color"
+                },
+                "500": {
+                    "$value": `{text.${finalColor}.500}`,
+                    "$type": "color"
+                },
+                "600": {
+                    "$value": `{text.${finalColor}.600}`,
+                    "$type": "color"
+                }
+            }
+        }
+    }   
+    return {
+        "text": {
+            "accent": {
+                "400": {
+                    "$value": `{text.${finalColor}.400}`,
+                    "$type": "color",
+                    "adjustments": {
+                        "h": primaryHUE,
+                        "s": "0.9"
+                    }
+                },
+                "500": {
+                    "$value": `{text.${finalColor}.500}`,
+                    "$type": "color",
+                    "adjustments": {
+                        "h": primaryHUE,
+                        "s": "0.9"
+                    }
+                },
+                "600": {
+                    "$value": `{text.${finalColor}.600}`,
+                    "$type": "color",
+                    "adjustments": {
+                        "h": primaryHUE,
+                        "s": "0.9"
                     }
                 }
             }
         }
     }
-
-    return null;
 }
 
-function processCommonColors(theme: 'light'|'dark', formData: ImportFormData, tokens) {
-    debugger
+function processCommonColors(formData: ImportFormData, tokens) {
     let textSaturationAdjustments = {};
-    let textColors = theme == 'light' ? paletteTextLight : paletteTextDark;
+    let textColors = getTextOnAccentColors(formData)
 
-    textColors = {
-        ...textColors,
-        ...getTextOnAccentColors(formData)
-    }
-    if(_colorSystemVersion == 1) {
+    if(ColorSystemVersion == 1) {
         textColors = null
     }
 
@@ -194,10 +204,10 @@ function processCommonColors(theme: 'light'|'dark', formData: ImportFormData, to
             s: formData.accentTextSaturation
         }
     }
-    const adjustments = {
+    const extension = {
         "text": {
             "base": {
-                "action": {
+                "primary": {
                     "adjustments": textSaturationAdjustments
                 },
                 "info": {
@@ -214,7 +224,7 @@ function processCommonColors(theme: 'light'|'dark', formData: ImportFormData, to
                 }
             },
             "contrast": {
-                "action": {
+                "primary": {
                     "adjustments": textSaturationAdjustments
                 },
                 "info": {
@@ -234,13 +244,13 @@ function processCommonColors(theme: 'light'|'dark', formData: ImportFormData, to
     }
 
     tokens = _mergeDeep(_clone(tokens), textColors)
-    return _mergeDeep(tokens, adjustments);
+    return _mergeDeep(tokens, extension);
 }
 
 export function getThemeColors(theme: SourceColorTheme, formData: ImportFormData): DesignTokensRaw {
 
-    let lightCommon = processCommonColors('light', formData, paletteLightCommon) as SystemColorPalette;
-    let darkCommon = processCommonColors('dark', formData, paletteDarkCommon) as SystemColorPalette;
+    let lightCommon = processCommonColors(formData, paletteLightCommon) as SystemColorPalette;
+    let darkCommon = processCommonColors(formData, paletteDarkCommon) as SystemColorPalette;
 
     let params = {
         ...normalizeFormData(formData)
@@ -425,8 +435,6 @@ export async function getColorTokenValue(token: DesignToken, modeId: string): Pr
     const variableAlias = await findVariableAlias(valueString);
     const rawValue = resolveColorTokenValue(token, getGlobalTokensDictionary());
 
-    if (token.name == 'text/base/action') debugger
-
     if (token.$type != "color") {
         return
     }
@@ -499,91 +507,68 @@ export async function upgradeTextPalette(params: ImportFormData) {
         ...getGlobalNeutrals(params)
     });
 
-    const contrastTextTokens = flattenObject({
-        "text": {
-            "contrast": {
-                "600": {
-                    "$value": "{text.white}",
-                    "$type": "color"
-                },
-                "500": {
-                    "$value": "rgba({text.white}, 0.7)",
-                    "$type": "color"
-                },
-                "400": {
-                    "$value": "rgba({text.white}, 0.45)",
-                    "$type": "color"
-                }
-            }
-        }
+    const paletteTextDark = flattenObject({
+        text: _clone(paletteDarkCommon.text)
     });
-    /* */
-    await importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: 'Light Base',
-        sortFn: getColorTokensSortFn(),
-        data: contrastTextTokens
+    const paletteTextLight = flattenObject({
+        text: _clone(paletteLightCommon.text)
     });
-    await importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: 'Dark Base',
-        sortFn: getColorTokensSortFn(),
-        data: contrastTextTokens
-    });
-    await importVariables({
-        collectionName: collectionNames.get('themeColors'),
-        modeName: 'Dark Elevated',
-        sortFn: getColorTokensSortFn(),
-        data: contrastTextTokens
-    });
+
+    /*
+        Extend existing collection with new variables 
+        Otherwise it wont be able to resolve variable aliases
+    */
+    const collectionName = collectionNames.get('themeColors');
+    const collection = await findFigmaVariableCollectionByName(collectionName);
+    const mode = collection.modes[0];
+    
+        for (const tokenName in paletteTextLight){
+        await setFigmaVariable(collection, mode.modeId, 'COLOR', tokenName)
+    }
     /* */
     
     await importVariables({
-        collectionName: collectionNames.get('themeColors'),
+        collectionName: collectionName,
         modeName: 'Light Base',
         sortFn: getColorTokensSortFn(),
-        data: flattenObject({
-            ...paletteTextLight
-        })
+        data: paletteTextLight
     });
     await importVariables({
-        collectionName: collectionNames.get('themeColors'),
+        collectionName: collectionName,
         modeName: 'Dark Base',
         sortFn: getColorTokensSortFn(),
-        data: flattenObject({
-            ...paletteTextDark
-        })
+        data: paletteTextDark
     });
     await importVariables({
-        collectionName: collectionNames.get('themeColors'),
+        collectionName: collectionName,
         modeName: 'Dark Elevated',
         sortFn: getColorTokensSortFn(),
-        data: flattenObject({
-            ...paletteTextDark
-        })
+        data: paletteTextDark
     });
+
+    ColorSystemVersion = 2;
 }
 
-let _colorSystemVersion;
+
 
 export async function getColorSystemVersion(refresh=false): Promise<number> {
-    if(_colorSystemVersion != undefined && !refresh) {
-        return _colorSystemVersion;
+    if(ColorSystemVersion != undefined && !refresh) {
+        return ColorSystemVersion;
     }
 
     const variables = await figma.variables.getLocalVariablesAsync();
     const isSDS = figma.root.getPluginData('SDS') !== '';
 
     if (variables.length == 0) {
-        _colorSystemVersion = 0;
+        ColorSystemVersion = 0;
     }
 
     if (isSDS) {
         const textOnAccentVar = variables.find(variable => variable.name.startsWith('text/accent'));
-        _colorSystemVersion = textOnAccentVar ? 2 : 1
+        ColorSystemVersion = textOnAccentVar ? 2 : 1
     }
 
-    return _colorSystemVersion;
+    return ColorSystemVersion;
 }
 
 function isAlias(value) {
@@ -594,7 +579,7 @@ function isAlias(value) {
         debugger
     }
 }
-export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: DesignTokensRaw) {
+export function processColorTokenCSSValue(token: ColorDesignToken, globalNeutrals: DesignTokensRaw) {
     let value = token.$value as string;
 
     value = resolveColorTokenValue(token as DesignToken, globalNeutrals, 'hsl');
@@ -605,7 +590,7 @@ export function processColorTokenCSSValue(token: DesignToken, globalNeutrals: De
         return value
     }
 
-    if (isAlias(token.$value)) {
+    if (isAlias(token.$value) && !token.$value.includes('rgb') && !token.$value.includes('hsl')) {
         const aliasName = getReferenceName(token.$value as string);
         value = `var(--${aliasName.replace(/\./g, "-")})`;
     }

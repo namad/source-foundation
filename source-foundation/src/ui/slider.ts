@@ -1,6 +1,9 @@
 import nouislider, { API } from 'nouislider';
 import { camelToTitle, toTitleCase } from '../utils/text-to-title-case';
 import { debounce } from '../utils/debounce';
+import { roundOneDigit } from '@foundation/utils/round-decimals';
+import { defaultSettings } from '@foundation/defaults';
+import { transformValue } from '@foundation/import-ui';
 
 export interface SliderComponent {
     rootElement: HTMLElement;
@@ -18,9 +21,10 @@ interface SliderOptions {
     step: number;
     value: number;
     syncValue: boolean;
-    tooltips?: boolean;
+    tooltips?: boolean; 
     direction?: 'ltr'|'rtl';
     valueMap?: string[];
+    range?: any;
     linked: boolean;
 }
 
@@ -37,7 +41,9 @@ export function initSlider(el: HTMLElement, options?): SliderComponent {
     }
 }
 
-function getMarkup({ label, name, min, max, step, value, linked }) {
+
+
+function getMarkup({ label, name, value, linked }) {
     const linkIndicator = linked === true ? `
         <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
         <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>         
@@ -62,26 +68,35 @@ function processComponent(el, options: SliderOptions) {
     const displayInput = el.querySelector(`input[data-display-element]`) as HTMLInputElement;
     const valueInput = el.querySelector(`input[data-value-element]`) as HTMLInputElement;
     let slider = el.querySelector(`.noui-slider`);
+    const range = options.range || {};
+    const defaultValue = transformValue(options.name,  defaultSettings[options.name], "IN") as number;
+
 
     slider = nouislider.create(slider, {
         connect: options.direction == 'rtl' ? 'upper' : 'lower',
         animate: false,
-        start: [options.value],
+        start: [defaultValue],
         step: options.step,
         direction: options.direction || 'ltr',
         tooltips: options.tooltips || false,
         range: {
             'min': [options.min],
-            'max': [options.max]
+            'max': [options.max],
+            ...range
         }
     });
 
+    el.querySelectorAll('.noUi-handle').forEach(el => {
+        el.addEventListener('dblclick', (e) => {
+            slider.set([defaultValue])
+        })
+    })
 
-    displayInput.value = getDisplayValue(options.value, options.valueMap);
+    displayInput.value = getDisplayValue(options.value, options.valueMap).toString();
 
     slider.on('update', debounce((values, handle) => {
         
-        var value = parseInt(values[handle]);
+        var value = parseFloat(values[handle]);
         const currentValue = valueInput.value;
         const newValue = `${value}`;
         valueInput.value = newValue;
@@ -90,7 +105,7 @@ function processComponent(el, options: SliderOptions) {
             displayInput.dispatchEvent(new Event('input', { 'bubbles': true }));
         }
 
-        displayInput.value = getDisplayValue(value, options.valueMap);
+        displayInput.value = getDisplayValue(value, options.valueMap).toString();
     }, 1))
 
     valueInput.addEventListener("input", (event) => {
@@ -105,19 +120,7 @@ function getDisplayValue(value, valueMap) {
        return toTitleCase(valueMap[value]);
     }
     else {
-        return parseInt(value);
+        return roundOneDigit(parseFloat(value));
     }
 
-}
-
-function syncValues({ slider, valueInput }) {
-    slider.on('update', function (values, handle) {
-        var value = parseInt(values[handle]);
-        valueInput.value = `${value}`;
-    });
-
-
-    valueInput.addEventListener("input", (event) => {
-        slider.set([valueInput.value]);
-    });
 }

@@ -15,55 +15,29 @@ export function getPresets(): ImportFormData[] {
         amber as ImportFormData,
         green as ImportFormData,
         cyan as ImportFormData,
-        blue as ImportFormData, 
-        rolayBlue as ImportFormData, 
+        blue as ImportFormData,
+        rolayBlue as ImportFormData,
         indigo as ImportFormData,
         pink as ImportFormData,
         deepPink as ImportFormData,
     ]
 }
 
-export function getPresetContentTemplate(index) {
-    return `
-        <input type="radio" name="theme" value="${index}" />
-        <span class="col-info">
-            <span class="info-item">
-                <span class="icon icon-16 icon-colors" title="Color pattern"></span>                
-                <span>
-                    <span class="text-text-base-600" data-value="distance" data-transform="IN">2</span><span class="text-text-base-400">%</span>
-                </span>
-            </span>
-            <span class="info-item">
-                <span class="icon icon-16 icon-typography" title="Typography"></span>
-                <span>
-                    <span class="text-text-base-600" data-value="typeScale">Minor Third</span> / 
-                    <span class="text-text-base-600" data-value="baseFontSize">Base</span>
-                </span>
-            </span>
-            <span class="flex flex-row gap-base">
-                <span class="info-item">
-                    <span class="icon icon-16 icon-spacing" title="Spacing"></span>                
-                    <span class="text-text-base-600" data-value="spacing">Base</span>
-                </span>
-                <span class="info-item">
-                    <span class="icon icon-16 icon-radii" title="Radii"></span>
-                    <span class="text-text-base-600" data-value="radii">Base</span>
-                </span>
-            </span>                
-        </span>
-        <span class="col-swatches">
-            <span class="swatches">
-                <span class="swatch bg-fill-base-200"></span>
-                <span class="swatch bg-fill-base-300"></span>
-                <span class="swatch bg-fill-base-400"></span>
-                <span class="swatch bg-fill-base-500"></span>
-            </span>
-            <span class="swatches">
-                <span class="swatch bg-primary-500"></span>
-                <span class="swatch bg-primary-400"></span>
-                <span class="swatch bg-primary-300"></span>
-                <span class="swatch bg-primary-200"></span>
-            </span>
-        </span>
-    `;
+export function getPresetContentTemplate(index: number, parent: HTMLElement): Element {
+    // Test to see if the browser supports the HTML template element by checking
+    // for the presence of the template element's content attribute.
+    if ("content" in document.createElement("template")) {
+        const template = document.querySelector("#presetItemTemplate") as HTMLTemplateElement;
+        let presetItem = document.importNode(template.content, true);
+        const radio = presetItem.querySelector('[name="theme"]');
+        const label = presetItem.querySelector('.theme-item')
+        radio.setAttribute('value', index.toString());
+        parent.appendChild(presetItem);
+        return label;
+    } else {
+        // Find another way to add the rows to the table because
+        // the HTML template element is not supported.
+
+        debugger;
+    }
 }

@@ -8,7 +8,7 @@
     padding: var(--spacing-xl4) var(--spacing-md);
     width: fit-content;
 
-    transition: transform 100ms ease-in-out;
+    transition: transform 500ms var(--easing-fn);
     cursor: grab;
 }
 

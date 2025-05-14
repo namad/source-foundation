@@ -62,7 +62,7 @@
     --text-base-400: hsla(190,20%,5.88%,0.45);
     --text-base-500: hsla(190,20%,5.88%,0.65);
     --text-base-600: hsl(190,20%,5.88%);
-    --text-base-action: var(--primary-500);
+    --text-base-primary: var(--primary-500);
     --text-base-info: var(--info-500);
     --text-base-success: var(--success-500);
     --text-base-warning: var(--warning-500);
@@ -221,7 +221,7 @@
     --text-base-400: hsla(0,0%,100%,0.45);
     --text-base-500: hsla(0,0%,100%,0.7);
     --text-base-600: hsl(0,0%,100%);
-    --text-base-action: var(--primary-500);
+    --text-base-primary: var(--primary-500);
     --text-base-info: var(--info-500);
     --text-base-success: var(--success-500);
     --text-base-warning: var(--warning-500);
@@ -380,7 +380,7 @@
     --text-base-400: hsla(0,0%,100%,0.45);
     --text-base-500: hsla(0,0%,100%,0.7);
     --text-base-600: hsl(0,0%,100%);
-    --text-base-action: var(--primary-500);
+    --text-base-primary: var(--primary-500);
     --text-base-info: var(--info-500);
     --text-base-success: var(--success-500);
     --text-base-warning: var(--warning-500);

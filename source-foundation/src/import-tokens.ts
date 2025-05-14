@@ -1,5 +1,5 @@
 import { SourceColorTheme, getColorTokenValue, getComponentColors, getGlobalNeutrals, getShadowColorTokens, getThemeColors } from './color-tokens';
-import { findFigmaVariableCollectionByName, getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
+import { getFigmaCollection, resolveVariableType, setFigmaVariable } from "./utils/figma-variables";
 
 import chroma from 'chroma-js';
 
@@ -23,7 +23,6 @@ import { importEffectStyles } from './utils/figma-effect-styles';
 import { flattenObject } from './utils/flatten-object';
 import { roundTwoDigits } from './utils/round-decimals';
 import { _clone } from './utils/clone';
-import { LOCAL_LIB_NAME } from './utils/figma-library-variables';
 import * as themeStore from './utils/themes-store';
 
 console.clear();
@@ -90,13 +89,7 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
     const contrastRatios = {};
 
     const primaryColorHUE = data.primary;
-    const shades = getGlobalAccentRamp(
-        data[primaryColorHUE],
-        data.accentSaturation,
-        data.accentMinLuminance,
-        data.accentMidLuminance,
-        data.accentMaxLuminance
-    );
+    const shades = getGlobalAccentRamp(data[primaryColorHUE], data);
 
     Object.entries(shades).forEach(([name, token]) => {
         token.scopes = [];
@@ -158,8 +151,6 @@ function generateVariablesForPlayground(data: ImportFormData, isPlayground = fal
 }
 
 export async function importAllTokens() {
-
-    themeStore.save();
     const params: ImportFormData = themeStore.getTheme('light')
 
     const isPlayground = figma.root.getPluginData('SDSPlayground') !== '';
@@ -324,7 +315,6 @@ export async function getCollectionAndPrepareTokens({ collectionName, modeName, 
 
     if (sortFn != null) {
         transformedTokens.sort(sortFn);
-        console.log(transformedTokens.map(token => token.name))
     }
 
     if (isNew) {

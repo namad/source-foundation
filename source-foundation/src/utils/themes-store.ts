@@ -44,12 +44,14 @@ function syncValues(data: ImportFormData) {
         'createOpacityTokens',
         'shadowsStyle',
         'shadowsSpread',
-        'textBlackBrightness'
+        'textBlackBrightness',
+        'acentHueSpin'
     ];
 
     store.forEach((params, themeKey) => {
         sharedProps.forEach(propName => {
-            params[propName] = data[propName];
+            const value = data[propName] == undefined ? defaultSettings[propName] : data[propName]
+            params[propName] = value;
         })
     })
 }
@@ -61,11 +63,11 @@ export function setTheme(data: ImportFormData) {
 
     if(_isCustomDarkMode === true && theme === 'dark') {
         data.theme = 'dark';
-        store.set(theme, data);
+        store.set(theme, {...defaultSettings, ...data});
     }
     else {
         data.theme = 'light';
-        store.set('light', data);
+        store.set('light', {...defaultSettings, ...data});
     }
 
     syncValues(data);

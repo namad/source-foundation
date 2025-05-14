@@ -8,7 +8,6 @@ async function preLoadFont(fontName: FontName) {
     const fontNameAndStyle = `${fontName.family} ${fontName.style}`;
 
     if(fontLoadStatus.indexOf(fontNameAndStyle) == -1) {
-        console.log(`loading ${fontNameAndStyle}`);
         await figma.loadFontAsync(fontName).catch((reason) => {
             debugger;
         });
@@ -16,7 +15,6 @@ async function preLoadFont(fontName: FontName) {
         return true;
     }
 
-    console.log(`already done with ${fontNameAndStyle}`);
     return false;
 }
 

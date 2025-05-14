@@ -1,3 +1,5 @@
+import { debounce } from "@foundation/utils/debounce";
+
 const cardCarousel = document.getElementById('cardCarouse');
 
 
@@ -17,15 +19,18 @@ function _mouseMove(e) {
         maxOffset
     })
 
-    if(Math.abs(offsetTranslateX) < maxOffset) {
-        cardCarousel.style.setProperty('--move-offset', `${offsetTranslateX}px`)
-    }
-
+    cardCarousel.style.setProperty('--move-offset', `${offsetTranslateX}px`)
 
 }
 
 function _mouseUp(e) {
     console.log(moveOffsetX)
+
+    const deltaK = offsetTranslateX < 0 ? -1 : 1;
+
+    if(Math.abs(offsetTranslateX) > maxOffset) {
+        cardCarousel.style.setProperty('--move-offset', `${maxOffset * deltaK}px`)
+    }
 
     cardCarousel.classList.remove('dragging');
     cardCarousel.removeEventListener('mousemove', _mouseMove);
@@ -51,18 +56,28 @@ cardCarousel.addEventListener('mousedown', (e) => {
 })
 
 cardCarousel.addEventListener("wheel", (event) => {
-    let delta = event.deltaX || event.deltaY;
-    const startTranslateX = parseInt(cardCarousel.style.getPropertyValue('--move-offset') || '0');
-    offsetTranslateX = startTranslateX - delta;
 
-    if(Math.abs(offsetTranslateX) < maxOffset) {
-        cardCarousel.style.setProperty('--move-offset', `${offsetTranslateX}px`)
+    debounce(trackWheel(event), 100)
+
+    const deltaK = offsetTranslateX < 0 ? -1 : 1;
+
+    if(Math.abs(offsetTranslateX) > maxOffset) {
+        cardCarousel.style.setProperty('--move-offset', `${maxOffset * deltaK}px`)
     }
-
+    
     event.preventDefault();
     event.stopPropagation();
 })
 
+const trackWheel = (event) => {
+    let delta = event.deltaX || event.deltaY;
+    const startTranslateX = parseInt(cardCarousel.style.getPropertyValue('--move-offset') || '0');
+    offsetTranslateX = startTranslateX - delta;
+
+    cardCarousel.style.setProperty('--move-offset', `${offsetTranslateX}px`)
+
+
+}
 
 // cardCarousel.addEventListener('dragstart', (e) => {
 //     startX = e.clientX;

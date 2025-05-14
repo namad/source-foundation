@@ -10,6 +10,7 @@ import { ConfigColors, ImportFormData } from './import-ui';
 import { CollectionExportRecord, exportBrandVariantToJSON, exportToJSON, importFromJSON } from './import-export-json';
 import { importAllTokens, initiateImport } from './import-tokens';
 import { createUpdateElevationComponents } from './effect-tokens';
+import { delayAsync } from './utils/delay-async';
 
 console.clear();
 
@@ -50,15 +51,6 @@ export interface ExportEventParameters {
     createRadiiTokens?: boolean;
 }
 
-async function preImportCheck() {
-    const colorSystemVersion = await getColorSystemVersion();
-    if(colorSystemVersion == 1) {
-    
-    }
-
-    return true;
-}
-
 const handlers = {
     process: async function(message: MessagePayload) {
         this.params = message.params;
@@ -66,15 +58,30 @@ const handlers = {
         await this[this.message.type]();
     },
 
+    refreshUI: async function(params: ImportFormData) {
+        figma.ui.postMessage({
+            type: "REFRESH_UI",
+            data: {
+                colorSystemVersion: await getColorSystemVersion(),
+                customDarkMode: themeStore.isCustomDarkMode(),
+                params: params
+            }
+        })    
+    },
     IMPORT: async function () {
         themeStore.setTheme(this.params);
+        themeStore.save();
 
-        if(!preImportCheck()) {
-            figma.ui.postMessage({ type: "PROMPT_TEXT_COLORS_UPGRADE" });
+        const colorSystemVersion = await getColorSystemVersion();
+        if(colorSystemVersion == 1) {
+            await this.UPGRADE_TEXT_COLORS();
         }
+
+        await delayAsync(10);
 
         await initiateImport();
         await importAllTokens();
+
     },
 
     GET_EXPORT_DATA: async function () {
@@ -114,6 +121,9 @@ const handlers = {
         const frameLightPalette = renderAccents('light', this.params, 'Light Mode Accents');
         const frameDarkPalette = renderAccents('dark', this.params, 'Dark Mode Accents');
         frameDarkPalette.y = frameLightPalette.height + 64;
+
+        figma.viewport.scrollAndZoomIntoView([frameDarkPalette, frameDarkPalette]);
+        figma.currentPage.selection = [frameDarkPalette, frameDarkPalette];
     },
 
     RENDER_NEUTRALS: async function () {
@@ -124,6 +134,7 @@ const handlers = {
 
     UPGRADE_TEXT_COLORS: async function () {
         await upgradeTextPalette(this.params);
+        await this.refreshUI(this.params);
     },
 
     START_ELEVATION_COMPONENTS: async function () {
@@ -186,64 +197,25 @@ const handlers = {
 
     RESET: async function () {
         themeStore.resetDefaults();
-        figma.ui.postMessage({
-            type: "REFRESH_UI",
-            data: {
-                colorSystemVersion: await getColorSystemVersion(),
-                customDarkMode: themeStore.isCustomDarkMode(),
-                params: themeStore.getTheme("light"),
-                tokenLibraries: figlib.serialize()
-            }
-        })
+        await this.refreshUI(themeStore.getTheme("light"));
     },
 
     UPDATE_ACTIVE_THEME: async function () {
         const selectedThemeData = themeStore.getTheme(this.params.theme);
 
         selectedThemeData.theme = this.params.theme;
-
-        figma.ui.postMessage({
-            type: "REFRESH_UI",
-            data: {
-                colorSystemVersion: await getColorSystemVersion(),
-                params: selectedThemeData,
-                customDarkMode: themeStore.isCustomDarkMode(),
-                tokenLibraries: figlib.serialize()
-            }
-        })
+        await this.refreshUI(selectedThemeData);
     },
 
-    ENABLE_CUSTOM_DARK_MODE: async function () {
+    ENABLE_CUSTOM_DARK_MODE: async function() {
         themeStore.enableCustomDarkMode();
-
-        figma.ui.postMessage({
-            type: "REFRESH_UI",
-            data: {
-                colorSystemVersion: await getColorSystemVersion(),
-                params: this.params,
-                customDarkMode: themeStore.isCustomDarkMode(),
-                tokenLibraries: figlib.serialize()
-            }
-        })
+        await this.refreshUI(this.params);
     },
 
-    DISABLE_CUSTOM_DARK_MODE: async function () {
-
+    DISABLE_CUSTOM_DARK_MODE: async function() {
         themeStore.disableCustomDarkMode();
-
-        figma.ui.postMessage({
-            type: "REFRESH_UI",
-            data: {
-                colorSystemVersion: await getColorSystemVersion(),
-                params: {
-                    ...themeStore.getTheme('light'),
-                    theme: this.params.theme
-                },
-                customDarkMode: themeStore.isCustomDarkMode(),
-                tokenLibraries: figlib.serialize()
-            }
-        })    
-    },
+        await this.refreshUI(this.params);
+    }    
 }
 
 figma.ui.onmessage = async (eventData: MessagePayload) => {

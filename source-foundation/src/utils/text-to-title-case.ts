@@ -1,5 +1,6 @@
-export function toTitleCase(str) {
-  return str.replace(
+export function toTitleCase(str: string) {
+  if(str === undefined) debugger
+  return str.toString().replace(
     /\w\S*/g,
     function(txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();

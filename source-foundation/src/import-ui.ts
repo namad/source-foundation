@@ -17,7 +17,7 @@ import { SliderComponent } from "./ui/slider";
 import { getTokenLibrariesListMarkup } from "./ui/helpers/figma-libraries-selector";
 import { sliders } from "./ui/ref/sliders-collection";
 import { mainForm } from "./ui/ref/main-form";
-import { getReferenceName } from "./utils/token-references";
+import { findTokenReferences, getReferenceName } from "./utils/token-references";
 import { activeModal } from "./ui/helpers/modal";
 import { getElevationTokens } from "./effect-tokens";
 import * as themeStore from './utils/themes-store';
@@ -59,10 +59,13 @@ export interface ImportFormData {
     baseFontSize: "compact" | "base" | "large";
     typeScale: "majorThird" | "minorThird" | "majorSecond";
     createStyles: boolean;
+
     accentSaturation: number;
     accentMinLuminance: number;
     accentMidLuminance: number;
     accentMaxLuminance: number;
+    accentHueSpin: number;
+
     radii: "compact" | "base" | "large";
     spacing: "compact" | "base" | "large" | "touch";
     verticalSpacing: "even" | "uneven";
@@ -213,11 +216,7 @@ export function generatePresetsPreview(masterData: ImportFormData) {
         data = {...defaultSettings, ...data};
         const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
         const globalNeutrals = getGlobalNeutrals(data);
-
-        const label = document.createElement('label');
-        label.classList.add('theme-item');
-        label.innerHTML = getPresetContentTemplate(index);
-        presetsListElement.appendChild(label);
+        const label = getPresetContentTemplate(index, presetsListElement) as HTMLElement;
 
         generateCSSVars({ ...themeColors, ...globalNeutrals }, label);
         updateValuesDisplay(data, label);
@@ -240,15 +239,9 @@ export function refreshUI(options: LoadDataOptions) {
     sliders['saturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
 
     const primaryColorHUE = data.primary
-    const shades = getGlobalAccentRamp(
-        data[primaryColorHUE],
-        data.accentSaturation,
-        data.accentMinLuminance,
-        data.accentMidLuminance,
-        data.accentMaxLuminance
-    );
+    const globalAccentRamp = getGlobalAccentRamp(data[primaryColorHUE], data);
     const globalAccent = flattenObject({
-        'global-accent': shades
+        'global-accent': globalAccentRamp
     })
 
     const themeColors = getThemeColors(data.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
@@ -275,20 +268,8 @@ export function refreshUI(options: LoadDataOptions) {
 
     generateBoxShadowsCSS(data, globalNeutrals);
 
-    const darkSurfaceColorRaw = globalNeutrals[`grey-20`].$value as string;
-    const darkSurfaceColor = chroma(darkSurfaceColorRaw);
-    const textWhiteColor = chroma.hsl(data.hue, data.accentSaturation, data.textWhiteBrightness/100);
-    const textBlackColor = chroma.hsl(data.hue, data.accentSaturation, data.textBlackBrightness/100);
-    const textAcentColorOnLightRaw = themeColors[`accent/${data.primary}/500`]['$value'] as string;
-    const textAcentColorOnLight = chroma(textAcentColorOnLightRaw);
-    const textAcentColorOnDarkRaw = themeColors[`accent/${data.primary}/600`]['$value'] as string;
-    const textAcentColorOnDark = chroma(textAcentColorOnDarkRaw);
-
     const extension = {
-        textAcentContrastOnLight: roundOneDigit(chroma.contrast(textAcentColorOnLight, textWhiteColor)),
-        textAcentContrastOnDark: roundOneDigit(chroma.contrast(textAcentColorOnDark, darkSurfaceColor)),
-        textBlackContrast: roundOneDigit(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
-        textWhiteContrast: roundOneDigit(chroma.contrast(textWhiteColor, darkSurfaceColor)),
+        ...calcContrastRatios({data, themeColors, globalNeutrals, globalAccent}),
         fillBase100: getReferenceName(themeColors['fill/base/100']['$value'] as string).replace('grey-', ''),
         fillBase200: getReferenceName(themeColors['fill/base/200']['$value'] as string).replace('grey-', ''),
         fillBase300: getReferenceName(themeColors['fill/base/300']['$value'] as string).replace('grey-', ''),
@@ -308,6 +289,34 @@ export function refreshUI(options: LoadDataOptions) {
     }
 }
 
+function calcContrastRatios({data, themeColors, globalNeutrals, globalAccent}) {
+    const darkSurfaceColorRaw = globalNeutrals[`grey-20`].$value as string;
+    const darkSurfaceColor = chroma(darkSurfaceColorRaw);
+    const textWhiteColor = chroma.hsl(data.hue, data.accentSaturation, data.textWhiteBrightness/100);
+    const textBlackColor = chroma.hsl(data.hue, data.accentSaturation, data.textBlackBrightness/100);
+    const textAccentColorOnLightRaw = themeColors[`accent/${data.primary}/500`]['$value'] as string;
+    const textAccentColorOnLight = chroma(textAccentColorOnLightRaw);
+    const textAccentColorOnDarkRaw = themeColors[`accent/${data.primary}/600`]['$value'] as string;
+    const textAccentColorOnDark = chroma(textAccentColorOnDarkRaw);
+
+    const baseAccentColorRaw = themeColors[`accent/${data.primary}/400`]['$value'] as string;
+    const baseAccentColor = chroma(baseAccentColorRaw);
+    const textOnAccentColorRaw = resolveColorTokenValue(themeColors[`text/accent/600`] as DesignToken, { ...themeColors, ...globalAccent, ...globalNeutrals }, 'hsl');
+    const textOnAccentColor = chroma(textOnAccentColorRaw);
+    const textOnAccentContrast = roundOneDigit(chroma.contrast(baseAccentColor, textOnAccentColor));
+
+    const aliases = themeColors[`text/accent/600`]['$value'];
+    const accentTextColor = findTokenReferences(aliases).map(ref => getReferenceName(ref)).pop().match(/white|black/g).pop();
+
+    return {
+        accentTextColor,
+        textOnAccentContrast,
+        textAccentContrastOnLight: roundOneDigit(chroma.contrast(textAccentColorOnLight, textWhiteColor)),
+        textAccentContrastOnDark: roundOneDigit(chroma.contrast(textAccentColorOnDark, darkSurfaceColor)),
+        textBlackContrast: roundOneDigit(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
+        textWhiteContrast: roundOneDigit(chroma.contrast(textWhiteColor, darkSurfaceColor)),    
+    }
+}
 function setCustomAccentTextSaturationSlider(data: ImportFormData) {
     const sliderComponent = sliders["accentTextSaturation"]
     const slider = sliderComponent.slider;
@@ -410,7 +419,7 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
     });
 }
 
-function updateValuesDisplay(data: ImportFormData, context = document.documentElement) {
+function updateValuesDisplay(data, context = document.documentElement) {
     context.querySelectorAll(`[data-value]`).forEach((el: HTMLElement) => {
         const name = el.dataset.value;
         const value = data[name];
@@ -479,8 +488,6 @@ export function loadData(options: LoadDataOptions) {
 }
 
 function applyData(params: ImportFormData, silent = false) {
-    params = Object.assign({}, defaultSettings, params);
-
     const formElements = mainForm.querySelectorAll(`input[name]`);
 
     formElements.forEach((formEl: HTMLFormElement) => {

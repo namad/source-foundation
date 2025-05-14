@@ -41,13 +41,16 @@ body {
 }
 
 a {
-    color: var(--primary-500);
+    color: var(--text-base-primary);
 }
 
 a:hover {
     text-decoration: underline;
 }
 
+p {
+    line-height: 125%;
+}
 ::-webkit-scrollbar {
     width: var(--scrollbar-width);
     height: var(--scrollbar-width);
@@ -114,10 +117,12 @@ a:hover {
 }
 
 .card-sticky {
+    --bg: color-mix(in srgb, var(--fill-base-100), transparent 20%);
     position: sticky;
     top: 0;
     z-index: 10;
     transition: all 600ms var(--easing-fn);
+       
 
     &::before {
         content: "";
@@ -125,13 +130,15 @@ a:hover {
         pointer-events: none;
         position: absolute;
         inset: calc(-1 * var(--form-gap));
-        bottom: 33%;
-        background-image: linear-gradient(180deg, var(--fill-base-300) 70%, transparent);
+        bottom: 50%;
+        background-image: linear-gradient(180deg, var(--fill-base-300) 50%, transparent);
         z-index: -1;
     }
 
     .card {
         position: relative;
+        -backdrop-filter: blur(10px);
+        -background-color: var(--bg);
     }
 }
 
@@ -147,7 +154,7 @@ a:hover {
 .card-sticky.is-pinned .card {
     outline: var(--border-width-base) solid var(--utility-tint-300);
     outline-offset: calc(var(--border-width-base) * -1);
-    box-shadow: var(--shadow-5-100);
+    box-shadow: var(--shadow-5-200);
 
     & .height-expander {
         opacity: 0;
@@ -171,7 +178,7 @@ form .container {
     overflow-x: hidden;
     padding: var(--form-gap);
     padding-right: calc(var(--form-gap) - var(--scrollbar-width));
-    gap: var(--form-gap);
+    gap: var(--spacing-minor-sm);
 }
 
 button {
@@ -209,14 +216,14 @@ button.outline-button {
 
 button.primary {
     background-color: var(--primary-400);
-    background-image: linear-gradient(180deg, hsla(0 0 100% / 20%), var(--utility-transparent));
+    /* background-image: linear-gradient(180deg, hsla(0 0 100% / 20%), var(--utility-transparent)); */
     background-blend-mode: overlay;
     border: none;
     color: var(--text-accent-600);
 }
 
 button.primary:hover {
-    background-image: linear-gradient(180deg, hsla(0 0 100% / 30%), var(--utility-transparent));
+    background-image: linear-gradient(180deg, hsla(0 0 0% / 20%), hsla(0 0 0% / 20%));
 }
 
 input,
@@ -243,7 +250,7 @@ textarea {
     right: var(--spacing-xs);
     top: var(--spacing-minor-xs);
     pointer-events: none;
-    color: var(--text-base-action);
+    color: var(--text-base-primary);
 }
 
 input:hover,
@@ -285,7 +292,11 @@ input[type=radio]:checked {
     border-radius: var(--radii-base);
 
     &.on-accent {
-        --bg-color: var(--alt-contrast-500);
+        --bg-color: color-mix(in srgb, white, transparent 80%);
+        background-blend-mode: overlay;
+    }
+    &.on-accent .container:hover {
+        background-color: var(--bg-color);
     }
 }
 
@@ -550,7 +561,7 @@ a[data-expanded=true]::after {
 
 .action-list li a:hover {
     background-color: var(--primary-100);
-    color: var(--text-base-action);
+    color: var(--text-base-primary);
     text-decoration: none;
 }
 
@@ -563,11 +574,14 @@ a[data-expanded=true]::after {
     --slider-thumb-color: color-mix(in srgb, var(--primary-300), white 10%);
 
     & .noui-slider {
-        background-color: color-mix(in srgb, white, transparent 60%);
+        box-shadow: var(--shadow-1-100);
+        background-color: color-mix(in srgb, white, transparent 80%);
     }
 
     & .noUi-connect {
-        background-color: color-mix(in srgb, white, transparent 30%);
+        --effect-opacity: 50%;
+        background-image: linear-gradient(180deg, hsl(0deg 100% 100% / 80%), hsl(0deg 100% 100% / 30%));
+        background-color: transparent;
     }
 
     & input[type=text] {
@@ -639,6 +653,19 @@ a[data-expanded=true]::after {
     }
 }
 
+[data-theme="dark"] .light-mode-only {
+    display: none;
+}
+
+[data-theme="light"] .dark-mode-only {
+    display: none;
+}
+
+[data-theme="dark"] .linked-dark-mode-only {
+    display: none;
+}
+
+
 [data-custom-dark="false"] .disable-dark-mode-controls {
     display: none;
 }
@@ -699,7 +726,9 @@ a[data-expanded=true]::after {
 }
 
 [data-custom-dark="true"] .custom-dark-dot {
-    --indicator-size: calc(var(--line-height-xs) / 3);
+    --indicator-size: 5px;
+    --margin: var(--spacing-md);
+
     position: relative;
     &::after {
         content: '';
@@ -711,9 +740,25 @@ a[data-expanded=true]::after {
         
         right: calc(100% + var(--spacing-xs2));
         top: calc(50% - var(--indicator-size) / 2);
-        background-color: var(--info-300);
+        background-color: var(--primary-300);
         /* outline: 3px solid var(--info-100); */
 
         transition: all 1s ease-in-out;
     }
+}
+
+.colors-grid {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: auto;
+    gap: var(--spacing-base);
+    row-gap: var(--spacing-minor-xs);
+}
+
+.colors-grid-card {
+    display: grid;
+    grid-column: span 2;
+    grid-template-columns: subgrid;
+    padding: var(--spacing-sm);
+    border-radius: var(--radii-md);
 }

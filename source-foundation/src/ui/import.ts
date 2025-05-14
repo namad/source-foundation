@@ -21,6 +21,7 @@ import "./helpers/accent-luminance-slider";
 // import "./helpers/text-brightness-slider";
 import "./helpers/tooltips";
 import "./helpers/card-carousel-scroller";
+import "./helpers/create-update-elevation-components-button";
 
 
 /*
@@ -109,21 +110,6 @@ document.getElementById('applyPresetButton').addEventListener('click', (e) => {
     });
 
     modal.close();
-})
-
-document.getElementById('createUpdateElevationComponentsButton').addEventListener('click', (e) => {
-    const modal = document.getElementById('manageElevationComponentsModal') as HTMLDialogElement;
-    const options = collectValues(modal) as ImportEventParameters;
-    const params = getFormData(mainForm);
-    parent.postMessage({ 
-        pluginMessage: { 
-            type: "CREATE_ELEVATION_COMPONENTS", 
-            params,
-            options
-        }
-    }, "*");   
-
-    modal.close();    
 })
 
 document.getElementById('importCustomThemeButton').addEventListener('click', (e) => {
@@ -237,6 +223,14 @@ importButton.addEventListener('click', async (e) => {
     parent.postMessage({ pluginMessage: message }, "*");
 })
 
+
+let markup = [];
+for(let x = 99; x >= 0; x--) {
+    markup.push(`
+        <div style="background-color: var(--grey-${x})"></div>
+    `)
+}
+document.getElementById('gloablNeutralsPreview').innerHTML = markup.join('');
 
 window.onmessage = ({ data: { pluginMessage } }) => {
     if(pluginMessage == 'IMPORT_COMPLETED') {

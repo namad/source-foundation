@@ -108,6 +108,9 @@
 .global-accent-600 {
     background-color: var(--global-accent-600);
 }
+.global-accent-700 {
+    background-color: var(--global-accent-700);
+}
 
 .color-box .token-value {
     display: block;
@@ -127,3 +130,33 @@
     content: var(--hsl);
     display: inline;
 }
+
+.preview-adjustments .color-box {
+    opacity: 0.35;
+}
+
+.preview-adjustments .color-box > * {
+    /* visibility: hidden; */
+}
+
+.preview-adjustments .color-box {
+    transition: all 800ms var(--easing-fn);
+}
+.preview-adjustments[data-color-key="0"] .color-box[data-color-handle="0"] > * {
+    visibility: visible;
+}
+.preview-adjustments[data-color-key="0"] .color-box[data-color-handle="0"] {
+    opacity: 1;
+} 
+.preview-adjustments[data-color-key="1"] .color-box[data-color-handle="1"] > * {
+    visibility: visible;
+}
+.preview-adjustments[data-color-key="1"] .color-box[data-color-handle="1"] {
+    opacity: 1;
+} 
+.preview-adjustments[data-color-key="2"] .color-box[data-color-handle="2"] > * {
+    visibility: visible;
+}
+.preview-adjustments[data-color-key="2"] .color-box[data-color-handle="2"] {
+    opacity: 1;
+} 

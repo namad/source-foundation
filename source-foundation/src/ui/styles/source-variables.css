@@ -64,7 +64,7 @@
     --text-base-success: #077E20;
     --text-base-info: #0B72AE;
     --text-base-danger: #D51A0C;
-    --text-base-action: #1C5FF0;
+    --text-base-primary: #1C5FF0;
     --text-base-600: #0E0F11;
     --text-base-500: rgba(14, 15, 17, 0.65);
     --text-base-400: rgba(14, 15, 17, 0.45);
@@ -72,7 +72,7 @@
     --text-contrast-success: #0FC020;
     --text-contrast-info: #11B4DD;
     --text-contrast-danger: #F5867E;
-    --text-contrast-action: #5FABF3;
+    --text-contrast-primary: #5FABF3;
     --text-contrast-600: #FFFFFF;
     --text-contrast-500: rgba(255, 255, 255, 0.65);
     --text-contrast-400: rgba(255, 255, 255, 0.45);

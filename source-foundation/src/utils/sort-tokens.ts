@@ -132,7 +132,7 @@ const colorNamesOrder = [
 ]
 
 export function getColorTokensSortFn() {
-    return getSortFn(colorNamesOrder, 'includes');
+    return getSortFn(colorNamesOrder, 'startsWith');
 }
 
 export function getSizeTokensSortFn() {

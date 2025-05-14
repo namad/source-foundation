@@ -18,7 +18,7 @@ function traverseToken({
     tokens,
 }) {
 
-    if(!object) debugger;
+    if(typeof object == undefined) debugger;
     
     // if key is a meta field, move on
     if (key.charAt(0) === "$") {

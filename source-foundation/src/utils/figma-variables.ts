@@ -65,6 +65,15 @@ export function resolveVariableType(typeName): VariableResolvedDataType {
     }
 }
 
+function getStubValue(type: VariableResolvedDataType) {
+    switch (type) {
+        case 'COLOR': return figma.util.rgb('#FFFFFF');
+        case 'BOOLEAN': return true;
+        case 'FLOAT': return 1;
+        default: return 'String';
+    }
+}
+
 export async function setFigmaVariable(
         collection: VariableCollection,
         modeId: string,
@@ -86,13 +95,11 @@ export async function setFigmaVariable(
         }
     }
 
-    if (value) {
-        try {
-            figmaVariable.setValueForMode(modeId, value);
-        }
-        catch(e) {
-            debugger
-        }
+    try {
+        figmaVariable.setValueForMode(modeId, value || getStubValue(type));
+    }
+    catch(e) {
+        debugger
     }
 
     figmaVariable.scopes = scopes;

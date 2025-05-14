@@ -187,3 +187,12 @@
 [data-name='danger'] {
     --slider-thumb-color: var(--danger-400);
 }
+
+[data-name=accentHueSpin] .noui-slider {
+    ---slider-thumb-color: var(--primary-400);
+    & .noUi-connect {
+        background-image: none;
+        background-color: transparent;
+    }
+    -background-image: linear-gradient(to right, var(--global-accent-200), var(--global-accent-400), var(--global-accent-600));
+}

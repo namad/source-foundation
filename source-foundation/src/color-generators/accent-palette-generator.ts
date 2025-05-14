@@ -12,12 +12,12 @@ export function getAccentRamp(theme: 'light' | 'dark', params: ImportFormData): 
         default: {
             return {
                 "100": {
-                    "$value": "rgba({200}, 0.125)",
+                    "$value": "rgba({200}, 0.20)",
                     "$type": "color",
                     "description": `Subtle semitransparent accent`
                 },
                 "200": {
-                    "$value": "rgba({200}, 0.33)",
+                    "$value": "rgba({200}, 0.50)",
                     "$type": "color",
                     "description": `Light semitransparent accent`
                 },
@@ -48,12 +48,12 @@ export function getAccentRamp(theme: 'light' | 'dark', params: ImportFormData): 
         case "dark": {
             return {
                 "100": {
-                    "$value": "rgba({200}, 0.20)",
+                    "$value": "rgba({200}, 0.30)",
                     "$type": "color",
                     "description": `Subtle semitransparent accent`
                 },
                 "200": {
-                    "$value": "rgba({200}, 0.45)",
+                    "$value": "rgba({200}, 0.60)",
                     "$type": "color",
                     "description": `Light semitransparent accent`
                 },
@@ -87,61 +87,55 @@ export function getAccentRamp(theme: 'light' | 'dark', params: ImportFormData): 
 function getColorParams(theme: 'light' | 'dark', params: ImportFormData) {
     let colorParams = {
         saturation: params.accentSaturation, //0.9 is default value
-        minLuminance: params.accentMinLuminance,
-        midLuminance: params.accentMidLuminance,
-        maxLuminance: params.accentMaxLuminance,    
+        accentMinLuminance: params.accentMinLuminance,
+        accentMidLuminance: params.accentMidLuminance,
+        accentMaxLuminance: params.accentMaxLuminance,    
     }
     if (theme == 'dark' && themeStore.isCustomDarkMode() === false) {
         colorParams.saturation = params.accentSaturation * 0.85;
-        // colorParams.maxLuminance = params.accentMaxLuminance * 0.85;
+        // colorParams.accentMaxLuminance = params.accentMaxLuminance * 0.85;
     }
     return colorParams;
 }
 
-export function generateSystemAccentPalette(theme: 'light' | 'dark', params: ImportFormData): SystemAccentList {
-    const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
+export function generateSystemAccentPalette(theme: 'light' | 'dark', themeParams: ImportFormData): SystemAccentList {
+    const { saturation, accentMinLuminance, accentMidLuminance, accentMaxLuminance } = getColorParams(theme, themeParams);
 
     let accents: SystemAccentList = {
-        red: getAccentRamp(theme, params),
-        amber: getAccentRamp(theme, params),
-        brown: getAccentRamp(theme, params),
-        green: getAccentRamp(theme, params),
-        teal: getAccentRamp(theme, params),
-        blue: getAccentRamp(theme, params),
-        indigo: getAccentRamp(theme, params),
-        violet: getAccentRamp(theme, params),
-        purple: getAccentRamp(theme, params),
-        pink: getAccentRamp(theme, params)
+        red: getAccentRamp(theme, themeParams),
+        amber: getAccentRamp(theme, themeParams),
+        brown: getAccentRamp(theme, themeParams),
+        green: getAccentRamp(theme, themeParams),
+        teal: getAccentRamp(theme, themeParams),
+        blue: getAccentRamp(theme, themeParams),
+        indigo: getAccentRamp(theme, themeParams),
+        violet: getAccentRamp(theme, themeParams),
+        purple: getAccentRamp(theme, themeParams),
+        pink: getAccentRamp(theme, themeParams)
     };
 
     for (const [name, scale] of Object.entries(accents)) {
-        const hue = params[name];
+        const hue = themeParams[name];
 
-        const shades = getGlobalAccentRamp(hue, saturation, minLuminance, midLuminance, maxLuminance);
+        const shades = getGlobalAccentRamp(hue, themeParams);
         accents[name] = resolveRampValues(scale, shades)
     }
 
     return accents;
 }
 
-export function generateGlobalAccentPalette(theme: 'light'|'dark', params: ImportFormData): SystemAccentList {
-    const { saturation, minLuminance, midLuminance, maxLuminance } = getColorParams(theme, params);
+export function generateGlobalAccentPalette(theme: 'light'|'dark', themeParams: ImportFormData): SystemAccentList {
+    const { saturation, accentMinLuminance, accentMidLuminance, accentMaxLuminance } = getColorParams(theme, themeParams);
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
-        const hue = params[name];
-        accents[name] = getGlobalAccentRamp(hue, saturation, minLuminance, midLuminance, maxLuminance);
+        const hue = themeParams[name];
+        accents[name] = getGlobalAccentRamp(hue, themeParams);
     })
     return accents;
 }
 
-export function getGlobalAccentRamp(hue: number, saturation: number, minLuminance: number, midLiminance: number, maxLuminance: number, steps = 7): ColorRamp {
-    const keyShades = getRangeOfThree({
-        hue,
-        saturation,
-        minLuminance,
-        midLiminance,
-        maxLuminance
-    });
+export function getGlobalAccentRamp(hue: number, themeParams: ImportFormData, steps = 7): ColorRamp {
+    const keyShades = getRangeOfThree(hue, themeParams);
     let colorRamp = {};
     const scale = chroma.scale(keyShades).colors(steps, 'hex');
 
@@ -167,19 +161,22 @@ function resolveRampValues(templateRamp: ColorRamp, dictionary) {
 }
 
 
-function getRangeOfThree({ hue, saturation, minLuminance = 0.1, midLiminance = 0.18, maxLuminance = 0.29 }): chroma.Color[] {
+function getRangeOfThree(hue: number, params: ImportFormData): chroma.Color[] {
+    const saturation = params.accentSaturation;
+    const {
+        accentMinLuminance,
+        accentMidLuminance,
+        accentMaxLuminance,
+        accentHueSpin
+    } = params
 
-    let color1 = chroma.hsl(hue * 0.96, saturation * 1, 0.5)
-        .luminance(maxLuminance)
-
-    // this one always 4.5 : 1 contrast ratio
-    let color2 = chroma.hsl(hue, saturation * 1, 0.5)
-        .luminance(midLiminance)
-
-    let color3 = chroma.hsl(hue * 1.04, saturation * 1, 0.5)
-        .luminance(minLuminance)
-
-    return [color1, color2, color3];
+    const spinPercent = 1 + accentHueSpin / 100;
+    const adjustedHUE = 20 / (hue / 360)
+    return [
+        chroma.hsl(hue + accentHueSpin, saturation * 1.2, 0.5).luminance(accentMaxLuminance),
+        chroma.hsl(hue, saturation, 0.5).luminance(accentMidLuminance),
+        chroma.hsl(hue + accentHueSpin, saturation * 1.2, 0.5).luminance(accentMinLuminance)
+    ];
 }
 
 export { defaultAccentHUEs as defaultAccentColors };

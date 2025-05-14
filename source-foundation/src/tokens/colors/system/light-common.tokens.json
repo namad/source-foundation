@@ -1,19 +1,59 @@
 {
     "text": {
+        "black": {
+            "600": {
+                "$value": "{black}",
+                "$type": "color",
+                "scopes": [],
+                "description": "Unscoped, theme independent private tokens"
+            },
+            "500": {
+                "$value": "rgba({black}, 0.7)",
+                "$type": "color",
+                "scopes": [],
+                "description": "Unscoped, theme independent private tokens"
+            },
+            "400": {
+                "$value": "rgba({black}, 0.45)",
+                "$type": "color",
+                "scopes": [],
+                "description": "Unscoped, theme independent private tokens"
+            }
+        },
+        "white": {
+            "600": {
+                "$value": "{white}",
+                "$type": "color",
+                "scopes": [],
+                "description": "Unscoped, theme independent private tokens"
+            },
+            "500": {
+                "$value": "rgba({white}, 0.7)",
+                "$type": "color",
+                "scopes": [],
+                "description": "Unscoped, theme independent private tokens"
+            },
+            "400": {
+                "$value": "rgba({white}, 0.45)",
+                "$type": "color",
+                "scopes": [],
+                "description": "Unscoped, theme independent private tokens"
+            }
+        },
         "base": {
             "600": {
-                "$value": "{text.black}",
+                "$value": "{text.black.600}",
                 "$type": "color"
             },
             "500": {
-                "$value": "rgba({text.black}, 0.7)",
+                "$value": "{text.black.500}",
                 "$type": "color"
             },
             "400": {
-                "$value": "rgba({text.black}, 0.45)",
+                "$value": "{text.black.400}",
                 "$type": "color"
             },
-            "action": {
+            "primary": {
                 "$value": "{primary.500}",
                 "$type": "color"
             },
@@ -36,18 +76,18 @@
         },
         "contrast": {
             "600": {
-                "$value": "{text.white}",
+                "$value": "{text.white.600}",
                 "$type": "color"
             },
             "500": {
-                "$value": "rgba({text.white}, 0.7)",
+                "$value": "{text.white.500}",
                 "$type": "color"
             },
             "400": {
-                "$value": "rgba({text.white}, 0.45)",
+                "$value": "{text.white.400}",
                 "$type": "color"
             },
-            "action": {
+            "primary": {
                 "$value": "{primary.600}",
                 "$type": "color"
             },
@@ -65,6 +105,20 @@
             },
             "danger": {
                 "$value": "{danger.600}",
+                "$type": "color"
+            }
+        },
+        "accent": {
+            "600": {
+                "$value": "{text.white.600}",
+                "$type": "color"
+            },
+            "500": {
+                "$value": "{text.white.500}",
+                "$type": "color"
+            },
+            "400": {
+                "$value": "{text.white.400}",
                 "$type": "color"
             }
         }

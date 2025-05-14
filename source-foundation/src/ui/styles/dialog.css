@@ -49,15 +49,15 @@ dialog[open] .modal-container {
 }
 
 dialog .header {
-    padding: var(--spacing-minor-lg) var(--spacing-lg);
+    padding: var(--spacing-minor-md) var(--spacing-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 dialog .body {
-    padding-left: var(--spacing-lg);
-    padding-right: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
     display: flex;
     flex-direction: column;
     row-gap: var(--spacing-minor-base);
@@ -65,7 +65,7 @@ dialog .body {
 }
 
 dialog .footer {
-    padding: var(--spacing-minor-lg) var(--spacing-lg) ;
+    padding: var(--spacing-minor-md) var(--spacing-md) ;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
