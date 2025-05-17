@@ -96,12 +96,12 @@ export interface SystemAccentList {
 }
 
 export interface ColorRamp {
-    "100": DesignToken;
-    "200": DesignToken;
-    "300": DesignToken;
-    "400": DesignToken;
-    "500": DesignToken;
-    "600": DesignToken;
+    "100": ColorDesignToken;
+    "200": ColorDesignToken;
+    "300": ColorDesignToken;
+    "400": ColorDesignToken;
+    "500": ColorDesignToken;
+    "600": ColorDesignToken;
 }
 
 export function getSemanticAccentSettings(): SemanticAccentColors {

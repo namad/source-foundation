@@ -1,6 +1,6 @@
 import "./styles/main.css";
 
-import { defaultSettings } from "../defaults";
+import { defaultSettings, systemAccentList } from "../defaults";
 import { debounce } from "../utils/debounce";
 import { ImportFormData, collectValues, refreshUI, getFormData, loadData, LoadDataOptions } from "../import-ui";
 import { getPresets } from "../presets";
@@ -21,7 +21,9 @@ import "./helpers/accent-luminance-slider";
 // import "./helpers/text-brightness-slider";
 import "./helpers/tooltips";
 import "./helpers/card-carousel-scroller";
+import "./helpers/global-accent-preview-carousel-scroller";
 import "./helpers/create-update-elevation-components-button";
+
 
 
 /*
@@ -186,11 +188,15 @@ function fireTokenExportEvent() {
     }, "*");
 }
 
+let updateTime;
+
 mainForm.addEventListener("input", debounce((e) => {
     const targetName = e.target.name;
     const params = getFormData(mainForm)
-
-    console.log(targetName);
+    
+    
+    console.log(targetName, new Date().getTime() - updateTime);
+    updateTime = new Date().getTime();
 
     if(targetName == "theme") {
         return parent.postMessage({ pluginMessage: {
@@ -205,7 +211,7 @@ mainForm.addEventListener("input", debounce((e) => {
         pluginMessage: { type: 'UPDATE', params }
     }, "*");
 
-}, 2));
+}, 100));
 
 
 importButton.addEventListener('click', async (e) => {
@@ -227,10 +233,29 @@ importButton.addEventListener('click', async (e) => {
 let markup = [];
 for(let x = 99; x >= 0; x--) {
     markup.push(`
-        <div style="background-color: var(--grey-${x})"></div>
+        <div class="color-cell" style="background-color: var(--grey-${x})">
+            <span class="value">${x}%</span>
+        </div>
     `)
 }
 document.getElementById('gloablNeutralsPreview').innerHTML = markup.join('');
+
+
+
+// nouislider.create(document.getElementById('gloabalNeutralsModal'), {
+//     start: defaultValues,
+//     connect: [false, true, true, false],
+//     step: 0.5,
+//     direction: 'rtl',
+//     range: {
+//         'min': 5,
+//         '85%': 60,
+//         'max': 90
+//     }
+// }).on('update', debounce((values, handle) => {
+//     luminanceSliderVals[handle].value = values[handle] as string;
+//     mainForm.dispatchEvent(new Event('input', { 'bubbles': true }));
+// }, 1))
 
 window.onmessage = ({ data: { pluginMessage } }) => {
     if(pluginMessage == 'IMPORT_COMPLETED') {

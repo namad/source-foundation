@@ -2,7 +2,7 @@
     position: relative;
     
     --reveal-iterations-count: 4;
-    --reveal-duration: 1.5s;
+    --reveal-duration: 2s;
 }
 [data-slider] {
     display: flex;

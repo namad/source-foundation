@@ -3,9 +3,9 @@ import { generateGlobalAccentPalette } from "./accent-palette-generator";
 import { renderShades } from "./swatches-generator";
 
 
-export function renderAccents(theme: 'light'| 'dark', params: ImportFormData, name?): FrameNode {
+export function renderAccents(params: ImportFormData, name?): FrameNode {
 
-    const colors = generateGlobalAccentPalette(theme, params);
+    const colors = generateGlobalAccentPalette(params);
     const existingNode = figma.currentPage.findChild((node) => node.name == (name || 'Accent Colours'));
     existingNode?.remove();
 

@@ -8,16 +8,18 @@ import { generateNeutrals, renderNeutrals } from './color-generators/neutrals-pa
 import { addToGlobalTokensDictionary } from './utils/token-references';
 import { ConfigColors, ImportFormData } from './import-ui';
 import { CollectionExportRecord, exportBrandVariantToJSON, exportToJSON, importFromJSON } from './import-export-json';
-import { importAllTokens, initiateImport } from './import-tokens';
+import { importAllTokens, importVariables, initiateImport } from './import-tokens';
 import { createUpdateElevationComponents } from './effect-tokens';
 import { delayAsync } from './utils/delay-async';
+import { generateGlobalAccentPalette } from './color-generators/accent-palette-generator';
+import { flattenObject } from './utils/flatten-object';
 
 console.clear();
 
 
 figma.showUI(__html__, {
-    width: 560,
-    height: 720,
+    width: 520,
+    height: 800,
     themeColors: true,
 });
 
@@ -52,10 +54,10 @@ export interface ExportEventParameters {
 }
 
 const handlers = {
+    params: {},
+    message: {},
     process: async function(message: MessagePayload) {
-        this.params = message.params;
-        this.message = message;
-        await this[this.message.type]();
+        await this[message.type](message.params, message);
     },
 
     refreshUI: async function(params: ImportFormData) {
@@ -68,13 +70,13 @@ const handlers = {
             }
         })    
     },
-    IMPORT: async function () {
-        themeStore.setTheme(this.params);
+    IMPORT: async function (params: ImportFormData, message: MessagePayload) {
+        themeStore.setTheme(params);
         themeStore.save();
 
         const colorSystemVersion = await getColorSystemVersion();
         if(colorSystemVersion == 1) {
-            await this.UPGRADE_TEXT_COLORS();
+            await this.UPGRADE_TEXT_COLORS(params, message);
         }
 
         await delayAsync(10);
@@ -84,25 +86,25 @@ const handlers = {
 
     },
 
-    GET_EXPORT_DATA: async function () {
+    GET_EXPORT_DATA: async function (params: ImportFormData, message: MessagePayload) {
         figma.ui.postMessage({ type: "EXPORT_RESULT_PRESET", exportRecords: themeStore.serialize() });
-        await exportToJSON(this.message.exportJSONParams, this.params).then(exportRecords => {
+        await exportToJSON(message.exportJSONParams, params).then(exportRecords => {
             figma.ui.postMessage({ type: "EXPORT_RESULT_JSON", exportRecords });
         });
-        await exportBrandVariantToJSON(this.message.exportBrandParams, this.params).then(exportRecords => {
+        await exportBrandVariantToJSON(message.exportBrandParams, params).then(exportRecords => {
             figma.ui.postMessage({ type: "EXPORT_RESULT_BRAND", exportRecords });
         });
     },
 
-    IMPORT_JSON: async function () {
+    IMPORT_JSON: async function (params: ImportFormData, message: MessagePayload) {
         addToGlobalTokensDictionary({
-            ...getGlobalNeutrals(this.params),
-            ...typographyTokens.getTypographyTokens(this.params.baseFontSize, this.params.typeScale)
+            ...getGlobalNeutrals(params),
+            ...typographyTokens.getTypographyTokens(params.baseFontSize, params.typeScale)
         });
 
-        figlib.setSelectedLibrary(this.message.importJSONParams.tokenLibraryName);
+        figlib.setSelectedLibrary(message.importJSONParams.tokenLibraryName);
 
-        await importFromJSON(this.message.data, this.params).catch((error: Error) => {
+        await importFromJSON(message.data, params).catch((error: Error) => {
             console.error(error);
             figma.ui.postMessage("IMPORT_COMPLETED");
             figma.notify(error.message, { error: true });
@@ -112,32 +114,32 @@ const handlers = {
         figma.ui.postMessage("IMPORT_COMPLETED");
     },
 
-    ALERT: async function () {
-        figma.notify(`${this.message.data}`, this.message.alertParams || {});
+    ALERT: async function (params: ImportFormData, message: MessagePayload) {
+        figma.notify(`${message.data}`, message.alertParams || {});
     },
 
-    RENDER_ACCENTS: async function () {
+    RENDER_ACCENTS: async function (params: ImportFormData, message: MessagePayload) {
         await figma.loadFontAsync({ family: "Inter", style: "Regular" });
-        const frameLightPalette = renderAccents('light', this.params, 'Light Mode Accents');
-        const frameDarkPalette = renderAccents('dark', this.params, 'Dark Mode Accents');
-        frameDarkPalette.y = frameLightPalette.height + 64;
+        const frameLightPalette = renderAccents(params, 'Global Accents');
 
-        figma.viewport.scrollAndZoomIntoView([frameDarkPalette, frameDarkPalette]);
-        figma.currentPage.selection = [frameDarkPalette, frameDarkPalette];
+        figma.currentPage.selection = [frameLightPalette];
+        figma.viewport.scrollAndZoomIntoView([frameLightPalette]);
     },
 
-    RENDER_NEUTRALS: async function () {
+    RENDER_NEUTRALS: async function (params: ImportFormData, message: MessagePayload) {
         await figma.loadFontAsync({ family: "Inter", style: "Regular" });
-        const neutralTokens = generateNeutrals(this.params);
-        renderNeutrals(neutralTokens, `Global Neutrals`);
+        const neutralTokens = generateNeutrals(params);
+        const resultFrame = renderNeutrals(neutralTokens, `Global Neutrals`);
+        figma.currentPage.selection = [resultFrame];
+        figma.viewport.scrollAndZoomIntoView([resultFrame]);        
     },
 
-    UPGRADE_TEXT_COLORS: async function () {
-        await upgradeTextPalette(this.params);
-        await this.refreshUI(this.params);
+    UPGRADE_TEXT_COLORS: async function (params: ImportFormData, message: MessagePayload) {
+        await upgradeTextPalette(params);
+        await this.refreshUI(params);
     },
 
-    START_ELEVATION_COMPONENTS: async function () {
+    START_ELEVATION_COMPONENTS: async function (params: ImportFormData, message: MessagePayload) {
         figma.ui.postMessage({
             type: "START_ELEVATION_COMPONENTS",
             data: {
@@ -147,15 +149,15 @@ const handlers = {
         })
     },
 
-    CREATE_ELEVATION_COMPONENTS: async function () {
-        const page = this.message.options['componentPage'];
-        await createUpdateElevationComponents(this.params, page).catch((error: Error) => {
+    CREATE_ELEVATION_COMPONENTS: async function (params: ImportFormData, message: MessagePayload) {
+        const page = message.options['componentPage'];
+        await createUpdateElevationComponents(params, page).catch((error: Error) => {
             figma.notify(error.message, { error: true });
         });
     },
 
     CENTER_WINDOW: function(message: MessagePayload) {
-        let pluginWidth = 500,
+        let pluginWidth = 520,
             pluginHeight = 800,
             zoom = figma.viewport.zoom,
             centerX = Math.round(figma.viewport.center.x - (zoom / 2)) - pluginWidth / 2,
@@ -164,7 +166,7 @@ const handlers = {
         figma.ui.reposition(centerX, centerY);    
     },
 
-    UI_READY: async function () {
+    UI_READY: async function (params: ImportFormData, message: MessagePayload) {
         const colorSystemVersion = await getColorSystemVersion(true);
         await figlib.getStoreData();
         themeStore.load();
@@ -180,45 +182,84 @@ const handlers = {
         })
     },
 
-    UPDATE: async function () {
-        themeStore.setTheme(this.params);
+    UPDATE: async function (params: ImportFormData, message: MessagePayload) {
+        themeStore.setTheme(params);
 
-        switch (this.params.baseFontSize) {
-            default: {
-                figma.ui.resize(500, 800)
-                break;
-            }
-            case 'large': {
-                figma.ui.resize(560, 800)
-                break;
-            }
-        }
+        // switch (params.baseFontSize) {
+        //     default: {
+        //         figma.ui.resize(500, 800)
+        //         break;
+        //     }
+        //     case 'large': {
+        //         figma.ui.resize(560, 800)
+        //         break;
+        //     }
+        // }
     },
 
-    RESET: async function () {
+    RESET: async function (params: ImportFormData, message: MessagePayload) {
         themeStore.resetDefaults();
         await this.refreshUI(themeStore.getTheme("light"));
     },
 
-    UPDATE_ACTIVE_THEME: async function () {
-        const selectedThemeData = themeStore.getTheme(this.params.theme);
+    UPDATE_ACTIVE_THEME: async function (params: ImportFormData, message: MessagePayload) {
+        const selectedThemeData = themeStore.getTheme(params.theme);
 
-        selectedThemeData.theme = this.params.theme;
+        selectedThemeData.theme = params.theme;
         await this.refreshUI(selectedThemeData);
     },
 
-    ENABLE_CUSTOM_DARK_MODE: async function() {
-        themeStore.enableCustomDarkMode();
-        await this.refreshUI(this.params);
+    MATCH_HUE_BRAND: async function (params: ImportFormData, message: MessagePayload) {
+        const brandColor = params.primary;
+        const brandHUE = params[brandColor];
+
+        params.hue = brandHUE;
+        themeStore.setTheme(params);
+        await this.refreshUI(params);
     },
 
-    DISABLE_CUSTOM_DARK_MODE: async function() {
+    ENABLE_CUSTOM_DARK_MODE: async function(params: ImportFormData, message: MessagePayload) {
+        themeStore.enableCustomDarkMode();
+        await this.refreshUI(params);
+    },
+
+    DISABLE_CUSTOM_DARK_MODE: async function(params: ImportFormData, message: MessagePayload) {
         themeStore.disableCustomDarkMode();
-        await this.refreshUI(this.params);
+        await this.refreshUI(params);
+    },
+
+    IMPORT_GLOBAL_ACCENT_VARIABLES: async function(params: ImportFormData, message: MessagePayload) {
+        const colors = flattenObject({
+            'global': {
+                'accent': generateGlobalAccentPalette(params)
+            }
+        })
+        await importVariables({
+            collectionName: 'Global Colors',
+            modeName: 'Default',
+            data: colors
+        });
+    },
+
+    IMPORT_GLOBAL_NEUTRAL_VARIABLES: async function(params: ImportFormData, message: MessagePayload) {
+        const colors = flattenObject({
+            'global': {
+                'neutral': getGlobalNeutrals(params)
+            }
+        })
+        await importVariables({
+            collectionName: 'Global Colors',
+            modeName: 'Default',
+            data: colors
+        });
     }    
 }
 
 figma.ui.onmessage = async (eventData: MessagePayload) => {
     console.log("code received message", eventData);
+
+    if(eventData.params?.hue == 0 && eventData.params?.saturation == 0) {
+        debugger
+    }
     await handlers.process(eventData);
 };

@@ -1,4 +1,4 @@
-import nouislider, { API } from 'nouislider';
+import nouislider, { API, Options } from 'nouislider';
 
 import { defaultSettings } from '@foundation/defaults';
 import { roundOneDigit } from '@foundation/utils/round-decimals';
@@ -12,6 +12,7 @@ const defaultValues = [
 ]
 
 const accentPalettePreviewDiv = document.getElementById(`accentPalettePreview`) as HTMLDivElement;
+const globalAccentPreviewDiv = document.getElementById(`globalAccentsPreview`) as HTMLDivElement;
 const keyColors = [
     accentPalettePreviewDiv.querySelector('[data-color-key="0"]'),
     accentPalettePreviewDiv.querySelector('[data-color-key="1"]'),
@@ -19,30 +20,32 @@ const keyColors = [
 ]
 
 const luminanceSlider = document.querySelector('#luminanceSlider') as HTMLDivElement;
+const luminanceSliderProxy = document.querySelector('#luminanceSliderProxy') as HTMLDivElement;
+
 const luminanceSliderVals = [
     document.getElementById('luminanceValMin') as HTMLInputElement,
     document.getElementById('luminanceValMid') as HTMLInputElement,
     document.getElementById('luminanceValMax') as HTMLInputElement
 ]
 
-nouislider.create(luminanceSlider, {
+const sliderConfig: Options = {
     start: defaultValues,
     connect: [false, true, true, false],
     step: 0.5,
     tooltips: [
         { 
             to: function(value) { 
-                return 'Min: ' + roundOneDigit(value); 
+                return 'Min: ' + roundOneDigit(value) + '%'; 
             } 
         },
         { 
             to: function(value) { 
-                return 'Mid: ' + roundOneDigit(value); 
+                return 'Mid: ' + roundOneDigit(value) + '%'; 
             } 
         },
         { 
             to: function(value) { 
-                return 'Max: ' + roundOneDigit(value); 
+                return 'Max: ' + roundOneDigit(value) + '%'; 
             } 
         }          
     ],
@@ -52,10 +55,15 @@ nouislider.create(luminanceSlider, {
         '85%': 60,
         'max': 90
     }
-}).on('update', debounce((values, handle) => {
+}
+nouislider.create(luminanceSlider, sliderConfig).on('update', (values, handle) => {
     luminanceSliderVals[handle].value = values[handle] as string;
     mainForm.dispatchEvent(new Event('input', { 'bubbles': true }));
-}, 1))
+})
+
+luminanceSlider['noUiSlider'].on('change', (values, handle) => {
+    luminanceSliderProxy['noUiSlider'].set(values)
+})
 
 luminanceSlider['noUiSlider'].on('start', (values, handle) => {
     console.log(handle)
@@ -73,14 +81,34 @@ luminanceSlider['noUiSlider'].on('end', (values, handle) => {
 })
 
 luminanceSliderVals.forEach((element, index) => {
-    element.addEventListener("input", () => {
+    element.addEventListener("update", () => {
         const val = luminanceSliderVals.map(el => el.value);
         luminanceSlider['noUiSlider'].set(val);
     });
 });
 
-luminanceSlider.querySelectorAll('.noUi-handle').forEach(el => {
+nouislider.create(luminanceSliderProxy, sliderConfig).on('update', (values, handle) => {
+    luminanceSlider['noUiSlider'].set(values);
+});
+
+[
+    ...luminanceSlider.querySelectorAll('.noUi-handle'),
+    ...luminanceSliderProxy.querySelectorAll('.noUi-handle')
+].forEach(el => {
     el.addEventListener('dblclick', (e) => {
-        luminanceSlider['noUiSlider'].set(defaultValues)
+        luminanceSlider['noUiSlider'].set(defaultValues);
+        luminanceSliderProxy['noUiSlider'].set(defaultValues);
     })
-})
+});
+
+
+
+luminanceSliderProxy['noUiSlider'].on('start', (values, handle) => {
+    globalAccentPreviewDiv.classList.add('preview-adjustments');
+    globalAccentPreviewDiv.dataset.colorKey = `${handle}`; 
+});
+
+luminanceSliderProxy['noUiSlider'].on('end', (values, handle) => {
+    globalAccentPreviewDiv.classList.remove('preview-adjustments');
+    globalAccentPreviewDiv.dataset.colorKey = 'none';
+});

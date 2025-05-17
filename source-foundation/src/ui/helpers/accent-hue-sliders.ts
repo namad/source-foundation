@@ -14,9 +14,6 @@ Object.entries(defaultAccentHUEs).forEach(([name, hue]) => {
 
     accentSlidersContainer.appendChild(el);
 
-
-    sliders[name] = sliderCompoent;
-
     const brandCard = document.getElementById('brandCard');
     const brandAccent = document.getElementById('brandAccent');
     const label = brandCard.querySelector('.text-label');

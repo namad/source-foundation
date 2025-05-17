@@ -83,7 +83,7 @@
     bottom: 130%; 
     /* calc(var(--slider-thumb-size) - var(--slider-thumb-size) / 10); */
     font-size: var(--font-size-xs2);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: var(--font-monospace);
     line-height: var(--line-height-xs2);
     visibility: hidden;
 

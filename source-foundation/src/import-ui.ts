@@ -4,9 +4,9 @@ import * as typescaleTokens from "./typography-tokens";
 import * as spacingTokens from "./spacing-tokens";
 import chroma from 'chroma-js';
 import { camelToTitle } from "./utils/text-to-title-case";
-import { getGlobalAccentRamp, getAccentRamp } from "./color-generators/accent-palette-generator";
+import { getGlobalAccentRamp, getAccentRamp, generateSystemAccentPalette, generateGlobalAccentPalette } from "./color-generators/accent-palette-generator";
 import { roundOneDigit, roundTwoDigits } from "./utils/round-decimals";
-import { getGlobalNeutrals, getShadowColorTokens, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "./color-tokens";
+import { ColorRamp, getGlobalNeutrals, getShadowColorTokens, getThemeColors, processColorTokenCSSValue, resolveColorTokenValue } from "./color-tokens";
 import { parseColorValue } from "./utils/figma-colors";
 import { outputHSL } from "./color-generators/swatches-generator";
 import { flattenObject } from "./utils/flatten-object";
@@ -21,6 +21,7 @@ import { findTokenReferences, getReferenceName } from "./utils/token-references"
 import { activeModal } from "./ui/helpers/modal";
 import { getElevationTokens } from "./effect-tokens";
 import * as themeStore from './utils/themes-store';
+import { delayAsync } from "./utils/delay-async";
 
 export type ConfigColors = "red" | "amber" | "brown" | "green" | "teal" | "blue" | "indigo" | "violet" | "purple" | "pink";
 
@@ -58,7 +59,6 @@ export interface ImportFormData {
     pink: number;
     baseFontSize: "compact" | "base" | "large";
     typeScale: "majorThird" | "minorThird" | "majorSecond";
-    createStyles: boolean;
 
     accentSaturation: number;
     accentMinLuminance: number;
@@ -66,7 +66,7 @@ export interface ImportFormData {
     accentMaxLuminance: number;
     accentHueSpin: number;
 
-    radii: "compact" | "base" | "large";
+    radii: "compact" | "base" | "large" | "x-large";
     spacing: "compact" | "base" | "large" | "touch";
     verticalSpacing: "even" | "uneven";
     singleCollection: boolean;
@@ -77,6 +77,7 @@ export interface ImportFormData {
     textWhiteBrightness: number;
     textBlackBrightness: number;
 
+    createStyles: boolean;
     createComponentTokens: boolean;
     createColorTokens: boolean;
     createTypographyTokens: boolean;
@@ -135,23 +136,23 @@ function getValueMap(name: string): string[] {
 export function transformValue(name: string, value: any, direction?): string | number {
     let val = typeof value == 'string' ? parseInt(value) : value;
     let valueMap = getValueMap(name);
-    
-    if(isNull(value) && direction === 'IN') {
-        return  "";
+
+    if (isNull(value) && direction === 'IN') {
+        return "";
     }
 
     if (isFloatField(name)) {
         if (direction === 'IN') {
-            val = parseFloat(value) * 100;
+            val = roundTwoDigits(parseFloat(value) * 100);
         }
         if (direction === 'OUT') {
-            val = val / 100;
+            val = roundTwoDigits(val / 100);
         }
     }
 
     if (isNaN(val)) {
         // this is string value we need to convert to number
-        if(valueMap && direction === 'IN') {
+        if (valueMap && direction === 'IN') {
             return valueMap.indexOf(value);
         }
 
@@ -203,7 +204,7 @@ export function getFormData(form: HTMLFormElement): ImportFormData {
 let _presetsReady = false;
 
 export function generatePresetsPreview(masterData: ImportFormData) {
-    if(_presetsReady === true) {
+    if (_presetsReady === true) {
         return
     }
 
@@ -213,7 +214,7 @@ export function generatePresetsPreview(masterData: ImportFormData) {
     presetsListElement.innerHTML = '';
 
     presets.forEach((data, index) => {
-        data = {...defaultSettings, ...data};
+        data = { ...defaultSettings, ...data };
         const themeColors = getThemeColors(masterData.theme == 'dark' ? 'darkElevated' : 'lightBase', data);
         const globalNeutrals = getGlobalNeutrals(data);
         const label = getPresetContentTemplate(index, presetsListElement) as HTMLElement;
@@ -229,14 +230,128 @@ interface UIDataOptions {
     customDarkMode?: boolean;
 }
 
+let _previousData;
+
+const fieldsToIgnore = [
+    'createComponentTokens',
+    'createColorTokens',
+    'createTypographyTokens',
+    'createSpacingTokens',
+    'createElevationTokens',
+    'createRadiiTokens',
+    'createGlobalSizeTokens',
+    'createOpacityTokens'
+]
+
+const fieldsAccent = [
+    'primary',
+    'info',
+    'success',
+    'warning',
+    'danger',
+    'red',
+    'amber',
+    'brown',
+    'green',
+    'teal',
+    'blue',
+    'indigo',
+    'violet',
+    'purple',
+    'pink',
+    'accentSaturation',
+    'accentMinLuminance',
+    'accentMidLuminance',
+    'accentMaxLuminance',
+    'accentHueSpin'
+]
+
+const fieldsNeutral = [
+    'theme',
+    'hue',
+    'saturation',
+    'distance',
+    'accentTextSaturation',
+    'accentTextColor',
+    'textWhiteBrightness',
+    'textBlackBrightness',
+]
+
+const fieldsSpacing = [
+    'spacing',
+    'verticalSpacing'
+]
+const fieldsRadii = [
+    'radii'
+]
+const fieldsTypeScale = [
+    'baseFontSize',
+    'typeScale',
+]
+
+const fieldsShadow = [
+    'shadowsStyle',
+    'shadowsColor',
+    'shadowsSpread',
+]
+
+function getDiff(dataNew: ImportFormData, dataOld: ImportFormData) {
+    if (dataOld == undefined) {
+        return [
+            ...fieldsAccent,
+            ...fieldsNeutral,
+            ...fieldsSpacing,
+            ...fieldsRadii,
+            ...fieldsTypeScale,
+            ...fieldsShadow,
+        ];
+    }
+    return Object.keys(dataNew).filter(paramName => dataNew[paramName] !== dataOld[paramName]);
+}
+
+function getIntersection(source: string[], destination: string[]): string[] {
+    return source.filter(value => destination.includes(value))
+}
+function isUpdateAccents(diff) {
+    return getIntersection(fieldsAccent, diff).length > 0;
+}
+function isUpdateNeutrals(diff) {
+    return getIntersection(fieldsNeutral, diff).length > 0;
+}
+function isUpdateSpacing(diff) {
+
+    return getIntersection(fieldsSpacing, diff).length > 0;
+}
+function isUpdateRadii(diff) {
+    return getIntersection(fieldsRadii, diff).length > 0;
+}
+function isUpdateTypescale(diff) {
+    return getIntersection(fieldsTypeScale, diff).length > 0;
+}
+function isUpdateShadows(diff) {
+    return getIntersection(fieldsShadow, diff).length > 0;
+}
+
 export function refreshUI(options: LoadDataOptions) {
 
     const data = options.params;
+    const diff = getDiff(data, _previousData);
+
+    console.log('refreshUI', diff)
+
+    _previousData = options.params;
+
     if (data === null) throw new Error(`Cannot refresh UI, data is missing`);
 
     // set colours on neutrals hue & sdaturation sliders
-    sliders['hue'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
-    sliders['saturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
+    if (isUpdateNeutrals(diff)) {
+        document.querySelectorAll('[data-slider-component=hue]').forEach((el: HTMLElement) => {
+            el.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.accentSaturation, 0.5).hex());
+        })
+        document.querySelectorAll('[data-slider-component=saturation]').forEach((el: HTMLElement) => {
+            el.style.setProperty('--slider-thumb-color', chroma.hsl(data.hue, data.saturation, 0.5).hex());
+        })
+    }
 
     const primaryColorHUE = data.primary
     const globalAccentRamp = getGlobalAccentRamp(data[primaryColorHUE], data);
@@ -250,26 +365,36 @@ export function refreshUI(options: LoadDataOptions) {
     // THEME MODES
     document.body.dataset.theme = data.theme;
 
-    if(options.customDarkMode != undefined) {
+    if (options.customDarkMode != undefined) {
         document.body.dataset.customDark = options.customDarkMode === true ? 'true' : 'false';
     }
 
-    if(options.colorSystemVersion) {
+    if (options.colorSystemVersion) {
         document.body.dataset.colorSystemVersion = `version-${options.colorSystemVersion}`;
     }
 
-    generateCSSVars({ ...themeColors, ...globalAccent, ...globalNeutrals });
+    if (isUpdateNeutrals(diff) || isUpdateAccents(diff)) {
+        generateCSSVars({ ...themeColors, ...globalAccent, ...globalNeutrals });
 
-    generateAccentsPreview(themeColors, data);
+        const globalAccents = flattenObject({
+            'global-accent' : generateGlobalAccentPalette(data)
+        })
+        generateCSSVars(globalAccents, document.getElementById('globalAccentsModal'));
+    }
 
-    generateCSSVars(radiiTokens[data.radii]);
-    generateCSSVars(typescaleTokens.getTypographyTokens(data.baseFontSize, data.typeScale));
-    generateCSSVars(spacingTokens.getSpacingTokens(data.verticalSpacing, data.spacing));
+    if (isUpdateAccents(diff)) {
+        generateAccentsPreview(themeColors, data);
+    }
 
-    generateBoxShadowsCSS(data, globalNeutrals);
+    isUpdateRadii(diff) && generateCSSVars(radiiTokens[data.radii]);
+    isUpdateTypescale(diff) && generateCSSVars(typescaleTokens.getTypographyTokens(data.baseFontSize, data.typeScale));
+    isUpdateSpacing(diff) && generateCSSVars(spacingTokens.getSpacingTokens(data.verticalSpacing, data.spacing));
+    isUpdateShadows(diff) && generateBoxShadowsCSS(data, globalNeutrals);
 
     const extension = {
-        ...calcContrastRatios({data, themeColors, globalNeutrals, globalAccent}),
+        ...calcContrastRatios({ data, themeColors, globalNeutrals, globalAccent }),
+        ...calcGlobalAccentContrastRatios(data, globalNeutrals, globalAccentRamp),
+        primaryHUE: data[data.primary],
         fillBase100: getReferenceName(themeColors['fill/base/100']['$value'] as string).replace('grey-', ''),
         fillBase200: getReferenceName(themeColors['fill/base/200']['$value'] as string).replace('grey-', ''),
         fillBase300: getReferenceName(themeColors['fill/base/300']['$value'] as string).replace('grey-', ''),
@@ -278,22 +403,34 @@ export function refreshUI(options: LoadDataOptions) {
         fillBase600: getReferenceName(themeColors['fill/base/600']['$value'] as string).replace('grey-', ''),
     }
 
-    updateValuesDisplay({...data, ...extension});
-
-    generatePresetsPreview(data);
+    updateValuesDisplay({ ...data, ...extension });
 
     setCustomAccentTextSaturationSlider(data);
 
-    if(activeModal) {
+    if (activeModal) {
         activeModal.close()
     }
 }
 
-function calcContrastRatios({data, themeColors, globalNeutrals, globalAccent}) {
+function calcGlobalAccentContrastRatios(data: ImportFormData, globalNeutrals: DesignTokensRaw, globalAccentRamp: ColorRamp) {
+    let result = {};
+    const whiteTextColor = chroma.hsl(data.hue, data.saturation, data.textWhiteBrightness / 100);
+    const blackTextColor = chroma.hsl(data.hue, data.saturation, data.textBlackBrightness / 100);
+
+    Object.entries(globalAccentRamp).forEach(([index, token]) => {
+        const accentColor = chroma(token.$value);
+        result[`whiteOn${index}`] = roundOneDigit(chroma.contrast(accentColor, whiteTextColor));
+        result[`blackOn${index}`] = roundOneDigit(chroma.contrast(accentColor, blackTextColor));
+
+    })
+    return result
+}
+
+function calcContrastRatios({ data, themeColors, globalNeutrals, globalAccent }) {
     const darkSurfaceColorRaw = globalNeutrals[`grey-20`].$value as string;
     const darkSurfaceColor = chroma(darkSurfaceColorRaw);
-    const textWhiteColor = chroma.hsl(data.hue, data.accentSaturation, data.textWhiteBrightness/100);
-    const textBlackColor = chroma.hsl(data.hue, data.accentSaturation, data.textBlackBrightness/100);
+    const textWhiteColor = chroma.hsl(data.hue, data.accentSaturation, data.textWhiteBrightness / 100);
+    const textBlackColor = chroma.hsl(data.hue, data.accentSaturation, data.textBlackBrightness / 100);
     const textAccentColorOnLightRaw = themeColors[`accent/${data.primary}/500`]['$value'] as string;
     const textAccentColorOnLight = chroma(textAccentColorOnLightRaw);
     const textAccentColorOnDarkRaw = themeColors[`accent/${data.primary}/600`]['$value'] as string;
@@ -314,28 +451,31 @@ function calcContrastRatios({data, themeColors, globalNeutrals, globalAccent}) {
         textAccentContrastOnLight: roundOneDigit(chroma.contrast(textAccentColorOnLight, textWhiteColor)),
         textAccentContrastOnDark: roundOneDigit(chroma.contrast(textAccentColorOnDark, darkSurfaceColor)),
         textBlackContrast: roundOneDigit(chroma.contrast(chroma(textBlackColor), chroma('#FFFFFF'))),
-        textWhiteContrast: roundOneDigit(chroma.contrast(textWhiteColor, darkSurfaceColor)),    
+        textWhiteContrast: roundOneDigit(chroma.contrast(textWhiteColor, darkSurfaceColor)),
     }
 }
 function setCustomAccentTextSaturationSlider(data: ImportFormData) {
-    const sliderComponent = sliders["accentTextSaturation"]
-    const slider = sliderComponent.slider;
-
     const accentTextSaturation = transformValue("accentTextSaturation", data.accentTextSaturation, "IN") as number;
     const accentSaturation = transformValue("accentSaturation", data.accentSaturation, "IN") as number;
     const primaryColorName = data.primary
     const saturation = accentTextSaturation <= 0 ? accentSaturation : accentTextSaturation;
 
-    sliders['accentTextSaturation'].rootElement.style.setProperty('--slider-thumb-color', chroma.hsl(data[primaryColorName], saturation/100, 0.5).hex());
+    document.querySelectorAll('[data-slider-component=accentTextSaturation] .noui-slider').forEach((el: HTMLElement) => {
+        el.style.setProperty('--slider-thumb-color', chroma.hsl(data[primaryColorName], saturation / 100, 0.5).hex());
 
-    if (data.customAccentTextSaturation == true) {
-        slider.set(saturation);
-        slider.enable();
-    }
-    else {
-        slider.disable();
-    }
+        const slider = el["noUiSlider"];
+
+        if (data.customAccentTextSaturation == true) {
+            slider.set(saturation);
+            slider.enable();
+        }
+        else {
+            slider.disable();
+        }
+    })
+
 }
+
 
 function generateAccentsPreview(themeColors: {}, data: ImportFormData, context = document.documentElement) {
     const systemAccentShades = getAccentRamp(data.theme, data);
@@ -352,13 +492,13 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
 
             const colorBoxDiv = context.querySelector(`.color-box.primary-${index}`);
 
-            if(!colorBoxDiv) {
+            if (!colorBoxDiv) {
                 return
             }
 
             const popoverTarget = colorBoxDiv.getAttribute('popovertarget');
             const popover = document.getElementById(popoverTarget);
-            
+
             const toolTip = popover.querySelector(`.toolip-body`) as HTMLDivElement;
             const valueEl = colorBoxDiv.querySelector(`.token-value`) as HTMLDivElement;
 
@@ -369,15 +509,15 @@ function generateAccentsPreview(themeColors: {}, data: ImportFormData, context =
             }
 
             const contrastWhite = roundOneDigit(
-                                            chroma.contrast(
-                                                chroma.hsl(data.hue, data.saturation, data.textWhiteBrightness / 100), chromaColor
-                                            )
-                                        );
+                chroma.contrast(
+                    chroma.hsl(data.hue, data.saturation, data.textWhiteBrightness / 100), chromaColor
+                )
+            );
             const contrastBlack = roundOneDigit(
-                                            chroma.contrast(
-                                                chroma.hsl(data.hue, data.saturation, data.textBlackBrightness / 100), chromaColor
-                                            )
-                                        );
+                chroma.contrast(
+                    chroma.hsl(data.hue, data.saturation, data.textBlackBrightness / 100), chromaColor
+                )
+            );
             const hsl = outputHSL(chromaColor).join(" ");
             let contrastWarnLightBg = 'none';
             let contrastWarnDarkBg = 'none';
@@ -448,16 +588,16 @@ function generateBoxShadowsCSS(params: ImportFormData, dictionary: DesignTokensR
     const shadowColors = getShadowColorTokens(params.theme, params);
     const shadowTokens = getElevationTokens(params);
 
-    generateCSSVars({...shadowColors, ...dictionary});
+    generateCSSVars({ ...shadowColors, ...dictionary });
 
     Object.entries(shadowTokens).forEach(([name, token]) => {
-        if(token.$type == 'effect') {
+        if (token.$type == 'effect') {
             const shadows = token.$value;
             const varName = `--${name.replace(/\//g, "-")}`;
 
             const cssString = shadows.map((shadowSettings) => {
                 const aliasName = getReferenceName(shadowSettings.color);
-                const value = `var(--${aliasName.replace(/\./g, "-")})`;            
+                const value = `var(--${aliasName.replace(/\./g, "-")})`;
                 return `${shadowSettings.offsetX}px ${shadowSettings.offsetY}px ${shadowSettings.radius}px ${shadowSettings.spread}px ${value}`
             })
             document.documentElement.style.setProperty(varName, cssString.join(', '));
@@ -475,16 +615,21 @@ export interface LoadDataOptions {
 }
 
 export function loadData(options: LoadDataOptions) {
-    if(options.tokenLibraries) {
+    if (options.tokenLibraries) {
         const tokenLibrariesListMarkup = getTokenLibrariesListMarkup(options.tokenLibraries);
         document.getElementById('sourceLibrariesList').innerHTML = tokenLibrariesListMarkup;
     }
 
-    if(options.customDarkMode === true) {
+    if (options.customDarkMode === true) {
     }
-        
-    applyData(options.params)
-    refreshUI(options)
+
+    applyData(options.params);
+    refreshUI(options);
+    generatePresetsPreview(options.params);
+
+    window.setTimeout(() => {
+        mainForm.classList.remove('loading');
+    }, 200)
 }
 
 function applyData(params: ImportFormData, silent = false) {
@@ -507,7 +652,7 @@ function applyData(params: ImportFormData, silent = false) {
         }
 
         if (silent !== true) {
-            formEl.dispatchEvent(new Event('input', { 'bubbles': true }));
+            formEl.dispatchEvent(new Event('update', { 'bubbles': true }));
         }
     });
 

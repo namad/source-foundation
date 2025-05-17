@@ -1,4 +1,4 @@
-<form id="importForm">
+<form id="importForm" class="loading">
     <dialog class="simple" id="typographyScaleModal">
         <div class="modal-container pb-minor-lg">
             <div class="header">
@@ -58,7 +58,7 @@
             </div>
             <div class="body">
                 <p class="color-text-base-500 text-sm">Select base border radius</p>
-                <div data-type="radii" data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
+                <div data-type="radii" data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 3, "step": 1, "value": 1}'>
                 </div>
             </div>
         </div>
@@ -76,10 +76,10 @@
                 <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
                     Enable custom dark mode to set the neutrals, accents and text colours individually for light and dark modes.
 
-                    <div class="-mx-base px-base py-minor-base rounded-md bg-utility-tint-200 shadow-2">
+                    <div class="-mx-base px-base py-minor-base rounded-md bg-utility-tint-200 shadow-2 relative group/hint">
                         <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs custom-dark-preview">
                             <div class="w-1.5 h-1.5 rounded bg-primary-300"></div>
-                            <span class="text-label">Saturation</span>
+                            <span class="text-label">Slider</span>
                             <div class="noui-slider flex-1 noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr">
                                 <div class="noUi-base">
                                     <div class="noUi-connects">
@@ -98,10 +98,12 @@
 
                             <input type="text" readonly="" value="20" />
                         </div>
+                        <div class="absolute z-10 px-sm inset-0 bg-info-400 shadow-2-200 rounded-md border border-utility-tint-200 bg-opacity-90 opacity-0 group-hover/hint:opacity-100 transition-opacity text-sm grid items-center justify-center">
+                            <span class="icon icon-info gap-xs color-text-accent-600">
+                                Once enabled this is how theme related parameters to look like. Check these visual cues to identify them!
+                            </span>
+                        </div>
                     </div>
-                    <p class="text-sm color-text-base-500 mb-minor-sm">
-                        Look for these visual cues to identify theme releated parameters
-                    </p>
                 </div>
 
                 <div class="flex flex-col gap-minor-base disable-dark-mode-controls">
@@ -244,7 +246,15 @@
             <div class="flex flex-row items-baseline justify-between">
                 <h3 class="text-lg font-bold">Neutral Colours</h3>
                 <!-- <a href="#" data-command="RENDER_NEUTRALS" title="Get palette colours as Figma frames">Extract Neutrals Palette</a> -->
-                <a href="#" data-modal="gloabalNeutralsModal" title="Get palette colours as Figma frames">View</a>
+                <span class="inline-flex gap-sm">
+                    <a href="#" data-command="MATCH_HUE_BRAND" data-tooltip="top" data-offset="12" popovertarget="matchHueBrandToolTip">Match Brand</a>                    
+                    <a href="#" data-modal="gloabalNeutralsModal">Global Neutrals</a>
+                    <div class="tooltip" id="matchHueBrandToolTip" popover>
+                        <div>
+                            Apply primary colour hue value (<span data-value="primary"></span> / <span data-value="primaryHUE"></span>deg) for neutrals
+                        </div>
+                    </div>                    
+                </span>
             </div>
             <div class="flex flex-col gap-y-xs">
                 <div class="flex flex-row gap-0 font-mono">
@@ -349,14 +359,11 @@
         <div class="card" id="accentColors">
             <div class="flex flex-row items-baseline justify-between">
                 <h3 class="text-lg font-bold">Accent Colours</h3>
-                <a href="#" data-command="RENDER_ACCENTS" title="Get palette colours as Figma frames">Extract Accent
-                    Palette</a>
+                <a href="#" data-modal="globalAccentsModal" title="Get palette colours as Figma frames">Global Accents</a>
             </div>
 
             <p class="color-text-base-500 text-sm">
-                Finetune each accent colour with custom hue value. Lightness of the base
-                colour to be set to fit into WCAG2 Level AA. Global saturation controls
-                are below
+                Sliders below are <b>hue</b> values for each accent colour.
             </p>
 
             <div class="flex flex-col gap-minor-xs" id="accentColorsSliders"></div>
@@ -641,7 +648,7 @@
             </div>
             <div>
                 <label class="checkbox flex flex-row gap-2" data-tooltip="top" data-offset="12" popovertarget="customAccentTextSaturationToolTip">
-                    <input type="checkbox" name="customAccentTextSaturation" data-check-expander="accentTextSaturationControl" value="true"/>
+                    <input type="checkbox" name="customAccentTextSaturation" data-check-expander="accentTextSaturationControl" value="true" />
                     <span>Enable custom saturation</span>
                 </label>
                 <div class="height-expander collapsed" id="accentTextSaturationControl">
@@ -690,7 +697,7 @@
                 </a>
                 <div class="tooltip text-center" id="slevationComponentsToolTip" popover>Create or update elevation components</div>
             </div>
-            <div class="-mx-md px-md overflow-hidden">
+            <div class="-mx-md px-md overflow-hidden group">
                 <div class="grid justify-center card-carrousel-wrapper relative">
                     <div class="card-carousel" id="cardCarouse" style="transform: translateX(var(--move-offset));" draggable="false">
                         <div class="min-w-fit p-minor-base bg-fill-base-100 shadow-1-200 rounded-md flex-1 items-center justify-center flex">
@@ -712,7 +719,7 @@
                             <span class="font-mono color-text-base-500 rounded-sm px-xs2 py-minor-xs3 text-xs pointer-events-none">shadow-6</span>
                         </div>
                     </div>
-                    <div class="text-center text-xs py-minor-xs color-text-base-400 absolute bottom-0 left-0 right-0 pointer-events-none">
+                    <div class="text-center text-xs py-minor-xs color-text-base-500 absolute bottom-0 left-0 right-0 pointer-events-none opacity-30 group-hover:opacity-70 transition-opacity">
                         Scroll or drag
                     </div>
                 </div>
@@ -721,6 +728,7 @@
             <div data-slider='{"label": "Depth", "name": "shadowsStyle", "min": 1, "max": 5, "step": 1, "value": 0, "linked": false}'></div>
             <div data-slider='{"label": "Spread", "name": "shadowsSpread", "min": -5, "max": 5, "step": 1, "value": 0, "linked": false}'></div>
         </div>
+
 
         <div class="card" id="ui-scale">
             <h3 class="text-lg font-bold">UI Scale</h3>
@@ -836,7 +844,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" id="moreToolsCard">
             <h3 class="text-lg font-bold">More Tools</h3>
             <p class="color-text-base-500 text-sm">
                 Connect Source Foundation with development
@@ -920,7 +928,12 @@
             </button>
         </div>
     </div>
+
+    <div class="loading-shim">
+        <span class="spinner color-primary-300"></span>
+    </div>
 </form>
+
 
 <dialog class="simple" id="customBrandColor">
     <div class="modal-container">
@@ -1179,6 +1192,8 @@
     </div>
 </dialog>
 
+
+
 <dialog id="gloabalNeutralsModal">
     <div class="modal-container">
         <div class="header">
@@ -1189,21 +1204,84 @@
         </div>
 
         <div class="body">
-            <div style=" display: grid;
-                         grid-template-columns: repeat(10, auto);
-                         grid-template-rows: repeat(10, 32px);
-                         grid-gap: 1px;
-                         height: auto;
-                         overflow: hidden;
-                         border-radius: var(--radii-md);
-                         overflow: auto;" id="gloablNeutralsPreview">
-            
+            <p>
+                Global neutrals are programatically generated based on the hue and saturation parameters.
+                These colours are used for fills, strokes and texts.
+            </p>
+
+            <div class="global-neutrals-preview-grid" id="gloablNeutralsPreview"></div>
+
+            <div class="bg-alt-base-200 rounded-md px-base py-minor-base flex flex-col gap-minor-sm">
+                <div data-neutrals data-slider='{"label": "Hue", "name": "hue", "min": 0, "max": 360, "step": 1, "value": 190, "proxy": true}'></div>
+                <div data-neutrals data-slider='{"label": "Saturation", "name": "saturation", "min": 0, "max": 40, "step": 1, "value": 20, "proxy": true}'></div>
             </div>
         </div>
         <div class="footer">
-            <div class="flex-1 hidden">
-                <button class="close-modal color-text-base-primary">Export to Frames</button>
-                <button class="close-modal color-text-base-primary">Export to Variables</button>
+            <div class="flex-1">
+                <button class="close-modal color-text-base-primary" data-command="RENDER_NEUTRALS" data-tooltip="top" data-offset="12" popovertarget="exportNeutralsToFrameToolTip">
+                    <span class="icon icon-figma-frame"></span>
+                    <span class="tooltip" id="exportNeutralsToFrameToolTip" popover>Import global neutrals as frames</span>
+                </button>
+                <button class="close-modal color-text-base-primary" data-command="IMPORT_GLOBAL_NEUTRAL_VARIABLES" data-tooltip="top" data-offset="12" popovertarget="exportAccentsToVarsToolTip">
+                    <span class="icon icon-figma-variable"></span>
+                    <span class="tooltip" id="exportAccentsToVarsToolTip" popover>Import global neutrals as variables</span>
+                </button> 
+            </div>
+            <button class="primary import-theme-button close-modal" autofocus>Close</button>
+        </div>
+
+    </div>
+</dialog>
+
+<dialog id="globalAccentsModal">
+    <div class="modal-container select-none">
+        <div class="header">
+            <h3 class="text-md font-bold">Global Accents</h3>
+            <button class="close close-modal" value="cancel">
+                <span class="icon icon-x"></span>
+            </button>
+        </div>
+
+        <div class="body">
+            <p>
+                Global accents are programatically generated based on the hue, saturation and luminance parameters.
+            </p>
+            <div class="-mx-md overflow-hidden group h-max">
+                <div class="grid justify-center relative cursor-grab">
+                    <div class="flex flex-row gap-1 text-left text-xs px-md color-text-base-500 absolute top-0 left-0 right-0 pointer-events-none opacity-30 group-hover:opacity-70 transition-opacity">
+                        Scroll or drag
+                        <span class="icon icon-arrow-left icon-xs"></span>
+                        <span class="icon icon-arrow-right icon-xs"></span>
+                    </div>
+                    <div class="accents-card-carousel pointer-events-none font-mono" id="globalAccentsPreview" style="transform: translateX(var(--move-offset, 0));">
+                    </div>
+                </div>
+            </div>
+            <div class="bg-alt-base-200 rounded-md px-base py-minor-base flex flex-col gap-minor-sm">
+                <div class="tooltip" id="accentLumHelpToolTip" popover>
+                    Use sliders below to customise accent palette. The first knob sets the lightest shade. The middle knob is for the base shade. The last knob defines the darkest shade.
+                </div>
+                <div class="sliders flex flex-row items-center w-full gap-xs ">
+                    <span class="text-label">
+                        Luminance
+                        <span data-tooltip="top" data-offset="12" popovertarget="accentLumHelpToolTip" class="hidden icon icon-info color-text-base-500 hover:color-text-base-600 hover:icon-info-filled"></span>
+                    </span>
+                    <div id="luminanceSliderProxy" class="noui-slider flex-1"></div>
+                </div>
+                <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "proxy": true, "noDisplayValue": true}'></div>
+                <div data-slider='{"label": "Hue Spin %", "name": "accentHueSpin", "min": -30, "max": 30, "step": 1, "value": 0, "proxy": true, "noDisplayValue": true}'></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="flex-1">
+                <button class="close-modal color-text-base-primary" data-command="RENDER_ACCENTS" data-tooltip="top" data-offset="12" popovertarget="exportAccentsToFrameToolTip">
+                    <span class="icon icon-figma-frame"></span>
+                    <span class="tooltip" id="exportAccentsToFrameToolTip" popover>Import global accents as frames</span>
+                </button>                
+                <button class="close-modal color-text-base-primary" data-command="IMPORT_GLOBAL_ACCENT_VARIABLES" data-tooltip="top" data-offset="12" popovertarget="exportAccentsToVarsToolTip">
+                    <span class="icon icon-figma-variable"></span>
+                    <span class="tooltip" id="exportAccentsToVarsToolTip" popover>Import global accents as variables</span>
+                </button>   
             </div>
             <button class="primary import-theme-button close-modal" autofocus>Close</button>
         </div>
@@ -1254,4 +1332,107 @@
             </span>
         </span>
     </label>
+</template>
+
+<template id="globalAccentRampPreviewTemplate">
+    <div class="flex flex-col rounded-md overflow-hidden border-outline-utility-shade-100 w-[136px]">
+        <div class="flex flex-col px-sm py-minor-sm color-text-accent-600 color-cell" data-shade="100">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-medium">
+                    100
+                </div>
+                <div class="font-light opacity-70">
+                    <span data-transform="IN" data-value="accentMaxLuminance"></span>%
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-sm py-minor-sm color-text-accent-600 color-cell" data-shade="200">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-light">
+                    200
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-sm py-minor-sm color-text-accent-600 color-cell" data-shade="300">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-light">
+                    300
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-sm py-minor-sm color-text-accent-600 color-cell" data-shade="400">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-medium">
+                    400
+                </div>
+                <div class="font-light opacity-70">
+                    <span data-transform="IN" data-value="accentMidLuminance"></span>%
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-sm py-minor-sm color-text-contrast-600 color-cell" data-shade="500">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-light">
+                    500
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-sm py-minor-sm color-text-contrast-600 color-cell" data-shade="600">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-light">
+                    600
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-sm py-minor-sm color-text-contrast-600 color-cell" data-shade="700">
+            <div class="text-xs2 opacity-70 mb-0.5">accent.<span class="color-name"></span></div>
+            <div class="flex flex-row flex-1 text-sm gap-sm">
+                <div class="font-medium">
+                    700
+                </div>
+                <div class="font-light opacity-70">
+                    <span data-transform="IN" data-value="accentMinLuminance"></span>%
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="globalAccentContrastPreviewTemplate">
+    <div class="flex flex-col rounded-md overflow-hidden w-min">
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="100">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn100"></div>
+        </div>
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="200">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn200"></div>
+        </div>
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="300">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn300"></div>
+        </div>
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="400">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn400"></div>
+        </div>
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="500">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn500"></div>
+        </div>
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="600">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn600"></div>
+        </div>
+        <div class="flex flex-col pl-sm py-minor-sm color-cell" data-shade="700">
+            <div class="text-xs2 opacity-70 mb-0.5">contrast</div>
+            <div class="text text-sm" data-value="whiteOn700"></div>
+        </div>
+    </div>
 </template>

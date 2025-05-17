@@ -74,18 +74,23 @@
 .primary-100 {
     background-color: var(--primary-100);
 }
+
 .primary-200 {
     background-color: var(--primary-200);
 }
+
 .primary-300 {
     background-color: var(--primary-300);
 }
+
 .primary-400 {
     background-color: var(--primary-400);
 }
+
 .primary-500 {
     background-color: var(--primary-500);
 }
+
 .primary-600 {
     background-color: var(--primary-600);
 }
@@ -93,21 +98,27 @@
 .global-accent-100 {
     background-color: var(--global-accent-100);
 }
+
 .global-accent-200 {
     background-color: var(--global-accent-200);
 }
+
 .global-accent-300 {
     background-color: var(--global-accent-300);
 }
+
 .global-accent-400 {
     background-color: var(--global-accent-400);
 }
+
 .global-accent-500 {
     background-color: var(--global-accent-500);
 }
+
 .global-accent-600 {
     background-color: var(--global-accent-600);
 }
+
 .global-accent-700 {
     background-color: var(--global-accent-700);
 }
@@ -122,41 +133,109 @@
     content: var(--contrast-white);
     display: inline;
 }
+
 .color-box .contrast-2::before {
     content: var(--contrast-white);
     display: inline;
 }
+
 .color-box .hsl::before {
     content: var(--hsl);
     display: inline;
 }
 
 .preview-adjustments .color-box {
-    opacity: 0.35;
+    
 }
+
+.preview-adjustments [data-shade] > *,
+.preview-adjustments .color-box > * {
+   opacity: 0.35;
+}
+
+
 
 .preview-adjustments .color-box > * {
-    /* visibility: hidden; */
+    /* transition: all 800ms var(--easing-fn); */
 }
 
-.preview-adjustments .color-box {
-    transition: all 800ms var(--easing-fn);
-}
-.preview-adjustments[data-color-key="0"] .color-box[data-color-handle="0"] > * {
-    visibility: visible;
-}
-.preview-adjustments[data-color-key="0"] .color-box[data-color-handle="0"] {
+.preview-adjustments[data-color-key="0"] [data-shade="700"] > *,
+.preview-adjustments[data-color-key="0"] [data-color-handle="0"] > * {
     opacity: 1;
-} 
-.preview-adjustments[data-color-key="1"] .color-box[data-color-handle="1"] > * {
-    visibility: visible;
 }
-.preview-adjustments[data-color-key="1"] .color-box[data-color-handle="1"] {
+
+.preview-adjustments[data-color-key="0"] [data-color-handle="0"] {
     opacity: 1;
-} 
-.preview-adjustments[data-color-key="2"] .color-box[data-color-handle="2"] > * {
-    visibility: visible;
 }
-.preview-adjustments[data-color-key="2"] .color-box[data-color-handle="2"] {
+
+.preview-adjustments[data-color-key="1"] [data-shade="400"] > *,
+.preview-adjustments[data-color-key="1"] [data-color-handle="1"] > * {
     opacity: 1;
-} 
+}
+
+.preview-adjustments[data-color-key="1"] [data-color-handle="1"] {
+    opacity: 1;
+}
+
+.preview-adjustments[data-color-key="2"] [data-shade="100"] > *,
+.preview-adjustments[data-color-key="2"] [data-color-handle="2"] > * {
+    opacity: 1;
+}
+
+.preview-adjustments[data-color-key="2"] [data-color-handle="2"] {
+    opacity: 1;
+}
+
+.global-neutrals-preview-grid .color-cell {
+    transition: all 200ms ease-in-out;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white-600);
+
+    & .value {
+        opacity: 0;
+        font-size: var(--font-size-xs2);
+        font-family: var(--font-monospace);
+        line-height: var(--line-height-xs2);
+    }
+}
+
+.global-neutrals-preview-grid .color-cell:nth-child(-n+33) {
+    color: var(--text-black-600);
+}
+
+.global-neutrals-preview-grid .color-cell:nth-child(1) {
+    border-top-left-radius: var(--radii-md);
+}
+
+.global-neutrals-preview-grid .color-cell:nth-child(10) {
+    border-top-right-radius: var(--radii-md);
+}
+
+.global-neutrals-preview-grid .color-cell:nth-child(91) {
+    border-bottom-left-radius: var(--radii-md);
+}
+
+.global-neutrals-preview-grid .color-cell:nth-child(100) {
+    border-bottom-right-radius: var(--radii-md);
+}
+
+.global-neutrals-preview-grid .color-cell:hover {
+    box-shadow: var(--shadow-3-300), 0 0 0 0.75px var(--alt-contrast-200), inset 0 0 0 0.75px var(--utility-shade-100);
+    transform: scale(1.25);
+    border-radius: var(--radii-sm);
+
+    & .value {
+        opacity: 1;
+    }
+}
+
+.global-neutrals-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    grid-template-rows: repeat(10, 32px);
+    grid-gap: 1px;
+    height: auto;
+    border-radius: var(--radii-md);
+}

@@ -68,7 +68,6 @@ export function renderColor(parentNode, name, color, colors) {
 
     const opaqueColor = chroma.gl(r, g, b, 1);
     const mixedColor = chroma.mix(opaqueColor, "white", 1 - a);
-    console.log(name, mixedColor.rgba());
 
     let contrast = [
         chroma.contrast("white", mixedColor),

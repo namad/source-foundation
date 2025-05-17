@@ -8,6 +8,8 @@
 @import "./slider.css";
 @import "./card-carousel.css";
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,6 +21,7 @@
     --form-gap: var(--spacing-sm);
     --border-width-base: 1px;
     --easing-fn: cubic-bezier(0.53, 0.04, 0.02, 1.12);
+    --font-monospace: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 * {
@@ -46,6 +49,10 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+a[data-modal]:hover,
+a[data-command]:hover {
+    text-decoration: underline dashed;
 }
 
 p {
@@ -172,6 +179,23 @@ form {
     margin: 0;
 }
 
+.loading-shim {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--fill-base-300);
+    z-index: 10;
+
+    & .spinner {
+        --icon-size: var(--line-height-lg)
+    }
+}
+
+.loading .loading-shim {
+    display: grid;
+}
 form .container {
     flex: 1;
     overflow: auto;
@@ -592,8 +616,9 @@ a[data-expanded=true]::after {
 }
 
 .spinner {
-    width: var(--line-height-base);
-    height: var(--line-height-base);
+    --icon-size: var(--line-height-base);
+    width: var(--icon-size, 16px);
+    height: var(--icon-size, 16px);
     display: inline-block;
     vertical-align: middle;
     font-size: 10px;
