@@ -2,10 +2,14 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = {
     content: [
-        // './dist/*.html',
         './source-foundation/src/ui/*.html',
-        './src/**/*.{ts, html, css}',
+        './source-foundation/**/*.{ts, html, css}',
     ],
+    theme: {
+        fontFamily: { 
+            'mono': ['"JetBrains Mono"', 'ui-monospace']
+        }
+    },
     presets: [
         require('./tw/source-preset')
     ]

@@ -126,42 +126,42 @@
     "alt": {
         "base": {
             "100": {
-                "$value": "rgba({grey-14}, 0.03)",
+                "$value": "rgba({grey-18}, 0.03)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
             "200": {
-                "$value": "rgba({grey-14}, 0.06)",
+                "$value": "rgba({grey-18}, 0.06)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
             "300": {
-                "$value": "rgba({grey-14}, 0.12)",
+                "$value": "rgba({grey-18}, 0.12)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
             "400": {
-                "$value": "rgba({grey-14}, 0.20)",
+                "$value": "rgba({grey-18}, 0.20)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
             "500": {
-                "$value": "rgba({grey-14}, 0.28)",
+                "$value": "rgba({grey-18}, 0.28)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"
                 }
             },
             "600": {
-                "$value": "rgba({grey-14}, 0.32)",
+                "$value": "rgba({grey-18}, 0.32)",
                 "$type": "color",
                 "adjustments": {
                     "s": "1"

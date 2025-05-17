@@ -7,7 +7,7 @@ let startX, moveOffsetX = 0, startTranslateX, offsetTranslateX;
 
 const cardWidth = cardCarousel.offsetWidth;
 const parentWidth = cardCarousel.parentElement.offsetWidth;
-const maxOffset = cardWidth/4;
+const maxOffset = (cardWidth - parentWidth)/2;
 
 function _mouseMove(e) {
     moveOffsetX = e.clientX - startX;
@@ -64,7 +64,7 @@ cardCarousel.addEventListener("wheel", (event) => {
     if(Math.abs(offsetTranslateX) > maxOffset) {
         cardCarousel.style.setProperty('--move-offset', `${maxOffset * deltaK}px`)
     }
-    
+
     event.preventDefault();
     event.stopPropagation();
 })

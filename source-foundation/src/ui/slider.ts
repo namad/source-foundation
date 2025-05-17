@@ -25,6 +25,8 @@ interface SliderOptions {
     direction?: 'ltr'|'rtl';
     valueMap?: string[];
     range?: any;
+    proxy?: boolean;
+    noDisplayValue?: boolean;
     linked: boolean;
 }
 
@@ -43,12 +45,22 @@ export function initSlider(el: HTMLElement, options?): SliderComponent {
 
 
 
-function getMarkup({ label, name, value, linked }) {
+function getMarkup(options: SliderOptions) {
+    const {
+        linked,
+        proxy,
+        label,
+        name,
+        value,
+        noDisplayValue
+    } = options;
+
     const linkIndicator = linked === true ? `
         <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
         <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>         
     ` : '';
     const linkedClassName = linked === true ? 'theme-specific' : '';
+    const inputName = proxy === true ? `${name}Proxy` : name;
     return `
         <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs ${linkedClassName}" data-name=${name}>
             <span class="text-label">${label}</span>
@@ -56,68 +68,89 @@ function getMarkup({ label, name, value, linked }) {
             <div class="icon-indicator-wrap">
                 ${linkIndicator}
             </div>
-            <input data-display-element type="text" readonly>
-            <input data-value-element type="hidden" name="${name}" value="${value}">
+            <input data-display-element type="${noDisplayValue == true ? 'hidden' : 'text'}" readonly>
+            <input data-value-element type="hidden" name="${inputName}" value="${value}">
         </div>
     `
 }
 
 function processComponent(el, options: SliderOptions) {
     el.innerHTML = getMarkup(options);
+    el.dataset.sliderComponent = options.name;
+    el.dataset.sliderMaster = options.proxy ? 'false' : 'true';
 
     const displayInput = el.querySelector(`input[data-display-element]`) as HTMLInputElement;
-    const valueInput = el.querySelector(`input[data-value-element]`) as HTMLInputElement;
+    let valueInput = el.querySelector(`input[data-value-element]`) as HTMLInputElement;
     let slider = el.querySelector(`.noui-slider`);
     const range = options.range || {};
     const defaultValue = transformValue(options.name,  defaultSettings[options.name], "IN") as number;
 
-
-    slider = nouislider.create(slider, {
+    const noUIslider = nouislider.create(slider, {
         connect: options.direction == 'rtl' ? 'upper' : 'lower',
         animate: false,
         start: [defaultValue],
         step: options.step,
         direction: options.direction || 'ltr',
-        tooltips: options.tooltips || false,
+        tooltips: options.tooltips || options.noDisplayValue || false,
         range: {
             'min': [options.min],
             'max': [options.max],
             ...range
         }
-    });
+    })
+    
+
 
     el.querySelectorAll('.noUi-handle').forEach(el => {
         el.addEventListener('dblclick', (e) => {
-            slider.set([defaultValue])
+            noUIslider.set([defaultValue])
         })
     })
 
     displayInput.value = getDisplayValue(options.value, options.valueMap).toString();
 
-    slider.on('update', debounce((values, handle) => {
-        
-        var value = parseFloat(values[handle]);
-        const currentValue = valueInput.value;
-        const newValue = `${value}`;
-        valueInput.value = newValue;
+    if(options.proxy === true) {
+        valueInput = document.querySelector(`input[name=${options.name}]`) as HTMLInputElement;
+        const masterSliderDiv = document.querySelector(`[data-slider-component=${options.name}][data-slider-master=true] .noui-slider`);
+        const masterSlider = masterSliderDiv['noUiSlider'] as API;
 
-        if(currentValue != newValue) {
-            displayInput.dispatchEvent(new Event('input', { 'bubbles': true }));
-        }
+        masterSlider.on('change', (values, handle) => {
+            let value = parseFloat(values[handle].toString());
+            displayInput.value = getDisplayValue(value, options.valueMap).toString();
+            noUIslider.set(values)
+        });
 
-        displayInput.value = getDisplayValue(value, options.valueMap).toString();
-    }, 1))
+        noUIslider.on('update', (values, handle) => {
+            let value = parseFloat(values[handle].toString());
+            displayInput.value = getDisplayValue(value, options.valueMap).toString();
+            masterSlider.set(values)
+        }); 
+    }
+    else {
+        noUIslider.on('update', (values, handle) => {
+            let value = parseFloat(values[handle].toString());
+            const currentValue = valueInput.value;
+            const newValue = `${value}`;
+            valueInput.value = newValue;
 
-    valueInput.addEventListener("input", (event) => {
-        slider.set([valueInput.value]);
+            if(currentValue != newValue) {
+                valueInput.dispatchEvent(new Event('input', { 'bubbles': true }));
+            }
+
+            displayInput.value = getDisplayValue(value, options.valueMap).toString();
+        });
+
+    }    
+    valueInput.addEventListener("update", (event) => {
+        noUIslider.set([valueInput.value]);
     });
 
-    return { valueInput, displayInput, slider }
+    return { valueInput, displayInput, slider: noUIslider }
 }
 
 function getDisplayValue(value, valueMap) {
     if (valueMap != null) {
-       return toTitleCase(valueMap[value]);
+       return camelToTitle(valueMap[value]);
     }
     else {
         return roundOneDigit(parseFloat(value));

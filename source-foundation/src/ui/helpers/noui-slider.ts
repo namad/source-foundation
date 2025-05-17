@@ -2,7 +2,8 @@ import { radiiSizeName, spacingSizeName, systemAccentList, typographySizeValues 
 import { initSlider } from "../slider";
 import { sliders } from "../ref/sliders-collection";
 
-document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
+const sliderElements = document.querySelectorAll('[data-slider]');
+sliderElements.forEach((el: HTMLDivElement) => {
     const valueMaps = {
         'semantics': systemAccentList,
         'typography': typographySizeValues,
@@ -17,7 +18,6 @@ document.querySelectorAll('[data-slider]').forEach((el: HTMLDivElement) => {
     };
 
     const type = el.dataset.type;
+    initSlider(el, { valueMap: valueMaps[type] || null });
 
-    const sliderComponent = initSlider(el, { valueMap: valueMaps[type] || null });
-    sliders[sliderComponent.params.name] = sliderComponent;
 });

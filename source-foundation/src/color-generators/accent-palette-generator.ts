@@ -99,8 +99,6 @@ function getColorParams(theme: 'light' | 'dark', params: ImportFormData) {
 }
 
 export function generateSystemAccentPalette(theme: 'light' | 'dark', themeParams: ImportFormData): SystemAccentList {
-    const { saturation, accentMinLuminance, accentMidLuminance, accentMaxLuminance } = getColorParams(theme, themeParams);
-
     let accents: SystemAccentList = {
         red: getAccentRamp(theme, themeParams),
         amber: getAccentRamp(theme, themeParams),
@@ -124,8 +122,7 @@ export function generateSystemAccentPalette(theme: 'light' | 'dark', themeParams
     return accents;
 }
 
-export function generateGlobalAccentPalette(theme: 'light'|'dark', themeParams: ImportFormData): SystemAccentList {
-    const { saturation, accentMinLuminance, accentMidLuminance, accentMaxLuminance } = getColorParams(theme, themeParams);
+export function generateGlobalAccentPalette(themeParams: ImportFormData): SystemAccentList {
     let accents = {} as SystemAccentList;
     systemAccentList.forEach(name => {
         const hue = themeParams[name];

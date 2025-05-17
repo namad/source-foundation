@@ -16,7 +16,7 @@ import { getSizeTokensSortFn, getColorTokensSortFn, getAlphaNumTokensSortFn  } f
 import { importTextStyles } from './utils/figma-text-styles';
 import { getGlobalAccentRamp } from './color-generators/accent-palette-generator';
 import { resolveAliasOrValue, addToGlobalTokensDictionary, getGlobalTokensDictionary } from './utils/token-references';
-import { toTitleCase } from './utils/text-to-title-case';
+import { camelToTitle, toTitleCase } from './utils/text-to-title-case';
 import { ImportFormData } from './import-ui';
 import { radiiSizeName, spacingSizeName, typographySizeName } from './defaults';
 import { importEffectStyles } from './utils/figma-effect-styles';
@@ -271,7 +271,7 @@ async function importSizeTokens(data: {
     for(const modeName of defaultOrder) {
         await importVariables({
             collectionName: singleCollection ? "UI Scale" : data.collectionName,
-            modeName: toTitleCase(modeName),
+            modeName: camelToTitle(modeName),
             modeIndex: index++,
             data: tokens[modeName],
             isSingleMode: isSingleMode
