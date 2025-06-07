@@ -71,6 +71,8 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             const fontStyleValue = token.$value.fontStyle;
             const fontStyleVariable = typeof fontStyleValue == 'string' ? await findVariableByReferences(fontStyleValue) : null;
 
+            debugger
+            
             lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
             fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);
             paragraphSpacingVariable && textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);
@@ -194,7 +196,7 @@ export function convertTextStyleToFigma(name, values: TypographyTokenValue): Tex
         'leadingTrim': "NONE",
         'paragraphIndent': 0,
         'paragraphSpacing': parseInt(`${values.paragraphSpacing}`) || 0,
-        'listSpacing': parseFloat(`${values.listSpacing}`) || 0,
+        'listSpacing': parseFloat(`${values.listSpacing}`) || parseFloat(`${values.lineHeight}`) / 2,
         'hangingPunctuation': false,
         'hangingList': false,
         'textCase': convertTextCaseToFigma(values.textCase)

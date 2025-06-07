@@ -263,7 +263,8 @@ const fieldsAccent = [
     'accentMinLuminance',
     'accentMidLuminance',
     'accentMaxLuminance',
-    'accentHueSpin'
+    'accentHueSpin',
+    'customAccentTextSaturation'
 ]
 
 const fieldsNeutral = [
@@ -311,6 +312,9 @@ function getDiff(dataNew: ImportFormData, dataOld: ImportFormData) {
 
 function getIntersection(source: string[], destination: string[]): string[] {
     return source.filter(value => destination.includes(value))
+}
+function isUpdatePrimary(diff) {
+    return diff.filter(value => 'primary')
 }
 function isUpdateAccents(diff) {
     return getIntersection(fieldsAccent, diff).length > 0;
@@ -364,6 +368,7 @@ export function refreshUI(options: LoadDataOptions) {
 
     // THEME MODES
     document.body.dataset.theme = data.theme;
+    document.body.dataset.primary = data.primary;
 
     if (options.customDarkMode != undefined) {
         document.body.dataset.customDark = options.customDarkMode === true ? 'true' : 'false';

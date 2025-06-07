@@ -1,6 +1,10 @@
+import { LOCAL_LIB_NAME } from "@foundation/utils/figma-library-variables";
+
 interface StoredData {
     [key: string]: LibraryVariable[]
 }
+
+LOCAL_LIB_NAME
 
 export function getTokenLibrariesListMarkup(storedData: StoredData): string {
     const markup = [];

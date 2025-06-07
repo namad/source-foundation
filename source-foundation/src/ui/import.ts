@@ -18,11 +18,12 @@ import "./helpers/expander";
 import "./helpers/noui-slider";
 import "./helpers/accent-hue-sliders";
 import "./helpers/accent-luminance-slider";
+import "./helpers/neutral-greys-render";
 // import "./helpers/text-brightness-slider";
-import "./helpers/tooltips";
 import "./helpers/card-carousel-scroller";
 import "./helpers/global-accent-preview-carousel-scroller";
 import "./helpers/create-update-elevation-components-button";
+import "./helpers/tooltips";
 
 
 
@@ -228,17 +229,6 @@ importButton.addEventListener('click', async (e) => {
 
     parent.postMessage({ pluginMessage: message }, "*");
 })
-
-
-let markup = [];
-for(let x = 99; x >= 0; x--) {
-    markup.push(`
-        <div class="color-cell" style="background-color: var(--grey-${x})">
-            <span class="value">${x}%</span>
-        </div>
-    `)
-}
-document.getElementById('gloablNeutralsPreview').innerHTML = markup.join('');
 
 
 

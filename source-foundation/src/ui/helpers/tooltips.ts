@@ -44,15 +44,28 @@ import { mainForm } from "../ref/main-form";
 //     }
 // }, true)
 
-document.querySelectorAll("[data-tooltip][popovertarget]").forEach((element: HTMLElement) => {
+const simplePopOver = document.createElement('div');
+simplePopOver.className = 'tooltip max-w text-center';
+simplePopOver.setAttribute('popover', '');
+
+document.body.appendChild(simplePopOver);
+
+document.querySelectorAll("[data-tooltip]").forEach((element: HTMLElement) => {
     const target = element.getAttribute("popovertarget");
-    const popover = document.getElementById(target) as HTMLElement;
+    const title = element.title.length > 0 ? element.title : null;
+
+    const popover = title ? simplePopOver : document.getElementById(target) as HTMLElement;
     const position = element.dataset.tooltip || 'top';
     const positionOffset = parseInt(element.dataset.offset) || 12;
 
-    // document.body.appendChild(popover);
+    element.removeAttribute('title');
 
     element.addEventListener("mouseenter", () => {
+
+        if(title) {
+            popover.innerText = title;
+        }
+
         popover.showPopover();
         computePosition(element, popover, {
             placement: position as Placement,

@@ -53,6 +53,15 @@ export interface ExportEventParameters {
     createRadiiTokens?: boolean;
 }
 
+function checkImportOptions(params: ImportFormData): boolean {
+    return  params.createComponentTokens
+            || params.createColorTokens
+            || params.createSpacingTokens
+            || params.createRadiiTokens
+            || params.createTypographyTokens
+            || params.createOpacityTokens
+            || params.createGlobalSizeTokens;
+}
 const handlers = {
     params: {},
     message: {},
@@ -73,6 +82,11 @@ const handlers = {
     IMPORT: async function (params: ImportFormData, message: MessagePayload) {
         themeStore.setTheme(params);
         themeStore.save();
+
+        if(checkImportOptions(params) === false) {
+            figma.ui.postMessage("IMPORT_COMPLETED");
+            return figma.notify('Psst, you may want to check your import options, seems like you turned everything OFF');
+        }
 
         const colorSystemVersion = await getColorSystemVersion();
         if(colorSystemVersion == 1) {

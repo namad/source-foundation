@@ -12,7 +12,7 @@ function getSaturationModifier(lightness) {
     // https://www.desmos.com/calculator/02ufrfsuzy
 
     const offset = 50; // ligthness range is [0, 100], for saturation we need to offset the curve to make [-50, 50] range 
-    const magnitude = 70; // sets how much to modify, higher values outputs smaller modifier
+    const magnitude = 60; // sets how much to modify, higher values outputs smaller modifier
     const saturationModifier = 1 + (Math.pow(lightness - offset, 2) / magnitude - Math.pow(offset, 2) / magnitude) / 100;
     return saturationModifier;
 }

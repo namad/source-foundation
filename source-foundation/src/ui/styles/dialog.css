@@ -63,7 +63,6 @@ dialog .body {
     flex-direction: column;
     row-gap: var(--spacing-minor-base);
     flex: 1;
-    overflow: auto;
 }
 
 dialog .footer {

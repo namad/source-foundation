@@ -1,0 +1,13 @@
+.design-token-pill {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-xs3);
+    align-items: center;
+/* rounded-round px-xs py-minor-xs2 border border-dashed border-alt-base-400 */
+    border-radius: var(--radii-round);
+    padding: var(--spacing-minor-xs2) var(--spacing-xs2);
+    &.global {
+        outline: var(--border-width-base) dashed var(--alt-base-400);
+        outline-offset: calc(-1 * var(--border-width-base));
+    }
+}

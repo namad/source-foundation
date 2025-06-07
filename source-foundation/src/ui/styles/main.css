@@ -7,6 +7,7 @@
 @import "./noui-slider.css";
 @import "./slider.css";
 @import "./card-carousel.css";
+@import "./tokens-visual.css";
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
@@ -22,6 +23,7 @@
     --border-width-base: 1px;
     --easing-fn: cubic-bezier(0.53, 0.04, 0.02, 1.12);
     --font-monospace: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    interpolate-size: allow-keywords;
 }
 
 * {

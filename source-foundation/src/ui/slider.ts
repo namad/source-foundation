@@ -56,8 +56,8 @@ function getMarkup(options: SliderOptions) {
     } = options;
 
     const linkIndicator = linked === true ? `
-        <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
-        <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>         
+        <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" title="Affects dark mode only because the custom dark mode is enabled"></span>
+        <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" title="Affects light mode only because the custom dark mode is enabled"></span>         
     ` : '';
     const linkedClassName = linked === true ? 'theme-specific' : '';
     const inputName = proxy === true ? `${name}Proxy` : name;

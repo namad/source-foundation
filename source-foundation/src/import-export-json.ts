@@ -314,9 +314,9 @@ export async function importFromJSON(data: CollectionExportRecord[], params: Imp
 
     const uniqueCollections = data.filter(record => {
         const collectionName = record.collection;
-
+        
         // get unique collection list
-        if (collections.indexOf(collectionName) < 0) {
+        if (!collections.includes(collectionName)) {
             collections.push(collectionName);
             return true;
         }
@@ -350,6 +350,8 @@ export async function importFromJSON(data: CollectionExportRecord[], params: Imp
             await delayAsync(5);
         }
     }
+
+    debugger
 
     // calculate tokens count
     let tokensCountTotal = 0;

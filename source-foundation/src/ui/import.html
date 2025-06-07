@@ -58,7 +58,7 @@
             </div>
             <div class="body">
                 <p class="color-text-base-500 text-sm">Select base border radius</p>
-                <div data-type="radii" data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 3, "step": 1, "value": 1}'>
+                <div data-type="radii" data-slider='{"label": "Base Radii", "name": "radii", "min": 0, "max": 2, "step": 1, "value": 1}'>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 <div class="flex flex-col gap-minor-base enable-dark-mode-controls">
                     Enable custom dark mode to set the neutrals, accents and text colours individually for light and dark modes.
 
-                    <div class="-mx-base px-base py-minor-base rounded-md bg-utility-tint-200 shadow-2 relative group/hint">
+                    <div class="-mx-base px-base py-minor-base rounded-md bg-utility-tint-200 shadow-2 relative group/hint overflow-hidden">
                         <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs custom-dark-preview">
                             <div class="w-1.5 h-1.5 rounded bg-primary-300"></div>
                             <span class="text-label">Slider</span>
@@ -98,10 +98,11 @@
 
                             <input type="text" readonly="" value="20" />
                         </div>
-                        <div class="absolute z-10 px-sm inset-0 bg-info-400 shadow-2-200 rounded-md border border-utility-tint-200 bg-opacity-90 opacity-0 group-hover/hint:opacity-100 transition-opacity text-sm grid items-center justify-center">
-                            <span class="icon icon-info gap-xs color-text-accent-600">
-                                Once enabled this is how theme related parameters to look like. Check these visual cues to identify them!
-                            </span>
+                        <div class="absolute z-10 px-sm inset-0 bg-info-400 shadow-2-200 rounded-md border border-utility-tint-200 bg-opacity-90 opacity-0 translate-y-1/2 group-hover/hint:opacity-100 group-hover/hint:translate-y-0 transition-all text-sm grid items-center justify-center">
+                            <div class="flex flex-row gap-xs">
+                                <span class="icon icon-info gap-xs color-text-accent-600 icon-sm"></span>
+                                Please note, this is not a real control but an illustration. Once enabled theme related parameters to receive special visual cues
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,15 +160,6 @@
         </div>
     </dialog>
 
-    <div class="tooltip" id="colorModeConnectedToolTip" popover>
-        <div class="text-center">Affects both light and dark modes. Enable custom dark mode to override</div>
-    </div>
-    <div class="tooltip" id="darkModeOnlyToolTip" popover>
-        <div class="text-center">Affects dark mode only because of the custom dark mode</div>
-    </div>
-    <div class="tooltip" id="lightModeOnlyToolTip" popover>
-        <div class="text-center">Affects light mode only because of the custom dark mode</div>
-    </div>
 
     <div class="container relative flex flex-col">
         <div class="sentinal"></div>
@@ -191,10 +183,7 @@
                             </span>
                         </label>
                     </div>
-                    <span data-tooltip="bottom" data-offset="12" popovertarget="customDarkModeToolTip" data-modal="customDarkModeHelp" class="icon icon-alert-octagon custom-dark-indicator color-text-base-500 hover:color-text-base-600 hover:icon-alert-octagon-filled"></span>
-                    <div class="tooltip" id="customDarkModeToolTip" popover>
-                        <div class="whitespace-nowrap">Custom dark mode is enabled</div>
-                    </div>
+                    <span data-tooltip="bottom" title="Custom dark mode is enabled" data-modal="customDarkModeHelp" class="icon icon-alert-octagon custom-dark-indicator color-text-base-500 hover:color-text-base-600 hover:icon-alert-octagon-filled"></span>
                 </div>
             </div>
         </div>
@@ -247,61 +236,72 @@
                 <h3 class="text-lg font-bold">Neutral Colours</h3>
                 <!-- <a href="#" data-command="RENDER_NEUTRALS" title="Get palette colours as Figma frames">Extract Neutrals Palette</a> -->
                 <span class="inline-flex gap-sm">
-                    <a href="#" data-command="MATCH_HUE_BRAND" data-tooltip="top" data-offset="12" popovertarget="matchHueBrandToolTip">Match Brand</a>                    
-                    <a href="#" data-modal="gloabalNeutralsModal">Global Neutrals</a>
+                    <a href="#" data-command="MATCH_HUE_BRAND" data-tooltip="top" data-offset="12" popovertarget="matchHueBrandToolTip">Match Brand</a>
+                    <a href="#" data-modal="gloabalNeutralsModal" data-tooltip="top" title="Explore generated global neutrals">Global Neutrals</a>
                     <div class="tooltip" id="matchHueBrandToolTip" popover>
-                        <div>
+                        <div class="w-48">
                             Apply primary colour hue value (<span data-value="primary"></span> / <span data-value="primaryHUE"></span>deg) for neutrals
                         </div>
-                    </div>                    
+                    </div>
                 </span>
             </div>
             <div class="flex flex-col gap-y-xs">
-                <div class="flex flex-row gap-0 font-mono">
+                <div class="flex flex-row gap-0 ">
                     <div class="color-box flex-1 bg-fill-base-200 color-text-base-400 hover:color-text-base-500 rounded-l" data-tooltip="top" data-offset="8" popovertarget="fillBase200ToolTip">
                         <div class="p-minor-xs text-xs">
                             <span class="whitespace-nowrap" data-value="fillBase200"></span>%
                         </div>
-                        <div class="tooltip flex-col gap-minor-xs" id="fillBase200ToolTip" popover>
-                            <div class="row text-sm">fill.base.<b>200</b></div>
-                            <div class="toolip-body text-xs">
-                                <div class="row flex flex-row justify-between gap-3">
-                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
-                                    <div>
-                                        <span class="font-mono whitespace-nowrap" data-value="fillBase200"></span>%
-                                    </div>
+
+                        <div class="tooltip rounded-round" id="fillBase200ToolTip" popover>
+                            <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                <div class="design-token-pill global">
+                                    <span>global.grey-<span data-value="fillBase200" class="lowercase"></span>
+                                </div>
+                                <span class="icon icon-arrow-right icon-xs"></span>
+                                <div class="design-token-pill bg-fill-base-200 border-shadow-alt-base-200">
+                                    <div>fill.base.<b>200</b></div>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                     <div class="color-box flex-1 bg-fill-base-300 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase300ToolTip">
                         <div class="p-minor-xs text-xs">
                             <span class="whitespace-nowrap" data-value="fillBase300"></span>%
                         </div>
-                        <div class="tooltip flex-col gap-minor-xs" id="fillBase300ToolTip" popover>
-                            <div class="row text-sm">fill.base.<b>300</b></div>
-                            <div class="toolip-body text-xs">
-                                <div class="row flex flex-row justify-between gap-3">
-                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
-                                    <div>
-                                        <span class="font-mono whitespace-nowrap" data-value="fillBase300"></span>%
-                                    </div>
+
+                        <div class="tooltip rounded-round" id="fillBase300ToolTip" popover>
+                            <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                <div class="design-token-pill global">
+                                    <span>global.grey-<span data-value="fillBase300" class="lowercase"></span>
+                                </div>
+                                <span class="icon icon-arrow-right icon-xs"></span>
+                                <div class="design-token-pill bg-fill-base-300 border-shadow-alt-base-200">
+                                    <div>fill.base.<b>300</b></div>
                                 </div>
                             </div>
                         </div>
+
+
+
+
+
+
+
                     </div>
                     <div class="color-box flex-1 bg-fill-base-400 color-text-base-400 hover:color-text-base-500" data-tooltip="top" data-offset="8" popovertarget="fillBase400ToolTip">
                         <div class="p-minor-xs text-xs">
                             <span class="whitespace-nowrap" data-value="fillBase400"></span>%
                         </div>
-                        <div class="tooltip flex-col gap-minor-xs" id="fillBase400ToolTip" popover>
-                            <div class="row text-sm">fill.base.<b>400</b></div>
-                            <div class="toolip-body text-xs">
-                                <div class="row flex flex-row justify-between gap-3">
-                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
-                                    <div>
-                                        <span class="font-mono whitespace-nowrap" data-value="fillBase400"></span>%
-                                    </div>
+                        <div class="tooltip rounded-round" id="fillBase400ToolTip" popover>
+                            <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                <div class="design-token-pill global">
+                                    <span>global.grey-<span data-value="fillBase400" class="lowercase"></span>
+                                </div>
+                                <span class="icon icon-arrow-right icon-xs"></span>
+                                <div class="design-token-pill bg-fill-base-400 border-shadow-alt-base-200">
+                                    <div>fill.base.<b>400</b></div>
                                 </div>
                             </div>
                         </div>
@@ -310,14 +310,14 @@
                         <div class="p-minor-xs text-xs">
                             <span class="whitespace-nowrap" data-value="fillBase500"></span>%
                         </div>
-                        <div class="tooltip flex-col gap-minor-xs" id="fillBase500ToolTip" popover>
-                            <div class="row text-sm">fill.base.<b>500</b></div>
-                            <div class="toolip-body text-xs">
-                                <div class="row flex flex-row justify-between gap-3">
-                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
-                                    <div>
-                                        <span class="font-mono whitespace-nowrap" data-value="fillBase500"></span>%
-                                    </div>
+                        <div class="tooltip rounded-round" id="fillBase500ToolTip" popover>
+                            <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                <div class="design-token-pill global">
+                                    <span>global.grey-<span data-value="fillBase500" class="lowercase"></span>
+                                </div>
+                                <span class="icon icon-arrow-right icon-xs"></span>
+                                <div class="design-token-pill bg-fill-base-500 border-shadow-alt-base-200">
+                                    <div>fill.base.<b>500</b></div>
                                 </div>
                             </div>
                         </div>
@@ -326,14 +326,14 @@
                         <div class="p-minor-xs text-xs">
                             <span class="whitespace-nowrap" data-value="fillBase600"></span>%
                         </div>
-                        <div class="tooltip flex-col gap-minor-xs" id="fillBase600ToolTip" popover>
-                            <div class="row text-sm">fill.base.<b>600</b></div>
-                            <div class="toolip-body text-xs">
-                                <div class="row flex flex-row justify-between gap-3">
-                                    <span class="whitespace-nowrap opacity-70">Lightness</span>
-                                    <div>
-                                        <span class="font-mono whitespace-nowrap" data-value="fillBase600"></span>%
-                                    </div>
+                        <div class="tooltip rounded-round" id="fillBase600ToolTip" popover>
+                            <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                <div class="design-token-pill global">
+                                    <span>global.grey-<span data-value="fillBase600" class="lowercase"></span>
+                                </div>
+                                <span class="icon icon-arrow-right icon-xs"></span>
+                                <div class="design-token-pill bg-fill-base-600 border-shadow-alt-base-200">
+                                    <div>fill.base.<b>600</b></div>
                                 </div>
                             </div>
                         </div>
@@ -359,7 +359,7 @@
         <div class="card" id="accentColors">
             <div class="flex flex-row items-baseline justify-between">
                 <h3 class="text-lg font-bold">Accent Colours</h3>
-                <a href="#" data-modal="globalAccentsModal" title="Get palette colours as Figma frames">Global Accents</a>
+                <a href="#" data-modal="globalAccentsModal" data-tooltip="top" title="Explore generated global accents">Global Accents</a>
             </div>
 
             <p class="color-text-base-500 text-sm">
@@ -453,8 +453,8 @@
                         <div class="sliders custom-dark-dot flex flex-row items-center w-full gap-xs theme-specific">
                             <div id="luminanceSlider" class="noui-slider flex-1"></div>
                             <div class="icon-indicator-wrap">
-                                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
-                                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
+                                <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" title="Affects dark mode only because the custom dark mode is enabled"></span>
+                                <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" title="Affects light mode only because the custom dark mode is enabled"></span>
                             </div>
                             <input type="hidden" name="accentMinLuminance" id="luminanceValMin" />
                             <input type="hidden" name="accentMidLuminance" id="luminanceValMid" />
@@ -495,42 +495,68 @@
             </div>
 
             <div class="colors-grid">
-                <div class="colors-grid-card bg-fill-base-300 rounded linked-dark-mode-only" id="whiteTextColorPreview">
+                <div class="colors-grid-card bg-fill-base-300 rounded linked-dark-mode-only" id="baseTextColorPreview" data-tooltip="top" data-offset="12" popovertarget="baseTextColorPreviewToolTip">
                     <div class="flex flex-col gap-0.5">
                         <div class="color-text-base-600 text-sm">
                             Text on light background
                         </div>
-                        <div class="flex flex-row gap-base color-text-base-500 font-mono text-xs">
+                        <div class="flex flex-row gap-base color-text-base-500 font-mono text-xs2 mt-1">
                             <span>Black <span data-value="textBlackBrightness">0</span>%</span>
                             <span><span data-value="textBlackContrast">0</span>:1</span>
                         </div>
                     </div>
                     <div data-slider='{"label": "White %", "name": "textBlackBrightness", "min": 4, "max": 50, "step": 1, "value": 6, "direction": "rtl", "linked": false}'></div>
+
+                    <div class="tooltip rounded-round" id="baseTextColorPreviewToolTip" popover>
+                        <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                            <div class="design-token-pill global">
+                                global.grey-<span data-value="textBlackBrightness">0</span>
+                            </div>
+                            <span class="icon icon-arrow-right icon-xs"></span>
+                            <div class="design-token-pill bg-fill-base-300">
+                                <span class="icon icon-circle-filled icon-xs gap-xs4">text.base.600</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="colors-grid-card custom-dark-dot bg-fill-contrast-300 color-text-contrast-600 rounded" style="background-color: var(--grey-20);" id="whiteTextColorPreview">
+                <div class="colors-grid-card custom-dark-dot bg-fill-contrast-300 color-text-contrast-600 rounded" style="background-color: var(--grey-20);" id="contrastTextColorPreview" data-tooltip="top" data-offset="12" popovertarget="contrastTextColorPreviewToolTip">
                     <div class="flex flex-col gap-0.5">
                         <div class=" text-sm">
                             Text on dark background
                         </div>
-                        <div class="flex flex-row gap-base color-text-contrast-500 font-mono text-xs">
+                        <div class="flex flex-row gap-base color-text-contrast-500 font-mono text-xs2 mt-1">
                             <span>White <span data-value="textWhiteBrightness">0</span>%</span>
                             <span><span data-value="textWhiteContrast">0</span>:1</span>
                         </div>
                     </div>
                     <div class="flex-1 overflow-hidden" data-slider='{"label": "White %", "name": "textWhiteBrightness", "min": 50, "max": 100, "step": 1, "value": 100, "linked": true}'></div>
+
+                    <div class="tooltip rounded-round" id="contrastTextColorPreviewToolTip" popover>
+                        <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                            <div class="design-token-pill global">
+                                global.grey-<span data-value="textWhiteBrightness">0</span>
+                            </div>
+                            <span class="icon icon-arrow-right icon-xs"></span>
+                            <div class="design-token-pill bg-fill-contrast-100 color-text-contrast-600">
+                                <span class="icon icon-circle-filled icon-xs gap-xs4">text.contrast.600</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="colors-grid-card custom-dark-dot bg-primary-400 color-text-accent-600 rounded-md">
+                <div class="colors-grid-card custom-dark-dot bg-primary-400 color-text-accent-600 rounded-md" data-tooltip="top" data-offset="12" popovertarget="accentTextColorPreviewToolTip">
                     <div class="flex flex-col gap-0.5">
-                        <div class="text-sm">Text on accent background</div>
-                        <div class="flex flex-row gap-base color-text-accent-500 font-mono text-xs">
+                        <div class="text-sm">
+                            Text on accent background
+                        </div>
+                        <div class="flex flex-row gap-base color-text-accent-500 font-mono text-xs2 mt-1">
                             <span data-value="accentTextColor"></span>
                             <span><span data-value="textOnAccentContrast">0</span>:1</span>
                         </div>
                     </div>
-                    <div class="flex flex-row gap-xs">
-                        <div class="radio-segment on-accent flex-1">
+                    <div class="flex flex-row gap-xs items-center">
+                        <div class="radio-segment on-accent flex-1 h-min">
                             <label class="flex-1">
                                 <input type="radio" name="accentTextColor" value="black" />
                                 <span class="container text-sm flex-1">
@@ -550,10 +576,20 @@
                                 </span>
                             </label>
                         </div>
-                        <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="lightModeOnlyToolTip"></span>
-                        <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" popovertarget="darkModeOnlyToolTip"></span>
+                        <span class="icon-sm icon icon-sun hover:icon-sun-filled opacity-70 hover:opacity-100 light-mode-custom-param" data-tooltip="top" data-offset="8" title="Affects light mode only because the custom dark mode is enabled"></span>
+                        <span class="icon-sm icon icon-moon hover:icon-moon-filled opacity-70 hover:opacity-100 dark-mode-custom-param" data-tooltip="top" data-offset="8" title="Affects dark mode only because the custom dark mode is enabled"></span>
                     </div>
-
+                    <div class="tooltip rounded-round" id="accentTextColorPreviewToolTip" popover>
+                        <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                            <div class="design-token-pill global">
+                                <span>global.<span data-value="accentTextColor" class="lowercase"></span>
+                            </div>
+                            <span class="icon icon-arrow-right icon-xs"></span>
+                            <div class="design-token-pill bg-primary-400 color-text-accent-600">
+                                <span class="icon icon-circle-filled icon-xs gap-xs4">text.accent.600</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -570,28 +606,59 @@
                             <span class="color-text-base-warning" data-tooltip="top" data-offset="12" popovertarget="textWarningColorToolTip">Warning</span>
                             <span class="color-text-base-danger" data-tooltip="top" data-offset="12" popovertarget="textDangerColorToolTip">Danger</span>
 
-                            <div class="tooltip" id="textInfoColorToolTip" popover>
-                                <div class="row text-sm">text.base.<b>primary</b></div>
-                                <div class="toolip-body text-xs font-mono lowercase">
-                                    {accent.<span data-value="primary"></span>.500}
+                            <div class="tooltip rounded-round" id="textInfoColorToolTip" popover>
+                                <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                    <div class="design-token-pill global">
+                                        <span>accent.<span data-value="primary" class="lowercase"></span>.500</span>
+                                    </div>
+                                    <span class="icon icon-arrow-right icon-xs"></span>
+                                    <div class="design-token-pill bg-fill-base-200 border-shadow-alt-base-200 ">
+                                        <span class="icon icon-circle-filled icon-xs gap-xs4 color-text-base-primary">
+                                            <span>text.base.<b>primary</b></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tooltip" id="textSuccessColorToolTip" popover>
-                                <div class="row text-sm">text.base.<b>success</b></div>
-                                <div class="toolip-body text-xs font-mono lowercase">
-                                    {accent.<span data-value="success"></span>.500}
+
+                            <div class="tooltip rounded-round" id="textSuccessColorToolTip" popover>
+                                <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                    <div class="design-token-pill global">
+                                        <span>accent.<span data-value="success" class="lowercase"></span>.500</span>
+                                    </div>
+                                    <span class="icon icon-arrow-right icon-xs"></span>
+                                    <div class="design-token-pill bg-fill-base-200 border-shadow-alt-base-200">
+                                        <span class="icon icon-circle-filled icon-xs gap-xs4 color-text-base-success">
+                                            <span>text.base.<b>success</b></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tooltip" id="textWarningColorToolTip" popover>
-                                <div class="row text-sm">text.base.<b>warning</b></div>
-                                <div class="toolip-body text-xs font-mono lowercase">
-                                    {accent.<span data-value="warning"></span>.500}
+
+                            <div class="tooltip rounded-round" id="textWarningColorToolTip" popover>
+                                <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                    <div class="design-token-pill global">
+                                        <span>accent.<span data-value="warning" class="lowercase"></span>.500</span>
+                                    </div>
+                                    <span class="icon icon-arrow-right icon-xs"></span>
+                                    <div class="design-token-pill bg-fill-base-200 border-shadow-alt-base-200">
+                                        <span class="icon icon-circle-filled icon-xs gap-xs4 color-text-base-warning">
+                                            <span>text.base.<b>warning</b></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="tooltip" id="textDangerColorToolTip" popover>
-                                <div class="row text-sm">text.base.<b>danger</b></div>
-                                <div class="toolip-body text-xs font-mono lowercase">
-                                    {accent.<span data-value="danger"></span>.500}
+
+                            <div class="tooltip rounded-round" id="textDangerColorToolTip" popover>
+                                <div class="flex flex-row text-xs gap-xs3 font-mono py-1">
+                                    <div class="design-token-pill global">
+                                        <span>accent.<span data-value="danger" class="lowercase"></span>.500</span>
+                                    </div>
+                                    <span class="icon icon-arrow-right icon-xs"></span>
+                                    <div class="design-token-pill bg-fill-base-200 border-shadow-alt-base-200">
+                                        <span class="icon icon-circle-filled icon-xs gap-xs4 color-text-base-danger">
+                                            <span>text.base.<b>danger</b></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -643,13 +710,10 @@
                 </div>
             </div>
 
-            <div class="tooltip" id="customAccentTextSaturationToolTip" popover>
-                By default, accent text colour is connected to it's respective accent. Tick this checkbox to enable custom saturation for bright texts.
-            </div>
             <div>
-                <label class="checkbox flex flex-row gap-2" data-tooltip="top" data-offset="12" popovertarget="customAccentTextSaturationToolTip">
+                <label class="checkbox flex flex-row gap-2">
                     <input type="checkbox" name="customAccentTextSaturation" data-check-expander="accentTextSaturationControl" value="true" />
-                    <span>Enable custom saturation</span>
+                    <span data-tooltip="top" title="By default, accent text colours are connected to their respective accents. Tick this checkbox to enable custom saturation for bright texts.">Enable custom saturation</span>
                 </label>
                 <div class="height-expander collapsed" id="accentTextSaturationControl">
                     <div data-slider='{"label": "Saturation", "name": "accentTextSaturation", "min": 30, "max": 100, "step": 1, "value": 100, "linked": true}' class="pt-minor-base"></div>
@@ -911,10 +975,10 @@
 
     <div class="flex flex-row justify-between px-sm py-sm text-right">
         <div class="flex gap-2">
-            <button class="color-text-base-primary" id="openExportModalButton" data-modal="exportModal" title="Export settings">
+            <button class="color-text-base-primary" id="openExportModalButton" data-modal="exportModal" data-tooltip="top" data-offset="12" title="Export settings">
                 <span class="icon icon-upload"></span>
             </button>
-            <button class="color-text-base-primary" id="openImportModalButton" data-modal="importModal" title="Import settings">
+            <button class="color-text-base-primary" id="openImportModalButton" data-modal="importModal" data-tooltip="top" data-offset="12" title="Import settings">
                 <span class="icon icon-download"></span>
             </button>
         </div>
@@ -1054,7 +1118,7 @@
                 <span class="icon icon-x"></span>
             </button>
         </div>
-        <div class="body max-h-">
+        <div class="body overflow-visible">
             <div class="radio-segment" data-tabs id="exportOptionsSegment">
                 <label class="flex-1">
                     <input type="radio" name="exportAs" value="preset" data-tab="exportPresetTab" checked />
@@ -1079,14 +1143,14 @@
                 <p class="color-text-base-500 text-sm">Copy the code below to save a preset. You can use the code to make CSS variables with <a href="https://namad.github.io/source-foundation-docs/cli-color-generator.html" target="_blank">Source Foundation CLI</a></p>
                 <textarea cols="10" onfocus="this.select();" name="exportCodeTextarea" id="exportCodeTextarea" readonly class="h-100% resize-none font-mono text-sm whitespace-pre"></textarea>
             </div>
-            <div id="exportTokensTab" class="flex flex-col flex-1 gap-xs items-center">
+            <div id="exportTokensTab" class="grid grid-rows-[min-content] gap-xs items-center">
                 <div class="flex flex-row gap-sm items-center w-full">
                     <span class="color-text-base-500 flex-1">Select color format:</span>
                     <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="hex" /><span>HEX</span></label>
                     <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="rgba" /><span>RGBA</span></label>
                     <label class="flex flex-row gap-2"><input type="radio" name="jsonColorFormat" value="hsl" checked /><span>HSL</span></label>
                 </div>
-                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-100% w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
+                <textarea cols="10" onfocus="this.select();" name="exportTokensTextarea" id="exportTokensTextarea" readonly class="h-full w-full resize-none font-mono text-sm whitespace-pre" placeholder="Press Export button to get code"></textarea>
             </div>
             <div id="exportBrandVariantTab" class="flex flex-col flex-1 gap-xs items-center">
 
@@ -1218,14 +1282,12 @@
         </div>
         <div class="footer">
             <div class="flex-1">
-                <button class="close-modal color-text-base-primary" data-command="RENDER_NEUTRALS" data-tooltip="top" data-offset="12" popovertarget="exportNeutralsToFrameToolTip">
+                <button class="close-modal color-text-base-primary" data-command="RENDER_NEUTRALS" data-tooltip="top" data-offset="12" title="Import global neutrals as frames">
                     <span class="icon icon-figma-frame"></span>
-                    <span class="tooltip" id="exportNeutralsToFrameToolTip" popover>Import global neutrals as frames</span>
                 </button>
-                <button class="close-modal color-text-base-primary" data-command="IMPORT_GLOBAL_NEUTRAL_VARIABLES" data-tooltip="top" data-offset="12" popovertarget="exportAccentsToVarsToolTip">
+                <button class="close-modal color-text-base-primary" data-command="IMPORT_GLOBAL_NEUTRAL_VARIABLES" data-tooltip="top" data-offset="12" title="Import global neutrals as variables">
                     <span class="icon icon-figma-variable"></span>
-                    <span class="tooltip" id="exportAccentsToVarsToolTip" popover>Import global neutrals as variables</span>
-                </button> 
+                </button>
             </div>
             <button class="primary import-theme-button close-modal" autofocus>Close</button>
         </div>
@@ -1258,30 +1320,32 @@
                 </div>
             </div>
             <div class="bg-alt-base-200 rounded-md px-base py-minor-base flex flex-col gap-minor-sm">
-                <div class="tooltip" id="accentLumHelpToolTip" popover>
-                    Use sliders below to customise accent palette. The first knob sets the lightest shade. The middle knob is for the base shade. The last knob defines the darkest shade.
-                </div>
                 <div class="sliders flex flex-row items-center w-full gap-xs ">
                     <span class="text-label">
                         Luminance
                         <span data-tooltip="top" data-offset="12" popovertarget="accentLumHelpToolTip" class="hidden icon icon-info color-text-base-500 hover:color-text-base-600 hover:icon-info-filled"></span>
                     </span>
                     <div id="luminanceSliderProxy" class="noui-slider flex-1"></div>
+                    <span class="icon icon-info color-text-base-500 hover:icon-info-filled" data-tooltip="top" data-offset="12" title="Use sliders below to customise accent palette. The first knob sets the lightest shade. The middle knob is for the base shade. The last knob defines the darkest shade."></span>
                 </div>
-                <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "proxy": true, "noDisplayValue": true}'></div>
-                <div data-slider='{"label": "Hue Spin %", "name": "accentHueSpin", "min": -30, "max": 30, "step": 1, "value": 0, "proxy": true, "noDisplayValue": true}'></div>
+                <div class="flex flex-row flex-1 gap-xs ">
+                    <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "proxy": true, "noDisplayValue": true}' class="w-full"></div>
+                    <span class="icon icon-info color-text-base-500 hover:icon-info-filled" data-tooltip="top" data-offset="12" title="Set overall saturation across all accents"></span>
+                </div>
+                <div class="flex flex-row flex-1 gap-xs ">
+                    <div data-slider='{"label": "Hue Spin", "name": "accentHueSpin", "min": -30, "max": 30, "step": 1, "value": 0, "proxy": true, "noDisplayValue": true}' class="w-full"></div>
+                    <span class="icon icon-info color-text-base-500 hover:icon-info-filled" data-tooltip="top" data-offset="12" title="Change hue values for the first and for the last shades in the ramp"></span>
+                </div>
             </div>
         </div>
         <div class="footer">
             <div class="flex-1">
-                <button class="close-modal color-text-base-primary" data-command="RENDER_ACCENTS" data-tooltip="top" data-offset="12" popovertarget="exportAccentsToFrameToolTip">
+                <button class="close-modal color-text-base-primary" data-command="RENDER_ACCENTS" data-tooltip="top" data-offset="12" title="Import global accents as frames">
                     <span class="icon icon-figma-frame"></span>
-                    <span class="tooltip" id="exportAccentsToFrameToolTip" popover>Import global accents as frames</span>
-                </button>                
-                <button class="close-modal color-text-base-primary" data-command="IMPORT_GLOBAL_ACCENT_VARIABLES" data-tooltip="top" data-offset="12" popovertarget="exportAccentsToVarsToolTip">
+                </button>
+                <button class="close-modal color-text-base-primary" data-command="IMPORT_GLOBAL_ACCENT_VARIABLES" data-tooltip="top" data-offset="12" title="Import global accents as variables">
                     <span class="icon icon-figma-variable"></span>
-                    <span class="tooltip" id="exportAccentsToVarsToolTip" popover>Import global accents as variables</span>
-                </button>   
+                </button>
             </div>
             <button class="primary import-theme-button close-modal" autofocus>Close</button>
         </div>

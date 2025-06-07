@@ -1,11 +1,11 @@
 .tooltip {
-    --effect-opacity: 10%;
+    --effect-opacity: 25%;
     position: absolute;
     display: none;
     flex-direction: column;
     gap: var(--spacing-minor-xs);
     /* min-width: 200%; */
-    max-width: 220px;
+    /* max-width: 220px; */
     padding: var(--spacing-minor-xs) var(--spacing-xs);
 
     background: var(--fill-base-100);
@@ -15,7 +15,7 @@
     outline: var(--border-width-base) solid var(--utility-shade-100);
     color: var(--text-base-600);
     border-radius: var(--radii-base);
-    box-shadow: var(--shadow-4-300);
+    box-shadow: var(--shadow-3-400);
     
     /* bottom: 120%;
     left: 50%;
@@ -32,6 +32,14 @@
 
     &:popover-open {
         display: flex;
+    }
+
+    &.max-w {
+        max-width: 220px;
+    }
+
+    &.text-center {
+        text-align: center;
     }
 }
 

@@ -7,14 +7,10 @@ export async function getStoreData(refresh = false) {
     if(refresh === true) {
         store.clear();
     }
+    
+    store.set(LOCAL_LIB_NAME, [])
 
-    const localLibraryVariables = await collectLocalVariables();
-
-    if(localLibraryVariables) {
-        store.set(localLibraryVariables.name, localLibraryVariables.libraryVariables)
-    }
-
-    if (store.size > 1) { // which means
+    if (store.size > 1) { // which means we already got other libraries read
         return store;
     }
 
@@ -105,16 +101,19 @@ export function setSelectedLibrary(name: string) {
     return selectedLibraryName;
 }
 
-export async function findVariableByName(variableName:string) {
-    const libraryName = getSelectedLibrary();
-    
+async function getLibVars(libraryName?: string): Promise<Variable[]> {
+    libraryName = libraryName || getSelectedLibrary();
     if(libraryName == LOCAL_LIB_NAME) {
-        const figmaVariables = await figma.variables.getLocalVariablesAsync();
-        return figmaVariables.find(variable => variable.name === variableName);
+        return await figma.variables.getLocalVariablesAsync();
     }
+    else {
+        const store = await getStoreData();
+        return await importLibraryVariables(libraryName);    
+    }
+}
 
-    const store = await getStoreData();
-    const variables = await importLibraryVariables(libraryName);
+export async function findVariableByName(variableName:string) {
+    const variables = await getLibVars()
 
     return variables.find(variable => {
         return variable.name == variableName
