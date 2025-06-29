@@ -116,21 +116,21 @@
                     <div data-expander data-role="container" class="height-expander collapsed ">
                         <div class="flex flex-col gap-minor-base pt-minor-base">
                             <p>
-                                These colours are generated programmatically, and by default, they are the same in the light and dark modes.
-                                This creates consistency and uniformity. To have a more nuanced visual experience, enable custom dark mode.
+                                Source Foundation generate colours programmatically, and by default, it uses the same underline swatches in the light and dark modes.
+                                This creates consistency and uniformity. Should you want to have a more nuanced visual experience, enable custom dark mode.
                             </p>
                             <p>
                                 With custom dark mode you can fine-tune light and dark theme colours independently by overriding the parameters listed below.
                             </p>
                             <div class="flex flex-col gap-minor-xs text-sm">
-                                <p>Neurals</p>
+                                <p>Neurals <a href="#" data-modal="gloabalNeutralsModal" class="ml-4">See global neutrals</a></p>
                                 <ul class="list-disc pl-md">
                                     <li><strong>Saturation</strong> defines the intensity of the tone</li>
                                     <li><strong>Distance</strong> controls the difference between adjaccent shades</li>
                                 </ul>
                             </div>
                             <div class="flex flex-col gap-minor-xs text-sm">
-                                <p>Accents</p>
+                                <p>Accents <a href="#" data-modal="globalAccentsModal" class="ml-4">See global accents</a></p>
                                 <ul class="list-disc pl-md">
                                     <li><strong>Saturation</strong> makes it more or less vibrant</li>
                                     <li><strong>Luminance</strong> controls brightness and overall contrast</li>
@@ -1326,7 +1326,7 @@
                         <span data-tooltip="top" data-offset="12" popovertarget="accentLumHelpToolTip" class="hidden icon icon-info color-text-base-500 hover:color-text-base-600 hover:icon-info-filled"></span>
                     </span>
                     <div id="luminanceSliderProxy" class="noui-slider flex-1"></div>
-                    <span class="icon icon-info color-text-base-500 hover:icon-info-filled" data-tooltip="top" data-offset="12" title="Use sliders below to customise accent palette. The first knob sets the lightest shade. The middle knob is for the base shade. The last knob defines the darkest shade."></span>
+                    <span class="icon icon-info color-text-base-500 hover:icon-info-filled" data-tooltip="top" data-offset="12" title="Customise accent palette. The first knob sets the lightest shade. The middle knob is for the base shade. The last knob defines the darkest shade."></span>
                 </div>
                 <div class="flex flex-row flex-1 gap-xs ">
                     <div data-slider='{"label": "Saturation", "name": "accentSaturation", "min": 30, "max": 100, "step": 1, "value": 90, "proxy": true, "noDisplayValue": true}' class="w-full"></div>

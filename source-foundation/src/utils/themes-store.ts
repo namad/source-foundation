@@ -144,10 +144,17 @@ export function resetDefaults() {
 
 export function enableCustomDarkMode() {
     _isCustomDarkMode = true;
+    if(_darkModeBackup) {
+        store.set('dark', _darkModeBackup);
+    }
 }
+
+let _darkModeBackup;
 
 export function disableCustomDarkMode() {
     _isCustomDarkMode = false;
+    _darkModeBackup = store.get('dark');
+    store.delete('dark');
 }
 
 export function isCustomDarkMode() {

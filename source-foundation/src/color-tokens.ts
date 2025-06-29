@@ -557,15 +557,21 @@ export async function getColorSystemVersion(refresh=false): Promise<number> {
     }
 
     const variables = await figma.variables.getLocalVariablesAsync();
-    const isSDS = figma.root.getPluginData('SDS') !== '';
+    const textOnAccentVar = variables.find(variable => variable.name.startsWith('text/accent'));
+    const textOnContrastVar = variables.find(variable => variable.name.startsWith('text/contrast'));
 
     if (variables.length == 0) {
         ColorSystemVersion = 0;
     }
 
-    if (isSDS) {
-        const textOnAccentVar = variables.find(variable => variable.name.startsWith('text/accent'));
-        ColorSystemVersion = textOnAccentVar ? 2 : 1
+    if (textOnAccentVar && textOnContrastVar) {
+        ColorSystemVersion = 2;
+    }
+    else if (!textOnAccentVar && textOnContrastVar) {
+        ColorSystemVersion = 1;
+    }
+    else if(!textOnAccentVar && !textOnContrastVar) {
+        ColorSystemVersion = 0;
     }
 
     return ColorSystemVersion;

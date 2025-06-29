@@ -56,6 +56,7 @@ export interface ExportEventParameters {
 function checkImportOptions(params: ImportFormData): boolean {
     return  params.createComponentTokens
             || params.createColorTokens
+            || params.createElevationTokens
             || params.createSpacingTokens
             || params.createRadiiTokens
             || params.createTypographyTokens
@@ -88,7 +89,7 @@ const handlers = {
             return figma.notify('Psst, you may want to check your import options, seems like you turned everything OFF');
         }
 
-        const colorSystemVersion = await getColorSystemVersion();
+        const colorSystemVersion = await getColorSystemVersion(true);
         if(colorSystemVersion == 1) {
             await this.UPGRADE_TEXT_COLORS(params, message);
         }

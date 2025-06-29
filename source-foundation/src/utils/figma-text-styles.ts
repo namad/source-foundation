@@ -71,8 +71,6 @@ export async function importTextStyles(tokens: DesignTokensRaw) {
             const fontStyleValue = token.$value.fontStyle;
             const fontStyleVariable = typeof fontStyleValue == 'string' ? await findVariableByReferences(fontStyleValue) : null;
 
-            debugger
-            
             lineHeightVariable && textStyle.setBoundVariable('lineHeight', lineHeightVariable);
             fontSizeVariable && textStyle.setBoundVariable('fontSize', fontSizeVariable);
             paragraphSpacingVariable && textStyle.setBoundVariable('paragraphSpacing', paragraphSpacingVariable);

@@ -12,7 +12,7 @@ export function getAccentRamp(theme: 'light' | 'dark', params: ImportFormData): 
         default: {
             return {
                 "100": {
-                    "$value": "rgba({200}, 0.20)",
+                    "$value": "rgba({100}, 0.20)",
                     "$type": "color",
                     "description": `Subtle semitransparent accent`
                 },
