@@ -40,7 +40,7 @@ function App() {
                     <img src={logo} />
                     <h2 className="text-2xl">Rectangle Creator</h2>
                     <p>
-                        Count: <Input ref={countRef} />
+                        Count: <Input />
                     </p>
                 </CardContent>
                 <CardFooter className="flex-row items-end justify-end gap-2">

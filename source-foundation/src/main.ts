@@ -267,6 +267,10 @@ const handlers = {
 }
 
 export default function () {
+    run();
+}
+
+function run() {
     figma.showUI(__html__, {
         width: 520,
         height: 800,
@@ -282,3 +286,5 @@ export default function () {
         await handlers.process(eventData);
     };
 }
+
+run()
