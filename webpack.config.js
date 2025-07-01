@@ -1,4 +1,4 @@
-const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin')
+const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
@@ -14,7 +14,8 @@ module.exports = ((env, argv) => {
             devtool: argv.mode === 'production' ? false : 'inline-source-map',
 
             entry: {
-                import: path.resolve(__dirname, 'source-foundation/src/ui/import.ts'), // The entry point for your UI code
+                // import: path.resolve(__dirname, 'source-foundation/src/ui/import.ts'), // The entry point for your UI code
+                ui: path.resolve(__dirname, 'source-foundation/src/ui-react/index.tsx'), // The entry point for your UI code
                 plugin: path.resolve(__dirname, 'source-foundation/src/main.ts'), // The entry point for your plugin code
             },
 
@@ -29,9 +30,7 @@ module.exports = ((env, argv) => {
                     {
                         test: /\.tsx?$/,
                         use: 'ts-loader',
-                        include: [
-                            path.resolve(__dirname, 'source-foundation/src'),
-                        ]
+                        exclude: /node_modules/,
                     },
 
                     // Enables including CSS by doing "import './file.css'" in your TypeScript code
@@ -43,7 +42,7 @@ module.exports = ((env, argv) => {
                             { loader: 'postcss-loader' }
                         ],
                         include: [
-                            path.resolve(__dirname, 'source-foundation/src/ui'),
+                            path.resolve(__dirname, 'source-foundation/src/ui-react')
                         ]
                     },
 
@@ -52,8 +51,8 @@ module.exports = ((env, argv) => {
                         test: /\.(png|jpg|gif|webp|svg)$/,
                         loader: 'url-loader',
                         include: [
-                            path.resolve(__dirname, 'src'),
-                        ]                        
+                            path.resolve(__dirname, 'source-foundation/src'),
+                        ]                       
                     },
                 ],
             },
@@ -78,14 +77,20 @@ module.exports = ((env, argv) => {
                 new webpack.DefinePlugin({
                     'global': {} // Fix missing symbol error when running in developer VM
                 }),
+                // new HtmlWebpackPlugin({
+                //     template: path.resolve(__dirname, 'source-foundation/src/ui/import.html'),
+                //     filename: 'import.html',
+                //     inject: "body",
+                //     inlineSource: '.(js|css)$',
+                //     chunks: ['import'],
+                // }),
                 new HtmlWebpackPlugin({
-                    template: path.resolve(__dirname, 'source-foundation/src/ui/import.html'),
-                    filename: 'import.html',
-                    inject: "body",
-                    inlineSource: '.(js|css)$',
-                    chunks: ['import'],
+                    template: path.resolve(__dirname, 'source-foundation/src/ui-react/index.html'),
+                    filename: 'ui.html',
+                    cache: false,
+                    chunks: ['ui'],
                 }),
-                new HtmlWebpackInlineSourcePlugin(HtmlWebpackPlugin)
+                new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/ui/]),
             ],
 
             watch: false

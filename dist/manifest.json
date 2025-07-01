@@ -1,0 +1,20 @@
+{
+  "api": "1.0.0",
+  "id": "0000000",
+  "name": "Source Foundation Dev",
+  "main": "main.js",
+  "ui": "ui.html",
+  "editorType": [
+    "figma",
+    "figjam"
+  ],
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ],
+    "devAllowedDomains": [
+      "http://localhost:6772",
+      "ws://localhost:9001"
+    ]
+  }
+}

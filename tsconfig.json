@@ -15,8 +15,9 @@
       "./node_modules/nouislider/dist",
       "./node_modules/@figma"
     ],
-    "paths": {
-      "@foundation/*": ["./source-foundation/src/*"]
+    "paths": { 
+      "@foundation/*": ["./source-foundation/src/*"],
+      "@/*": ["./*"]
     }    
   }
 }

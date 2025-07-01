@@ -17,11 +17,7 @@ import { flattenObject } from './utils/flatten-object';
 console.clear();
 
 
-figma.showUI(__html__, {
-    width: 520,
-    height: 800,
-    themeColors: true,
-});
+
 
 interface MessagePayload {
     type: string;
@@ -270,11 +266,19 @@ const handlers = {
     }    
 }
 
-figma.ui.onmessage = async (eventData: MessagePayload) => {
-    console.log("code received message", eventData);
+export default function () {
+    figma.showUI(__html__, {
+        width: 520,
+        height: 800,
+        themeColors: true,
+    });
+    
+    figma.ui.onmessage = async (eventData: MessagePayload) => {
+        console.log("code received message", eventData);
 
-    if(eventData.params?.hue == 0 && eventData.params?.saturation == 0) {
-        debugger
-    }
-    await handlers.process(eventData);
-};
+        if(eventData.params?.hue == 0 && eventData.params?.saturation == 0) {
+            debugger
+        }
+        await handlers.process(eventData);
+    };
+}

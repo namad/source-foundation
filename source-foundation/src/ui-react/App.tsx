@@ -1,6 +1,8 @@
 import React from "react";
 import logo from "./assets/logo.svg";
-import "./styles/ui.css";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 function App() {
     const textbox = React.useRef<HTMLInputElement>(undefined);
@@ -32,17 +34,23 @@ function App() {
     }, []);
 
     return (
-        <div>
-            <img src={logo} />
-            <h2>Rectangle Creator</h2>
-            <p>
-                Count: <input ref={countRef} />
-            </p>
-            <button id="create" onClick={onCreate}>
-                Create
-            </button>
-            <button onClick={onCancel}>Cancel</button>
-        </div>
+
+            <Card>
+                <CardContent>
+                    <img src={logo} />
+                    <h2 className="text-2xl">Rectangle Creator</h2>
+                    <p>
+                        Count: <Input ref={countRef} />
+                    </p>
+                </CardContent>
+                <CardFooter className="flex-row items-end justify-end gap-2">
+                    <Button variant="outline" onClick={onCancel}>Cancel</Button>
+                    <Button id="create" onClick={onCreate}>
+                        Create
+                    </Button>
+                </CardFooter>
+            </Card>
+
     );
 }
 
