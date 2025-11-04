@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./assets/logo.svg";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardAction, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -15,7 +15,7 @@ function App() {
     const onCreate = () => {
         const count = parseInt(textbox.current.value, 10);
         parent.postMessage({
-            pluginMessage: { type: "create-rectangles", count } 
+            pluginMessage: { type: "create-rectangles", count }
         }, "*");
     };
 
@@ -35,21 +35,25 @@ function App() {
 
     return (
 
-            <Card>
-                <CardContent>
-                    <img src={logo} />
-                    <h2 className="text-2xl">Rectangle Creator</h2>
-                    <p>
-                        Count: <Input />
-                    </p>
-                </CardContent>
-                <CardFooter className="flex-row items-end justify-end gap-2">
-                    <Button variant="outline" onClick={onCancel}>Cancel</Button>
-                    <Button id="create" onClick={onCreate}>
-                        Create
-                    </Button>
-                </CardFooter>
-            </Card>
+        <Card>
+            <CardHeader>
+                <CardTitle>Neutrals</CardTitle>
+                <CardAction>
+                    <Button variant="link">Sign Up</Button>
+                </CardAction>
+            </CardHeader>
+            <CardContent>
+                <img src={logo} />
+                <h2 className="text-2xl">Rectangle Creator</h2>
+                <p>
+                    Count: <Input />
+                </p>
+            </CardContent>
+            <CardFooter className="flex-row items-end justify-end gap-2">
+                <Button variant="outline" onClick={onCancel}>Cancel</Button>
+                <Button id="create" onClick={onCreate}>Create</Button>
+            </CardFooter>
+        </Card>
 
     );
 }

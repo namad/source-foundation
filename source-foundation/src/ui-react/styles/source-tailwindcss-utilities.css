@@ -1,0 +1,3 @@
+@utility color-* {
+  color: --value(--color-*);
+}

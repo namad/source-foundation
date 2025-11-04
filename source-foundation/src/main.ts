@@ -16,9 +16,6 @@ import { flattenObject } from './utils/flatten-object';
 
 console.clear();
 
-
-
-
 interface MessagePayload {
     type: string;
     params?: ImportFormData;
@@ -283,7 +280,13 @@ function run() {
         if(eventData.params?.hue == 0 && eventData.params?.saturation == 0) {
             debugger
         }
-        await handlers.process(eventData);
+
+        if(eventData.type in handlers) {
+            await handlers.process(eventData);
+        }
+        else {
+            console.log('Unsupported event type', eventData);
+        }
     };
 }
 

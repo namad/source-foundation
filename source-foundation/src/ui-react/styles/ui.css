@@ -3,11 +3,12 @@
 
 @import "./source-variables.css";
 @import "./chadcn.css";
-@import "./source-tw.css";
+@import "./source-tailwindcss-theme.css";
+@import "./source-tailwindcss-utilities.css";
 
 * {
     border-color: var(--border);
-    outline-color: color-mix(in oklab, var(--ring)50%, transparent);
+    outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
 }
 
 body {

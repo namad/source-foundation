@@ -210,7 +210,7 @@
     --text-sm: var(--font-size-sm);
     --text-sm--line-height: var(--line-height-sm);
     --text-base: var(--font-size-base);
-    --text-bas--line-heighte: var(--line-height-base);
+    --text-base--line-height: var(--line-height-base);
     --text-md: var(--font-size-md);
     --text-md--line-height: var(--line-height-md);
     --text-lg: var(--font-size-lg);
@@ -229,12 +229,4 @@
     --text-xl5--line-height: var(--line-height-xl5);
     --text-xl7: var(--font-size-xl7);
     --text-xl7--line-height: var(--line-height-xl7);    
-}
-
-@utility content-custom {
-  content-visibility: auto;
-}
-
-@utility color-* {
-  color: --value(--color-*);
 }
